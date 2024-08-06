@@ -1,37 +1,65 @@
+import { HomeIcon } from '@assets';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
+import { AccountScreen, CartScreen, CategoriesScreen, HomeScreen } from '@screens';
 import React from 'react';
-import HomeScreen from '../screens/HomeScreen';
-import ProfileScreen from '../screens/ProfileScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import { StyleSheet, View } from 'react-native';
+import { SCREEN_NAME } from '../constants';
+import { COLORS } from '../themes';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-const Drawer = createDrawerNavigator();
 
 function BottomTabNavigator() {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
+    <Tab.Navigator screenOptions={{
+      headerShown: false
+    }}>
+      <Tab.Screen options={{
+        tabBarIcon: (focus) => {
+          if (focus.focused) {
+            return (
+              <View style={styles.iconActive}>
+                <HomeIcon color={COLORS.primaryWhite}></HomeIcon>
+              </View>
+            )
+          }
+          return (
+            <HomeIcon></HomeIcon>
+          )
+        },
+        tabBarLabelStyle: {
+          fontSize: 14,
+          lineHeight: 20,
+          fontWeight: '200',
+          color: COLORS.primaryBlack
+        },
+        tabBarLabel: 'Home'
+      }} name={SCREEN_NAME.HOME} component={HomeScreen} />
+      <Tab.Screen name="categories_screen" component={CategoriesScreen} />
+      <Tab.Screen name="cart_screen" component={CartScreen} />
+      <Tab.Screen name="account_screen" component={AccountScreen} />
     </Tab.Navigator>
-  );
-}
-
-function DrawerNavigator() {
-  return (
-    <Drawer.Navigator>
-      <Drawer.Screen name="Tabs" component={BottomTabNavigator} />
-      <Drawer.Screen name="Profile" component={ProfileScreen} />
-    </Drawer.Navigator>
   );
 }
 
 export default function Navigation() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Main" component={DrawerNavigator} />
+    <Stack.Navigator screenOptions={{
+      headerShown: false
+    }}>
+      <Stack.Screen name="app" component={BottomTabNavigator} />
     </Stack.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  iconActive: {
+    height: 32,
+    width: 64,
+    backgroundColor: COLORS.primaryBlack,
+    borderRadius: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
+})

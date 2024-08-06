@@ -1,0 +1,8 @@
+const SCREEN_NAME =  {
+    HOME: 'HOME',
+    CATEGORIES: 'CATEGORIES',
+    CART: 'CART',
+    ACCOUNT: 'ACCOUNT'
+}
+
+export { SCREEN_NAME }

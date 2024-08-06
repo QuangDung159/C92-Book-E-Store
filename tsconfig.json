@@ -1,11 +1,13 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true,
+    "baseUrl": "./src",
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@screens": ["screens"],
+      "@assets": ["assets"],
+      "@themes": ["themes"],
+      "@store": ["store"],
+      "@sagas": ["sagas"],
     },
     "target": "esnext",
     "module": "commonjs",

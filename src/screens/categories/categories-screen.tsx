@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { Button, Text, View } from 'react-native';
 
-const HomeScreen = ({ navigation }: any) => {
+const CategoriesScreen = ({ navigation }: any) => {
   return (
     <View>
-      <Text>Home Screen</Text>
+      <Text>CategoriesScreen</Text>
       <Button
         title="Go to Profile"
         onPress={() => navigation.navigate('Profile')}
@@ -13,4 +13,5 @@ const HomeScreen = ({ navigation }: any) => {
   );
 };
 
-export default HomeScreen;
+export { CategoriesScreen };
+
