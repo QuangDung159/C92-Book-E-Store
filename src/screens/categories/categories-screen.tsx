@@ -14,4 +14,3 @@ const CategoriesScreen = ({ navigation }: any) => {
 };
 
 export { CategoriesScreen };
-

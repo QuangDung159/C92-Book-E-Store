@@ -14,4 +14,3 @@ const HomeScreen = ({ navigation }: any) => {
 };
 
 export { HomeScreen };
-

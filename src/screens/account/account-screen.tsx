@@ -14,4 +14,3 @@ const AccountScreen = ({ navigation }: any) => {
 };
 
 export { AccountScreen };
-

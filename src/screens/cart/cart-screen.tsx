@@ -10,4 +10,3 @@ const CartScreen = () => {
 };
 
 export { CartScreen };
-

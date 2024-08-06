@@ -1,8 +1,8 @@
-const SCREEN_NAME =  {
-    HOME: 'HOME',
-    CATEGORIES: 'CATEGORIES',
-    CART: 'CART',
-    ACCOUNT: 'ACCOUNT'
-}
+const SCREEN_NAME = {
+  HOME: 'HOME',
+  CATEGORIES: 'CATEGORIES',
+  CART: 'CART',
+  ACCOUNT: 'ACCOUNT',
+};
 
-export { SCREEN_NAME }
+export { SCREEN_NAME };
