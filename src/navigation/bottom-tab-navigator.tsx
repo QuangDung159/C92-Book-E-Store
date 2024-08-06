@@ -41,6 +41,7 @@ function BottomTabNavigator() {
           },
           tabBarLabelStyle: styles.tabBarLabelStyle,
           tabBarLabel: 'Trang chủ',
+          tabBarStyle: styles.tabBarStyle,
         }}
         name={SCREEN_NAME.HOME}
         component={HomeScreen}
@@ -61,6 +62,7 @@ function BottomTabNavigator() {
           },
           tabBarLabelStyle: styles.tabBarLabelStyle,
           tabBarLabel: 'Danh mục',
+          tabBarStyle: styles.tabBarStyle,
         }}
         name={SCREEN_NAME.CATEGORIES}
         component={CategoriesScreen}
@@ -77,6 +79,7 @@ function BottomTabNavigator() {
           },
           tabBarLabelStyle: styles.tabBarLabelStyle,
           tabBarLabel: 'Thông báo',
+          tabBarStyle: styles.tabBarStyle,
         }}
         name={SCREEN_NAME.NOTIFICATIONS}
         component={NotificationsScreen}
@@ -97,6 +100,7 @@ function BottomTabNavigator() {
           },
           tabBarLabelStyle: styles.tabBarLabelStyle,
           tabBarLabel: 'Tài khoản',
+          tabBarStyle: styles.tabBarStyle,
         }}
         name={SCREEN_NAME.ACCOUNT}
         component={AccountScreen}
@@ -119,6 +123,10 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontWeight: '200',
     color: COLORS.primaryBlack,
+  },
+  tabBarStyle: {
+    height: 100,
+    marginBottom: -25,
   },
 });
 

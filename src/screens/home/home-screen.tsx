@@ -1,15 +1,27 @@
 import React from 'react';
-import { Button, Text, View } from 'react-native';
+import { Button, ScrollView, Text, View } from 'react-native';
 
 const HomeScreen = ({ navigation }: any) => {
   return (
-    <View>
-      <Text>Home Screen</Text>
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <View
+        style={{
+          height: 600,
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 30,
+          }}
+        >
+          Home Screen
+        </Text>
+      </View>
       <Button
         title="Go to Profile"
         onPress={() => navigation.navigate('account')}
       />
-    </View>
+    </ScrollView>
   );
 };
 
