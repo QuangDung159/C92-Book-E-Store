@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { StyleProp, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { Button } from 'react-native-paper';
 import { COLORS } from '@themes';
 
@@ -32,17 +32,16 @@ const CButton: FC<CButtonProps> = ({
   return (
     <Button
       style={[
+        styles.button,
         {
           backgroundColor: getColor().backgroundColor,
-          borderRadius: 6,
         },
         style,
       ]}
       mode="outlined"
       labelStyle={[
+        styles.label,
         {
-          fontSize: 14,
-          fontWeight: 'bold',
           color: getColor().color,
         },
         labelStyle,
@@ -63,5 +62,15 @@ CButton.defaultProps = {
   style: {},
   onPress: () => {},
 };
+
+const styles = StyleSheet.create({
+  button: {
+    borderRadius: 6,
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+});
 
 export { CButton };

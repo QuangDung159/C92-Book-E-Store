@@ -1,7 +1,8 @@
 import React from 'react';
-import { View } from 'react-native';
-import { Buttons, Layouts } from '@components';
+import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { Layouts } from '@components';
 import { DataModels } from '@models';
+import { COLORS } from '@themes';
 
 interface TopBooksFilterProps {
   listFilter: Array<DataModels.ITopBooksFilter>;
@@ -14,22 +15,38 @@ const TopBooksFilter: React.FC<TopBooksFilterProps> = ({
   selectedValue,
   onPress,
 }) => {
+  const getColor = (isSelected: boolean) => ({
+    backgroundColor: isSelected ? COLORS.primaryBlack : COLORS.primaryWhite,
+    color: isSelected ? COLORS.primaryWhite : COLORS.primaryBlack,
+  });
+
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-      }}
-    >
+    <View style={styles.container}>
       {listFilter.map((item) => {
+        const isSelected = item.value === selectedValue;
         return (
           <React.Fragment key={item.value}>
-            <Buttons.CButton
-              buttonType={
-                selectedValue === item.value ? 'primary' : 'secondary'
-              }
-              label={item.label}
-              onPress={() => onPress(item)}
-            />
+            <TouchableWithoutFeedback onPress={() => onPress(item)}>
+              <View
+                style={[
+                  styles.button,
+                  {
+                    backgroundColor: getColor(isSelected).backgroundColor,
+                  },
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.label,
+                    {
+                      color: getColor(isSelected).color,
+                    },
+                  ]}
+                >
+                  {item.label}
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
             <Layouts.HSpace value={12} />
           </React.Fragment>
         );
@@ -37,5 +54,23 @@ const TopBooksFilter: React.FC<TopBooksFilterProps> = ({
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+  },
+  button: {
+    borderRadius: 6,
+    borderColor: COLORS.primaryBlack,
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  label: {
+    padding: 8,
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+});
 
 export { TopBooksFilter };

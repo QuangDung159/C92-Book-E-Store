@@ -9,11 +9,10 @@ import Carousel, {
   Pagination,
 } from 'react-native-reanimated-carousel';
 import { ImageAssets } from '@assets';
-import { Layouts, ListBookCardHorizontal } from '@components';
-import { TOP_BOOKS_FILTER } from '@constants';
-import { DataModels } from '@models';
+import { Layouts } from '@components';
+import { TOP_BOOKS, TOP_BOOKS_FILTER } from '@constants';
 import { COLORS } from '@themes';
-import { TopBooksFilter } from './components';
+import { HorizontalListCard } from './components';
 
 const HomeScreen = ({ navigation }: any) => {
   const width = Dimensions.get('window').width;
@@ -37,41 +36,6 @@ const HomeScreen = ({ navigation }: any) => {
     width: carouselItemWidth,
     height: carouselItemWidth / 2,
   } as const;
-
-  const TOP_BOOKS1: Array<DataModels.IBook> = [
-    {
-      name: 'The Picture of Dorian Gray',
-      author: 'Oscar Wilde',
-      price: 25,
-      isLiked: false,
-      category: 'Classics',
-      id: '1',
-    },
-    {
-      name: 'Nine Liars',
-      author: 'Oscar Wilde',
-      price: 25.99,
-      isLiked: true,
-      category: 'Classics',
-      id: '2',
-    },
-    {
-      name: 'The Picture of Dorian Gray 12 1233 s qww eeww ww',
-      author: 'Oscar Wilde 123',
-      price: 25,
-      isLiked: false,
-      category: 'Classics',
-      id: '3',
-    },
-    {
-      name: 'The Picture of Dorian 44v',
-      author: 'Oscar Wilde 44',
-      price: 19,
-      isLiked: false,
-      category: 'Fantasy',
-      id: '4',
-    },
-  ];
 
   const [topBooksSelectedFilter, setTopBooksSelectedFilter] = useState(
     TOP_BOOKS_FILTER[0].value,
@@ -181,28 +145,29 @@ const HomeScreen = ({ navigation }: any) => {
           onPress={onPressPagination}
         />
         <Layouts.VSpace value={24} />
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}
-        >
-          <Text style={styles.categoryTitle}>Top Books</Text>
-          <Layouts.MaxSpace />
-          <Text style={styles.seeMore}>See more</Text>
-        </View>
-        <Layouts.VSpace value={12} />
-        <TopBooksFilter
-          listFilter={TOP_BOOKS_FILTER}
-          onPress={(selectedValue) => {
-            setTopBooksSelectedFilter(selectedValue.value);
-          }}
-          selectedValue={topBooksSelectedFilter}
+        <HorizontalListCard
+          listItem={TOP_BOOKS}
+          title="Top Books"
+          showSeeMore
+          showTopFilter
+          setTopBooksSelectedFilter={(value) =>
+            setTopBooksSelectedFilter(value)
+          }
+          topBooksSelectedFilter={topBooksSelectedFilter}
+        />
+        <Layouts.VSpace value={48} />
+        <HorizontalListCard
+          listItem={TOP_BOOKS}
+          title="Latest Books"
+          showSeeMore
+        />
+        <Layouts.VSpace value={48} />
+        <HorizontalListCard
+          listItem={TOP_BOOKS}
+          title="Upcoming Books"
+          showSeeMore
         />
         <Layouts.VSpace value={24} />
-        <ListBookCardHorizontal listItem={TOP_BOOKS1} />
-        <Layouts.VSpace value={12} />
-        <Text style={styles.seeMore}>See more</Text>
       </ScrollView>
     </View>
   );
