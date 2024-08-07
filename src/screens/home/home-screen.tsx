@@ -1,42 +1,14 @@
 import { AntDesign, Feather } from '@expo/vector-icons';
-import { Image } from 'expo-image';
-import React, { useRef, useState } from 'react';
-import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
+import React, { useState } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { Text, TextInput } from 'react-native-paper';
-import { useSharedValue } from 'react-native-reanimated';
-import Carousel, {
-  ICarouselInstance,
-  Pagination,
-} from 'react-native-reanimated-carousel';
 import { ImageAssets } from '@assets';
 import { Layouts } from '@components';
 import { TOP_BOOKS, TOP_BOOKS_FILTER } from '@constants';
 import { COLORS } from '@themes';
-import { HorizontalListCard } from './components';
+import { BestDealCarousel, HorizontalListCard } from './components';
 
 const HomeScreen = ({ navigation }: any) => {
-  const width = Dimensions.get('window').width;
-
-  const ref = useRef<ICarouselInstance>(null);
-  const progress = useSharedValue<number>(0);
-
-  const onPressPagination = (index: number) => {
-    ref.current?.scrollTo({
-      count: index - progress.value,
-      animated: true,
-    });
-  };
-
-  const data = [...new Array(6).keys()];
-
-  const carouselItemWidth = width * 0.85;
-
-  const baseOptions = {
-    vertical: false,
-    width: carouselItemWidth,
-    height: carouselItemWidth / 2,
-  } as const;
-
   const [topBooksSelectedFilter, setTopBooksSelectedFilter] = useState(
     TOP_BOOKS_FILTER[0].value,
   );
@@ -106,43 +78,15 @@ const HomeScreen = ({ navigation }: any) => {
       </View>
       <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}>
         <Layouts.VSpace value={12}></Layouts.VSpace>
-        <Text style={styles.categoryTitle}>Best Deals</Text>
-        <Layouts.VSpace value={12} />
-        <View style={{ flex: 1 }}>
-          <Carousel
-            {...baseOptions}
-            ref={ref}
-            style={{ width: '100%' }}
-            data={data}
-            onProgressChange={progress}
-            renderItem={() => (
-              <View
-                style={{
-                  flex: 1,
-                  marginRight: '2.5%',
-                }}
-              >
-                <Image
-                  style={{
-                    flex: 1,
-                    width: '100%',
-                  }}
-                  source={ImageAssets.slide}
-                  contentFit="contain"
-                />
-              </View>
-            )}
-          />
-        </View>
-        <Pagination.Basic
-          progress={progress}
-          data={data}
-          dotStyle={{ backgroundColor: 'rgba(0,0,0,0.2)', borderRadius: 50 }}
-          activeDotStyle={{
-            backgroundColor: COLORS.primaryBlack,
-          }}
-          containerStyle={{ gap: 5, marginTop: 10 }}
-          onPress={onPressPagination}
+        <BestDealCarousel
+          data={[
+            ImageAssets.slide,
+            ImageAssets.slide,
+            ImageAssets.slide,
+            ImageAssets.slide,
+            ImageAssets.slide,
+            ImageAssets.slide,
+          ]}
         />
         <Layouts.VSpace value={24} />
         <HorizontalListCard
