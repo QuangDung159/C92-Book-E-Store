@@ -1,11 +1,170 @@
 import { AntDesign, Feather } from '@expo/vector-icons';
-import React from 'react';
-import { Button, ScrollView, StyleSheet, View } from 'react-native';
+import { FlashList } from '@shopify/flash-list';
+import { Image } from 'expo-image';
+import React, { useRef } from 'react';
+import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
 import { Text, TextInput } from 'react-native-paper';
+import { useSharedValue } from 'react-native-reanimated';
+import Carousel, {
+  ICarouselInstance,
+  Pagination,
+} from 'react-native-reanimated-carousel';
+import { ImageAssets } from '@assets';
 import { Layouts } from '@components';
+import { DataModels } from '@models';
 import { COLORS } from '@themes';
 
 const HomeScreen = ({ navigation }: any) => {
+  const width = Dimensions.get('window').width;
+
+  const ref = useRef<ICarouselInstance>(null);
+  const progress = useSharedValue<number>(0);
+
+  const onPressPagination = (index: number) => {
+    ref.current?.scrollTo({
+      count: index - progress.value,
+      animated: true,
+    });
+  };
+
+  const data = [...new Array(6).keys()];
+
+  const carouselItemWidth = width * 0.85;
+
+  const baseOptions = {
+    vertical: false,
+    width: carouselItemWidth,
+    height: carouselItemWidth / 2,
+  } as const;
+
+  const renderCard = (item: DataModels.IBook, index: number) => {
+    return (
+      <React.Fragment key={item.id}>
+        <View
+          style={{
+            marginRight: index !== TOP_BOOKS1.length - 1 ? 12 : 0,
+            width: 180,
+          }}
+        >
+          <View
+            style={{
+              height: 280,
+              width: '100%',
+            }}
+          >
+            <Image
+              style={{
+                width: '100%',
+                flex: 1,
+              }}
+              source={ImageAssets.bookImage1}
+              contentFit="contain"
+            />
+          </View>
+          <View>
+            <Text>{item.name}</Text>
+          </View>
+        </View>
+      </React.Fragment>
+    );
+  };
+
+  const listCard = () => {
+    return (
+      <FlashList
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        data={TOP_BOOKS1}
+        renderItem={({ item, index }) => <>{renderCard(item, index)}</>}
+      />
+    );
+  };
+
+  const topBooksFilter = [
+    {
+      label: 'This Week',
+      value: 'week',
+    },
+    {
+      label: 'This Month',
+      value: 'month',
+    },
+    {
+      label: 'This Year',
+      value: 'year',
+    },
+  ];
+
+  const renderTopBooksFilter = () => {
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+        }}
+      >
+        {topBooksFilter.map((item) => {
+          return (
+            <React.Fragment key={item.value}>
+              <View
+                style={{
+                  backgroundColor: COLORS.primaryBlack,
+                  borderRadius: 6,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontWeight: 'semibold',
+                    color: COLORS.primaryWhite,
+                    padding: 8,
+                  }}
+                >
+                  {item.label}
+                </Text>
+              </View>
+              <Layouts.HSpace value={12} />
+            </React.Fragment>
+          );
+        })}
+      </View>
+    );
+  };
+
+  const TOP_BOOKS1: Array<DataModels.IBook> = [
+    {
+      name: 'The Picture of Dorian Gray',
+      author: 'Oscar Wilde',
+      price: 25,
+      isLiked: false,
+      category: 'Classics',
+      id: '1',
+    },
+    {
+      name: 'Nine Liars',
+      author: 'Oscar Wilde',
+      price: 25.99,
+      isLiked: true,
+      category: 'Classics',
+      id: '2',
+    },
+    {
+      name: 'The Picture of Dorian Gray 12 1233 s',
+      author: 'Oscar Wilde 123',
+      price: 25,
+      isLiked: false,
+      category: 'Classics',
+      id: '3',
+    },
+    {
+      name: 'The Picture of Dorian 44v',
+      author: 'Oscar Wilde 44',
+      price: 19,
+      isLiked: false,
+      category: 'Fantasy',
+      id: '4',
+    },
+  ];
+
   return (
     <View
       style={{
@@ -69,29 +228,77 @@ const HomeScreen = ({ navigation }: any) => {
           </View>
         </View>
       </View>
-      <ScrollView contentContainerStyle={styles.container} scrollEnabled={true}>
+      <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}>
         <Layouts.VSpace value={12}></Layouts.VSpace>
-        <Text
+        <Text style={styles.categoryTitle}>Best Deals</Text>
+        <Layouts.VSpace value={12} />
+        <View style={{ flex: 1 }}>
+          <Carousel
+            {...baseOptions}
+            ref={ref}
+            style={{ width: '100%' }}
+            data={data}
+            onProgressChange={progress}
+            renderItem={() => (
+              <View
+                style={{
+                  flex: 1,
+                  marginRight: '2.5%',
+                }}
+              >
+                <Image
+                  style={{
+                    flex: 1,
+                    width: '100%',
+                  }}
+                  source={ImageAssets.slide}
+                  contentFit="contain"
+                />
+              </View>
+            )}
+          />
+        </View>
+        <Pagination.Basic
+          progress={progress}
+          data={data}
+          dotStyle={{ backgroundColor: 'rgba(0,0,0,0.2)', borderRadius: 50 }}
+          activeDotStyle={{
+            backgroundColor: COLORS.primaryBlack,
+          }}
+          containerStyle={{ gap: 5, marginTop: 10 }}
+          onPress={onPressPagination}
+        />
+        <Layouts.VSpace value={24} />
+        <View
           style={{
-            fontSize: 20,
-            lineHeight: 32,
-            fontWeight: 'semibold',
+            flexDirection: 'row',
+            alignItems: 'center',
           }}
         >
-          Best Deals
-        </Text>
-        <Button
-          title="Go to Profile"
-          onPress={() => navigation.navigate('account')}
-        />
+          <Text style={styles.categoryTitle}>Top Books</Text>
+          <Layouts.MaxSpace />
+          <Text style={styles.seeMore}>See more</Text>
+        </View>
+        <Layouts.VSpace value={12} />
+        {renderTopBooksFilter()}
+        <Layouts.VSpace value={24} />
+        {listCard()}
+        <Layouts.VSpace value={12} />
+        <Text style={styles.seeMore}>See more</Text>
       </ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    // paddingHorizontal: 24,
+  categoryTitle: {
+    fontSize: 20,
+    lineHeight: 32,
+    fontWeight: 'semibold',
+  },
+  seeMore: {
+    fontSize: 14,
+    lineHeight: 20,
   },
 });
 

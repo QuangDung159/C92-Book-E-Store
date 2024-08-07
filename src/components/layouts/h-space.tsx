@@ -9,6 +9,4 @@ const HSpace: FC<HSpaceProps> = ({ value }) => {
   return <View style={{ width: value }} />;
 };
 
-HSpace.defaultProps = {};
-
 export { HSpace };

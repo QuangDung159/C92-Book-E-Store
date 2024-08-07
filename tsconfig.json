@@ -8,7 +8,9 @@
       "@themes": ["themes"],
       "@store": ["store"],
       "@sagas": ["sagas"],
-      "@components": ["components"]
+      "@components": ["components"],
+      "@models": ["models"],
+      "@constants": ["constants"]
     },
     "target": "esnext",
     "module": "commonjs",

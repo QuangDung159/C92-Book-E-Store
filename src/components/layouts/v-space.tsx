@@ -8,6 +8,4 @@ const VSpace: FC<VSpaceProps> = ({ value }) => {
   return <View style={{ height: value }} />;
 };
 
-VSpace.defaultProps = {};
-
 export { VSpace };

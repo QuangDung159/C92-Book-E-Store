@@ -8,6 +8,4 @@ const MaxSpace: FC<MaxSpaceProps> = () => {
   return <View style={{ flex: 1 }} />;
 };
 
-MaxSpace.defaultProps = {};
-
 export { MaxSpace };
