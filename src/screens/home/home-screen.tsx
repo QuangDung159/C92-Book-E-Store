@@ -50,7 +50,6 @@ const HomeScreen = ({ navigation }: any) => {
             style={{
               height: 280,
               alignItems: 'center',
-              justifyContent: 'center',
               backgroundColor: COLORS.gray,
               borderTopLeftRadius: 8,
               borderTopRightRadius: 8,
@@ -58,8 +57,9 @@ const HomeScreen = ({ navigation }: any) => {
           >
             <Image
               style={{
-                width: '90%',
+                width: '60%',
                 flex: 1,
+                marginTop: -90,
               }}
               source={ImageAssets.bookImage1}
               contentFit="contain"
@@ -72,6 +72,10 @@ const HomeScreen = ({ navigation }: any) => {
               borderBottomRightRadius: 8,
               height: 140,
               padding: 12,
+              position: 'absolute',
+              top: 170,
+              left: 0,
+              right: 0,
             }}
           >
             <Text
