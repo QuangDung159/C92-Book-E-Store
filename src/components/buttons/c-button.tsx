@@ -54,15 +54,6 @@ const CButton: FC<CButtonProps> = ({
   );
 };
 
-CButton.defaultProps = {
-  buttonType: 'primary',
-  label: 'Press',
-  disabled: false,
-  labelStyle: {},
-  style: {},
-  onPress: () => {},
-};
-
 const styles = StyleSheet.create({
   button: {
     borderRadius: 6,

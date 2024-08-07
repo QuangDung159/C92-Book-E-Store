@@ -1,9 +1,10 @@
-import { AntDesign, Feather } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { Layouts } from '@components';
 import { COLORS } from '@themes';
+import { CartIconWithBadge } from './cart-icon-with-badge';
 
 interface SearchBarProps {
   showCartIcon?: boolean;
@@ -21,17 +22,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ showCartIcon }) => {
       <Layouts.HSpace value={8} />
       <View style={styles.iconWrapper}>
         <Feather name="search" size={24} />
-        {showCartIcon && (
-          <>
-            <Layouts.HSpace value={8} />
-            <View>
-              <AntDesign name="shoppingcart" size={24} />
-              <View style={styles.cartIconContainer}>
-                <Text style={styles.cartNumber}>99+</Text>
-              </View>
-            </View>
-          </>
-        )}
+        {showCartIcon && <CartIconWithBadge />}
       </View>
     </View>
   );

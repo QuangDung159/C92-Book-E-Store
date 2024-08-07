@@ -50,4 +50,87 @@ const TOP_BOOKS_FILTER = [
   },
 ];
 
-export { TOP_BOOKS, TOP_BOOKS_FILTER };
+const CATEGORY: Array<DataModels.ICategory> = [
+  {
+    id: 'cate_1',
+    name: 'Cate 1',
+    level: 1,
+    child: [
+      {
+        id: 'cate_1_cate_1',
+        name: 'Cate 1 - Cate 1',
+        level: 2,
+        child: [
+          {
+            id: 'cate_1_cate_1_cate_1',
+            name: 'Cate 1 - Cate 1 - Cate 1',
+            level: 3,
+            child: [],
+            parent: 'cate_1_cate_1',
+          },
+          {
+            id: 'cate_1_cate_1_cate_2',
+            name: 'Cate 1 - Cate 1 - Cate 2',
+            level: 3,
+            child: [],
+            parent: 'cate_1_cate_1',
+          },
+          {
+            id: 'cate_1_cate_1_cate_3',
+            name: 'Cate 1 - Cate 1 - Cate 3',
+            level: 3,
+            child: [],
+            parent: 'cate_1_cate_1',
+          },
+        ],
+        parent: 'cate_1',
+      },
+      {
+        id: 'cate_1_cate_2',
+        name: 'Cate 1 - Cate 2',
+        level: 2,
+        child: [
+          {
+            id: 'cate_1_cate_2_cate_1',
+            name: 'Cate 1 - Cate 2 - Cate 1',
+            level: 3,
+            child: [],
+            parent: 'cate_1_cate_2',
+          },
+          {
+            id: 'cate_1_cate_2_cate_2',
+            name: 'Cate 1 - Cate 2 - Cate 2',
+            level: 3,
+            child: [],
+            parent: 'cate_1_cate_2',
+          },
+          {
+            id: 'cate_1_cate_2_cate_3',
+            name: 'Cate 1 - Cate 2 - Cate 3',
+            level: 3,
+            child: [],
+            parent: 'cate_1_cate_2',
+          },
+        ],
+        parent: 'cate_1',
+      },
+    ],
+    parent: null,
+  },
+  {
+    id: 'cate_2',
+    name: 'Cate 2',
+    level: 1,
+    child: [],
+    parent: null,
+  },
+  {
+    id: 'cate_3',
+    name: 'Cate 3',
+    level: 1,
+    child: [],
+    parent: null,
+  },
+];
+
+export { CATEGORY, TOP_BOOKS, TOP_BOOKS_FILTER };
