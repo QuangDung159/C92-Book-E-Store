@@ -3,3 +3,4 @@ export * from './cart';
 export * from './categories';
 export * from './home';
 export * from './notifications';
+export * from './search';
