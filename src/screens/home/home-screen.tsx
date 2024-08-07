@@ -49,20 +49,75 @@ const HomeScreen = ({ navigation }: any) => {
           <View
             style={{
               height: 280,
-              width: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: COLORS.gray,
+              borderTopLeftRadius: 8,
+              borderTopRightRadius: 8,
             }}
           >
             <Image
               style={{
-                width: '100%',
+                width: '90%',
                 flex: 1,
               }}
               source={ImageAssets.bookImage1}
               contentFit="contain"
             />
           </View>
-          <View>
-            <Text>{item.name}</Text>
+          <View
+            style={{
+              backgroundColor: COLORS.primaryBlack,
+              borderBottomLeftRadius: 8,
+              borderBottomRightRadius: 8,
+              height: 140,
+              padding: 12,
+            }}
+          >
+            <Text
+              style={{
+                color: COLORS.primaryWhite,
+                fontSize: 10,
+              }}
+            >
+              {item.category}
+            </Text>
+            <Layouts.VSpace value={4} />
+            <View
+              style={{
+                height: 60,
+              }}
+            >
+              <Text
+                style={{
+                  color: COLORS.primaryWhite,
+                  fontSize: 16,
+                  fontWeight: 'semibold',
+                }}
+                numberOfLines={2}
+              >
+                {item.name}
+              </Text>
+              <Layouts.VSpace value={8} />
+              <Text
+                style={{
+                  color: COLORS.primaryWhite,
+                  fontSize: 10,
+                }}
+              >
+                {item.author}
+              </Text>
+            </View>
+            <Layouts.VSpace value={8} />
+            <Text
+              style={{
+                color: COLORS.primaryWhite,
+                fontSize: 22,
+                fontWeight: 'bold',
+              }}
+            >
+              ${item.price}
+            </Text>
           </View>
         </View>
       </React.Fragment>
@@ -148,7 +203,7 @@ const HomeScreen = ({ navigation }: any) => {
       id: '2',
     },
     {
-      name: 'The Picture of Dorian Gray 12 1233 s',
+      name: 'The Picture of Dorian Gray 12 1233 s qww eeww ww',
       author: 'Oscar Wilde 123',
       price: 25,
       isLiked: false,
