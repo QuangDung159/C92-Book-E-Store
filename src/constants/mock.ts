@@ -35,4 +35,19 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
   },
 ];
 
-export { TOP_BOOKS };
+const TOP_BOOKS_FILTER = [
+  {
+    label: 'This Week',
+    value: 'week',
+  },
+  {
+    label: 'This Month',
+    value: 'month',
+  },
+  {
+    label: 'This Year',
+    value: 'year',
+  },
+];
+
+export { TOP_BOOKS, TOP_BOOKS_FILTER };

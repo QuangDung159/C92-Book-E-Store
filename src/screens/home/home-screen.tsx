@@ -1,7 +1,6 @@
 import { AntDesign, Feather } from '@expo/vector-icons';
-import { FlashList } from '@shopify/flash-list';
 import { Image } from 'expo-image';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
 import { Text, TextInput } from 'react-native-paper';
 import { useSharedValue } from 'react-native-reanimated';
@@ -10,9 +9,11 @@ import Carousel, {
   Pagination,
 } from 'react-native-reanimated-carousel';
 import { ImageAssets } from '@assets';
-import { Layouts } from '@components';
+import { Layouts, ListBookCardHorizontal } from '@components';
+import { TOP_BOOKS_FILTER } from '@constants';
 import { DataModels } from '@models';
 import { COLORS } from '@themes';
+import { TopBooksFilter } from './components';
 
 const HomeScreen = ({ navigation }: any) => {
   const width = Dimensions.get('window').width;
@@ -36,158 +37,6 @@ const HomeScreen = ({ navigation }: any) => {
     width: carouselItemWidth,
     height: carouselItemWidth / 2,
   } as const;
-
-  const renderCard = (item: DataModels.IBook, index: number) => {
-    return (
-      <React.Fragment key={item.id}>
-        <View
-          style={{
-            marginRight: index !== TOP_BOOKS1.length - 1 ? 12 : 0,
-            width: 180,
-          }}
-        >
-          <View
-            style={{
-              height: 280,
-              alignItems: 'center',
-              backgroundColor: COLORS.gray,
-              borderTopLeftRadius: 8,
-              borderTopRightRadius: 8,
-            }}
-          >
-            <Image
-              style={{
-                width: '60%',
-                flex: 1,
-                marginTop: -90,
-              }}
-              source={ImageAssets.bookImage1}
-              contentFit="contain"
-            />
-          </View>
-          <View
-            style={{
-              backgroundColor: COLORS.primaryBlack,
-              borderBottomLeftRadius: 8,
-              borderBottomRightRadius: 8,
-              height: 140,
-              padding: 12,
-              position: 'absolute',
-              top: 170,
-              left: 0,
-              right: 0,
-            }}
-          >
-            <Text
-              style={{
-                color: COLORS.primaryWhite,
-                fontSize: 10,
-              }}
-            >
-              {item.category}
-            </Text>
-            <Layouts.VSpace value={4} />
-            <View
-              style={{
-                height: 60,
-              }}
-            >
-              <Text
-                style={{
-                  color: COLORS.primaryWhite,
-                  fontSize: 16,
-                  fontWeight: 'semibold',
-                }}
-                numberOfLines={2}
-              >
-                {item.name}
-              </Text>
-              <Layouts.VSpace value={8} />
-              <Text
-                style={{
-                  color: COLORS.primaryWhite,
-                  fontSize: 10,
-                }}
-              >
-                {item.author}
-              </Text>
-            </View>
-            <Layouts.VSpace value={8} />
-            <Text
-              style={{
-                color: COLORS.primaryWhite,
-                fontSize: 22,
-                fontWeight: 'bold',
-              }}
-            >
-              ${item.price}
-            </Text>
-          </View>
-        </View>
-      </React.Fragment>
-    );
-  };
-
-  const listCard = () => {
-    return (
-      <FlashList
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        data={TOP_BOOKS1}
-        renderItem={({ item, index }) => <>{renderCard(item, index)}</>}
-      />
-    );
-  };
-
-  const topBooksFilter = [
-    {
-      label: 'This Week',
-      value: 'week',
-    },
-    {
-      label: 'This Month',
-      value: 'month',
-    },
-    {
-      label: 'This Year',
-      value: 'year',
-    },
-  ];
-
-  const renderTopBooksFilter = () => {
-    return (
-      <View
-        style={{
-          flexDirection: 'row',
-        }}
-      >
-        {topBooksFilter.map((item) => {
-          return (
-            <React.Fragment key={item.value}>
-              <View
-                style={{
-                  backgroundColor: COLORS.primaryBlack,
-                  borderRadius: 6,
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 14,
-                    fontWeight: 'semibold',
-                    color: COLORS.primaryWhite,
-                    padding: 8,
-                  }}
-                >
-                  {item.label}
-                </Text>
-              </View>
-              <Layouts.HSpace value={12} />
-            </React.Fragment>
-          );
-        })}
-      </View>
-    );
-  };
 
   const TOP_BOOKS1: Array<DataModels.IBook> = [
     {
@@ -223,6 +72,10 @@ const HomeScreen = ({ navigation }: any) => {
       id: '4',
     },
   ];
+
+  const [topBooksSelectedFilter, setTopBooksSelectedFilter] = useState(
+    TOP_BOOKS_FILTER[0].value,
+  );
 
   return (
     <View
@@ -339,9 +192,15 @@ const HomeScreen = ({ navigation }: any) => {
           <Text style={styles.seeMore}>See more</Text>
         </View>
         <Layouts.VSpace value={12} />
-        {renderTopBooksFilter()}
+        <TopBooksFilter
+          listFilter={TOP_BOOKS_FILTER}
+          onPress={(selectedValue) => {
+            setTopBooksSelectedFilter(selectedValue.value);
+          }}
+          selectedValue={topBooksSelectedFilter}
+        />
         <Layouts.VSpace value={24} />
-        {listCard()}
+        <ListBookCardHorizontal listItem={TOP_BOOKS1} />
         <Layouts.VSpace value={12} />
         <Text style={styles.seeMore}>See more</Text>
       </ScrollView>

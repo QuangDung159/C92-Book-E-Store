@@ -6,3 +6,8 @@ export interface IBook {
   author: string;
   category: string;
 }
+
+export interface ITopBooksFilter {
+  value: string;
+  label: string;
+}
