@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   },
   tabBarStyle: {
     height: 100,
-    marginBottom: -25,
+    marginBottom: -30,
   },
 });
 

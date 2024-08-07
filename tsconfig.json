@@ -8,6 +8,7 @@
       "@themes": ["themes"],
       "@store": ["store"],
       "@sagas": ["sagas"],
+      "@components": ["components"]
     },
     "target": "esnext",
     "module": "commonjs",
@@ -16,10 +17,5 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-  ],
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
 }
