@@ -13,12 +13,14 @@ const SearchScreen = ({ route, navigation }: any) => {
         <MaterialCommunityIcons name="filter" size={24} />
         <Layouts.HSpace value={8} />
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <Chip
-            label={route?.params?.category}
-            onRemove={() => {}}
-            value={route?.params?.category}
-            showRemove
-          />
+          {route?.params?.category && (
+            <Chip
+              label={route?.params?.category}
+              onRemove={() => {}}
+              value={route?.params?.category}
+              showRemove
+            />
+          )}
         </ScrollView>
       </View>
       <Layouts.VSpace value={12} />
