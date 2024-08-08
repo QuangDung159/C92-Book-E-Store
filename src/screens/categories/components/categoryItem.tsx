@@ -4,21 +4,27 @@ import {
   Dimensions,
   StyleSheet,
   Text,
-  TouchableWithoutFeedback,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import { Layouts } from '@components';
 import { DataModels } from '@models';
+import { FONT_STYLES } from '@themes';
 
 interface CategoryItemProps {
   item: DataModels.ICategory;
+  onPress: (categorySelected: DataModels.ICategory) => void;
 }
 
-const CategoryItem: React.FC<CategoryItemProps> = ({ item }) => {
+const CategoryItem: React.FC<CategoryItemProps> = ({ item, onPress }) => {
   const { width } = Dimensions.get('window');
 
   return (
-    <TouchableWithoutFeedback>
+    <TouchableOpacity
+      onPress={() => {
+        onPress(item);
+      }}
+    >
       <>
         <View style={styles.container}>
           <Text
@@ -37,7 +43,7 @@ const CategoryItem: React.FC<CategoryItemProps> = ({ item }) => {
         </View>
         <Layouts.VSpace value={12} />
       </>
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   );
 };
 
@@ -46,11 +52,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  name: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    lineHeight: 20,
-  },
+  name: { ...FONT_STYLES.BOLD_16 },
 });
 
 export { CategoryItem };

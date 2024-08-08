@@ -20,12 +20,12 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
       <View
         style={{
           marginRight: isLastItem ? 0 : 12,
-          width: 180,
+          width: 160,
         }}
       >
         <View
           style={{
-            height: 320,
+            height: 300,
             alignItems: 'center',
             backgroundColor: COLORS.gray,
             borderRadius: 8,
