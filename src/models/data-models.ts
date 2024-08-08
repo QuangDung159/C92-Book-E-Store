@@ -15,7 +15,6 @@ export interface ITopBooksFilter {
 export interface ICategory {
   id: string;
   name: string;
-  level: number;
   parent?: string;
-  child?: Array<ICategory>;
+  hasChild: boolean;
 }

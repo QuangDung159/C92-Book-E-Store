@@ -1,7 +1,13 @@
 import { Entypo } from '@expo/vector-icons';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { Layouts, SearchBar } from '@components';
 import { CATEGORY } from '@constants';
 import { categoryStore } from '@store';
@@ -13,40 +19,54 @@ const CategoriesScreen = ({ navigation }: any) => {
     <View style={styles.container}>
       <SearchBar showCartIcon />
       {categoryStore.categorySelected && (
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: COLORS.gray200,
-            borderRadius: 8,
-            padding: 8,
-            height: 40,
+        <TouchableOpacity
+          onPress={() => {
+            const parent = CATEGORY.find(
+              (item) => categoryStore.categorySelected.parent === item.id,
+            );
+
+            categoryStore.setCategorySelected(parent);
           }}
         >
           <View
             style={{
-              position: 'absolute',
-              left: 8,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: COLORS.gray200,
+              borderRadius: 8,
+              padding: 8,
+              height: 40,
             }}
           >
-            <Entypo name="chevron-left" size={24} />
+            <View
+              style={{
+                position: 'absolute',
+                left: 8,
+              }}
+            >
+              <Entypo name="chevron-left" size={24} />
+            </View>
+            <Text
+              style={{
+                ...FONT_STYLES.BOLD_16,
+              }}
+            >
+              {categoryStore.categorySelected.name}
+            </Text>
           </View>
-          <Text
-            style={{
-              ...FONT_STYLES.BOLD_16,
-            }}
-          >
-            {categoryStore.categorySelected.name}
-          </Text>
-        </View>
+        </TouchableOpacity>
       )}
       <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}>
         <Layouts.VSpace value={12} />
         <CategoryList
-          list={categoryStore.categorySelected?.child || CATEGORY}
+          list={
+            categoryStore.selectedChild.length != 0
+              ? categoryStore.selectedChild
+              : CATEGORY
+          }
           onPress={(categorySelected) => {
-            const listChild = categorySelected.child;
+            const listChild = categoryStore.selectedChild;
             if (listChild || listChild.length > 0) {
               categoryStore.setCategorySelected(categorySelected);
             }

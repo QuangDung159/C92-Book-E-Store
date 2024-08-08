@@ -22,7 +22,9 @@ const CategoryItem: React.FC<CategoryItemProps> = ({ item, onPress }) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        onPress(item);
+        if (item.hasChild) {
+          onPress(item);
+        }
       }}
     >
       <>
