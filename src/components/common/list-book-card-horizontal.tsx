@@ -2,7 +2,7 @@ import { FlashList } from '@shopify/flash-list';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { DataModels } from '@models';
-import { BookCardItem } from './book-card-item';
+import { BookCardItemHorizontal } from './book-card-item-horizontal';
 
 interface ListBookCardHorizontalProps {
   listItem: Array<DataModels.IBook>;
@@ -19,7 +19,7 @@ const ListBookCardHorizontal: React.FC<ListBookCardHorizontalProps> = ({
       keyExtractor={(item) => item.id}
       estimatedItemSize={186}
       renderItem={({ item, index }) => (
-        <BookCardItem
+        <BookCardItemHorizontal
           bookCardItem={item}
           isLastItem={index === listItem.length}
         />
