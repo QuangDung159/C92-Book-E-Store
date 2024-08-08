@@ -18,3 +18,10 @@ export interface ICategory {
   parent?: string;
   hasChild: boolean;
 }
+
+export interface ISearchFilter {
+  category?: string;
+  keyword?: string;
+  max?: number;
+  min?: number;
+}

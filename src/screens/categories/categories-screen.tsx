@@ -10,11 +10,14 @@ import {
 } from 'react-native';
 import { Layouts, SearchBar } from '@components';
 import { CATEGORY } from '@constants';
+import { useNavigate } from '@hooks';
 import { categoryStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { CategoryList } from './components';
 
 const CategoriesScreen = ({ navigation }: any) => {
+  const { openSearchScreen } = useNavigate(navigation);
+
   return (
     <View style={styles.container}>
       <SearchBar showCartIcon />
@@ -66,9 +69,15 @@ const CategoriesScreen = ({ navigation }: any) => {
               : CATEGORY
           }
           onPress={(categorySelected) => {
-            const listChild = categoryStore.selectedChild;
-            if (listChild || listChild.length > 0) {
-              categoryStore.setCategorySelected(categorySelected);
+            if (categorySelected.hasChild) {
+              const listChild = categoryStore.selectedChild;
+              if (listChild || listChild.length > 0) {
+                categoryStore.setCategorySelected(categorySelected);
+              }
+            } else {
+              openSearchScreen({
+                category: categorySelected.id,
+              });
             }
           }}
         />

@@ -10,7 +10,8 @@
       "@sagas": ["sagas"],
       "@components": ["components"],
       "@models": ["models"],
-      "@constants": ["constants"]
+      "@constants": ["constants"],
+      "@hooks": ["hooks"]
     },
     "target": "esnext",
     "module": "commonjs",

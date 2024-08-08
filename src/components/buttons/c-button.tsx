@@ -56,7 +56,7 @@ const CButton: FC<CButtonProps> = ({
 
 const styles = StyleSheet.create({
   button: {
-    borderRadius: 6,
+    borderRadius: 8,
   },
   label: {
     fontSize: 14,

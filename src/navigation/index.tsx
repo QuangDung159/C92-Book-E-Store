@@ -1,6 +1,8 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
+import { SCREEN_NAME } from '@constants';
 import { BottomTabNavigator } from './bottom-tab-navigator';
+import { SearchNavigator } from './search-navigator';
 
 const Stack = createStackNavigator();
 
@@ -12,6 +14,10 @@ export default function Navigation() {
       }}
     >
       <Stack.Screen name="app" component={BottomTabNavigator} />
+      <Stack.Screen
+        name={SCREEN_NAME.SEARCH_NAVIGATOR}
+        component={SearchNavigator}
+      />
     </Stack.Navigator>
   );
 }

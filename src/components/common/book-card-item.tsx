@@ -1,6 +1,6 @@
 import { Image } from 'expo-image';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { StyleProp, Text, View, ViewStyle } from 'react-native';
 import { ImageAssets } from '@assets';
 import { Layouts } from '@components';
 import { DataModels } from '@models';
@@ -9,19 +9,24 @@ import { COLORS } from '@themes';
 interface BookCardItemProps {
   bookCardItem: DataModels.IBook;
   isLastItem?: boolean;
+  containerStyle?: StyleProp<ViewStyle>;
 }
 
 const BookCardItem: React.FC<BookCardItemProps> = ({
   bookCardItem,
   isLastItem,
+  containerStyle,
 }) => {
   return (
     <React.Fragment key={bookCardItem.id}>
       <View
-        style={{
-          marginRight: isLastItem ? 0 : 12,
-          width: 160,
-        }}
+        style={[
+          {
+            marginRight: isLastItem ? 0 : 12,
+            width: 160,
+          },
+          containerStyle,
+        ]}
       >
         <View
           style={{

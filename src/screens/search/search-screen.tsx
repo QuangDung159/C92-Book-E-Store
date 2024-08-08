@@ -1,11 +1,68 @@
-import { AntDesign, Feather } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
-import { Text, TextInput } from 'react-native-paper';
-import { Layouts } from '@components';
-import { COLORS } from '@themes';
+import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { BookCardItem, Layouts, SearchBar } from '@components';
+import { TOP_BOOKS } from '@constants';
+import { COLORS, FONT_STYLES } from '@themes';
 
-const SearchScreen = ({ navigation }: any) => {
+const SearchScreen = ({ route, navigation }: any) => {
+  const { width } = Dimensions.get('window');
+  const cardWidth = (width - 48 - 24) / 2;
+
+  const renderFilterItem = () => {
+    return (
+      <View
+        style={{
+          backgroundColor: COLORS.gray200,
+          borderRadius: 8,
+          padding: 8,
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginRight: 4,
+          marginBottom: 4,
+        }}
+      >
+        <Text
+          style={{
+            ...FONT_STYLES.SEMIBOLD_14,
+          }}
+        >
+          {route?.params?.category}
+        </Text>
+        <Layouts.HSpace value={4} />
+        <MaterialCommunityIcons name="close-circle" size={20} />
+      </View>
+    );
+  };
+
+  const renderRowItem = () => {
+    return (
+      <React.Fragment>
+        <View
+          style={{
+            flexDirection: 'row',
+            flex: 1,
+          }}
+        >
+          <BookCardItem
+            containerStyle={{
+              width: cardWidth,
+            }}
+            bookCardItem={TOP_BOOKS[0]}
+          />
+          <Layouts.HSpace value={12} />
+          <BookCardItem
+            containerStyle={{
+              width: cardWidth,
+            }}
+            bookCardItem={TOP_BOOKS[0]}
+          />
+        </View>
+        <Layouts.VSpace value={36} />
+      </React.Fragment>
+    );
+  };
+
   return (
     <View
       style={{
@@ -15,62 +72,29 @@ const SearchScreen = ({ navigation }: any) => {
         paddingTop: 12,
       }}
     >
+      <SearchBar showCartIcon showBackIcon navigation={navigation} />
       <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          paddingBottom: 12,
+          flexWrap: 'wrap',
         }}
       >
-        <TextInput
-          placeholder="Happy reading!"
-          style={{
-            height: 40,
-            flex: 1,
-          }}
-          mode="outlined"
-          activeOutlineColor={COLORS.primaryBlack}
-        />
+        <MaterialCommunityIcons name="filter" size={24} />
         <Layouts.HSpace value={8} />
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}
-        >
-          <Feather name="search" size={24} />
-          <Layouts.HSpace value={8} />
-          <View>
-            <AntDesign name="shoppingcart" size={24} />
-            <View
-              style={{
-                position: 'absolute',
-                bottom: 15,
-                left: 10,
-                backgroundColor: COLORS.primaryBlack,
-                borderRadius: 99,
-                minHeight: 16,
-                minWidth: 26,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Text
-                style={{
-                  color: COLORS.primaryWhite,
-                  fontSize: 8,
-                  paddingHorizontal: 2,
-                  fontWeight: 'bold',
-                }}
-              >
-                99+
-              </Text>
-            </View>
-          </View>
-        </View>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {renderFilterItem()}
+          {renderFilterItem()}
+          {renderFilterItem()}
+          {renderFilterItem()}
+          {renderFilterItem()}
+        </ScrollView>
       </View>
+      <Layouts.VSpace value={12} />
       <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}>
-        <Layouts.VSpace value={24} />
+        {renderRowItem()}
+        {renderRowItem()}
+        {renderRowItem()}
       </ScrollView>
     </View>
   );

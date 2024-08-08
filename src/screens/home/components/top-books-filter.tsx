@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   button: {
-    borderRadius: 6,
+    borderRadius: 8,
     borderColor: COLORS.primaryBlack,
     borderWidth: 1,
     justifyContent: 'center',
