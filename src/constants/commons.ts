@@ -5,4 +5,10 @@ const DEFAULT_SORT: DataModels.ISortOption = {
   label: 'Name ASC',
 };
 
-export { DEFAULT_SORT };
+const SEARCH_VIEW_STYLE = {
+  grid: 'grid',
+  list: 'list',
+  complex: 'complex',
+};
+
+export { DEFAULT_SORT, SEARCH_VIEW_STYLE };

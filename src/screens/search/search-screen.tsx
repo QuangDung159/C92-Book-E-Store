@@ -1,4 +1,5 @@
 import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
+import { observer } from 'mobx-react-lite';
 import React, { useRef } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Chip, Layouts, ListBookCardVerticalRow, SearchBar } from '@components';
@@ -84,4 +85,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export { SearchScreen };
+const observable = observer(SearchScreen);
+export { observable as SearchScreen };

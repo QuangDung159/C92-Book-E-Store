@@ -3,9 +3,12 @@ import {
   MaterialCommunityIcons,
   MaterialIcons,
 } from '@expo/vector-icons';
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Layouts } from '@components';
+import { SEARCH_VIEW_STYLE } from '@constants';
+import { searchStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 
 interface SortSectionProps {
@@ -43,11 +46,41 @@ const SortSection: React.FC<SortSectionProps> = ({ label, onPress }) => {
           </View>
         </TouchableOpacity>
         <Layouts.MaxSpace />
-        <MaterialCommunityIcons name="view-grid" size={24} />
+        <TouchableOpacity
+          onPress={() => {
+            searchStore.setViewStyle(SEARCH_VIEW_STYLE.grid);
+          }}
+        >
+          <MaterialCommunityIcons
+            name="view-grid"
+            size={24}
+            color={searchStore.getViewStyleIconColor(SEARCH_VIEW_STYLE.grid)}
+          />
+        </TouchableOpacity>
         <Layouts.HSpace value={4} />
-        <MaterialIcons name="view-list" size={30} />
+        <TouchableOpacity
+          onPress={() => {
+            searchStore.setViewStyle(SEARCH_VIEW_STYLE.list);
+          }}
+        >
+          <MaterialIcons
+            name="view-list"
+            color={searchStore.getViewStyleIconColor(SEARCH_VIEW_STYLE.list)}
+            size={30}
+          />
+        </TouchableOpacity>
         <Layouts.HSpace value={4} />
-        <MaterialIcons name="featured-play-list" size={25} />
+        <TouchableOpacity
+          onPress={() => {
+            searchStore.setViewStyle(SEARCH_VIEW_STYLE.complex);
+          }}
+        >
+          <MaterialIcons
+            name="featured-play-list"
+            size={25}
+            color={searchStore.getViewStyleIconColor(SEARCH_VIEW_STYLE.complex)}
+          />
+        </TouchableOpacity>
       </View>
     );
   };
@@ -63,4 +96,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export { SortSection };
+const observable = observer(SortSection);
+export { observable as SortSection };
