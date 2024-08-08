@@ -23,7 +23,7 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
         style={[
           {
             marginRight: isLastItem ? 0 : 12,
-            width: 160,
+            width: 180,
           },
           containerStyle,
         ]}
@@ -32,7 +32,7 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
           style={{
             height: 300,
             alignItems: 'center',
-            backgroundColor: COLORS.gray,
+            backgroundColor: COLORS.gray200,
             borderRadius: 8,
           }}
         >
@@ -54,7 +54,7 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
             height: 140,
             padding: 12,
             position: 'absolute',
-            top: 180,
+            top: 160,
             left: 0,
             right: 0,
           }}

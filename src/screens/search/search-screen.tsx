@@ -58,7 +58,7 @@ const SearchScreen = ({ route, navigation }: any) => {
             bookCardItem={TOP_BOOKS[0]}
           />
         </View>
-        <Layouts.VSpace value={36} />
+        <Layouts.VSpace value={24} />
       </React.Fragment>
     );
   };
