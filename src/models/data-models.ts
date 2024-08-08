@@ -25,3 +25,8 @@ export interface ISearchFilter {
   max?: number;
   min?: number;
 }
+
+export interface ISortOption {
+  value: string;
+  label: string;
+}

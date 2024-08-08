@@ -3,12 +3,13 @@ import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Chip, Layouts, ListBookCardVerticalRow, SearchBar } from '@components';
 import { TOP_BOOKS } from '@constants';
+import { searchStore } from '@store';
 import { COLORS } from '@themes';
+import { SortSection } from './components';
 
 const SearchScreen = ({ route, navigation }: any) => {
-  return (
-    <View style={styles.container}>
-      <SearchBar showCartIcon showBackIcon navigation={navigation} />
+  const renderFilter = () => {
+    return (
       <View style={styles.filterContainer}>
         <MaterialCommunityIcons name="filter" size={24} />
         <Layouts.HSpace value={8} />
@@ -23,6 +24,15 @@ const SearchScreen = ({ route, navigation }: any) => {
           )}
         </ScrollView>
       </View>
+    );
+  };
+
+  return (
+    <View style={styles.container}>
+      <SearchBar showCartIcon showBackIcon navigation={navigation} />
+      <SortSection onPress={() => {}} label={searchStore.sortOption.label} />
+      <Layouts.VSpace value={12} />
+      {renderFilter()}
       <Layouts.VSpace value={12} />
       <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}>
         <ListBookCardVerticalRow listItem={TOP_BOOKS} />

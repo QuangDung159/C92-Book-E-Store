@@ -1,5 +1,5 @@
 import { appModel } from './app-model';
 
-const { cartStore, categoryStore } = appModel;
+const { cartStore, categoryStore, searchStore } = appModel;
 
-export { appModel, cartStore, categoryStore };
+export { appModel, cartStore, categoryStore, searchStore };
