@@ -1,4 +1,8 @@
-import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
+import {
+  Entypo,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from '@expo/vector-icons';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Layouts } from '@components';
@@ -38,6 +42,12 @@ const SortSection: React.FC<SortSectionProps> = ({ label, onPress }) => {
             <Entypo name="chevron-down" size={24} color={COLORS.primaryBlack} />
           </View>
         </TouchableOpacity>
+        <Layouts.MaxSpace />
+        <MaterialCommunityIcons name="view-grid" size={24} />
+        <Layouts.HSpace value={4} />
+        <MaterialIcons name="view-list" size={30} />
+        <Layouts.HSpace value={4} />
+        <MaterialIcons name="featured-play-list" size={25} />
       </View>
     );
   };
