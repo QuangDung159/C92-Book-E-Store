@@ -2,7 +2,6 @@ export * from './book-card-item';
 export * from './book-card-item-complex';
 export * from './book-card-item-horizontal';
 export * from './book-card-item-vertical';
-export * from './book-card-row-item';
 export * from './cart-icon-with-badge';
 export * from './chip';
 export * from './list-book-card-complex';
