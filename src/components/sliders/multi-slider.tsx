@@ -4,20 +4,27 @@ import { StyleSheet, Text, View } from 'react-native';
 import { COLORS } from '@themes';
 
 interface MultiSliderProps {
-  sliderRange: number[];
+  selctedRange: number[];
+  maximumValue: number;
+  minimumValue: number;
+  onSlidingComplete: (range: number[]) => void;
 }
 
-const MultiSlider: FC<MultiSliderProps> = ({ sliderRange }) => {
+const MultiSlider: FC<MultiSliderProps> = ({
+  selctedRange,
+  maximumValue,
+  minimumValue,
+  onSlidingComplete,
+}) => {
   const DEFAULT_VALUE = 0.2;
 
   const SliderContainer = (props: {
-    caption: string;
     children: React.ReactElement;
     sliderValue?: Array<number>;
     trackMarks?: Array<number>;
     vertical?: boolean;
   }) => {
-    const { caption, sliderValue, trackMarks } = props;
+    const { sliderValue, trackMarks } = props;
     const [value, setValue] = useState(
       sliderValue ? sliderValue : DEFAULT_VALUE,
     );
@@ -41,7 +48,6 @@ const MultiSlider: FC<MultiSliderProps> = ({ sliderRange }) => {
     return (
       <View style={styles.sliderContainer}>
         <View style={styles.titleContainer}>
-          <Text>{caption}</Text>
           <Text>{Array.isArray(value) ? value.join(' - ') : value}</Text>
         </View>
         {renderChildren()}
@@ -49,15 +55,16 @@ const MultiSlider: FC<MultiSliderProps> = ({ sliderRange }) => {
     );
   };
   return (
-    <SliderContainer sliderValue={sliderRange} caption="asd">
+    <SliderContainer sliderValue={selctedRange}>
       <Slider
         animateTransitions
         maximumTrackTintColor={COLORS.gray}
-        maximumValue={20}
+        maximumValue={maximumValue}
         minimumTrackTintColor={COLORS.primaryBlack}
-        minimumValue={0}
-        step={1}
+        minimumValue={minimumValue}
+        step={500}
         thumbTintColor={COLORS.primaryBlack}
+        onSlidingComplete={onSlidingComplete}
       />
     </SliderContainer>
   );

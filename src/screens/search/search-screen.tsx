@@ -26,6 +26,7 @@ import { SortSection } from './components';
 const SearchScreen = ({ route, navigation }: any) => {
   const scrollRef = useRef<ScrollView>();
   const [isPopupVisible, setPopupVisible] = useState(false);
+  const [price, setPrice] = useState([79000, 679000]);
 
   const renderFilter = () => {
     return (
@@ -70,7 +71,14 @@ const SearchScreen = ({ route, navigation }: any) => {
         >
           <Text style={styles.popupText}>This is a bottom popup!</Text>
           <Button title="Close" onPress={() => setPopupVisible(false)} />
-          <Sliders.MultiSlider sliderRange={[0, 100]} />
+          <Text>{price[0]}</Text>
+          <Text>{price[1]}</Text>
+          <Sliders.MultiSlider
+            selctedRange={price}
+            maximumValue={679000}
+            minimumValue={79000}
+            onSlidingComplete={setPrice}
+          />
         </Layouts.BottomPopup>
         <SortSection onPress={() => {}} label={searchStore.sortOption.label} />
         <Layouts.VSpace value={12} />
