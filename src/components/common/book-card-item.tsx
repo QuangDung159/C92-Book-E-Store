@@ -74,6 +74,10 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
               alignItems: 'center',
             }}
           >
+            <View>
+              <Text style={styles.stock}>In stock:</Text>
+              <Text style={styles.stock}>10 pcs</Text>
+            </View>
             <Layouts.MaxSpace />
             <View style={styles.cartIconWrapper}>
               <AntDesign
@@ -140,6 +144,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: COLORS.primaryWhite,
+  },
+  stock: {
+    ...FONT_STYLES.SEMIBOLD_14,
+    color: COLORS.primaryWhite,
   },
 });
 
