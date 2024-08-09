@@ -4,7 +4,7 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
   {
     name: 'The Picture of Dorian Gray',
     author: 'Oscar Wilde',
-    price: 25,
+    price: 25000.999,
     isLiked: false,
     category: 'Classics',
     id: '1',

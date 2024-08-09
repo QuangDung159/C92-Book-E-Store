@@ -2,8 +2,14 @@ import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
 import { observer } from 'mobx-react-lite';
 import React, { useRef } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Chip, Layouts, ListBookCardVerticalRow, SearchBar } from '@components';
-import { TOP_BOOKS } from '@constants';
+import {
+  Chip,
+  Layouts,
+  ListBookCardVertical,
+  ListBookCardVerticalRow,
+  SearchBar,
+} from '@components';
+import { SEARCH_VIEW_STYLE, TOP_BOOKS } from '@constants';
 import { searchStore } from '@store';
 import { COLORS } from '@themes';
 import { SortSection } from './components';
@@ -48,7 +54,12 @@ const SearchScreen = ({ route, navigation }: any) => {
         <Layouts.VSpace value={12} />
         {renderFilter()}
         <Layouts.VSpace value={12} />
-        <ListBookCardVerticalRow listItem={TOP_BOOKS} />
+        {searchStore.viewStyle === SEARCH_VIEW_STYLE.grid && (
+          <ListBookCardVerticalRow listItem={TOP_BOOKS} />
+        )}
+        {searchStore.viewStyle === SEARCH_VIEW_STYLE.list && (
+          <ListBookCardVertical listItem={TOP_BOOKS} />
+        )}
       </ScrollView>
       <View style={styles.scrollTop}>
         <TouchableOpacity onPress={scrollToTop}>
