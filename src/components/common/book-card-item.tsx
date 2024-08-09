@@ -21,12 +21,7 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
     <React.Fragment key={bookCardItem.id}>
       <View
         style={[
-          {
-            backgroundColor: COLORS.gray,
-            borderRadius: 8,
-            flex: 1,
-            marginBottom: 12,
-          },
+          styles.conatiner,
           index % 2 === 0 && {
             marginRight: 12,
           },
@@ -60,6 +55,12 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
 };
 
 const styles = StyleSheet.create({
+  conatiner: {
+    backgroundColor: COLORS.gray,
+    borderRadius: 8,
+    flex: 1,
+    marginBottom: 12,
+  },
   imageWrapper: {
     height: 300,
     alignItems: 'center',
