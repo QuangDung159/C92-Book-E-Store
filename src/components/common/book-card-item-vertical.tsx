@@ -1,8 +1,8 @@
 import { AntDesign, Entypo, Ionicons } from '@expo/vector-icons';
+import { Image } from 'expo-image';
 import React from 'react';
 import {
   Dimensions,
-  Image,
   StyleProp,
   StyleSheet,
   Text,
@@ -32,8 +32,9 @@ const BookCardItemVertical: React.FC<BookCardItemVerticalProps> = ({
         <View style={styles.info}>
           <Image
             style={styles.image}
-            resizeMode="contain"
+            contentFit="contain"
             source={ImageAssets.bookImage1}
+            transition={500}
           />
           <View
             style={[

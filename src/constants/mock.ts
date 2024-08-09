@@ -2,7 +2,7 @@ import { DataModels } from '@models';
 
 const TOP_BOOKS: Array<DataModels.IBook> = [
   {
-    name: 'The Picture of Dorian Gray',
+    name: 'The Picture of Dorian Gray The Picture of Dorian Gray',
     author: 'Oscar Wilde',
     price: 25000.999,
     isLiked: false,
@@ -38,6 +38,66 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
       'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
     category: 'Fantasy',
     id: '4',
+  },
+  {
+    name: 'The Picture of Dorian Gray 12',
+    author: 'Oscar Wilde 123',
+    price: 25,
+    isLiked: false,
+    description:
+      'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
+    category: 'Classics',
+    id: '5',
+  },
+  {
+    name: 'The Picture of Dorian 44v',
+    author: 'Oscar Wilde 44',
+    price: 19,
+    isLiked: false,
+    description:
+      'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
+    category: 'Fantasy',
+    id: '6',
+  },
+  {
+    name: 'The Picture of Dorian Gray 12',
+    author: 'Oscar Wilde 123',
+    price: 25,
+    isLiked: false,
+    description:
+      'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
+    category: 'Classics',
+    id: '7',
+  },
+  {
+    name: 'The Picture of Dorian 44v',
+    author: 'Oscar Wilde 44',
+    price: 19,
+    isLiked: false,
+    description:
+      'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
+    category: 'Fantasy',
+    id: '8',
+  },
+  {
+    name: 'The Picture of Dorian Gray 12',
+    author: 'Oscar Wilde 123',
+    price: 25,
+    isLiked: false,
+    description:
+      'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
+    category: 'Classics',
+    id: '9',
+  },
+  {
+    name: 'The Picture of Dorian 44v',
+    author: 'Oscar Wilde 44',
+    price: 19,
+    isLiked: false,
+    description:
+      'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
+    category: 'Fantasy',
+    id: '10',
   },
 ];
 

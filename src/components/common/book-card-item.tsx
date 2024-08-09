@@ -1,3 +1,4 @@
+import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import React from 'react';
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
@@ -29,6 +30,19 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
         ]}
       >
         <View style={styles.imageWrapper}>
+          <View
+            style={{
+              position: 'absolute',
+              right: 4,
+              top: 8,
+            }}
+          >
+            <Ionicons
+              name="heart-outline"
+              size={24}
+              color={COLORS.primaryBlack}
+            />
+          </View>
           <Image
             style={styles.image}
             source={ImageAssets.bookImage1}
@@ -48,6 +62,22 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
           </View>
           <Layouts.VSpace value={8} />
           <Text style={styles.price}>${bookCardItem.price}</Text>
+          <Layouts.VSpace value={8} />
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+          >
+            <Layouts.MaxSpace />
+            <View style={styles.cartIconWrapper}>
+              <AntDesign
+                name="shoppingcart"
+                size={24}
+                color={COLORS.primaryBlack}
+              />
+            </View>
+          </View>
         </View>
       </View>
     </React.Fragment>
@@ -56,27 +86,26 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
 
 const styles = StyleSheet.create({
   conatiner: {
-    backgroundColor: COLORS.gray,
     borderRadius: 8,
     flex: 1,
     marginBottom: 12,
   },
   imageWrapper: {
-    height: 300,
+    height: 340,
     alignItems: 'center',
-    backgroundColor: COLORS.gray,
+    backgroundColor: COLORS.gray200,
     borderRadius: 8,
   },
   image: {
     width: 100,
     flex: 1,
-    marginTop: -120,
+    marginTop: -160,
   },
   info: {
     backgroundColor: COLORS.primaryBlack,
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,
-    height: 140,
+    height: 180,
     padding: 12,
     position: 'absolute',
     top: 160,
@@ -98,6 +127,14 @@ const styles = StyleSheet.create({
   price: {
     ...FONT_STYLES.BOLD_18,
     color: COLORS.primaryWhite,
+  },
+  cartIconWrapper: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.primaryWhite,
   },
 });
 
