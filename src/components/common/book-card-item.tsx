@@ -8,22 +8,27 @@ import { COLORS, FONT_STYLES } from '@themes';
 
 interface BookCardItemProps {
   bookCardItem: DataModels.IBook;
-  isLastItem?: boolean;
   containerStyle?: StyleProp<ViewStyle>;
+  index: number;
 }
 
 const BookCardItem: React.FC<BookCardItemProps> = ({
   bookCardItem,
-  isLastItem,
   containerStyle,
+  index,
 }) => {
   return (
     <React.Fragment key={bookCardItem.id}>
       <View
         style={[
           {
-            marginRight: isLastItem ? 0 : 12,
-            width: 180,
+            backgroundColor: COLORS.gray,
+            borderRadius: 8,
+            flex: 1,
+            marginBottom: 12,
+          },
+          index % 2 === 0 && {
+            marginRight: 12,
           },
           containerStyle,
         ]}
@@ -33,6 +38,7 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
             style={styles.image}
             source={ImageAssets.bookImage1}
             contentFit="contain"
+            transition={500}
           />
         </View>
         <View style={styles.info}>
@@ -57,11 +63,11 @@ const styles = StyleSheet.create({
   imageWrapper: {
     height: 300,
     alignItems: 'center',
-    backgroundColor: COLORS.gray200,
+    backgroundColor: COLORS.gray,
     borderRadius: 8,
   },
   image: {
-    width: '60%',
+    width: 100,
     flex: 1,
     marginTop: -120,
   },

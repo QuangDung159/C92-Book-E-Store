@@ -1,6 +1,6 @@
 import { FlashList } from '@shopify/flash-list';
 import React from 'react';
-import { Dimensions, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { BookCardItem } from '@components';
 import { DataModels } from '@models';
 
@@ -11,9 +11,6 @@ interface ListBookCardVerticalRowProps {
 const ListBookCardVerticalRow: React.FC<ListBookCardVerticalRowProps> = ({
   listItem,
 }) => {
-  const { width } = Dimensions.get('window');
-  const cardWidth = (width - 48 - 24) / 2;
-
   return (
     <FlashList
       showsVerticalScrollIndicator={false}
@@ -21,13 +18,8 @@ const ListBookCardVerticalRow: React.FC<ListBookCardVerticalRowProps> = ({
       keyExtractor={(item) => item.id}
       estimatedItemSize={186}
       numColumns={2}
-      renderItem={({ item }) => (
-        <BookCardItem
-          containerStyle={{
-            width: cardWidth,
-          }}
-          bookCardItem={item}
-        />
+      renderItem={({ item, index }) => (
+        <BookCardItem bookCardItem={item} index={index} />
       )}
       ListEmptyComponent={() => {
         return (

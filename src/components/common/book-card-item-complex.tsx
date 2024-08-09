@@ -29,7 +29,7 @@ const BookCardItemComplex: React.FC<BookCardItemComplexProps> = ({
             style={styles.image}
             source={ImageAssets.bookImage1}
             contentFit="contain"
-            transition={1000}
+            transition={500}
           />
         </View>
         <Layouts.VSpace value={12} />
