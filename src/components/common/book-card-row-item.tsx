@@ -41,7 +41,7 @@ const BookCardRowItem: React.FC<BookCardRowItemProps> = ({
           bookCardItem={bookCardRowItemRight}
         />
       </View>
-      <Layouts.VSpace value={24} />
+      <Layouts.VSpace value={12} />
     </React.Fragment>
   );
 };
