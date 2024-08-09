@@ -57,9 +57,9 @@ const BookCardItemVertical: React.FC<BookCardItemVerticalProps> = ({
             >
               <Text style={styles.stock}>In stock: 10 pcs</Text>
               <Layouts.MaxSpace />
-              <Ionicons name="heart-outline" size={24} />
+              <Ionicons name="heart-outline" size={20} />
               <Layouts.HSpace value={8} />
-              <Ionicons name="eye" size={24} />
+              <Ionicons name="eye" size={20} />
             </View>
           </View>
         </View>

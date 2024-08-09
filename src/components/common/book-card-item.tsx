@@ -23,9 +23,13 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
       <View
         style={[
           styles.conatiner,
-          index % 2 === 0 && {
-            marginRight: 12,
-          },
+          index % 2 === 0
+            ? {
+                marginRight: 6,
+              }
+            : {
+                marginLeft: 6,
+              },
           containerStyle,
         ]}
       >
@@ -39,9 +43,10 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
           >
             <Ionicons
               name="heart-outline"
-              size={24}
+              size={20}
               color={COLORS.primaryBlack}
             />
+            <Ionicons name="eye" size={20} />
           </View>
           <Image
             style={styles.image}

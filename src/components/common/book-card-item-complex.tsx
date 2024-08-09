@@ -21,9 +21,9 @@ const BookCardItemComplex: React.FC<BookCardItemComplexProps> = ({
       <View style={[styles.container, containerStyle]}>
         <View style={styles.imageWrapper}>
           <View style={styles.likeViewIcon}>
-            <Ionicons name="heart-outline" size={24} />
+            <Ionicons name="heart-outline" size={20} />
             <Layouts.HSpace value={8} />
-            <Ionicons name="eye" size={24} />
+            <Ionicons name="eye" size={20} />
           </View>
           <Image
             style={styles.image}
