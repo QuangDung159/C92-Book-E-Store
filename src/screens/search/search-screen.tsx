@@ -1,7 +1,14 @@
 import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
 import { observer } from 'mobx-react-lite';
-import React, { useRef } from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import React, { useRef, useState } from 'react';
+import {
+  Button,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {
   Chip,
   Layouts,
@@ -9,6 +16,7 @@ import {
   ListBookCardVertical,
   ListBookCardVerticalRow,
   SearchBar,
+  Sliders,
 } from '@components';
 import { SEARCH_VIEW_STYLE, TOP_BOOKS } from '@constants';
 import { searchStore } from '@store';
@@ -17,6 +25,7 @@ import { SortSection } from './components';
 
 const SearchScreen = ({ route, navigation }: any) => {
   const scrollRef = useRef<ScrollView>();
+  const [isPopupVisible, setPopupVisible] = useState(false);
 
   const renderFilter = () => {
     return (
@@ -51,6 +60,18 @@ const SearchScreen = ({ route, navigation }: any) => {
         scrollEnabled={true}
         showsVerticalScrollIndicator={false}
       >
+        <Button
+          title="Show Bottom Popup"
+          onPress={() => setPopupVisible(true)}
+        />
+        <Layouts.BottomPopup
+          visible={isPopupVisible}
+          onClose={() => setPopupVisible(false)}
+        >
+          <Text style={styles.popupText}>This is a bottom popup!</Text>
+          <Button title="Close" onPress={() => setPopupVisible(false)} />
+          <Sliders.MultiSlider sliderRange={[0, 100]} />
+        </Layouts.BottomPopup>
         <SortSection onPress={() => {}} label={searchStore.sortOption.label} />
         <Layouts.VSpace value={12} />
         {renderFilter()}
@@ -97,6 +118,10 @@ const styles = StyleSheet.create({
     bottom: 8,
     right: 24,
     opacity: 0.8,
+  },
+  popupText: {
+    fontSize: 18,
+    marginBottom: 10,
   },
 });
 
