@@ -12,22 +12,28 @@ const ListBookCardVertical: React.FC<ListBookCardVerticalProps> = ({
   listItem,
 }) => {
   return (
-    <FlashList
-      showsVerticalScrollIndicator={false}
-      data={listItem}
-      keyExtractor={(item) => item.id}
-      estimatedItemSize={186}
-      renderItem={({ item }) => {
-        return <BookCardItemVertical bookCardItem={item} />;
+    <View
+      style={{
+        marginBottom: 55,
       }}
-      ListEmptyComponent={() => {
-        return (
-          <View>
-            <Text>No data</Text>
-          </View>
-        );
-      }}
-    />
+    >
+      <FlashList
+        showsVerticalScrollIndicator={false}
+        data={listItem}
+        keyExtractor={(item) => item.id}
+        estimatedItemSize={186}
+        renderItem={({ item }) => {
+          return <BookCardItemVertical bookCardItem={item} />;
+        }}
+        ListEmptyComponent={() => {
+          return (
+            <View>
+              <Text>No data</Text>
+            </View>
+          );
+        }}
+      />
+    </View>
   );
 };
 
