@@ -6,6 +6,8 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
     author: 'Oscar Wilde',
     price: 25000.999,
     isLiked: false,
+    description:
+      'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
     category: 'Classics',
     id: '1',
   },
@@ -22,6 +24,8 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
     author: 'Oscar Wilde 123',
     price: 25,
     isLiked: false,
+    description:
+      'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
     category: 'Classics',
     id: '3',
   },
@@ -30,6 +34,8 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
     author: 'Oscar Wilde 44',
     price: 19,
     isLiked: false,
+    description:
+      'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
     category: 'Fantasy',
     id: '4',
   },

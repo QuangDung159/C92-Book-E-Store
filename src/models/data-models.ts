@@ -5,6 +5,7 @@ export interface IBook {
   isLiked: boolean;
   author: string;
   category: string;
+  description?: string;
 }
 
 export interface ITopBooksFilter {

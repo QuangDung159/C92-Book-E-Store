@@ -5,6 +5,7 @@ import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import {
   Chip,
   Layouts,
+  ListBookCardComplex,
   ListBookCardVertical,
   ListBookCardVerticalRow,
   SearchBar,
@@ -59,6 +60,9 @@ const SearchScreen = ({ route, navigation }: any) => {
         )}
         {searchStore.viewStyle === SEARCH_VIEW_STYLE.list && (
           <ListBookCardVertical listItem={TOP_BOOKS} />
+        )}
+        {searchStore.viewStyle === SEARCH_VIEW_STYLE.complex && (
+          <ListBookCardComplex listItem={TOP_BOOKS} />
         )}
       </ScrollView>
       <View style={styles.scrollTop}>
