@@ -1,9 +1,11 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useRef } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Close, Layouts, Sliders } from '@components';
+import { TextInput } from 'react-native-paper';
+import { Close, Layouts } from '@components';
 import { DataModels } from '@models';
-import { FONT_STYLES } from '@themes';
+import { COLORS, FONT_STYLES } from '@themes';
+import { PriceMultiSlider } from './price-multi-slider';
 import { FilterViewModel } from '../view-models';
 
 interface FilterPopupProps {
@@ -71,11 +73,43 @@ const FilterPopup: React.FC<FilterPopupProps> = ({
       >
         Price
       </Text>
-      <Sliders.MultiSlider
+      <Layouts.VSpace value={12} />
+      <View
+        style={{
+          flexDirection: 'row',
+        }}
+      >
+        <TextInput
+          placeholder="Happy reading!"
+          style={{
+            height: 40,
+            width: 100,
+            alignContent: 'center',
+          }}
+          mode="outlined"
+          activeOutlineColor={COLORS.primaryBlack}
+          value={filterVM.priceSelectedRange[0].toString()}
+        />
+        <Layouts.MaxSpace />
+        <TextInput
+          placeholder="Happy reading!"
+          style={{
+            height: 40,
+            width: 95,
+            alignContent: 'center',
+          }}
+          mode="outlined"
+          activeOutlineColor={COLORS.primaryBlack}
+          value={filterVM.priceSelectedRange[1].toString()}
+        />
+      </View>
+      <PriceMultiSlider
         selctedRange={filterVM.priceSelectedRange}
         maximumValue={priceRange[1]}
         minimumValue={priceRange[0]}
-        onSlidingComplete={filterVM.setPriceSelectedPrice}
+        onSlidingComplete={(value) => {
+          filterVM.setPriceSelectedPrice(value);
+        }}
       />
     </Layouts.BottomPopup>
   );
