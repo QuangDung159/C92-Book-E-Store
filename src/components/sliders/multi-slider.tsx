@@ -55,6 +55,7 @@ const MultiSlider: FC<MultiSliderProps> = ({
       </View>
     );
   };
+
   return (
     <SliderContainer sliderValue={selctedRange}>
       <Slider
