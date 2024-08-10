@@ -1,8 +1,9 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useRef } from 'react';
-import { Button, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Close, Layouts, Sliders } from '@components';
 import { DataModels } from '@models';
+import { FONT_STYLES } from '@themes';
 import { FilterViewModel } from '../view-models';
 
 interface FilterPopupProps {
@@ -30,19 +31,46 @@ const FilterPopup: React.FC<FilterPopupProps> = ({
 
   return (
     <Layouts.BottomPopup visible={filterVM.visible}>
-      <TouchableOpacity onPress={onDismiss}>
-        <Close />
-      </TouchableOpacity>
-      <Text style={styles.popupText}>Filter</Text>
-      <Button
-        title="Close"
-        onPress={() => {
-          onClose(searchFilter);
-          onDismiss();
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
         }}
-      />
-      <Text>{filterVM.priceSelectedRange[0]}</Text>
-      <Text>{filterVM.priceSelectedRange[1]}</Text>
+      >
+        <View
+          style={{
+            flex: 1,
+          }}
+        >
+          <TouchableOpacity onPress={onDismiss}>
+            <Close />
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            flex: 1,
+            alignItems: 'center',
+          }}
+        >
+          <Text style={styles.popupText}>Filter</Text>
+        </View>
+        <View
+          style={{
+            flex: 1,
+            alignItems: 'flex-end',
+          }}
+        >
+          <Text style={styles.reset}>Reset</Text>
+        </View>
+      </View>
+      <Layouts.VSpace value={24} />
+      <Text
+        style={{
+          ...FONT_STYLES.SEMIBOLD_16,
+        }}
+      >
+        Price
+      </Text>
       <Sliders.MultiSlider
         selctedRange={filterVM.priceSelectedRange}
         maximumValue={priceRange[1]}
@@ -55,8 +83,10 @@ const FilterPopup: React.FC<FilterPopupProps> = ({
 
 const styles = StyleSheet.create({
   popupText: {
-    fontSize: 18,
-    marginBottom: 10,
+    ...FONT_STYLES.SEMIBOLD_18,
+  },
+  reset: {
+    ...FONT_STYLES.REGULAR_18,
   },
 });
 

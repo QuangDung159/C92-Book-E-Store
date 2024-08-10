@@ -30,7 +30,7 @@ const MultiSlider: FC<MultiSliderProps> = ({
     );
     let renderTrackMarkComponent: (inde: number) => React.ReactNode;
 
-    const renderChildren = () => {
+    const renderMultiSlider = () => {
       return Children.map(props.children, (child: React.ReactElement) => {
         if (!!child && child.type === Slider) {
           return cloneElement(child, {
@@ -47,11 +47,11 @@ const MultiSlider: FC<MultiSliderProps> = ({
 
     return (
       <View style={styles.sliderContainer}>
+        {renderMultiSlider()}
         <View style={styles.titleContainer}>
           <Text>{value[0]}</Text>
           <Text>{value[1]}</Text>
         </View>
-        {renderChildren()}
       </View>
     );
   };
@@ -77,7 +77,8 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
   },
 });
 
