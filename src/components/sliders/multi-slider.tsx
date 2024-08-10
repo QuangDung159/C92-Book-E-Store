@@ -62,7 +62,7 @@ const MultiSlider: FC<MultiSliderProps> = ({
         maximumValue={maximumValue}
         minimumTrackTintColor={COLORS.primaryBlack}
         minimumValue={minimumValue}
-        step={500}
+        step={1000}
         thumbTintColor={COLORS.primaryBlack}
         onSlidingComplete={onSlidingComplete}
       />

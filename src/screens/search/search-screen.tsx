@@ -55,16 +55,17 @@ const SearchScreen = ({ route, navigation }: any) => {
         showsVerticalScrollIndicator={false}
       >
         <FilterPopup
+          onDismiss={() => setPopupVisible(false)}
           visible={isPopupVisible}
           onClose={(searchFilter) => {
             console.log('searchFilter :>> ', searchFilter);
-            setPopupVisible(false);
           }}
           searchFilter={{
             category: route?.params?.category,
-            max: 679000,
-            min: 79000,
+            max: 659000,
+            min: 90000,
           }}
+          priceRange={[679000, 79000]}
         />
         <SortSection onPress={() => {}} label={searchStore.sortOption.label} />
         <Layouts.VSpace value={12} />
