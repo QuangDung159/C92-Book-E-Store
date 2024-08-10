@@ -79,30 +79,83 @@ const FilterPopup: React.FC<FilterPopupProps> = ({
           flexDirection: 'row',
         }}
       >
-        <TextInput
-          placeholder="Happy reading!"
+        <View
           style={{
-            height: 40,
-            width: 100,
-            alignContent: 'center',
+            flexDirection: 'row',
+            alignItems: 'center',
           }}
-          mode="outlined"
-          activeOutlineColor={COLORS.primaryBlack}
-          value={filterVM.priceSelectedRange[0].toString()}
-        />
+        >
+          <TextInput
+            style={{
+              height: 40,
+              width: 100,
+              alignContent: 'center',
+            }}
+            mode="outlined"
+            activeOutlineColor={COLORS.primaryBlack}
+            value={filterVM.priceSelectedRange[0].toString()}
+            onChangeText={(value) => {
+              let priceMin = +value;
+
+              if (priceMin < priceRange[0]) {
+                priceMin = priceRange[0];
+              }
+
+              filterVM.setPriceSelectedPrice([
+                priceMin,
+                filterVM.priceSelectedRange[1],
+              ]);
+            }}
+          />
+          <Text
+            style={{
+              ...FONT_STYLES.REGULAR_16,
+            }}
+          >
+            {' '}
+            đ
+          </Text>
+        </View>
         <Layouts.MaxSpace />
-        <TextInput
-          placeholder="Happy reading!"
+        <View
           style={{
-            height: 40,
-            width: 95,
-            alignContent: 'center',
+            flexDirection: 'row',
+            alignItems: 'center',
           }}
-          mode="outlined"
-          activeOutlineColor={COLORS.primaryBlack}
-          value={filterVM.priceSelectedRange[1].toString()}
-        />
+        >
+          <TextInput
+            style={{
+              height: 40,
+              width: 95,
+              alignContent: 'center',
+            }}
+            mode="outlined"
+            activeOutlineColor={COLORS.primaryBlack}
+            value={filterVM.priceSelectedRange[1].toString()}
+            onChangeText={(value) => {
+              let priceMax = +value;
+
+              if (priceMax > priceRange[1]) {
+                priceMax = priceRange[1];
+              }
+
+              filterVM.setPriceSelectedPrice([
+                filterVM.priceSelectedRange[0],
+                priceMax,
+              ]);
+            }}
+          />
+          <Text
+            style={{
+              ...FONT_STYLES.REGULAR_16,
+            }}
+          >
+            {' '}
+            đ
+          </Text>
+        </View>
       </View>
+      <Layouts.VSpace value={8} />
       <PriceMultiSlider
         selctedRange={filterVM.priceSelectedRange}
         maximumValue={priceRange[1]}

@@ -22,9 +22,11 @@ export interface ICategory {
 
 export interface ISearchFilter {
   category?: string;
-  keyword?: string;
   max?: number;
   min?: number;
+  author?: string;
+  publisher?: string;
+  form?: string;
 }
 
 export interface ISortOption {

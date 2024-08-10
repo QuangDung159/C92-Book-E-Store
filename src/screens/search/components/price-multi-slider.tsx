@@ -1,7 +1,7 @@
 import { Slider } from '@miblanchard/react-native-slider';
 import React, { Children, cloneElement, FC, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { COLORS } from '@themes';
+import { COLORS, FONT_STYLES } from '@themes';
 
 interface PriceMultiSliderProps {
   selctedRange: number[];
@@ -49,8 +49,20 @@ const PriceMultiSlider: FC<PriceMultiSliderProps> = ({
       <View>
         {renderPriceMultiSlider()}
         <View style={styles.titleContainer}>
-          <Text>{value[0]}</Text>
-          <Text>{value[1]}</Text>
+          <Text
+            style={{
+              ...FONT_STYLES.REGULAR_16,
+            }}
+          >
+            {value[0]}đ
+          </Text>
+          <Text
+            style={{
+              ...FONT_STYLES.REGULAR_16,
+            }}
+          >
+            {value[1]}đ
+          </Text>
         </View>
       </View>
     );
