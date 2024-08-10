@@ -45,8 +45,8 @@ const FilterPopup: React.FC<FilterPopupProps> = ({
       <Text>{filterVM.priceSelectedRange[1]}</Text>
       <Sliders.MultiSlider
         selctedRange={filterVM.priceSelectedRange}
-        maximumValue={priceRange[0]}
-        minimumValue={priceRange[1]}
+        maximumValue={priceRange[1]}
+        minimumValue={priceRange[0]}
         onSlidingComplete={filterVM.setPriceSelectedPrice}
       />
     </Layouts.BottomPopup>

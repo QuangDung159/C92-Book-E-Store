@@ -65,7 +65,7 @@ const SearchScreen = ({ route, navigation }: any) => {
             max: 659000,
             min: 90000,
           }}
-          priceRange={[679000, 79000]}
+          priceRange={[79000, 679000]}
         />
         <SortSection onPress={() => {}} label={searchStore.sortOption.label} />
         <Layouts.VSpace value={12} />

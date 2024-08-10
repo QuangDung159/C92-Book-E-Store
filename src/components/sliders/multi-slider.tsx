@@ -16,7 +16,7 @@ const MultiSlider: FC<MultiSliderProps> = ({
   minimumValue,
   onSlidingComplete,
 }) => {
-  const DEFAULT_VALUE = 0.2;
+  const DEFAULT_VALUE = [0, 1000000];
 
   const SliderContainer = (props: {
     children: React.ReactElement;
@@ -48,7 +48,8 @@ const MultiSlider: FC<MultiSliderProps> = ({
     return (
       <View style={styles.sliderContainer}>
         <View style={styles.titleContainer}>
-          <Text>{Array.isArray(value) ? value.join(' - ') : value}</Text>
+          <Text>{value[0]}</Text>
+          <Text>{value[1]}</Text>
         </View>
         {renderChildren()}
       </View>
