@@ -12,11 +12,9 @@ const { height } = Dimensions.get('window');
 
 const BottomPopup = ({
   visible,
-  onClose,
   children,
 }: {
   visible: boolean;
-  onClose: () => void;
   children: React.ReactNode;
 }) => {
   const slideAnim = useRef(new Animated.Value(height)).current;
@@ -33,18 +31,13 @@ const BottomPopup = ({
         toValue: height,
         duration: 300,
         useNativeDriver: true,
-      }).start(onClose);
+      });
     }
-  }, [onClose, slideAnim, visible]);
+  }, [slideAnim, visible]);
 
   return (
-    <Modal
-      transparent
-      visible={visible}
-      animationType="fade"
-      onRequestClose={onClose}
-    >
-      <TouchableWithoutFeedback onPress={onClose}>
+    <Modal transparent visible={visible} animationType="fade">
+      <TouchableWithoutFeedback>
         <View style={styles.overlay}>
           <Animated.View
             style={[

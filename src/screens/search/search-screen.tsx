@@ -1,14 +1,7 @@
 import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
 import { observer } from 'mobx-react-lite';
 import React, { useRef, useState } from 'react';
-import {
-  Button,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import {
   Chip,
   Layouts,
@@ -16,22 +9,22 @@ import {
   ListBookCardVertical,
   ListBookCardVerticalRow,
   SearchBar,
-  Sliders,
 } from '@components';
 import { SEARCH_VIEW_STYLE, TOP_BOOKS } from '@constants';
 import { searchStore } from '@store';
 import { COLORS } from '@themes';
-import { SortSection } from './components';
+import { FilterPopup, SortSection } from './components';
 
 const SearchScreen = ({ route, navigation }: any) => {
   const scrollRef = useRef<ScrollView>();
   const [isPopupVisible, setPopupVisible] = useState(false);
-  const [price, setPrice] = useState([79000, 679000]);
 
   const renderFilter = () => {
     return (
       <View style={styles.filterContainer}>
-        <MaterialCommunityIcons name="filter" size={24} />
+        <TouchableOpacity onPress={() => setPopupVisible(true)}>
+          <MaterialCommunityIcons name="filter" size={24} />
+        </TouchableOpacity>
         <Layouts.HSpace value={8} />
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {route?.params?.category && (
@@ -61,25 +54,18 @@ const SearchScreen = ({ route, navigation }: any) => {
         scrollEnabled={true}
         showsVerticalScrollIndicator={false}
       >
-        <Button
-          title="Show Bottom Popup"
-          onPress={() => setPopupVisible(true)}
-        />
-        <Layouts.BottomPopup
+        <FilterPopup
           visible={isPopupVisible}
-          onClose={() => setPopupVisible(false)}
-        >
-          <Text style={styles.popupText}>This is a bottom popup!</Text>
-          <Button title="Close" onPress={() => setPopupVisible(false)} />
-          <Text>{price[0]}</Text>
-          <Text>{price[1]}</Text>
-          <Sliders.MultiSlider
-            selctedRange={price}
-            maximumValue={679000}
-            minimumValue={79000}
-            onSlidingComplete={setPrice}
-          />
-        </Layouts.BottomPopup>
+          onClose={(searchFilter) => {
+            console.log('searchFilter :>> ', searchFilter);
+            setPopupVisible(false);
+          }}
+          searchFilter={{
+            category: route?.params?.category,
+            max: 679000,
+            min: 79000,
+          }}
+        />
         <SortSection onPress={() => {}} label={searchStore.sortOption.label} />
         <Layouts.VSpace value={12} />
         {renderFilter()}
@@ -126,10 +112,6 @@ const styles = StyleSheet.create({
     bottom: 8,
     right: 24,
     opacity: 0.8,
-  },
-  popupText: {
-    fontSize: 18,
-    marginBottom: 10,
   },
 });
 

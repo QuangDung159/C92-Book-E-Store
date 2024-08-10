@@ -37,8 +37,8 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
           <View
             style={{
               position: 'absolute',
-              right: 4,
-              top: 8,
+              right: 6,
+              top: 10,
             }}
           >
             <Ionicons
