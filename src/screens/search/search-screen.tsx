@@ -26,7 +26,7 @@ const SearchScreen = ({ route, navigation }: any) => {
       <View style={styles.filterContainer}>
         <TouchableOpacity
           onPress={() => {
-            openFilterScreen(searchStore.searchFilter, [79000, 679000]);
+            openFilterScreen([79000, 679000]);
           }}
         >
           <MaterialCommunityIcons name="filter" size={24} />

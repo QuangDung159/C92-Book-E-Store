@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { ChevronLeft, Layouts } from '@components';
+import { searchStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { PriceMultiSlider } from './components';
 import { FilterViewModel } from './view-models';
@@ -16,14 +17,14 @@ import { FilterViewModel } from './view-models';
 const FilterScreen = ({ route, navigation }: any) => {
   const scrollRef = useRef<ScrollView>();
   const filterVM = useRef<FilterViewModel>(
-    new FilterViewModel(route.params?.searchFilter),
+    new FilterViewModel(searchStore.searchFilter),
   ).current;
 
   const onDismiss = () => {
     navigation.goBack();
   };
 
-  const priceRange = route.params?.searchFilter || [0, 100000];
+  const priceRange = route.params?.priceRange || [0, 100000];
 
   return (
     <View style={styles.container}>

@@ -9,13 +9,10 @@ export const useNavigate = (navigation: any) => {
     });
   };
 
-  const openFilterScreen = (
-    searchFilter: DataModels.ISearchFilter,
-    priceRange: number[],
-  ) => {
+  const openFilterScreen = (priceRange: number[]) => {
     navigation.navigate(SCREEN_NAME.SEARCH_NAVIGATOR, {
       screen: SCREEN_NAME.FILTER_SCREEN,
-      params: { searchFilter, priceRange },
+      params: { priceRange },
     });
   };
 
