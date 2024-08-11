@@ -1,14 +1,7 @@
-import React, { useEffect, useRef } from 'react';
-import {
-  Animated,
-  Dimensions,
-  Modal,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
-
-const { height } = Dimensions.get('window');
+import React from 'react';
+import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import Modal from 'react-native-modal';
+import { COLORS } from '@themes';
 
 const BottomPopup = ({
   visible,
@@ -17,36 +10,20 @@ const BottomPopup = ({
   visible: boolean;
   children: React.ReactNode;
 }) => {
-  const slideAnim = useRef(new Animated.Value(height)).current;
-
-  useEffect(() => {
-    if (visible) {
-      Animated.timing(slideAnim, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-    } else {
-      Animated.timing(slideAnim, {
-        toValue: height,
-        duration: 300,
-        useNativeDriver: true,
-      });
-    }
-  }, [slideAnim, visible]);
-
   return (
-    <Modal transparent visible={visible} animationType="fade">
+    <Modal
+      isVisible={visible}
+      animationIn={'fadeInUp'}
+      style={{
+        margin: 0,
+      }}
+      animationOut={'fadeOutDown'}
+      animationOutTiming={500}
+      avoidKeyboard
+    >
       <TouchableWithoutFeedback>
         <View style={styles.overlay}>
-          <Animated.View
-            style={[
-              styles.popupContainer,
-              { transform: [{ translateY: slideAnim }] },
-            ]}
-          >
-            {children}
-          </Animated.View>
+          <View style={styles.popupContainer}>{children}</View>
         </View>
       </TouchableWithoutFeedback>
     </Modal>
@@ -56,19 +33,13 @@ const BottomPopup = ({
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'flex-end',
   },
   popupContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.primaryWhite,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    padding: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 5,
+    padding: 24,
   },
 });
 
