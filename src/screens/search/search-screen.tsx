@@ -1,6 +1,6 @@
 import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
 import { observer } from 'mobx-react-lite';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import {
   Chip,
@@ -14,11 +14,10 @@ import { SEARCH_VIEW_STYLE, TOP_BOOKS } from '@constants';
 import { useNavigate } from '@hooks';
 import { searchStore } from '@store';
 import { COLORS } from '@themes';
-import { FilterPopup, SortSection } from './components';
+import { SortSection } from './components';
 
 const SearchScreen = ({ route, navigation }: any) => {
   const scrollRef = useRef<ScrollView>();
-  const [isPopupVisible, setPopupVisible] = useState(false);
   const { openFilterScreen } = useNavigate(navigation);
 
   const renderFilter = () => {
@@ -60,15 +59,6 @@ const SearchScreen = ({ route, navigation }: any) => {
         scrollEnabled={true}
         showsVerticalScrollIndicator={false}
       >
-        <FilterPopup
-          onDismiss={() => setPopupVisible(false)}
-          visible={isPopupVisible}
-          onClose={(searchFilter) => {
-            console.log('searchFilter :>> ', searchFilter);
-          }}
-          searchFilter={searchStore.searchFilter}
-          priceRange={[79000, 679000]}
-        />
         <SortSection onPress={() => {}} label={searchStore.sortOption.label} />
         <Layouts.VSpace value={12} />
         {renderFilter()}
