@@ -12,15 +12,25 @@ import {
   ScreenHeader,
 } from '@components';
 import { PRICE_STEP } from '@constants';
+import { DataModels } from '@models';
 import { referenceOptionsStore, searchStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
-import { delay } from '@utils';
+import { delay, StringHelpers } from '@utils';
 import { ListCheckBoxFilter, PriceMultiSlider } from './components';
 
 const FilterScreen = ({ route, navigation }: any) => {
   const priceRange = route.params?.priceRange || [1000, 100000];
   const [isShowAuthorList, setIsShowAuthorList] = useState(false);
   const [isShowFormList, setIsShowFormList] = useState(false);
+  const [listAuthor, setListAuthor] = useState<DataModels.IReferenceOptions[]>(
+    [],
+  );
+  const [listForm, setListForm] = useState<DataModels.IReferenceOptions[]>([]);
+
+  useEffect(() => {
+    setListAuthor(referenceOptionsStore.authorDataSource);
+    setListForm(referenceOptionsStore.formDataSource);
+  }, []);
 
   useEffect(() => {
     if (searchStore.listAuthorSelected.length > 0) {
@@ -146,10 +156,20 @@ const FilterScreen = ({ route, navigation }: any) => {
         </View>
         <Collapsible collapsed={!isShowAuthorList}>
           <Layouts.VSpace value={12} />
-          <Inputs.CTextInput placeholder="Search" />
+          <Inputs.CTextInput
+            placeholder="Search"
+            onChangeText={(value) => {
+              const result = StringHelpers.searchByFirstLetter(
+                referenceOptionsStore.authorDataSource,
+                value,
+              );
+
+              setListAuthor(result);
+            }}
+          />
           <Layouts.VSpace value={12} />
           <ListCheckBoxFilter
-            listFilterItem={referenceOptionsStore.authorDataSource}
+            listFilterItem={listAuthor}
             listRefer={searchStore.listAuthorSelected}
             onCheck={(itemId, checked) => {
               let list = [...searchStore.listAuthorSelected];
@@ -185,10 +205,20 @@ const FilterScreen = ({ route, navigation }: any) => {
         </View>
         <Collapsible collapsed={!isShowFormList}>
           <Layouts.VSpace value={12} />
-          <Inputs.CTextInput placeholder="Search" />
+          <Inputs.CTextInput
+            placeholder="Search"
+            onChangeText={(value) => {
+              const result = StringHelpers.searchByFirstLetter(
+                referenceOptionsStore.formDataSource,
+                value,
+              );
+
+              setListForm(result);
+            }}
+          />
           <Layouts.VSpace value={12} />
           <ListCheckBoxFilter
-            listFilterItem={referenceOptionsStore.formDataSource}
+            listFilterItem={listForm}
             listRefer={searchStore.listFormSelected}
             onCheck={(itemId, checked) => {
               let list = [...searchStore.listFormSelected];

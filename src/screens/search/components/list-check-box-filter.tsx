@@ -5,7 +5,7 @@ import { DataModels } from '@models';
 
 interface ListCheckBoxFilterProps {
   onCheck: (value: string, status: boolean) => void;
-  listFilterItem: DataModels.IReferrenceOptions[];
+  listFilterItem: DataModels.IReferenceOptions[];
   listRefer: string[];
 }
 

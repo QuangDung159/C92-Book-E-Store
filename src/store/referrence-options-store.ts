@@ -2,8 +2,8 @@ import { action, makeObservable, observable } from 'mobx';
 import { DataModels } from '@models';
 
 class ReferrenceOptionsStore {
-  authorDataSource: DataModels.IReferrenceOptions[] = [];
-  formDataSource: DataModels.IReferrenceOptions[] = [];
+  authorDataSource: DataModels.IReferenceOptions[] = [];
+  formDataSource: DataModels.IReferenceOptions[] = [];
 
   constructor() {
     makeObservable(this, {
@@ -15,7 +15,7 @@ class ReferrenceOptionsStore {
   }
 
   setAuthorDataSource(values: DataModels.IAuthor[]) {
-    const listAuthor: DataModels.IReferrenceOptions[] = values.map((item) => ({
+    const listAuthor: DataModels.IReferenceOptions[] = values.map((item) => ({
       label: item.name,
       value: item.id,
     }));
@@ -24,7 +24,7 @@ class ReferrenceOptionsStore {
   }
 
   setFormDataSource(values: DataModels.IForm[]) {
-    const listForm: DataModels.IReferrenceOptions[] = values.map((item) => ({
+    const listForm: DataModels.IReferenceOptions[] = values.map((item) => ({
       label: item.name,
       value: item.id,
     }));

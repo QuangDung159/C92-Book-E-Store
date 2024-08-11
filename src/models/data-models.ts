@@ -44,7 +44,7 @@ export interface IForm {
   name: string;
 }
 
-export interface IReferrenceOptions {
+export interface IReferenceOptions {
   label: string;
   value: string;
   extraData?: any;
