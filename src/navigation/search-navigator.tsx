@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import { SearchScreen } from '@screens';
+import { FilterScreen, SearchScreen } from '@screens';
 import { SCREEN_NAME } from '../constants';
 
 const Stack = createStackNavigator();
@@ -13,6 +13,7 @@ function SearchNavigator() {
       }}
     >
       <Stack.Screen name={SCREEN_NAME.SEARCH} component={SearchScreen} />
+      <Stack.Screen name={SCREEN_NAME.FILTER_SCREEN} component={FilterScreen} />
     </Stack.Navigator>
   );
 }

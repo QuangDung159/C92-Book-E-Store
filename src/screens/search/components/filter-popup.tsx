@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect, useRef } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
-import { Close, Layouts } from '@components';
+import { CloseIcon, Layouts } from '@components';
 import { DataModels } from '@models';
 import { COLORS, FONT_STYLES } from '@themes';
 import { PriceMultiSlider } from './price-multi-slider';
@@ -45,7 +45,7 @@ const FilterPopup: React.FC<FilterPopupProps> = ({
           }}
         >
           <TouchableOpacity onPress={onDismiss}>
-            <Close />
+            <CloseIcon />
           </TouchableOpacity>
         </View>
         <View

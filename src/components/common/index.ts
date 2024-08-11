@@ -8,7 +8,7 @@ export * from './chevron-left';
 export * from './chevron-right';
 export * from './chevron-up';
 export * from './chip';
-export * from './close';
+export * from './close-icon';
 export * from './list-book-card-complex';
 export * from './list-book-card-horizontal';
 export * from './list-book-card-vertical';

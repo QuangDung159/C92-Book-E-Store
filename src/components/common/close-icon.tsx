@@ -7,11 +7,11 @@ interface CloseProps {
   color?: string;
 }
 
-const Close: React.FC<CloseProps> = ({
+const CloseIcon: React.FC<CloseProps> = ({
   size = 24,
   color = COLORS.primaryBlack,
 }) => {
   return <Ionicons name="close" size={size} color={color} />;
 };
 
-export { Close };
+export { CloseIcon };

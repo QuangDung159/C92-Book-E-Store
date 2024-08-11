@@ -11,6 +11,7 @@ import {
   SearchBar,
 } from '@components';
 import { SEARCH_VIEW_STYLE, TOP_BOOKS } from '@constants';
+import { useNavigate } from '@hooks';
 import { searchStore } from '@store';
 import { COLORS } from '@themes';
 import { FilterPopup, SortSection } from './components';
@@ -18,11 +19,16 @@ import { FilterPopup, SortSection } from './components';
 const SearchScreen = ({ route, navigation }: any) => {
   const scrollRef = useRef<ScrollView>();
   const [isPopupVisible, setPopupVisible] = useState(false);
+  const { openFilterScreen } = useNavigate(navigation);
 
   const renderFilter = () => {
     return (
       <View style={styles.filterContainer}>
-        <TouchableOpacity onPress={() => setPopupVisible(true)}>
+        <TouchableOpacity
+          onPress={() => {
+            openFilterScreen(searchStore.searchFilter, [79000, 679000]);
+          }}
+        >
           <MaterialCommunityIcons name="filter" size={24} />
         </TouchableOpacity>
         <Layouts.HSpace value={8} />
@@ -60,11 +66,7 @@ const SearchScreen = ({ route, navigation }: any) => {
           onClose={(searchFilter) => {
             console.log('searchFilter :>> ', searchFilter);
           }}
-          searchFilter={{
-            category: route?.params?.category,
-            max: 659000,
-            min: 90000,
-          }}
+          searchFilter={searchStore.searchFilter}
           priceRange={[79000, 679000]}
         />
         <SortSection onPress={() => {}} label={searchStore.sortOption.label} />

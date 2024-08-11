@@ -9,5 +9,15 @@ export const useNavigate = (navigation: any) => {
     });
   };
 
-  return { openSearchScreen };
+  const openFilterScreen = (
+    searchFilter: DataModels.ISearchFilter,
+    priceRange: number[],
+  ) => {
+    navigation.navigate(SCREEN_NAME.SEARCH_NAVIGATOR, {
+      screen: SCREEN_NAME.FILTER_SCREEN,
+      params: { searchFilter, priceRange },
+    });
+  };
+
+  return { openSearchScreen, openFilterScreen };
 };
