@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -7,40 +7,59 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Buttons, Inputs, Layouts, PlusIcon, ScreenHeader } from '@components';
+import Collapsible from 'react-native-collapsible';
+import {
+  Buttons,
+  Inputs,
+  Layouts,
+  MinusIcon,
+  PlusIcon,
+  ScreenHeader,
+} from '@components';
 import { LIST_AUTHOR, PRICE_STEP } from '@constants';
 import { searchStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
+import { delay } from '@utils';
 import { PriceMultiSlider } from './components';
 
 const FilterScreen = ({ route, navigation }: any) => {
   const scrollRef = useRef<ScrollView>();
 
   const priceRange = route.params?.priceRange || [1000, 100000];
+  const [isShowAuthorList, setIsShowAuthorList] = useState(false);
 
-  const [listChecked, setListChecked] = useState<string[]>([]);
+  useEffect(() => {
+    if (searchStore.listAuthorSelected.length > 0) {
+      delay(500).then(() => {
+        setIsShowAuthorList(true);
+      });
+    }
+  }, []);
 
   const renderListAuthorCheckBox = () => {
     return (
       <>
         {LIST_AUTHOR.map((item) => {
-          const checked = listChecked.includes(item.id);
+          const checked = searchStore.listAuthorSelected.includes(item.id);
           return (
             <React.Fragment key={item.id}>
               <Buttons.CCheckBox
                 checked={checked ? 'checked' : 'unchecked'}
                 label={item.name}
                 onCheck={() => {
-                  const list = [...listChecked];
+                  let list = [...searchStore.listAuthorSelected];
                   if (checked) {
                     const listUncheck = list.filter(
                       (itemAuthor) => itemAuthor !== item.id,
                     );
-                    setListChecked(listUncheck);
+                    list = listUncheck;
                   } else {
                     list.push(item.id);
-                    setListChecked(list);
                   }
+
+                  searchStore.setSearchFilter({
+                    author: list,
+                  });
                 }}
               />
             </React.Fragment>
@@ -153,12 +172,18 @@ const FilterScreen = ({ route, navigation }: any) => {
         >
           <Text style={styles.label}>Author</Text>
           <Layouts.MaxSpace />
-          <PlusIcon />
+          {isShowAuthorList ? (
+            <MinusIcon onPress={() => setIsShowAuthorList(false)} />
+          ) : (
+            <PlusIcon onPress={() => setIsShowAuthorList(true)} />
+          )}
         </View>
-        <Layouts.VSpace value={12} />
-        <Inputs.CTextInput placeholder="Search" />
-        <Layouts.VSpace value={12} />
-        {renderListAuthorCheckBox()}
+        <Collapsible collapsed={!isShowAuthorList}>
+          <Layouts.VSpace value={12} />
+          <Inputs.CTextInput placeholder="Search" />
+          <Layouts.VSpace value={12} />
+          {renderListAuthorCheckBox()}
+        </Collapsible>
       </ScrollView>
       <View style={styles.buttonWrapper}>
         <Layouts.VSpace value={12} />

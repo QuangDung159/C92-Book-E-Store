@@ -10,6 +10,9 @@ class SearchStore {
   searchFilterDefault: DataModels.ISearchFilter = {
     max: 659000,
     min: 90000,
+    author: [],
+    form: [],
+    publisher: [],
   };
 
   constructor() {
@@ -22,6 +25,7 @@ class SearchStore {
       setSearchFilter: action,
       resetSeachFilter: action,
       filterSelectedRange: computed,
+      listAuthorSelected: computed,
     });
 
     this.searchFilter = this.searchFilterDefault;
@@ -49,6 +53,10 @@ class SearchStore {
 
   get filterSelectedRange() {
     return [this.searchFilter.min, this.searchFilter.max];
+  }
+
+  get listAuthorSelected() {
+    return this.searchFilter.author || [];
   }
 }
 

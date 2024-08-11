@@ -11,7 +11,8 @@
       "@components": ["components"],
       "@models": ["models"],
       "@constants": ["constants"],
-      "@hooks": ["hooks"]
+      "@hooks": ["hooks"],
+      "@utils": ["utils"],
     },
     "target": "esnext",
     "module": "commonjs",
