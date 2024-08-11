@@ -15,3 +15,5 @@ export * from './list-book-card-vertical';
 export * from './list-book-card-vertical-row';
 export * from './screen-header';
 export * from './search-bar';
+export * from './plus-icon';
+export * from './minus-icon';

@@ -203,4 +203,47 @@ const CATEGORY: Array<DataModels.ICategory> = [
   },
 ];
 
-export { CATEGORY, TOP_BOOKS, TOP_BOOKS_FILTER };
+const LIST_AUTHOR: DataModels.IAuthor[] = [
+  {
+    id: 'author_1',
+    name: 'Author 1',
+  },
+  {
+    id: 'author_2',
+    name: 'Author 2',
+  },
+  {
+    id: 'author_3',
+    name: 'Author 3',
+  },
+  {
+    id: 'author_4',
+    name: 'Author 4',
+  },
+  {
+    id: 'author_5',
+    name: 'Author 5',
+  },
+  {
+    id: 'author_6',
+    name: 'Author 6',
+  },
+  {
+    id: 'author_7',
+    name: 'Author 7',
+  },
+  {
+    id: 'author_8',
+    name: 'Author 8',
+  },
+  {
+    id: 'author_9',
+    name: 'Author 9',
+  },
+  {
+    id: 'author_10',
+    name: 'Author 10',
+  },
+];
+
+export { CATEGORY, LIST_AUTHOR, TOP_BOOKS, TOP_BOOKS_FILTER };

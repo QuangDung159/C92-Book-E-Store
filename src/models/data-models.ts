@@ -24,12 +24,17 @@ export interface ISearchFilter {
   category?: string;
   max?: number;
   min?: number;
-  author?: string;
-  publisher?: string;
-  form?: string;
+  author?: string[];
+  publisher?: string[];
+  form?: string[];
 }
 
 export interface ISortOption {
   value: string;
   label: string;
+}
+
+export interface IAuthor {
+  id: string;
+  name: string;
 }

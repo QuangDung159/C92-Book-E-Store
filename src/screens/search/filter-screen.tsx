@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Buttons, Inputs, Layouts, ScreenHeader } from '@components';
-import { PRICE_STEP } from '@constants';
+import { Buttons, Inputs, Layouts, PlusIcon, ScreenHeader } from '@components';
+import { LIST_AUTHOR, PRICE_STEP } from '@constants';
 import { searchStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { PriceMultiSlider } from './components';
@@ -17,6 +17,38 @@ const FilterScreen = ({ route, navigation }: any) => {
   const scrollRef = useRef<ScrollView>();
 
   const priceRange = route.params?.priceRange || [1000, 100000];
+
+  const [listChecked, setListChecked] = useState<string[]>([]);
+
+  const renderListAuthorCheckBox = () => {
+    return (
+      <>
+        {LIST_AUTHOR.map((item) => {
+          const checked = listChecked.includes(item.id);
+          return (
+            <React.Fragment key={item.id}>
+              <Buttons.CCheckBox
+                checked={checked ? 'checked' : 'unchecked'}
+                label={item.name}
+                onCheck={() => {
+                  const list = [...listChecked];
+                  if (checked) {
+                    const listUncheck = list.filter(
+                      (itemAuthor) => itemAuthor !== item.id,
+                    );
+                    setListChecked(listUncheck);
+                  } else {
+                    list.push(item.id);
+                    setListChecked(list);
+                  }
+                }}
+              />
+            </React.Fragment>
+          );
+        })}
+      </>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -112,6 +144,21 @@ const FilterScreen = ({ route, navigation }: any) => {
             });
           }}
         />
+        <Layouts.VSpace value={24} />
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}
+        >
+          <Text style={styles.label}>Author</Text>
+          <Layouts.MaxSpace />
+          <PlusIcon />
+        </View>
+        <Layouts.VSpace value={12} />
+        <Inputs.CTextInput placeholder="Search" />
+        <Layouts.VSpace value={12} />
+        {renderListAuthorCheckBox()}
       </ScrollView>
       <View style={styles.buttonWrapper}>
         <Layouts.VSpace value={12} />
