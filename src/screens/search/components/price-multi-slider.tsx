@@ -1,6 +1,7 @@
 import { Slider } from '@miblanchard/react-native-slider';
 import React, { Children, cloneElement, FC, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { PRICE_STEP } from '@constants';
 import { COLORS, FONT_STYLES } from '@themes';
 
 interface PriceMultiSliderProps {
@@ -76,7 +77,7 @@ const PriceMultiSlider: FC<PriceMultiSliderProps> = ({
         maximumValue={maximumValue}
         minimumTrackTintColor={COLORS.primaryBlack}
         minimumValue={minimumValue}
-        step={1000}
+        step={PRICE_STEP}
         thumbTintColor={COLORS.primaryBlack}
         onSlidingComplete={onSlidingComplete}
       />

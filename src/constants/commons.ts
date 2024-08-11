@@ -11,4 +11,6 @@ const SEARCH_VIEW_STYLE = {
   complex: 'complex',
 };
 
-export { DEFAULT_SORT, SEARCH_VIEW_STYLE };
+const PRICE_STEP = 1000;
+
+export { DEFAULT_SORT, PRICE_STEP, SEARCH_VIEW_STYLE };

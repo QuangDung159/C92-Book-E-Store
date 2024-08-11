@@ -13,4 +13,5 @@ export * from './list-book-card-complex';
 export * from './list-book-card-horizontal';
 export * from './list-book-card-vertical';
 export * from './list-book-card-vertical-row';
+export * from './screen-header';
 export * from './search-bar';

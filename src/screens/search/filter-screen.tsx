@@ -8,7 +8,8 @@ import {
   View,
 } from 'react-native';
 import { TextInput } from 'react-native-paper';
-import { ChevronLeft, Layouts } from '@components';
+import { Layouts, ScreenHeader } from '@components';
+import { PRICE_STEP } from '@constants';
 import { searchStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { PriceMultiSlider } from './components';
@@ -20,78 +21,31 @@ const FilterScreen = ({ route, navigation }: any) => {
     new FilterViewModel(searchStore.searchFilter),
   ).current;
 
-  const onDismiss = () => {
-    navigation.goBack();
-  };
-
   const priceRange = route.params?.priceRange || [0, 100000];
 
   return (
     <View style={styles.container}>
+      <ScreenHeader
+        title="Filter"
+        navigation={navigation}
+        rightConponent={() => (
+          <TouchableOpacity>
+            <Text style={styles.reset}>Reset</Text>
+          </TouchableOpacity>
+        )}
+      />
       <ScrollView
         ref={scrollRef}
         scrollEnabled={true}
         showsVerticalScrollIndicator={false}
       >
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginTop: 6,
-          }}
-        >
-          <View
-            style={{
-              flex: 1,
-            }}
-          >
-            <TouchableOpacity onPress={onDismiss}>
-              <ChevronLeft />
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-            }}
-          >
-            <Text style={styles.popupText}>Filter</Text>
-          </View>
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'flex-end',
-            }}
-          >
-            <Text style={styles.reset}>Reset</Text>
-          </View>
-        </View>
         <Layouts.VSpace value={24} />
-        <Text
-          style={{
-            ...FONT_STYLES.SEMIBOLD_16,
-          }}
-        >
-          Price
-        </Text>
+        <Text style={styles.label}>Price</Text>
         <Layouts.VSpace value={12} />
-        <View
-          style={{
-            flexDirection: 'row',
-          }}
-        >
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}
-          >
+        <View style={styles.priceInputWrapper}>
+          <View style={styles.minInputWrapper}>
             <TextInput
-              style={{
-                height: 40,
-                width: 100,
-                alignContent: 'center',
-              }}
+              style={styles.minInput}
               mode="outlined"
               activeOutlineColor={COLORS.primaryBlack}
               value={filterVM.priceSelectedRange[0].toString()}
@@ -102,34 +56,22 @@ const FilterScreen = ({ route, navigation }: any) => {
                   priceMin = priceRange[0];
                 }
 
+                if (priceMin >= filterVM.priceSelectedRange[1]) {
+                  priceMin = filterVM.priceSelectedRange[1] - PRICE_STEP;
+                }
+
                 filterVM.setPriceSelectedPrice([
                   priceMin,
                   filterVM.priceSelectedRange[1],
                 ]);
               }}
             />
-            <Text
-              style={{
-                ...FONT_STYLES.REGULAR_16,
-              }}
-            >
-              {' '}
-              đ
-            </Text>
+            <Text style={styles.currency}> đ</Text>
           </View>
           <Layouts.MaxSpace />
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}
-          >
+          <View style={styles.maxInputWrapper}>
             <TextInput
-              style={{
-                height: 40,
-                width: 95,
-                alignContent: 'center',
-              }}
+              style={styles.maxInput}
               mode="outlined"
               activeOutlineColor={COLORS.primaryBlack}
               value={filterVM.priceSelectedRange[1].toString()}
@@ -140,20 +82,17 @@ const FilterScreen = ({ route, navigation }: any) => {
                   priceMax = priceRange[1];
                 }
 
+                if (priceMax <= filterVM.priceSelectedRange[0]) {
+                  priceMax = filterVM.priceSelectedRange[0] + PRICE_STEP;
+                }
+
                 filterVM.setPriceSelectedPrice([
                   filterVM.priceSelectedRange[0],
                   priceMax,
                 ]);
               }}
             />
-            <Text
-              style={{
-                ...FONT_STYLES.REGULAR_16,
-              }}
-            >
-              {' '}
-              đ
-            </Text>
+            <Text style={styles.currency}> đ</Text>
           </View>
         </View>
         <Layouts.VSpace value={8} />
@@ -177,11 +116,35 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingTop: 12,
   },
-  popupText: {
-    ...FONT_STYLES.SEMIBOLD_18,
-  },
   reset: {
-    ...FONT_STYLES.REGULAR_18,
+    ...FONT_STYLES.REGULAR_16,
+  },
+  label: {
+    ...FONT_STYLES.SEMIBOLD_16,
+  },
+  priceInputWrapper: {
+    flexDirection: 'row',
+  },
+  minInputWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  minInput: {
+    height: 40,
+    width: 100,
+    alignContent: 'center',
+  },
+  currency: {
+    ...FONT_STYLES.REGULAR_16,
+  },
+  maxInputWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  maxInput: {
+    height: 40,
+    width: 100,
+    alignContent: 'center',
   },
 });
 
