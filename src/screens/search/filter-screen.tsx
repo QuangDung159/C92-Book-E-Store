@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import { TextInput } from 'react-native-paper';
-import { Layouts, ScreenHeader } from '@components';
+import { Buttons, Layouts, ScreenHeader } from '@components';
 import { PRICE_STEP } from '@constants';
 import { searchStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
@@ -35,6 +35,9 @@ const FilterScreen = ({ route, navigation }: any) => {
         ref={scrollRef}
         scrollEnabled={true}
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          paddingHorizontal: 24,
+        }}
       >
         <Layouts.VSpace value={24} />
         <Text style={styles.label}>Price</Text>
@@ -115,6 +118,16 @@ const FilterScreen = ({ route, navigation }: any) => {
           }}
         />
       </ScrollView>
+      <View style={styles.buttonWrapper}>
+        <Layouts.VSpace value={12} />
+        <Buttons.CButton
+          onPress={() => {
+            navigation.goBack();
+          }}
+          label="Apply"
+          buttonType="primary"
+        />
+      </View>
     </View>
   );
 };
@@ -123,8 +136,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.primaryWhite,
-    paddingHorizontal: 24,
-    paddingTop: 12,
   },
   reset: {
     ...FONT_STYLES.REGULAR_16,
@@ -155,6 +166,11 @@ const styles = StyleSheet.create({
     height: 40,
     width: 100,
     alignContent: 'center',
+  },
+  buttonWrapper: {
+    paddingHorizontal: 24,
+    borderTopColor: COLORS.gray200,
+    borderTopWidth: 1,
   },
 });
 

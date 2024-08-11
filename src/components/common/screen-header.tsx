@@ -1,6 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { FONT_STYLES } from '@themes';
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { Layouts } from '@components';
+import { COLORS, FONT_STYLES } from '@themes';
 import { ChevronLeft } from './chevron-left';
 
 interface ScreenHeaderProps {
@@ -18,6 +25,7 @@ const ScreenHeader: React.FC<ScreenHeaderProps> = ({
   navigation,
   onGoBack,
 }) => {
+  const { width } = Dimensions.get('window');
   const goBack = () => {
     onGoBack?.();
     navigation.goBack();
@@ -36,12 +44,22 @@ const ScreenHeader: React.FC<ScreenHeaderProps> = ({
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.left}>{renderLeftComponent()}</View>
-      <View style={styles.titleWrapper}>
-        <Text style={styles.title}>{title}</Text>
+    <View
+      style={[
+        styles.wrapper,
+        {
+          width,
+        },
+      ]}
+    >
+      <View style={styles.container}>
+        <View style={styles.left}>{renderLeftComponent()}</View>
+        <View style={styles.titleWrapper}>
+          <Text style={styles.title}>{title}</Text>
+        </View>
+        <View style={styles.right}>{rightConponent()}</View>
       </View>
-      <View style={styles.right}>{rightConponent()}</View>
+      <Layouts.VSpace value={12} />
     </View>
   );
 };
@@ -53,7 +71,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 6,
+    marginTop: 18,
+    paddingHorizontal: 24,
   },
   left: {
     flex: 1,
@@ -65,6 +84,10 @@ const styles = StyleSheet.create({
   right: {
     flex: 1,
     alignItems: 'flex-end',
+  },
+  wrapper: {
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.gray200,
   },
 });
 
