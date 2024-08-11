@@ -45,23 +45,30 @@ const FilterScreen = ({ route, navigation }: any) => {
         <View style={styles.priceInputWrapper}>
           <View style={styles.minInputWrapper}>
             <TextInput
-              style={styles.minInput}
-              mode="outlined"
-              activeOutlineColor={COLORS.primaryBlack}
-              value={filterVM.priceSelectedRange[0].toString()}
-              onChangeText={(value) => {
-                let priceMin = +value;
+              keyboardType="numeric"
+              onEndEditing={(e) => {
+                let priceMin = +e.nativeEvent.text;
 
                 if (priceMin < priceRange[0]) {
                   priceMin = priceRange[0];
                 }
 
                 if (priceMin >= filterVM.priceSelectedRange[1]) {
-                  priceMin = filterVM.priceSelectedRange[1] - PRICE_STEP;
+                  priceMin = filterVM.priceSelectedRange[1] - PRICE_STEP * 100;
                 }
 
                 filterVM.setPriceSelectedPrice([
                   priceMin,
+                  filterVM.priceSelectedRange[1],
+                ]);
+              }}
+              style={styles.minInput}
+              mode="outlined"
+              activeOutlineColor={COLORS.primaryBlack}
+              value={filterVM.priceSelectedRange[0].toString()}
+              onChangeText={(value) => {
+                filterVM.setPriceSelectedPrice([
+                  +value,
                   filterVM.priceSelectedRange[1],
                 ]);
               }}
@@ -71,24 +78,31 @@ const FilterScreen = ({ route, navigation }: any) => {
           <Layouts.MaxSpace />
           <View style={styles.maxInputWrapper}>
             <TextInput
-              style={styles.maxInput}
-              mode="outlined"
-              activeOutlineColor={COLORS.primaryBlack}
-              value={filterVM.priceSelectedRange[1].toString()}
-              onChangeText={(value) => {
-                let priceMax = +value;
+              keyboardType="numeric"
+              onEndEditing={(e) => {
+                let priceMax = +e.nativeEvent.text;
 
                 if (priceMax > priceRange[1]) {
                   priceMax = priceRange[1];
                 }
 
                 if (priceMax <= filterVM.priceSelectedRange[0]) {
-                  priceMax = filterVM.priceSelectedRange[0] + PRICE_STEP;
+                  priceMax = filterVM.priceSelectedRange[0] + PRICE_STEP * 100;
                 }
 
                 filterVM.setPriceSelectedPrice([
                   filterVM.priceSelectedRange[0],
                   priceMax,
+                ]);
+              }}
+              style={styles.maxInput}
+              mode="outlined"
+              activeOutlineColor={COLORS.primaryBlack}
+              value={filterVM.priceSelectedRange[1].toString()}
+              onChangeText={(value) => {
+                filterVM.setPriceSelectedPrice([
+                  filterVM.priceSelectedRange[0],
+                  +value,
                 ]);
               }}
             />
