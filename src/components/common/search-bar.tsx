@@ -2,8 +2,7 @@ import { Entypo, Feather } from '@expo/vector-icons';
 import { useNavigation } from 'expo-router';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { TextInput } from 'react-native-paper';
-import { Layouts } from '@components';
+import { Inputs, Layouts } from '@components';
 import { COLORS } from '@themes';
 import { CartIconWithBadge } from './cart-icon-with-badge';
 
@@ -30,13 +29,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
         </TouchableOpacity>
       )}
       <Layouts.HSpace value={8} />
-      <TextInput
-        placeholder="Happy reading!"
-        style={styles.searchInput}
-        mode="outlined"
-        activeOutlineColor={COLORS.primaryBlack}
-        outlineStyle={styles.outlineStyle}
-      />
+      <Inputs.CTextInput placeholder="Happy reading!" />
       <Layouts.HSpace value={8} />
       <View style={styles.iconWrapper}>
         <Feather name="search" size={24} />
@@ -51,13 +44,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingBottom: 12,
-  },
-  outlineStyle: {
-    borderRadius: 8,
-  },
-  searchInput: {
-    height: 40,
-    flex: 1,
   },
   iconWrapper: {
     flexDirection: 'row',
