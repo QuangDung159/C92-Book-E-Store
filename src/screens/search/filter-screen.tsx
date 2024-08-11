@@ -7,8 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { TextInput } from 'react-native-paper';
-import { Buttons, Layouts, ScreenHeader } from '@components';
+import { Buttons, Inputs, Layouts, ScreenHeader } from '@components';
 import { PRICE_STEP } from '@constants';
 import { searchStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
@@ -44,7 +43,7 @@ const FilterScreen = ({ route, navigation }: any) => {
         <Layouts.VSpace value={12} />
         <View style={styles.priceInputWrapper}>
           <View style={styles.minInputWrapper}>
-            <TextInput
+            <Inputs.CTextInput
               keyboardType="numeric"
               onEndEditing={(e) => {
                 let priceMin = +e.nativeEvent.text;
@@ -61,21 +60,19 @@ const FilterScreen = ({ route, navigation }: any) => {
                   min: priceMin,
                 });
               }}
-              style={styles.minInput}
-              mode="outlined"
-              activeOutlineColor={COLORS.primaryBlack}
               value={searchStore.searchFilter.min.toString()}
               onChangeText={(value) => {
                 searchStore.setSearchFilter({
                   min: +value,
                 });
               }}
+              style={styles.minInput}
             />
             <Text style={styles.currency}> đ</Text>
           </View>
           <Layouts.MaxSpace />
           <View style={styles.maxInputWrapper}>
-            <TextInput
+            <Inputs.CTextInput
               keyboardType="numeric"
               onEndEditing={(e) => {
                 let priceMax = +e.nativeEvent.text;
@@ -93,8 +90,6 @@ const FilterScreen = ({ route, navigation }: any) => {
                 });
               }}
               style={styles.maxInput}
-              mode="outlined"
-              activeOutlineColor={COLORS.primaryBlack}
               value={searchStore.searchFilter.max.toString()}
               onChangeText={(value) => {
                 searchStore.setSearchFilter({

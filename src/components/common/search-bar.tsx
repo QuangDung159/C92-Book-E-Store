@@ -29,7 +29,12 @@ const SearchBar: React.FC<SearchBarProps> = ({
         </TouchableOpacity>
       )}
       <Layouts.HSpace value={8} />
-      <Inputs.CTextInput placeholder="Happy reading!" />
+      <Inputs.CTextInput
+        placeholder="Happy reading!"
+        style={{
+          flex: 1,
+        }}
+      />
       <Layouts.HSpace value={8} />
       <View style={styles.iconWrapper}>
         <Feather name="search" size={24} />

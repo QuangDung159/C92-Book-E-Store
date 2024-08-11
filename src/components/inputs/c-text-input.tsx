@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import {
+  KeyboardTypeOptions,
   NativeSyntheticEvent,
   StyleProp,
   StyleSheet,
@@ -15,10 +16,12 @@ interface CTextInputProps {
   style?: StyleProp<TextStyle>;
   outlineStyle?: StyleProp<ViewStyle>;
   onChangeText?: (value: string) => void;
-  onEndEditting?: (
+  onEndEditing?: (
     e: NativeSyntheticEvent<TextInputEndEditingEventData>,
   ) => void;
   placeholder?: string;
+  keyboardType?: KeyboardTypeOptions;
+  value?: string;
 }
 
 const CTextInput: FC<CTextInputProps> = ({
@@ -26,8 +29,10 @@ const CTextInput: FC<CTextInputProps> = ({
   outlineStyle,
   disabled,
   onChangeText,
-  onEndEditting,
+  onEndEditing,
   placeholder,
+  keyboardType = 'default',
+  value,
 }) => {
   return (
     <TextInput
@@ -38,7 +43,9 @@ const CTextInput: FC<CTextInputProps> = ({
       outlineStyle={[styles.outlineStyle, outlineStyle]}
       disabled={disabled}
       onChangeText={onChangeText}
-      onEndEditing={onEndEditting}
+      onEndEditing={onEndEditing}
+      keyboardType={keyboardType}
+      value={value}
     />
   );
 };
@@ -46,7 +53,6 @@ const CTextInput: FC<CTextInputProps> = ({
 const styles = StyleSheet.create({
   searchInput: {
     height: 40,
-    flex: 1,
   },
   outlineStyle: {
     borderRadius: 8,
