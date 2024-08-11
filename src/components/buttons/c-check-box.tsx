@@ -29,14 +29,20 @@ const CCheckBox: FC<CCheckBoxProps> = ({
 }) => {
   return (
     <View style={[styles.container, containerStyle]}>
-      <Checkbox.Android
-        status={checked}
-        disabled={disabled}
-        onPress={() => {
-          onCheck?.();
+      <View
+        style={{
+          marginLeft: -8,
         }}
-        color={COLORS.primaryBlack}
-      />
+      >
+        <Checkbox.Android
+          status={checked}
+          disabled={disabled}
+          onPress={() => {
+            onCheck?.();
+          }}
+          color={COLORS.primaryBlack}
+        />
+      </View>
       <Text style={[styles.label, labelStyle]}>{label}</Text>
     </View>
   );
