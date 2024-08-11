@@ -8,6 +8,7 @@ interface ScreenHeaderProps {
   leftComponent?: () => React.ReactNode;
   rightConponent?: () => React.ReactNode;
   navigation: any;
+  onGoBack?: () => void;
 }
 
 const ScreenHeader: React.FC<ScreenHeaderProps> = ({
@@ -15,8 +16,10 @@ const ScreenHeader: React.FC<ScreenHeaderProps> = ({
   leftComponent,
   rightConponent,
   navigation,
+  onGoBack,
 }) => {
   const goBack = () => {
+    onGoBack?.();
     navigation.goBack();
   };
 

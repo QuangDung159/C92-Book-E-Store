@@ -13,15 +13,11 @@ import { PRICE_STEP } from '@constants';
 import { searchStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { PriceMultiSlider } from './components';
-import { FilterViewModel } from './view-models';
 
 const FilterScreen = ({ route, navigation }: any) => {
   const scrollRef = useRef<ScrollView>();
-  const filterVM = useRef<FilterViewModel>(
-    new FilterViewModel(searchStore.searchFilter),
-  ).current;
 
-  const priceRange = route.params?.priceRange || [0, 100000];
+  const priceRange = route.params?.priceRange || [1000, 100000];
 
   return (
     <View style={styles.container}>
@@ -29,10 +25,11 @@ const FilterScreen = ({ route, navigation }: any) => {
         title="Filter"
         navigation={navigation}
         rightConponent={() => (
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => searchStore.resetSeachFilter()}>
             <Text style={styles.reset}>Reset</Text>
           </TouchableOpacity>
         )}
+        onGoBack={() => searchStore.resetSeachFilter()}
       />
       <ScrollView
         ref={scrollRef}
@@ -53,24 +50,22 @@ const FilterScreen = ({ route, navigation }: any) => {
                   priceMin = priceRange[0];
                 }
 
-                if (priceMin >= filterVM.priceSelectedRange[1]) {
-                  priceMin = filterVM.priceSelectedRange[1] - PRICE_STEP * 100;
+                if (priceMin >= searchStore.searchFilter.max) {
+                  priceMin = searchStore.searchFilter.max - PRICE_STEP * 100;
                 }
 
-                filterVM.setPriceSelectedPrice([
-                  priceMin,
-                  filterVM.priceSelectedRange[1],
-                ]);
+                searchStore.setSearchFilter({
+                  min: priceMin,
+                });
               }}
               style={styles.minInput}
               mode="outlined"
               activeOutlineColor={COLORS.primaryBlack}
-              value={filterVM.priceSelectedRange[0].toString()}
+              value={searchStore.searchFilter.min.toString()}
               onChangeText={(value) => {
-                filterVM.setPriceSelectedPrice([
-                  +value,
-                  filterVM.priceSelectedRange[1],
-                ]);
+                searchStore.setSearchFilter({
+                  min: +value,
+                });
               }}
             />
             <Text style={styles.currency}> đ</Text>
@@ -86,24 +81,22 @@ const FilterScreen = ({ route, navigation }: any) => {
                   priceMax = priceRange[1];
                 }
 
-                if (priceMax <= filterVM.priceSelectedRange[0]) {
-                  priceMax = filterVM.priceSelectedRange[0] + PRICE_STEP * 100;
+                if (priceMax <= searchStore.searchFilter.min) {
+                  priceMax = searchStore.searchFilter.min + PRICE_STEP * 100;
                 }
 
-                filterVM.setPriceSelectedPrice([
-                  filterVM.priceSelectedRange[0],
-                  priceMax,
-                ]);
+                searchStore.setSearchFilter({
+                  max: priceMax,
+                });
               }}
               style={styles.maxInput}
               mode="outlined"
               activeOutlineColor={COLORS.primaryBlack}
-              value={filterVM.priceSelectedRange[1].toString()}
+              value={searchStore.searchFilter.max.toString()}
               onChangeText={(value) => {
-                filterVM.setPriceSelectedPrice([
-                  filterVM.priceSelectedRange[0],
-                  +value,
-                ]);
+                searchStore.setSearchFilter({
+                  max: +value,
+                });
               }}
             />
             <Text style={styles.currency}> đ</Text>
@@ -111,11 +104,14 @@ const FilterScreen = ({ route, navigation }: any) => {
         </View>
         <Layouts.VSpace value={8} />
         <PriceMultiSlider
-          selctedRange={filterVM.priceSelectedRange}
+          selctedRange={searchStore.filterSelectedRange}
           maximumValue={priceRange[1]}
           minimumValue={priceRange[0]}
           onSlidingComplete={(value) => {
-            filterVM.setPriceSelectedPrice(value);
+            searchStore.setSearchFilter({
+              min: value[0],
+              max: value[1],
+            });
           }}
         />
       </ScrollView>

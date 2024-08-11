@@ -1,4 +1,4 @@
-import { action, makeObservable, observable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 import { DEFAULT_SORT } from '@constants';
 import { DataModels } from '@models';
 import { COLORS } from '@themes';
@@ -21,6 +21,7 @@ class SearchStore {
       setViewStyle: action,
       setSearchFilter: action,
       resetSeachFilter: action,
+      filterSelectedRange: computed,
     });
 
     this.searchFilter = this.searchFilterDefault;
@@ -39,11 +40,15 @@ class SearchStore {
   };
 
   setSearchFilter(value: DataModels.ISearchFilter) {
-    this.searchFilter = value;
+    this.searchFilter = { ...this.searchFilter, ...value };
   }
 
   resetSeachFilter() {
     this.searchFilter = this.searchFilterDefault;
+  }
+
+  get filterSelectedRange() {
+    return [this.searchFilter.min, this.searchFilter.max];
   }
 }
 
