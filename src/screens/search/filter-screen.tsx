@@ -16,11 +16,11 @@ import {
   PlusIcon,
   ScreenHeader,
 } from '@components';
-import { LIST_AUTHOR, PRICE_STEP } from '@constants';
-import { searchStore } from '@store';
+import { PRICE_STEP } from '@constants';
+import { referenceOptionsStore, searchStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { delay } from '@utils';
-import { PriceMultiSlider } from './components';
+import { ListCheckBoxFilter, PriceMultiSlider } from './components';
 
 const FilterScreen = ({ route, navigation }: any) => {
   const scrollRef = useRef<ScrollView>();
@@ -35,39 +35,6 @@ const FilterScreen = ({ route, navigation }: any) => {
       });
     }
   }, []);
-
-  const renderListAuthorCheckBox = () => {
-    return (
-      <>
-        {LIST_AUTHOR.map((item) => {
-          const checked = searchStore.listAuthorSelected.includes(item.id);
-          return (
-            <React.Fragment key={item.id}>
-              <Buttons.CCheckBox
-                checked={checked ? 'checked' : 'unchecked'}
-                label={item.name}
-                onCheck={() => {
-                  let list = [...searchStore.listAuthorSelected];
-                  if (checked) {
-                    const listUncheck = list.filter(
-                      (itemAuthor) => itemAuthor !== item.id,
-                    );
-                    list = listUncheck;
-                  } else {
-                    list.push(item.id);
-                  }
-
-                  searchStore.setSearchFilter({
-                    author: list,
-                  });
-                }}
-              />
-            </React.Fragment>
-          );
-        })}
-      </>
-    );
-  };
 
   return (
     <View style={styles.container}>
@@ -182,7 +149,25 @@ const FilterScreen = ({ route, navigation }: any) => {
           <Layouts.VSpace value={12} />
           <Inputs.CTextInput placeholder="Search" />
           <Layouts.VSpace value={12} />
-          {renderListAuthorCheckBox()}
+          <ListCheckBoxFilter
+            listFilterItem={referenceOptionsStore.authorDataSource}
+            listRefer={searchStore.listAuthorSelected}
+            onCheck={(itemId, checked) => {
+              let list = [...searchStore.listAuthorSelected];
+              if (checked) {
+                const listUncheck = list.filter(
+                  (itemAuthor) => itemAuthor !== itemId,
+                );
+                list = listUncheck;
+              } else {
+                list.push(itemId);
+              }
+
+              searchStore.setSearchFilter({
+                author: list,
+              });
+            }}
+          />
         </Collapsible>
       </ScrollView>
       <View style={styles.buttonWrapper}>

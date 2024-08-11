@@ -1,5 +1,12 @@
 import { appModel } from './app-model';
 
-const { cartStore, categoryStore, searchStore } = appModel;
+const { cartStore, categoryStore, searchStore, referenceOptionsStore } =
+  appModel;
 
-export { appModel, cartStore, categoryStore, searchStore };
+export {
+  appModel,
+  cartStore,
+  categoryStore,
+  referenceOptionsStore,
+  searchStore,
+};
