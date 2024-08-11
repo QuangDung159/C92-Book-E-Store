@@ -39,6 +39,11 @@ export interface IAuthor {
   name: string;
 }
 
+export interface IForm {
+  id: string;
+  name: string;
+}
+
 export interface IReferrenceOptions {
   label: string;
   value: string;

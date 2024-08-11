@@ -1,13 +1,8 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useRef, useState } from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Collapsible from 'react-native-collapsible';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
   Buttons,
   Inputs,
@@ -23,15 +18,20 @@ import { delay } from '@utils';
 import { ListCheckBoxFilter, PriceMultiSlider } from './components';
 
 const FilterScreen = ({ route, navigation }: any) => {
-  const scrollRef = useRef<ScrollView>();
-
   const priceRange = route.params?.priceRange || [1000, 100000];
   const [isShowAuthorList, setIsShowAuthorList] = useState(false);
+  const [isShowFormList, setIsShowFormList] = useState(false);
 
   useEffect(() => {
     if (searchStore.listAuthorSelected.length > 0) {
       delay(500).then(() => {
         setIsShowAuthorList(true);
+      });
+    }
+
+    if (searchStore.listFormSelected.length > 0) {
+      delay(500).then(() => {
+        setIsShowFormList(true);
       });
     }
   }, []);
@@ -48,8 +48,7 @@ const FilterScreen = ({ route, navigation }: any) => {
         )}
         onGoBack={() => searchStore.resetSeachFilter()}
       />
-      <ScrollView
-        ref={scrollRef}
+      <KeyboardAwareScrollView
         scrollEnabled={true}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
@@ -169,7 +168,45 @@ const FilterScreen = ({ route, navigation }: any) => {
             }}
           />
         </Collapsible>
-      </ScrollView>
+        <Layouts.VSpace value={12} />
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}
+        >
+          <Text style={styles.label}>Form</Text>
+          <Layouts.MaxSpace />
+          {isShowFormList ? (
+            <MinusIcon onPress={() => setIsShowFormList(false)} />
+          ) : (
+            <PlusIcon onPress={() => setIsShowFormList(true)} />
+          )}
+        </View>
+        <Collapsible collapsed={!isShowFormList}>
+          <Layouts.VSpace value={12} />
+          <Inputs.CTextInput placeholder="Search" />
+          <Layouts.VSpace value={12} />
+          <ListCheckBoxFilter
+            listFilterItem={referenceOptionsStore.formDataSource}
+            listRefer={searchStore.listFormSelected}
+            onCheck={(itemId, checked) => {
+              let list = [...searchStore.listFormSelected];
+              if (checked) {
+                const listUncheck = list.filter((i) => i !== itemId);
+                list = listUncheck;
+              } else {
+                list.push(itemId);
+              }
+
+              searchStore.setSearchFilter({
+                form: list,
+              });
+            }}
+          />
+        </Collapsible>
+        <Layouts.VSpace value={24} />
+      </KeyboardAwareScrollView>
       <View style={styles.buttonWrapper}>
         <Layouts.VSpace value={12} />
         <Buttons.CButton

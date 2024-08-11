@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { LIST_AUTHOR } from '@constants';
+import { LIST_AUTHOR, LIST_FORM } from '@constants';
 import { referenceOptionsStore } from '@store';
 import Navigation from '../src/navigation';
 
 export default function App() {
   useEffect(() => {
     referenceOptionsStore.setAuthorDataSource(LIST_AUTHOR);
+    referenceOptionsStore.setFormDataSource(LIST_FORM);
   }, []);
 
   return <Navigation />;

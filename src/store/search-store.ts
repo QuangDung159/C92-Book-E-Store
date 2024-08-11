@@ -26,6 +26,7 @@ class SearchStore {
       resetSeachFilter: action,
       filterSelectedRange: computed,
       listAuthorSelected: computed,
+      listFormSelected: computed,
     });
 
     this.searchFilter = this.searchFilterDefault;
@@ -57,6 +58,10 @@ class SearchStore {
 
   get listAuthorSelected() {
     return this.searchFilter.author || [];
+  }
+
+  get listFormSelected() {
+    return this.searchFilter.form || [];
   }
 }
 

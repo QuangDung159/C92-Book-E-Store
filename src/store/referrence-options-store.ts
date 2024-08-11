@@ -3,11 +3,14 @@ import { DataModels } from '@models';
 
 class ReferrenceOptionsStore {
   authorDataSource: DataModels.IReferrenceOptions[] = [];
+  formDataSource: DataModels.IReferrenceOptions[] = [];
 
   constructor() {
     makeObservable(this, {
       authorDataSource: observable,
+      formDataSource: observable,
       setAuthorDataSource: action,
+      setFormDataSource: action,
     });
   }
 
@@ -18,6 +21,15 @@ class ReferrenceOptionsStore {
     }));
 
     this.authorDataSource = listAuthor;
+  }
+
+  setFormDataSource(values: DataModels.IForm[]) {
+    const listForm: DataModels.IReferrenceOptions[] = values.map((item) => ({
+      label: item.name,
+      value: item.id,
+    }));
+
+    this.formDataSource = listForm;
   }
 }
 

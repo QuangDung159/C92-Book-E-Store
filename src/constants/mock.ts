@@ -246,4 +246,47 @@ const LIST_AUTHOR: DataModels.IAuthor[] = [
   },
 ];
 
-export { CATEGORY, LIST_AUTHOR, TOP_BOOKS, TOP_BOOKS_FILTER };
+const LIST_FORM: DataModels.IForm[] = [
+  {
+    id: 'form_1',
+    name: 'Form 1',
+  },
+  {
+    id: 'form_2',
+    name: 'Form 2',
+  },
+  {
+    id: 'form_3',
+    name: 'Form 3',
+  },
+  {
+    id: 'form_4',
+    name: 'Form 4',
+  },
+  {
+    id: 'form_5',
+    name: 'Form 5',
+  },
+  {
+    id: 'form_6',
+    name: 'Form 6',
+  },
+  {
+    id: 'form_7',
+    name: 'Form 7',
+  },
+  {
+    id: 'form_8',
+    name: 'Form 8',
+  },
+  {
+    id: 'form_9',
+    name: 'Form 9',
+  },
+  {
+    id: 'form_10',
+    name: 'Form 10',
+  },
+];
+
+export { CATEGORY, LIST_AUTHOR, LIST_FORM, TOP_BOOKS, TOP_BOOKS_FILTER };
