@@ -28,6 +28,8 @@ const FilterScreen = ({ route, navigation }: any) => {
   const [listForm, setListForm] = useState<DataModels.IReferenceOptions[]>([]);
 
   useEffect(() => {
+    searchStore.setSearchFilterPreviuos(searchStore.searchFilter);
+
     setListAuthor(referenceOptionsStore.authorDataSource);
     setListForm(referenceOptionsStore.formDataSource);
   }, []);
@@ -56,7 +58,7 @@ const FilterScreen = ({ route, navigation }: any) => {
             <Text style={styles.reset}>Reset</Text>
           </TouchableOpacity>
         )}
-        onGoBack={() => searchStore.resetSeachFilter()}
+        onGoBack={() => searchStore.backToPreviousFilter()}
       />
       <KeyboardAwareScrollView
         scrollEnabled={true}

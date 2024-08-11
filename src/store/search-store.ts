@@ -3,33 +3,41 @@ import { DEFAULT_SORT } from '@constants';
 import { DataModels } from '@models';
 import { COLORS } from '@themes';
 
+const defaultFilter: DataModels.ISearchFilter = {
+  max: 659000,
+  min: 90000,
+  author: [],
+  form: [],
+  publisher: [],
+};
+
 class SearchStore {
   sortOption: DataModels.ISortOption | null = DEFAULT_SORT;
   viewStyle: string = 'grid';
-  searchFilter: DataModels.ISearchFilter | null = null;
-  searchFilterDefault: DataModels.ISearchFilter = {
-    max: 659000,
-    min: 90000,
-    author: [],
-    form: [],
-    publisher: [],
-  };
+  searchFilter: DataModels.ISearchFilter | null = defaultFilter;
+
+  searchFilterPreviuos: DataModels.ISearchFilter = defaultFilter;
 
   constructor() {
     makeObservable(this, {
       sortOption: observable,
       viewStyle: observable,
       searchFilter: observable,
+      searchFilterPreviuos: observable,
       setSortOption: action,
       setViewStyle: action,
       setSearchFilter: action,
       resetSeachFilter: action,
+      backToPreviousFilter: action,
+      setSearchFilterPreviuos: action,
       filterSelectedRange: computed,
       listAuthorSelected: computed,
       listFormSelected: computed,
     });
+  }
 
-    this.searchFilter = this.searchFilterDefault;
+  setSearchFilterPreviuos(value: DataModels.ISearchFilter) {
+    this.searchFilterPreviuos = value;
   }
 
   setSortOption(value: DataModels.ISortOption) {
@@ -49,7 +57,11 @@ class SearchStore {
   }
 
   resetSeachFilter() {
-    this.searchFilter = this.searchFilterDefault;
+    this.searchFilter = defaultFilter;
+  }
+
+  backToPreviousFilter() {
+    this.searchFilter = this.searchFilterPreviuos;
   }
 
   get filterSelectedRange() {
