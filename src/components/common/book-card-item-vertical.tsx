@@ -58,8 +58,11 @@ const BookCardItemVertical: React.FC<BookCardItemVerticalProps> = ({
                 <Icons.HeartOutlineIcon size={20} />
               )}
             </View>
+            <Layouts.VSpace value={8} />
             <Text style={styles.subTitle}>{bookCardItem.author}</Text>
+            <Layouts.VSpace value={8} />
             <Text style={styles.subTitle}>Rating: 4.9</Text>
+            <Layouts.VSpace value={8} />
             <Text style={styles.stock}>In stock: 10 pcs</Text>
           </View>
         </View>

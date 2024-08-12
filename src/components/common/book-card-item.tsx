@@ -43,13 +43,15 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
         </View>
         <View style={styles.info}>
           <Text style={styles.subTitle}>{bookCardItem.category}</Text>
+          <Layouts.VSpace value={4} />
           <View style={styles.inforSection}>
             <Text style={styles.title} numberOfLines={2}>
               {bookCardItem.name}
             </Text>
+            <Layouts.VSpace value={4} />
             <Text style={styles.subTitle}>{bookCardItem.author}</Text>
           </View>
-          <Layouts.VSpace value={12} />
+          <Layouts.VSpace value={8} />
           <BookCardPrice price={bookCardItem.price} />
           <Layouts.VSpace value={8} />
           <View style={styles.stockSection}>
