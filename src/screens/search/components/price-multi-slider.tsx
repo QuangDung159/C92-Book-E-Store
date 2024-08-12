@@ -3,6 +3,7 @@ import React, { Children, cloneElement, FC, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { PRICE_STEP } from '@constants';
 import { COLORS, FONT_STYLES } from '@themes';
+import { StringHelpers } from '@utils';
 
 interface PriceMultiSliderProps {
   selctedRange: number[];
@@ -50,19 +51,11 @@ const PriceMultiSlider: FC<PriceMultiSliderProps> = ({
       <View>
         {renderPriceMultiSlider()}
         <View style={styles.titleContainer}>
-          <Text
-            style={{
-              ...FONT_STYLES.REGULAR_16,
-            }}
-          >
-            {value[0]}đ
+          <Text style={styles.price}>
+            {StringHelpers.formatCurrency(value[0])}
           </Text>
-          <Text
-            style={{
-              ...FONT_STYLES.REGULAR_16,
-            }}
-          >
-            {value[1]}đ
+          <Text style={styles.price}>
+            {StringHelpers.formatCurrency(value[1])}
           </Text>
         </View>
       </View>
@@ -90,6 +83,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
+  },
+  price: {
+    ...FONT_STYLES.REGULAR_16,
   },
 });
 

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Buttons, Inputs, Layouts, ScreenHeader } from '@components';
-import { PRICE_STEP } from '@constants';
+import { DEFAULT_PRICE_RANGE, PRICE_STEP } from '@constants';
 import { DataModels } from '@models';
 import { referenceOptionsStore, searchStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
@@ -11,7 +11,7 @@ import { delay, StringHelpers } from '@utils';
 import { CollapsibleList, PriceMultiSlider } from './components';
 
 const FilterScreen = ({ route, navigation }: any) => {
-  const priceRange = route.params?.priceRange || [1000, 100000];
+  const priceRange = route.params?.priceRange || DEFAULT_PRICE_RANGE;
   const [isShowAuthorList, setIsShowAuthorList] = useState(false);
   const [isShowFormList, setIsShowFormList] = useState(false);
   const [isShowPublisherList, setIsShowPublisherList] = useState(false);

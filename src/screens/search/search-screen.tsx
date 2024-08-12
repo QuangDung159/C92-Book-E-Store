@@ -10,7 +10,12 @@ import {
   ListBookCardVerticalRow,
   SearchBar,
 } from '@components';
-import { LIST_SORT_OPTION, SEARCH_VIEW_STYLE, TOP_BOOKS } from '@constants';
+import {
+  DEFAULT_PRICE_RANGE,
+  LIST_SORT_OPTION,
+  SEARCH_VIEW_STYLE,
+  TOP_BOOKS,
+} from '@constants';
 import { useNavigate } from '@hooks';
 import { referenceOptionsStore, searchStore } from '@store';
 import { COLORS } from '@themes';
@@ -28,7 +33,7 @@ const SearchScreen = ({ route, navigation }: any) => {
       <View style={styles.filterContainer}>
         <TouchableOpacity
           onPress={() => {
-            openFilterScreen([79000, 679000]);
+            openFilterScreen(DEFAULT_PRICE_RANGE);
           }}
         >
           <MaterialCommunityIcons name="filter" size={24} />
@@ -41,25 +46,28 @@ const SearchScreen = ({ route, navigation }: any) => {
               onRemove={() => {}}
               value={route?.params?.category}
               showRemove
+              type="category"
             />
           )}
-
           <Chip
+            type="price"
             label={`${StringHelpers.formatCurrency(searchStore.searchFilter.min)} - ${StringHelpers.formatCurrency(searchStore.searchFilter.max)}`}
             onRemove={() => {}}
-            value={`${searchStore.searchFilter.min}đ - ${searchStore.searchFilter.max}đ`}
+            value={`${searchStore.searchFilter.min} - ${searchStore.searchFilter.max}`}
             showRemove
           />
-
           <ListChipByListFilter
             dataSource={referenceOptionsStore.authorDataSource}
             listItemId={searchStore.listAuthorSelected}
+            type="author"
           />
           <ListChipByListFilter
+            type="form"
             dataSource={referenceOptionsStore.formDataSource}
             listItemId={searchStore.listFormSelected}
           />
           <ListChipByListFilter
+            type="publisher"
             dataSource={referenceOptionsStore.publisherDataSource}
             listItemId={searchStore.listPublisherSelected}
             isHaveLastItem
