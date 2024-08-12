@@ -1,10 +1,12 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
-import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
+import React, { useState } from 'react';
+import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
+import Collapsible from 'react-native-collapsible';
 import { ImageAssets } from '@assets';
 import { BookCardCarousel, Icons, Layouts } from '@components';
 import { DataModels } from '@models';
-import { COLORS } from '@themes';
+import { COLORS, FONT_STYLES } from '@themes';
+import { InformationTitle, InfoRow } from './components';
 
 const BookDetailScreen = ({ route, navigation }: any) => {
   const book = route.params?.book as DataModels.IBook;
@@ -13,6 +15,10 @@ const BookDetailScreen = ({ route, navigation }: any) => {
 
   const carouselWidth = width - 48;
   const carouselHeight = carouselWidth * 0.6;
+
+  const [isCollapseDescription, setIsCollapseDescription] = useState(false);
+  const [isCollapseInformation, setIsCollapseInformation] = useState(true);
+  const [isCollapseReview, setIsCollapseReview] = useState(true);
 
   const data = [
     ImageAssets.bookImage1,
@@ -46,8 +52,100 @@ const BookDetailScreen = ({ route, navigation }: any) => {
             carouselWidth={carouselWidth}
             data={data}
             imageStyle={styles.image}
+            dotStyle={{
+              marginTop: 12,
+            }}
           />
         </View>
+        <Layouts.VSpace value={12} />
+        <Text
+          style={{
+            ...FONT_STYLES.BOLD_18,
+          }}
+        >
+          {book.name}
+        </Text>
+        <Layouts.VSpace value={12} />
+        <Text
+          style={{
+            ...FONT_STYLES.REGULAR_14,
+          }}
+        >
+          Rating: 4.9
+        </Text>
+        <Layouts.VSpace value={12} />
+        <Text
+          style={{
+            ...FONT_STYLES.REGULAR_14,
+          }}
+        >
+          Stock: 12 pcs
+        </Text>
+        <Layouts.VSpace value={12} />
+        <InformationTitle
+          isCollapse={isCollapseDescription}
+          setIsCollapse={(isCollapse) => {
+            if (!isCollapse) {
+              setIsCollapseDescription(isCollapse);
+              setIsCollapseInformation(!isCollapse);
+              setIsCollapseReview(!isCollapse);
+            }
+          }}
+          title="Description"
+        />
+        <Layouts.VSpace value={12} />
+        <Collapsible collapsed={isCollapseDescription}>
+          <Text
+            style={{
+              ...FONT_STYLES.REGULAR_14,
+              lineHeight: 20,
+            }}
+          >
+            {book.description}
+          </Text>
+        </Collapsible>
+        <Layouts.VSpace value={12} />
+        <InformationTitle
+          isCollapse={isCollapseInformation}
+          setIsCollapse={(isCollapse) => {
+            console.log('isCollapse :>> ', isCollapse);
+            if (!isCollapse) {
+              setIsCollapseInformation(isCollapse);
+              setIsCollapseDescription(!isCollapse);
+              setIsCollapseReview(!isCollapse);
+            }
+          }}
+          title="Information"
+        />
+        <Layouts.VSpace value={12} />
+        <Collapsible collapsed={isCollapseInformation}>
+          <InfoRow title="Form" value="Form 1" />
+          <InfoRow title="Form" value="Form 1" />
+          <InfoRow title="Form" value="Form 1" />
+          <InfoRow title="Form" value="Form 1" />
+          <InfoRow title="Form" value="Form 1" />
+        </Collapsible>
+        <Layouts.VSpace value={12} />
+        <InformationTitle
+          isCollapse={isCollapseReview}
+          setIsCollapse={(isCollapse) => {
+            console.log('isCollapse :>> ', isCollapse);
+            if (!isCollapse) {
+              setIsCollapseReview(isCollapse);
+              setIsCollapseDescription(!isCollapse);
+              setIsCollapseInformation(!isCollapse);
+            }
+          }}
+          title="Reviews"
+        />
+        <Layouts.VSpace value={12} />
+        <Collapsible collapsed={isCollapseReview}>
+          <InfoRow title="Form" value="Form 1" />
+          <InfoRow title="Form" value="Form 1" />
+          <InfoRow title="Form" value="Form 1" />
+          <InfoRow title="Form" value="Form 1" />
+          <InfoRow title="Form" value="Form 1" />
+        </Collapsible>
         <Layouts.VSpace value={24} />
       </ScrollView>
     </View>
