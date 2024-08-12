@@ -2,7 +2,7 @@ import { Image } from 'expo-image';
 import React from 'react';
 import { StyleProp, Text, View, ViewStyle } from 'react-native';
 import { ImageAssets } from '@assets';
-import { Layouts } from '@components';
+import { BookCardPrice, Layouts } from '@components';
 import { DataModels } from '@models';
 import { COLORS } from '@themes';
 
@@ -94,15 +94,7 @@ const BookCardItemHorizontal: React.FC<BookCardItemHorizontalProps> = ({
             </Text>
           </View>
           <Layouts.VSpace value={8} />
-          <Text
-            style={{
-              color: COLORS.primaryWhite,
-              fontSize: 22,
-              fontWeight: 'bold',
-            }}
-          >
-            ${bookCardItem.price}
-          </Text>
+          <BookCardPrice price={bookCardItem.price} />
         </View>
       </View>
     </React.Fragment>

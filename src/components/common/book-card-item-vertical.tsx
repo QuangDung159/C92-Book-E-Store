@@ -9,10 +9,9 @@ import {
   ViewStyle,
 } from 'react-native';
 import { ImageAssets } from '@assets';
-import { AddToCartButton, Icons, Layouts } from '@components';
+import { AddToCartButton, BookCardPrice, Icons, Layouts } from '@components';
 import { DataModels } from '@models';
 import { COLORS, FONT_STYLES } from '@themes';
-import { StringHelpers } from '@utils';
 
 interface BookCardItemVerticalProps {
   bookCardItem: DataModels.IBook;
@@ -65,9 +64,7 @@ const BookCardItemVertical: React.FC<BookCardItemVerticalProps> = ({
           </View>
         </View>
         <View style={styles.priceWrapper}>
-          <Text style={styles.price}>
-            {StringHelpers.formatCurrency(bookCardItem.price)}
-          </Text>
+          <BookCardPrice price={bookCardItem.price} />
           <Layouts.MaxSpace />
           <AddToCartButton itemCount={20} />
         </View>
@@ -113,9 +110,6 @@ const styles = StyleSheet.create({
     marginTop: 4,
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  price: {
-    ...FONT_STYLES.SEMIBOLD_18,
   },
   addToCartWrapper: {
     flexDirection: 'row',

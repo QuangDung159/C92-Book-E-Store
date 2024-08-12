@@ -2,10 +2,9 @@ import { Image } from 'expo-image';
 import React from 'react';
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { ImageAssets } from '@assets';
-import { Icons, Layouts } from '@components';
+import { BookCardPrice, Icons, Layouts } from '@components';
 import { DataModels } from '@models';
 import { COLORS, FONT_STYLES } from '@themes';
-import { StringHelpers } from '@utils';
 
 interface BookCardItemProps {
   bookCardItem: DataModels.IBook;
@@ -53,9 +52,7 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
             <Text style={styles.subTitle}>{bookCardItem.author}</Text>
           </View>
           <Layouts.VSpace value={8} />
-          <Text style={styles.price}>
-            ${StringHelpers.formatCurrency(bookCardItem.price)}
-          </Text>
+          <BookCardPrice price={bookCardItem.price} style={styles.price} />
           <Layouts.VSpace value={8} />
           <View
             style={{
@@ -119,7 +116,6 @@ const styles = StyleSheet.create({
     fontWeight: 'semibold',
   },
   price: {
-    ...FONT_STYLES.SEMIBOLD_18,
     color: COLORS.primaryWhite,
   },
   cartIconWrapper: {

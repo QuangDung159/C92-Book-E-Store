@@ -2,10 +2,9 @@ import { Image } from 'expo-image';
 import React from 'react';
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { ImageAssets } from '@assets';
-import { AddToCartButton, Icons, Layouts } from '@components';
+import { AddToCartButton, BookCardPrice, Icons, Layouts } from '@components';
 import { DataModels } from '@models';
 import { COLORS, FONT_STYLES } from '@themes';
-import { StringHelpers } from '@utils';
 
 interface BookCardItemComplexProps {
   bookCardItem: DataModels.IBook;
@@ -45,9 +44,7 @@ const BookCardItemComplex: React.FC<BookCardItemComplexProps> = ({
         <Text style={styles.description}>{bookCardItem.description}</Text>
         <Layouts.VSpace value={4} />
         <View style={styles.priceWrapper}>
-          <Text style={styles.price}>
-            {StringHelpers.formatCurrency(bookCardItem.price)}
-          </Text>
+          <BookCardPrice price={bookCardItem.price} />
           <Layouts.MaxSpace />
           <AddToCartButton itemCount={10} />
         </View>
@@ -81,9 +78,6 @@ const styles = StyleSheet.create({
   },
   stock: {
     ...FONT_STYLES.SEMIBOLD_14,
-  },
-  price: {
-    ...FONT_STYLES.SEMIBOLD_18,
   },
   priceWrapper: {
     marginTop: 4,
