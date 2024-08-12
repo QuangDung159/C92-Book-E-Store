@@ -5,6 +5,7 @@ export * from './book-card-item-complex';
 export * from './book-card-item-horizontal';
 export * from './book-card-item-vertical';
 export * from './book-card-price';
+export * from './book-title';
 export * from './cart-icon-with-badge';
 export * from './chip';
 export * from './list-book-card-complex';

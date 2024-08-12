@@ -56,7 +56,7 @@ const ScreenHeader: React.FC<ScreenHeaderProps> = ({
         <View style={styles.titleWrapper}>
           <Text style={styles.title}>{title}</Text>
         </View>
-        <View style={styles.right}>{rightConponent()}</View>
+        <View style={styles.right}>{rightConponent?.()}</View>
       </View>
       <Layouts.VSpace value={12} />
     </View>

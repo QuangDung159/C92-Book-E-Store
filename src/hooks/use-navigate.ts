@@ -1,4 +1,5 @@
 import { SCREEN_NAME } from '@constants';
+import { DataModels } from '@models';
 
 export const useNavigate = (navigation: any) => {
   const openSearchScreen = (params?: any) => {
@@ -15,5 +16,12 @@ export const useNavigate = (navigation: any) => {
     });
   };
 
-  return { openSearchScreen, openFilterScreen };
+  const openBookDetailScreen = (book: DataModels.IBook) => {
+    navigation.navigate(SCREEN_NAME.BOOK_DETAIL_NAVIGATOR, {
+      screen: SCREEN_NAME.BOOK_DETAIL_SCREEN,
+      params: { book },
+    });
+  };
+
+  return { openSearchScreen, openFilterScreen, openBookDetailScreen };
 };
