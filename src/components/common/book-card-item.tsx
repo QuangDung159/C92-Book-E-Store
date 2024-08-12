@@ -1,6 +1,18 @@
 import { Image } from 'expo-image';
-import React from 'react';
-import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
+import React, { useRef } from 'react';
+import {
+  Dimensions,
+  StyleProp,
+  StyleSheet,
+  Text,
+  View,
+  ViewStyle,
+} from 'react-native';
+import { useSharedValue } from 'react-native-reanimated';
+import Carousel, {
+  ICarouselInstance,
+  Pagination,
+} from 'react-native-reanimated-carousel';
 import { ImageAssets } from '@assets';
 import { BookCardPrice, Buttons, Icons, Layouts } from '@components';
 import { DataModels } from '@models';
@@ -17,6 +29,30 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
   containerStyle,
   index,
 }) => {
+  const ref = useRef<ICarouselInstance>(null);
+  const progress = useSharedValue<number>(0);
+
+  const { width } = Dimensions.get('window');
+
+  const carouselWidth = (width - 48 - 12) / 2;
+  const carouselHeight = carouselWidth * 1.2;
+
+  const onPressPagination = (index: number) => {
+    ref.current?.scrollTo({
+      count: index - progress.value,
+      animated: true,
+    });
+  };
+
+  const data = [
+    ImageAssets.bookImage1,
+    ImageAssets.bookImage1,
+    ImageAssets.bookImage1,
+    ImageAssets.bookImage1,
+    ImageAssets.bookImage1,
+    ImageAssets.bookImage1,
+  ];
+
   return (
     <React.Fragment key={bookCardItem.id}>
       <View
@@ -26,21 +62,54 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
           containerStyle,
         ]}
       >
-        <View style={styles.imageWrapper}>
-          <View style={styles.iconsWrapper}>
+        <View style={{ flex: 1 }}>
+          <View
+            style={{
+              position: 'absolute',
+              right: 8,
+              zIndex: 99,
+              top: 8,
+            }}
+          >
             {bookCardItem.isLiked ? (
               <Icons.HeartIcon size={20} />
             ) : (
               <Icons.HeartOutlineIcon size={20} />
             )}
           </View>
-          <Image
-            style={styles.image}
-            source={ImageAssets.bookImage1}
-            contentFit="contain"
-            transition={500}
+          <Carousel
+            vertical={false}
+            width={carouselWidth}
+            height={carouselHeight}
+            ref={ref}
+            data={data}
+            onProgressChange={progress}
+            renderItem={({ item }) => (
+              <View
+                style={{
+                  width: carouselWidth,
+                  height: carouselHeight,
+                  alignItems: 'center',
+                }}
+              >
+                <Image
+                  style={styles.image}
+                  source={item}
+                  contentFit="contain"
+                  transition={500}
+                />
+              </View>
+            )}
           />
         </View>
+        <Pagination.Basic
+          progress={progress}
+          data={data}
+          dotStyle={styles.dot}
+          activeDotStyle={styles.activeDot}
+          containerStyle={styles.paging}
+          onPress={onPressPagination}
+        />
         <View style={styles.info}>
           <Text style={styles.stock}>{bookCardItem.category}</Text>
           <Layouts.VSpace value={4} />
@@ -117,6 +186,19 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 6,
     top: 10,
+  },
+  paging: { gap: 5, marginTop: 10 },
+  dot: {
+    backgroundColor: 'rgba(0,0,0,0.2)',
+    borderRadius: 50,
+    width: 4,
+    height: 4,
+    marginTop: -36,
+  },
+  activeDot: {
+    backgroundColor: COLORS.primaryBlack,
+    width: 4,
+    height: 4,
   },
 });
 
