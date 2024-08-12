@@ -20,7 +20,7 @@ const CategoriesScreen = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
-      <SearchBar showCartIcon navigation={navigation} />
+      <SearchBar showCartIcon navigation={navigation} showSearch />
       {categoryStore.categorySelected && (
         <TouchableOpacity
           onPress={() => {

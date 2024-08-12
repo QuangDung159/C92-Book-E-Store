@@ -95,6 +95,7 @@ const SearchScreen = ({ route, navigation }: any) => {
         showBackIcon
         navigation={navigation}
         autoFocus={route?.params?.autoFocus}
+        showSearch
       />
       <ScrollView
         ref={scrollRef}

@@ -1,10 +1,11 @@
-import { Entypo, Feather } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from 'expo-router';
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Inputs, Layouts } from '@components';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Icons, Inputs, Layouts } from '@components';
 import { useNavigate } from '@hooks';
 import { searchStore } from '@store';
+import { FONT_STYLES } from '@themes';
 import { CartIconWithBadge } from './cart-icon-with-badge';
 
 interface SearchBarProps {
@@ -14,6 +15,7 @@ interface SearchBarProps {
   onChangeText?: () => void;
   navigation: any;
   autoFocus?: boolean;
+  showSearch?: boolean;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({
@@ -21,6 +23,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   showBackIcon,
   navigation,
   autoFocus,
+  showSearch,
 }) => {
   const { goBack } = useNavigation();
   const { openSearchScreen } = useNavigate(navigation);
@@ -37,19 +40,43 @@ const SearchBar: React.FC<SearchBarProps> = ({
         </TouchableOpacity>
       )}
       <Layouts.HSpace value={8} />
-      <Inputs.CTextInput
-        placeholder="Happy reading!"
-        style={styles.input}
-        onFocus={() => {
-          openSearchScreen(searchStore.searchFilter, {
-            autoFocus: true,
-          });
-        }}
-        autoFocus={autoFocus}
-      />
+      {showSearch ? (
+        <Inputs.CTextInput
+          placeholder="Happy reading!"
+          style={styles.input}
+          autoFocus={autoFocus}
+        />
+      ) : (
+        <View
+          style={{
+            flex: 1,
+          }}
+        >
+          <Text
+            style={{
+              ...FONT_STYLES.SEMIBOLD_16,
+            }}
+          >
+            Good afternoon! My friend
+          </Text>
+          <Text
+            style={{
+              ...FONT_STYLES.THIN_14,
+            }}
+          >
+            Ho Chi Minh City
+          </Text>
+        </View>
+      )}
       <Layouts.HSpace value={8} />
       <View style={styles.iconWrapper}>
-        <Feather name="search" size={24} />
+        <Icons.SearchIcon
+          onPress={() => {
+            openSearchScreen(searchStore.searchFilter, {
+              autoFocus: true,
+            });
+          }}
+        />
         {showCartIcon && <CartIconWithBadge />}
       </View>
     </View>
