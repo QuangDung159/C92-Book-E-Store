@@ -1,10 +1,10 @@
 import { Image } from 'expo-image';
 import React from 'react';
-import { StyleProp, Text, View, ViewStyle } from 'react-native';
+import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { ImageAssets } from '@assets';
 import { BookCardPrice, Layouts } from '@components';
 import { DataModels } from '@models';
-import { COLORS } from '@themes';
+import { COLORS, FONT_STYLES } from '@themes';
 
 interface BookCardItemHorizontalProps {
   bookCardItem: DataModels.IBook;
@@ -21,84 +21,78 @@ const BookCardItemHorizontal: React.FC<BookCardItemHorizontalProps> = ({
     <React.Fragment key={bookCardItem.id}>
       <View
         style={[
-          {
-            marginRight: isLastItem ? 0 : 12,
-            width: 180,
-          },
+          styles.container,
+          { marginRight: isLastItem ? 0 : 12 },
           containerStyle,
         ]}
       >
-        <View
-          style={{
-            height: 300,
-            alignItems: 'center',
-            backgroundColor: COLORS.gray200,
-            borderRadius: 8,
-          }}
-        >
+        <View style={styles.imageWrapper}>
           <Image
-            style={{
-              width: '60%',
-              flex: 1,
-              marginTop: -120,
-            }}
+            style={styles.image}
             source={ImageAssets.bookImage1}
             contentFit="contain"
           />
         </View>
-        <View
-          style={{
-            backgroundColor: COLORS.primaryBlack,
-            borderBottomLeftRadius: 8,
-            borderBottomRightRadius: 8,
-            height: 140,
-            padding: 12,
-            position: 'absolute',
-            top: 160,
-            left: 0,
-            right: 0,
-          }}
-        >
-          <Text
-            style={{
-              color: COLORS.primaryWhite,
-              fontSize: 10,
-            }}
-          >
-            {bookCardItem.category}
-          </Text>
+        <View style={styles.info}>
+          <Text style={styles.subTitle}>{bookCardItem.category}</Text>
           <Layouts.VSpace value={4} />
           <View
             style={{
               height: 60,
             }}
           >
-            <Text
-              style={{
-                color: COLORS.primaryWhite,
-                fontSize: 16,
-                fontWeight: 'semibold',
-              }}
-              numberOfLines={2}
-            >
+            <Text style={styles.title} numberOfLines={2}>
               {bookCardItem.name}
             </Text>
             <Layouts.VSpace value={8} />
-            <Text
-              style={{
-                color: COLORS.primaryWhite,
-                fontSize: 10,
-              }}
-            >
-              {bookCardItem.author}
-            </Text>
+            <Text style={styles.subTitle}>{bookCardItem.author}</Text>
           </View>
           <Layouts.VSpace value={8} />
-          <BookCardPrice price={bookCardItem.price} />
+          <BookCardPrice price={bookCardItem.price} style={styles.price} />
         </View>
       </View>
     </React.Fragment>
   );
 };
+
+const styles = StyleSheet.create({
+  price: {
+    color: COLORS.primaryWhite,
+  },
+  container: {
+    width: 180,
+  },
+  imageWrapper: {
+    height: 300,
+    alignItems: 'center',
+    backgroundColor: COLORS.gray200,
+    borderRadius: 8,
+  },
+  image: {
+    width: '60%',
+    flex: 1,
+    marginTop: -120,
+  },
+  info: {
+    backgroundColor: COLORS.primaryBlack,
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
+    height: 140,
+    padding: 12,
+    position: 'absolute',
+    top: 160,
+    left: 0,
+    right: 0,
+  },
+  subTitle: {
+    ...FONT_STYLES.REGULAR_10,
+    color: COLORS.primaryWhite,
+    lineHeight: 10,
+  },
+  title: {
+    ...FONT_STYLES.SEMIBOLD_16,
+    color: COLORS.primaryWhite,
+  },
+});
 
 export { BookCardItemHorizontal };
