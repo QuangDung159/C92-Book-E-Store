@@ -4,13 +4,12 @@ import { Icons, Layouts } from '@components';
 import { COLORS, FONT_STYLES } from '@themes';
 
 interface ChipProps {
-  onRemove: (type: string) => void;
+  onRemove: () => void;
   label: string;
   showRemove?: boolean;
   value: string;
   isLastItem?: boolean;
   disabled?: boolean;
-  type: string;
 }
 
 const Chip: React.FC<ChipProps> = ({
@@ -20,7 +19,6 @@ const Chip: React.FC<ChipProps> = ({
   value,
   isLastItem,
   disabled,
-  type,
 }) => {
   return (
     <View
@@ -38,9 +36,7 @@ const Chip: React.FC<ChipProps> = ({
           <Layouts.HSpace value={4} />
           <Icons.CloseCircleIcon
             size={20}
-            onPress={() => {
-              onRemove?.(type);
-            }}
+            onPress={onRemove}
             disabled={disabled}
           />
         </>

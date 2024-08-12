@@ -7,14 +7,14 @@ interface ListChipByListFilterProps {
   listItemId: string[];
   dataSource: DataModels.IReferenceOptions[];
   isHaveLastItem?: boolean;
-  type: string;
+  onRemove: (itemId: string) => void;
 }
 
 const ListChipByListFilter: React.FC<ListChipByListFilterProps> = ({
   listItemId,
   dataSource,
   isHaveLastItem,
-  type,
+  onRemove,
 }) => {
   return (
     <>
@@ -23,10 +23,11 @@ const ListChipByListFilter: React.FC<ListChipByListFilterProps> = ({
 
         return (
           <Chip
-            type={type}
             key={filterChip.value}
             label={filterChip.label}
-            onRemove={() => {}}
+            onRemove={() => {
+              onRemove(itemId);
+            }}
             value={filterChip.value}
             showRemove
             isLastItem={isHaveLastItem && index === listItemId.length - 1}

@@ -40,17 +40,19 @@ const SearchScreen = ({ route, navigation }: any) => {
         </TouchableOpacity>
         <Layouts.HSpace value={8} />
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {route?.params?.category && (
+          {searchStore.searchFilter.category && (
             <Chip
-              label={route?.params?.category}
-              onRemove={() => {}}
-              value={route?.params?.category}
+              label={searchStore.searchFilter.category}
+              onRemove={() => {
+                searchStore.setSearchFilter({
+                  category: null,
+                });
+              }}
+              value={searchStore.searchFilter.category}
               showRemove
-              type="category"
             />
           )}
           <Chip
-            type="price"
             label={`${StringHelpers.formatCurrency(searchStore.searchFilter.min)} - ${StringHelpers.formatCurrency(searchStore.searchFilter.max)}`}
             onRemove={() => {
               searchStore.setSearchFilter({
@@ -68,18 +70,42 @@ const SearchScreen = ({ route, navigation }: any) => {
           <ListChipByListFilter
             dataSource={referenceOptionsStore.authorDataSource}
             listItemId={searchStore.listAuthorSelected}
-            type="author"
+            onRemove={(itemId) => {
+              const listSelected = searchStore.listAuthorSelected.filter(
+                (item) => item !== itemId,
+              );
+
+              searchStore.setSearchFilter({
+                author: listSelected,
+              });
+            }}
           />
           <ListChipByListFilter
-            type="form"
             dataSource={referenceOptionsStore.formDataSource}
             listItemId={searchStore.listFormSelected}
+            onRemove={(itemId) => {
+              const listSelected = searchStore.listFormSelected.filter(
+                (item) => item !== itemId,
+              );
+
+              searchStore.setSearchFilter({
+                form: listSelected,
+              });
+            }}
           />
           <ListChipByListFilter
-            type="publisher"
             dataSource={referenceOptionsStore.publisherDataSource}
             listItemId={searchStore.listPublisherSelected}
             isHaveLastItem
+            onRemove={(itemId) => {
+              const listSelected = searchStore.listPublisherSelected.filter(
+                (item) => item !== itemId,
+              );
+
+              searchStore.setSearchFilter({
+                publisher: listSelected,
+              });
+            }}
           />
         </ScrollView>
       </View>

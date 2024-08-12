@@ -11,7 +11,7 @@ import {
 import { Layouts, SearchBar } from '@components';
 import { CATEGORY } from '@constants';
 import { useNavigate } from '@hooks';
-import { categoryStore } from '@store';
+import { categoryStore, searchStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { CategoryList } from './components';
 
@@ -75,7 +75,8 @@ const CategoriesScreen = ({ navigation }: any) => {
                 categoryStore.setCategorySelected(categorySelected);
               }
             } else {
-              openSearchScreen({
+              openSearchScreen();
+              searchStore.setSearchFilter({
                 category: categorySelected.id,
               });
             }
