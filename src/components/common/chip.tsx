@@ -9,18 +9,27 @@ interface ChipProps {
   label: string;
   showRemove?: boolean;
   value: string;
+  isLastItem?: boolean;
 }
 
-const Chip: React.FC<ChipProps> = ({ onRemove, label, showRemove, value }) => {
+const Chip: React.FC<ChipProps> = ({
+  onRemove,
+  label,
+  showRemove,
+  value,
+  isLastItem,
+}) => {
   return (
-    <View key={value} style={styles.container}>
-      <Text
-        style={{
-          ...FONT_STYLES.SEMIBOLD_14,
-        }}
-      >
-        {label}
-      </Text>
+    <View
+      key={value}
+      style={[
+        styles.container,
+        !isLastItem && {
+          marginRight: 8,
+        },
+      ]}
+    >
+      <Text style={styles.label}>{label}</Text>
       {showRemove && (
         <>
           <Layouts.HSpace value={4} />
@@ -40,8 +49,10 @@ const styles = StyleSheet.create({
     padding: 8,
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 4,
     marginBottom: 4,
+  },
+  label: {
+    ...FONT_STYLES.SEMIBOLD_14,
   },
 });
 

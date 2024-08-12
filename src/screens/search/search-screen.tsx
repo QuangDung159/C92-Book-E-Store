@@ -12,9 +12,9 @@ import {
 } from '@components';
 import { SEARCH_VIEW_STYLE, TOP_BOOKS } from '@constants';
 import { useNavigate } from '@hooks';
-import { searchStore } from '@store';
+import { referenceOptionsStore, searchStore } from '@store';
 import { COLORS } from '@themes';
-import { SortSection } from './components';
+import { ListChipByListFilter, SortSection } from './components';
 
 const SearchScreen = ({ route, navigation }: any) => {
   const scrollRef = useRef<ScrollView>();
@@ -40,6 +40,27 @@ const SearchScreen = ({ route, navigation }: any) => {
               showRemove
             />
           )}
+
+          <Chip
+            label={`${searchStore.searchFilter.min}đ - ${searchStore.searchFilter.max}đ`}
+            onRemove={() => {}}
+            value={`${searchStore.searchFilter.min}đ - ${searchStore.searchFilter.max}đ`}
+            showRemove
+          />
+
+          <ListChipByListFilter
+            dataSource={referenceOptionsStore.authorDataSource}
+            listItemId={searchStore.listAuthorSelected}
+          />
+          <ListChipByListFilter
+            dataSource={referenceOptionsStore.formDataSource}
+            listItemId={searchStore.listFormSelected}
+          />
+          <ListChipByListFilter
+            dataSource={referenceOptionsStore.publisherDataSource}
+            listItemId={searchStore.listPublisherSelected}
+            isHaveLastItem
+          />
         </ScrollView>
       </View>
     );
