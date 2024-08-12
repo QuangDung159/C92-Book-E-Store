@@ -10,7 +10,7 @@ import {
   ListBookCardVerticalRow,
   SearchBar,
 } from '@components';
-import { SEARCH_VIEW_STYLE, TOP_BOOKS } from '@constants';
+import { LIST_SORT_OPTION, SEARCH_VIEW_STYLE, TOP_BOOKS } from '@constants';
 import { useNavigate } from '@hooks';
 import { referenceOptionsStore, searchStore } from '@store';
 import { COLORS } from '@themes';
@@ -77,9 +77,17 @@ const SearchScreen = ({ route, navigation }: any) => {
   return (
     <View style={styles.container}>
       <SortPopup
+        initSortValue={searchStore.sortOption.value}
         visible={isShowSortPopup}
-        onDismiss={() => {
+        onDismiss={(sortSelected) => {
           setIsShowSortPopup(false);
+          const sortOptionSelected = LIST_SORT_OPTION.find(
+            (item) => item.value === sortSelected,
+          );
+
+          if (sortOptionSelected) {
+            searchStore.setSortOption(sortOptionSelected);
+          }
         }}
       />
       <SearchBar showCartIcon showBackIcon navigation={navigation} />

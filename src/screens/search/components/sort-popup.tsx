@@ -1,76 +1,64 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { CloseIcon, Layouts } from '@components';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { RadioButton } from 'react-native-paper';
+import { Layouts } from '@components';
 import { LIST_SORT_OPTION } from '@constants';
 import { FONT_STYLES } from '@themes';
+import { PopupHeader } from 'components/layouts';
 
 interface SortPopupProps {
   visible: boolean;
-  onDismiss: () => void;
+  onDismiss: (value: string) => void;
+  initSortValue: string;
 }
 
-const SortPopup: React.FC<SortPopupProps> = ({ visible, onDismiss }) => {
+const SortPopup: React.FC<SortPopupProps> = ({
+  visible,
+  onDismiss,
+  initSortValue,
+}) => {
+  const [sortSelected, setSortSelected] = useState(initSortValue);
+
   return (
     <Layouts.BottomPopup visible={visible}>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
+      <PopupHeader
+        label="Sort"
+        onDismiss={() => {
+          onDismiss(sortSelected);
         }}
-      >
-        <View
-          style={{
-            flex: 1,
-          }}
+      />
+      <View style={styles.contentWrapper}>
+        <RadioButton.Group
+          onValueChange={(value) => setSortSelected(value)}
+          value={sortSelected}
         >
-          <TouchableOpacity onPress={onDismiss}>
-            <CloseIcon />
-          </TouchableOpacity>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-          }}
-        >
-          <Text style={styles.popupText}>Sort</Text>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'flex-end',
-          }}
-        >
-          <Text style={styles.reset}></Text>
-        </View>
+          {LIST_SORT_OPTION.map((item) => {
+            return (
+              <View key={item.value} style={styles.sortItem}>
+                <RadioButton.Android value={item.value} />
+                <Text style={styles.sortLabel}>{item.label}</Text>
+                <Layouts.VSpace value={12} />
+              </View>
+            );
+          })}
+        </RadioButton.Group>
       </View>
-      <Layouts.VSpace value={24} />
-      {LIST_SORT_OPTION.map((item) => {
-        return (
-          <View key={item.value}>
-            <Text
-              style={{
-                ...FONT_STYLES.SEMIBOLD_16,
-              }}
-            >
-              {item.label}
-            </Text>
-            <Layouts.VSpace value={12} />
-          </View>
-        );
-      })}
       <Layouts.VSpace value={12} />
     </Layouts.BottomPopup>
   );
 };
 
 const styles = StyleSheet.create({
-  popupText: {
-    ...FONT_STYLES.SEMIBOLD_18,
+  contentWrapper: {
+    marginLeft: -8,
   },
-  reset: {
-    ...FONT_STYLES.REGULAR_18,
+  sortItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  sortLabel: {
+    ...FONT_STYLES.SEMIBOLD_16,
   },
 });
 
