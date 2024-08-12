@@ -1,8 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Layouts } from '@components';
+import { Icons, Layouts } from '@components';
 import { FONT_STYLES } from '@themes';
-import { CloseIcon } from 'components/common';
 
 interface PopupHeaderProps {
   onDismiss: () => void;
@@ -21,7 +20,7 @@ const PopupHeader: React.FC<PopupHeaderProps> = ({
 }) => {
   const renderCloseIcon = () => (
     <TouchableOpacity onPress={onDismiss}>
-      <CloseIcon />
+      <Icons.CloseIcon />
     </TouchableOpacity>
   );
 
