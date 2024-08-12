@@ -1,9 +1,7 @@
 import { DataModels } from '@models';
+import { LIST_SORT_OPTION } from './mock';
 
-const DEFAULT_SORT: DataModels.ISortOption = {
-  value: 'name_asc',
-  label: 'Name ASC',
-};
+const DEFAULT_SORT: DataModels.ISortOption = LIST_SORT_OPTION[0];
 
 const SEARCH_VIEW_STYLE = {
   grid: 'grid',

@@ -1,6 +1,6 @@
 import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
 import { observer } from 'mobx-react-lite';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import {
   Chip,
@@ -14,11 +14,13 @@ import { SEARCH_VIEW_STYLE, TOP_BOOKS } from '@constants';
 import { useNavigate } from '@hooks';
 import { referenceOptionsStore, searchStore } from '@store';
 import { COLORS } from '@themes';
-import { ListChipByListFilter, SortSection } from './components';
+import { ListChipByListFilter, SortPopup, SortSection } from './components';
 
 const SearchScreen = ({ route, navigation }: any) => {
   const scrollRef = useRef<ScrollView>();
   const { openFilterScreen } = useNavigate(navigation);
+
+  const [isShowSortPopup, setIsShowSortPopup] = useState(false);
 
   const renderFilter = () => {
     return (
@@ -74,13 +76,24 @@ const SearchScreen = ({ route, navigation }: any) => {
 
   return (
     <View style={styles.container}>
+      <SortPopup
+        visible={isShowSortPopup}
+        onDismiss={() => {
+          setIsShowSortPopup(false);
+        }}
+      />
       <SearchBar showCartIcon showBackIcon navigation={navigation} />
       <ScrollView
         ref={scrollRef}
         scrollEnabled={true}
         showsVerticalScrollIndicator={false}
       >
-        <SortSection onPress={() => {}} label={searchStore.sortOption.label} />
+        <SortSection
+          onPress={() => {
+            setIsShowSortPopup(true);
+          }}
+          label={searchStore.sortOption.label}
+        />
         <Layouts.VSpace value={12} />
         {renderFilter()}
         <Layouts.VSpace value={12} />

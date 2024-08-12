@@ -332,11 +332,31 @@ const LIST_PUBLISHER: DataModels.IForm[] = [
   },
 ];
 
+const LIST_SORT_OPTION = [
+  {
+    value: 'name_asc',
+    label: 'Name ASC',
+  },
+  {
+    value: 'name_desc',
+    label: 'Name DESC',
+  },
+  {
+    value: 'price_asc',
+    label: 'Price ASC',
+  },
+  {
+    value: 'price_desc',
+    label: 'Price DESC',
+  },
+];
+
 export {
   CATEGORY,
   LIST_AUTHOR,
   LIST_FORM,
   LIST_PUBLISHER,
+  LIST_SORT_OPTION,
   TOP_BOOKS,
   TOP_BOOKS_FILTER,
 };

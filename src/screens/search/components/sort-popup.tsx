@@ -2,15 +2,12 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { CloseIcon, Layouts } from '@components';
-import { DataModels } from '@models';
+import { LIST_SORT_OPTION } from '@constants';
 import { FONT_STYLES } from '@themes';
 
 interface SortPopupProps {
-  searchFilter: DataModels.ISearchFilter;
-  onClose: (searchFiltrer: DataModels.ISearchFilter) => void;
   visible: boolean;
   onDismiss: () => void;
-  priceRange: number[];
 }
 
 const SortPopup: React.FC<SortPopupProps> = ({ visible, onDismiss }) => {
@@ -37,7 +34,7 @@ const SortPopup: React.FC<SortPopupProps> = ({ visible, onDismiss }) => {
             alignItems: 'center',
           }}
         >
-          <Text style={styles.popupText}>Filter</Text>
+          <Text style={styles.popupText}>Sort</Text>
         </View>
         <View
           style={{
@@ -45,17 +42,25 @@ const SortPopup: React.FC<SortPopupProps> = ({ visible, onDismiss }) => {
             alignItems: 'flex-end',
           }}
         >
-          <Text style={styles.reset}>Reset</Text>
+          <Text style={styles.reset}></Text>
         </View>
       </View>
       <Layouts.VSpace value={24} />
-      <Text
-        style={{
-          ...FONT_STYLES.SEMIBOLD_16,
-        }}
-      >
-        Price
-      </Text>
+      {LIST_SORT_OPTION.map((item) => {
+        return (
+          <View key={item.value}>
+            <Text
+              style={{
+                ...FONT_STYLES.SEMIBOLD_16,
+              }}
+            >
+              {item.label}
+            </Text>
+            <Layouts.VSpace value={12} />
+          </View>
+        );
+      })}
+      <Layouts.VSpace value={12} />
     </Layouts.BottomPopup>
   );
 };
