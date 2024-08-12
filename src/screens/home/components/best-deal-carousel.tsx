@@ -16,8 +16,6 @@ interface BestDealCarouselProps {
 const BestDealCarousel: React.FC<BestDealCarouselProps> = ({ data }) => {
   const width = Dimensions.get('window').width;
 
-  // const data = [...new Array(6).keys()];
-
   const carouselItemWidth = width * 0.85;
 
   const ref = useRef<ICarouselInstance>(null);

@@ -1,7 +1,7 @@
 import { TextStyle } from 'react-native';
 
 const FONT_16: TextStyle = {
-  lineHeight: 20,
+  lineHeight: 18,
   fontSize: 16,
   color: '#121212',
 };
@@ -27,7 +27,7 @@ const THIN_16: TextStyle = {
 };
 
 const FONT_14: TextStyle = {
-  lineHeight: 20,
+  lineHeight: 16,
   fontSize: 14,
   color: '#121212',
 };
@@ -53,7 +53,7 @@ const THIN_14: TextStyle = {
 };
 
 const FONT_10: TextStyle = {
-  lineHeight: 20,
+  lineHeight: 12,
   fontSize: 10,
   color: '#121212',
 };

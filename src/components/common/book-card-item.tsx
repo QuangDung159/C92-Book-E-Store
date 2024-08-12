@@ -43,30 +43,23 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
         </View>
         <View style={styles.info}>
           <Text style={styles.subTitle}>{bookCardItem.category}</Text>
-          <Layouts.VSpace value={4} />
           <View style={styles.inforSection}>
             <Text style={styles.title} numberOfLines={2}>
               {bookCardItem.name}
             </Text>
-            <Layouts.VSpace value={8} />
             <Text style={styles.subTitle}>{bookCardItem.author}</Text>
           </View>
+          <Layouts.VSpace value={12} />
+          <BookCardPrice price={bookCardItem.price} />
           <Layouts.VSpace value={8} />
-          <BookCardPrice price={bookCardItem.price} style={styles.price} />
-          <Layouts.VSpace value={8} />
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}
-          >
+          <View style={styles.stockSection}>
             <View>
               <Text style={styles.stock}>In stock:</Text>
               <Text style={styles.stock}>10 pcs</Text>
             </View>
             <Layouts.MaxSpace />
             <View style={styles.cartIconWrapper}>
-              <Icons.CartIcon />
+              <Icons.CartIcon color={COLORS.primaryWhite} />
             </View>
           </View>
         </View>
@@ -80,43 +73,31 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     flex: 1,
     marginBottom: 12,
+    backgroundColor: COLORS.gray200,
   },
   imageWrapper: {
-    height: 340,
+    height: 200,
     alignItems: 'center',
-    backgroundColor: COLORS.gray200,
-    borderRadius: 8,
   },
   image: {
     width: 100,
+    height: 100,
     flex: 1,
-    marginTop: -160,
+    marginTop: -24,
   },
   info: {
-    backgroundColor: COLORS.primaryBlack,
-    borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 8,
-    height: 180,
-    padding: 12,
-    position: 'absolute',
-    top: 160,
-    left: 0,
-    right: 0,
+    marginTop: -24,
+    paddingHorizontal: 12,
+    paddingBottom: 12,
   },
   subTitle: {
     ...FONT_STYLES.REGULAR_10,
-    color: COLORS.primaryWhite,
   },
   inforSection: {
     height: 60,
   },
   title: {
-    color: COLORS.primaryWhite,
-    fontSize: 16,
-    fontWeight: 'semibold',
-  },
-  price: {
-    color: COLORS.primaryWhite,
+    ...FONT_STYLES.SEMIBOLD_16,
   },
   cartIconWrapper: {
     width: 40,
@@ -124,11 +105,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: COLORS.primaryWhite,
+    backgroundColor: COLORS.primaryBlack,
   },
   stock: {
     ...FONT_STYLES.SEMIBOLD_14,
-    color: COLORS.primaryWhite,
   },
   left: {
     marginRight: 6,
@@ -140,6 +120,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 6,
     top: 10,
+  },
+  stockSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 
