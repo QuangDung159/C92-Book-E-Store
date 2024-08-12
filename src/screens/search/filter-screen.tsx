@@ -148,7 +148,18 @@ const FilterScreen = ({ route, navigation }: any) => {
             alignItems: 'center',
           }}
         >
-          <Text style={styles.label}>Author</Text>
+          <Text style={styles.label}>
+            Author{' '}
+            {searchStore.listAuthorSelected.length > 0 && (
+              <Text
+                style={{
+                  ...FONT_STYLES.THIN_16,
+                }}
+              >
+                {`(${searchStore.listAuthorSelected.length} selcted)`}
+              </Text>
+            )}
+          </Text>
           <Layouts.MaxSpace />
           {isShowAuthorList ? (
             <MinusIcon onPress={() => setIsShowAuthorList(false)} />
@@ -197,7 +208,18 @@ const FilterScreen = ({ route, navigation }: any) => {
             alignItems: 'center',
           }}
         >
-          <Text style={styles.label}>Form</Text>
+          <Text style={styles.label}>
+            Form{' '}
+            {searchStore.listFormSelected.length > 0 && (
+              <Text
+                style={{
+                  ...FONT_STYLES.THIN_16,
+                }}
+              >
+                {`(${searchStore.listFormSelected.length} selcted)`}
+              </Text>
+            )}
+          </Text>
           <Layouts.MaxSpace />
           {isShowFormList ? (
             <MinusIcon onPress={() => setIsShowFormList(false)} />
