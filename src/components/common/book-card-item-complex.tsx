@@ -36,13 +36,15 @@ const BookCardItemComplex: React.FC<BookCardItemComplexProps> = ({
         <Layouts.VSpace value={12} />
         <Text style={styles.title}>{bookCardItem.name}</Text>
         <Text style={styles.stock}>{bookCardItem.author}</Text>
-        <Layouts.VSpace value={8} />
+        <Layouts.VSpace value={6} />
+        <Text style={styles.stock}>{bookCardItem.category}</Text>
+        <Layouts.VSpace value={6} />
         <Text style={styles.stock}>Rating: 4.9</Text>
-        <Layouts.VSpace value={8} />
+        <Layouts.VSpace value={6} />
         <Text style={styles.stock}>In stock: 10 pcs</Text>
-        <Layouts.VSpace value={8} />
+        <Layouts.VSpace value={6} />
         <Text style={styles.description}>{bookCardItem.description}</Text>
-        <Layouts.VSpace value={8} />
+        <Layouts.VSpace value={6} />
         <View style={styles.priceWrapper}>
           <BookCardPrice price={bookCardItem.price} />
           <Layouts.MaxSpace />
@@ -77,7 +79,7 @@ const styles = StyleSheet.create({
     ...FONT_STYLES.BOLD_16,
   },
   stock: {
-    ...FONT_STYLES.SEMIBOLD_14,
+    ...FONT_STYLES.SEMIBOLD_10,
   },
   priceWrapper: {
     marginTop: 4,

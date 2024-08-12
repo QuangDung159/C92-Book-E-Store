@@ -2,7 +2,7 @@ import { Image } from 'expo-image';
 import React from 'react';
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { ImageAssets } from '@assets';
-import { BookCardPrice, Icons, Layouts } from '@components';
+import { BookCardPrice, Buttons, Icons, Layouts } from '@components';
 import { DataModels } from '@models';
 import { COLORS, FONT_STYLES } from '@themes';
 
@@ -42,28 +42,26 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
           />
         </View>
         <View style={styles.info}>
-          <Text style={styles.subTitle}>{bookCardItem.category}</Text>
+          <Text style={styles.stock}>{bookCardItem.category}</Text>
           <Layouts.VSpace value={4} />
           <View style={styles.inforSection}>
             <Text style={styles.title} numberOfLines={2}>
               {bookCardItem.name}
             </Text>
-            <Layouts.VSpace value={4} />
-            <Text style={styles.subTitle}>{bookCardItem.author}</Text>
+            <Text style={styles.stock}>{bookCardItem.author}</Text>
           </View>
-          <Layouts.VSpace value={8} />
+          <Layouts.VSpace value={6} />
+          <Text style={styles.stock}>Rating: 4.9</Text>
+          <Layouts.VSpace value={6} />
+          <Text style={styles.stock}>In stock: 10 pcs</Text>
+          <Layouts.VSpace value={6} />
           <BookCardPrice price={bookCardItem.price} />
-          <Layouts.VSpace value={8} />
-          <View style={styles.stockSection}>
-            <View>
-              <Text style={styles.stock}>In stock:</Text>
-              <Text style={styles.stock}>10 pcs</Text>
-            </View>
-            <Layouts.MaxSpace />
-            <View style={styles.cartIconWrapper}>
-              <Icons.CartIcon color={COLORS.primaryWhite} />
-            </View>
-          </View>
+          <Layouts.VSpace value={6} />
+          <Buttons.CButton
+            onPress={() => {}}
+            buttonType="primary"
+            label="Add to cart"
+          />
         </View>
       </View>
     </React.Fragment>
@@ -92,9 +90,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingBottom: 12,
   },
-  subTitle: {
-    ...FONT_STYLES.REGULAR_10,
-  },
   inforSection: {
     height: 60,
   },
@@ -110,7 +105,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primaryBlack,
   },
   stock: {
-    ...FONT_STYLES.SEMIBOLD_14,
+    ...FONT_STYLES.SEMIBOLD_10,
   },
   left: {
     marginRight: 6,
@@ -122,10 +117,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 6,
     top: 10,
-  },
-  stockSection: {
-    flexDirection: 'row',
-    alignItems: 'center',
   },
 });
 

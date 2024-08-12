@@ -58,11 +58,12 @@ const BookCardItemVertical: React.FC<BookCardItemVerticalProps> = ({
                 <Icons.HeartOutlineIcon size={20} />
               )}
             </View>
-            <Layouts.VSpace value={8} />
-            <Text style={styles.subTitle}>{bookCardItem.author}</Text>
-            <Layouts.VSpace value={8} />
-            <Text style={styles.subTitle}>Rating: 4.9</Text>
-            <Layouts.VSpace value={8} />
+            <Text style={styles.stock}>{bookCardItem.author}</Text>
+            <Layouts.VSpace value={6} />
+            <Text style={styles.stock}>{bookCardItem.category}</Text>
+            <Layouts.VSpace value={6} />
+            <Text style={styles.stock}>Rating: 4.9</Text>
+            <Layouts.VSpace value={6} />
             <Text style={styles.stock}>In stock: 10 pcs</Text>
           </View>
         </View>
@@ -102,11 +103,8 @@ const styles = StyleSheet.create({
     ...FONT_STYLES.SEMIBOLD_16,
     width: '90%',
   },
-  subTitle: {
-    ...FONT_STYLES.REGULAR_10,
-  },
   stock: {
-    ...FONT_STYLES.SEMIBOLD_14,
+    ...FONT_STYLES.SEMIBOLD_10,
   },
   priceWrapper: {
     marginHorizontal: 12,
