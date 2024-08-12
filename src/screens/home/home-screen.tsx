@@ -13,7 +13,7 @@ const HomeScreen = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
-      <SearchBar showCartIcon />
+      <SearchBar showCartIcon navigation={navigation} />
       <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}>
         <Layouts.VSpace value={12}></Layouts.VSpace>
         <BestDealCarousel

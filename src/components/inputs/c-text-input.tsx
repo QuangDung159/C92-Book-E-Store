@@ -22,6 +22,8 @@ interface CTextInputProps {
   placeholder?: string;
   keyboardType?: KeyboardTypeOptions;
   value?: string;
+  onFocus?: () => void;
+  autoFocus?: boolean;
 }
 
 const CTextInput: FC<CTextInputProps> = ({
@@ -33,6 +35,8 @@ const CTextInput: FC<CTextInputProps> = ({
   placeholder,
   keyboardType = 'default',
   value,
+  onFocus,
+  autoFocus,
 }) => {
   return (
     <TextInput
@@ -46,6 +50,8 @@ const CTextInput: FC<CTextInputProps> = ({
       onEndEditing={onEndEditing}
       keyboardType={keyboardType}
       value={value}
+      onFocus={onFocus}
+      autoFocus={autoFocus}
     />
   );
 };

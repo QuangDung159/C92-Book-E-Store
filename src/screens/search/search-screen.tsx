@@ -90,7 +90,12 @@ const SearchScreen = ({ route, navigation }: any) => {
           }
         }}
       />
-      <SearchBar showCartIcon showBackIcon navigation={navigation} />
+      <SearchBar
+        showCartIcon
+        showBackIcon
+        navigation={navigation}
+        autoFocus={route?.params?.autoFocus}
+      />
       <ScrollView
         ref={scrollRef}
         scrollEnabled={true}
