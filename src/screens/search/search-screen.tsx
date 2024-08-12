@@ -52,9 +52,18 @@ const SearchScreen = ({ route, navigation }: any) => {
           <Chip
             type="price"
             label={`${StringHelpers.formatCurrency(searchStore.searchFilter.min)} - ${StringHelpers.formatCurrency(searchStore.searchFilter.max)}`}
-            onRemove={() => {}}
+            onRemove={() => {
+              searchStore.setSearchFilter({
+                min: DEFAULT_PRICE_RANGE[0],
+                max: DEFAULT_PRICE_RANGE[1],
+              });
+            }}
             value={`${searchStore.searchFilter.min} - ${searchStore.searchFilter.max}`}
             showRemove
+            disabled={
+              searchStore.searchFilter.min === DEFAULT_PRICE_RANGE[0] &&
+              searchStore.searchFilter.max === DEFAULT_PRICE_RANGE[1]
+            }
           />
           <ListChipByListFilter
             dataSource={referenceOptionsStore.authorDataSource}
