@@ -33,6 +33,7 @@ class SearchStore {
       filterSelectedRange: computed,
       listAuthorSelected: computed,
       listFormSelected: computed,
+      listPublisherSelected: computed,
     });
   }
 
@@ -74,6 +75,10 @@ class SearchStore {
 
   get listFormSelected() {
     return this.searchFilter.form || [];
+  }
+
+  get listPublisherSelected() {
+    return this.searchFilter.publisher || [];
   }
 }
 

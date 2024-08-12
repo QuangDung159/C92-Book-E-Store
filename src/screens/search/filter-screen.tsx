@@ -14,16 +14,21 @@ const FilterScreen = ({ route, navigation }: any) => {
   const priceRange = route.params?.priceRange || [1000, 100000];
   const [isShowAuthorList, setIsShowAuthorList] = useState(false);
   const [isShowFormList, setIsShowFormList] = useState(false);
+  const [isShowPublisherList, setIsShowPublisherList] = useState(false);
   const [listAuthor, setListAuthor] = useState<DataModels.IReferenceOptions[]>(
     [],
   );
   const [listForm, setListForm] = useState<DataModels.IReferenceOptions[]>([]);
+  const [listPublisher, setListPublisher] = useState<
+    DataModels.IReferenceOptions[]
+  >([]);
 
   useEffect(() => {
     searchStore.setSearchFilterPreviuos(searchStore.searchFilter);
 
     setListAuthor(referenceOptionsStore.authorDataSource);
     setListForm(referenceOptionsStore.formDataSource);
+    setListPublisher(referenceOptionsStore.publisherDataSource);
   }, []);
 
   useEffect(() => {
@@ -36,6 +41,12 @@ const FilterScreen = ({ route, navigation }: any) => {
     if (searchStore.listFormSelected.length > 0) {
       delay(500).then(() => {
         setIsShowFormList(true);
+      });
+    }
+
+    if (searchStore.listPublisherSelected.length > 0) {
+      delay(500).then(() => {
+        setIsShowPublisherList(true);
       });
     }
   }, []);
@@ -55,9 +66,7 @@ const FilterScreen = ({ route, navigation }: any) => {
       <KeyboardAwareScrollView
         scrollEnabled={true}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          paddingHorizontal: 24,
-        }}
+        contentContainerStyle={styles.wrapper}
       >
         <Layouts.VSpace value={24} />
         <Text style={styles.label}>Price</Text>
@@ -185,6 +194,32 @@ const FilterScreen = ({ route, navigation }: any) => {
           title="Form"
           setIsCollapse={setIsShowFormList}
         />
+        <Layouts.VSpace value={12} />
+        <CollapsibleList
+          isCollapse={!isShowPublisherList}
+          dataSource={
+            listPublisher.length > 0
+              ? listPublisher
+              : referenceOptionsStore.publisherDataSource
+          }
+          listItemReferForSearch={searchStore.listPublisherSelected}
+          onChangeText={(value) => {
+            const result = StringHelpers.searchByFirstLetter(
+              referenceOptionsStore.publisherDataSource,
+              value,
+            );
+
+            setListPublisher(result);
+          }}
+          onCheck={(list) => {
+            searchStore.setSearchFilter({
+              publisher: list,
+            });
+          }}
+          listChecked={searchStore.listPublisherSelected}
+          title="Publisher"
+          setIsCollapse={setIsShowPublisherList}
+        />
         <Layouts.VSpace value={24} />
       </KeyboardAwareScrollView>
       <View style={styles.buttonWrapper}>
@@ -240,6 +275,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     borderTopColor: COLORS.gray200,
     borderTopWidth: 1,
+  },
+  wrapper: {
+    paddingHorizontal: 24,
   },
 });
 

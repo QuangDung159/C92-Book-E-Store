@@ -289,4 +289,54 @@ const LIST_FORM: DataModels.IForm[] = [
   },
 ];
 
-export { CATEGORY, LIST_AUTHOR, LIST_FORM, TOP_BOOKS, TOP_BOOKS_FILTER };
+const LIST_PUBLISHER: DataModels.IForm[] = [
+  {
+    id: 'publisher_1',
+    name: 'Publisher 1',
+  },
+  {
+    id: 'publisher_2',
+    name: 'Publisher 2',
+  },
+  {
+    id: 'publisher_3',
+    name: 'Publisher 3',
+  },
+  {
+    id: 'publisher_4',
+    name: 'Publisher 4',
+  },
+  {
+    id: 'publisher_5',
+    name: 'Publisher 5',
+  },
+  {
+    id: 'publisher_6',
+    name: 'Publisher 6',
+  },
+  {
+    id: 'publisher_7',
+    name: 'Publisher 7',
+  },
+  {
+    id: 'publisher_8',
+    name: 'Publisher 8',
+  },
+  {
+    id: 'publisher_9',
+    name: 'Publisher 9',
+  },
+  {
+    id: 'publisher_10',
+    name: 'Publisher 10',
+  },
+];
+
+export {
+  CATEGORY,
+  LIST_AUTHOR,
+  LIST_FORM,
+  LIST_PUBLISHER,
+  TOP_BOOKS,
+  TOP_BOOKS_FILTER,
+};

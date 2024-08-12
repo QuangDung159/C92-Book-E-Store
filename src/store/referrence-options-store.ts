@@ -4,13 +4,16 @@ import { DataModels } from '@models';
 class ReferrenceOptionsStore {
   authorDataSource: DataModels.IReferenceOptions[] = [];
   formDataSource: DataModels.IReferenceOptions[] = [];
+  publisherDataSource: DataModels.IReferenceOptions[] = [];
 
   constructor() {
     makeObservable(this, {
       authorDataSource: observable,
       formDataSource: observable,
+      publisherDataSource: observable,
       setAuthorDataSource: action,
       setFormDataSource: action,
+      setPublisherDataSource: action,
     });
   }
 
@@ -30,6 +33,17 @@ class ReferrenceOptionsStore {
     }));
 
     this.formDataSource = listForm;
+  }
+
+  setPublisherDataSource(values: DataModels.IForm[]) {
+    const listPublisher: DataModels.IReferenceOptions[] = values.map(
+      (item) => ({
+        label: item.name,
+        value: item.id,
+      }),
+    );
+
+    this.publisherDataSource = listPublisher;
   }
 }
 
