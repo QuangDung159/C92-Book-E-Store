@@ -5,19 +5,19 @@ import { DataModels } from '@models';
 
 interface ListCheckBoxFilterProps {
   onCheck: (value: string, status: boolean) => void;
-  listFilterItem: DataModels.IReferenceOptions[];
+  dataSource: DataModels.IReferenceOptions[];
   listRefer: string[];
 }
 
 const ListCheckBoxFilter: React.FC<ListCheckBoxFilterProps> = ({
   onCheck,
-  listFilterItem,
+  dataSource,
   listRefer,
 }) => {
   const renderListAuthorCheckBox = () => {
     return (
       <>
-        {listFilterItem.map((item) => {
+        {dataSource.map((item) => {
           const checked = listRefer.includes(item.value);
           return (
             <React.Fragment key={item.value}>

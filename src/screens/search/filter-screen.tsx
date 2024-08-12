@@ -1,22 +1,14 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Collapsible from 'react-native-collapsible';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import {
-  Buttons,
-  Inputs,
-  Layouts,
-  MinusIcon,
-  PlusIcon,
-  ScreenHeader,
-} from '@components';
+import { Buttons, Inputs, Layouts, ScreenHeader } from '@components';
 import { PRICE_STEP } from '@constants';
 import { DataModels } from '@models';
 import { referenceOptionsStore, searchStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { delay, StringHelpers } from '@utils';
-import { ListCheckBoxFilter, PriceMultiSlider } from './components';
+import { CollapsibleList, PriceMultiSlider } from './components';
 
 const FilterScreen = ({ route, navigation }: any) => {
   const priceRange = route.params?.priceRange || [1000, 100000];
@@ -142,123 +134,57 @@ const FilterScreen = ({ route, navigation }: any) => {
           }}
         />
         <Layouts.VSpace value={24} />
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
+        <CollapsibleList
+          isCollapse={!isShowAuthorList}
+          dataSource={
+            listAuthor.length > 0
+              ? listAuthor
+              : referenceOptionsStore.authorDataSource
+          }
+          listItemReferForSearch={searchStore.listAuthorSelected}
+          onChangeText={(value) => {
+            const result = StringHelpers.searchByFirstLetter(
+              referenceOptionsStore.authorDataSource,
+              value,
+            );
+
+            setListAuthor(result);
           }}
-        >
-          <Text style={styles.label}>
-            Author{' '}
-            {searchStore.listAuthorSelected.length > 0 && (
-              <Text
-                style={{
-                  ...FONT_STYLES.THIN_16,
-                }}
-              >
-                {`(${searchStore.listAuthorSelected.length} selcted)`}
-              </Text>
-            )}
-          </Text>
-          <Layouts.MaxSpace />
-          {isShowAuthorList ? (
-            <MinusIcon onPress={() => setIsShowAuthorList(false)} />
-          ) : (
-            <PlusIcon onPress={() => setIsShowAuthorList(true)} />
-          )}
-        </View>
-        <Collapsible collapsed={!isShowAuthorList}>
-          <Layouts.VSpace value={12} />
-          <Inputs.CTextInput
-            placeholder="Search"
-            onChangeText={(value) => {
-              const result = StringHelpers.searchByFirstLetter(
-                referenceOptionsStore.authorDataSource,
-                value,
-              );
-
-              setListAuthor(result);
-            }}
-          />
-          <Layouts.VSpace value={12} />
-          <ListCheckBoxFilter
-            listFilterItem={listAuthor}
-            listRefer={searchStore.listAuthorSelected}
-            onCheck={(itemId, checked) => {
-              let list = [...searchStore.listAuthorSelected];
-              if (checked) {
-                const listUncheck = list.filter(
-                  (itemAuthor) => itemAuthor !== itemId,
-                );
-                list = listUncheck;
-              } else {
-                list.push(itemId);
-              }
-
-              searchStore.setSearchFilter({
-                author: list,
-              });
-            }}
-          />
-        </Collapsible>
+          onCheck={(list) => {
+            searchStore.setSearchFilter({
+              author: list,
+            });
+          }}
+          listChecked={searchStore.listAuthorSelected}
+          title="Author"
+          setIsCollapse={setIsShowAuthorList}
+        />
         <Layouts.VSpace value={12} />
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
+        <CollapsibleList
+          isCollapse={!isShowFormList}
+          dataSource={
+            listForm.length > 0
+              ? listForm
+              : referenceOptionsStore.formDataSource
+          }
+          listItemReferForSearch={searchStore.listFormSelected}
+          onChangeText={(value) => {
+            const result = StringHelpers.searchByFirstLetter(
+              referenceOptionsStore.formDataSource,
+              value,
+            );
+
+            setListForm(result);
           }}
-        >
-          <Text style={styles.label}>
-            Form{' '}
-            {searchStore.listFormSelected.length > 0 && (
-              <Text
-                style={{
-                  ...FONT_STYLES.THIN_16,
-                }}
-              >
-                {`(${searchStore.listFormSelected.length} selcted)`}
-              </Text>
-            )}
-          </Text>
-          <Layouts.MaxSpace />
-          {isShowFormList ? (
-            <MinusIcon onPress={() => setIsShowFormList(false)} />
-          ) : (
-            <PlusIcon onPress={() => setIsShowFormList(true)} />
-          )}
-        </View>
-        <Collapsible collapsed={!isShowFormList}>
-          <Layouts.VSpace value={12} />
-          <Inputs.CTextInput
-            placeholder="Search"
-            onChangeText={(value) => {
-              const result = StringHelpers.searchByFirstLetter(
-                referenceOptionsStore.formDataSource,
-                value,
-              );
-
-              setListForm(result);
-            }}
-          />
-          <Layouts.VSpace value={12} />
-          <ListCheckBoxFilter
-            listFilterItem={listForm}
-            listRefer={searchStore.listFormSelected}
-            onCheck={(itemId, checked) => {
-              let list = [...searchStore.listFormSelected];
-              if (checked) {
-                const listUncheck = list.filter((i) => i !== itemId);
-                list = listUncheck;
-              } else {
-                list.push(itemId);
-              }
-
-              searchStore.setSearchFilter({
-                form: list,
-              });
-            }}
-          />
-        </Collapsible>
+          onCheck={(list) => {
+            searchStore.setSearchFilter({
+              form: list,
+            });
+          }}
+          listChecked={searchStore.listFormSelected}
+          title="Form"
+          setIsCollapse={setIsShowFormList}
+        />
         <Layouts.VSpace value={24} />
       </KeyboardAwareScrollView>
       <View style={styles.buttonWrapper}>
