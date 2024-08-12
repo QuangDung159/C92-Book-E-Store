@@ -1,9 +1,9 @@
-import { AntDesign, Entypo, Ionicons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import React from 'react';
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { ImageAssets } from '@assets';
-import { Layouts } from '@components';
+import { Icons, Layouts } from '@components';
 import { DataModels } from '@models';
 import { COLORS, FONT_STYLES } from '@themes';
 
@@ -21,9 +21,11 @@ const BookCardItemComplex: React.FC<BookCardItemComplexProps> = ({
       <View style={[styles.container, containerStyle]}>
         <View style={styles.imageWrapper}>
           <View style={styles.likeViewIcon}>
-            <Ionicons name="heart-outline" size={20} />
-            <Layouts.HSpace value={8} />
-            <Ionicons name="eye" size={20} />
+            {bookCardItem.isLiked ? (
+              <Icons.HeartIcon size={20} />
+            ) : (
+              <Icons.HeartOutlineIcon size={20} />
+            )}
           </View>
           <Image
             style={styles.image}
@@ -53,9 +55,9 @@ const BookCardItemComplex: React.FC<BookCardItemComplexProps> = ({
           <Layouts.MaxSpace />
           <View style={styles.addToCartWrapper}>
             <View style={styles.addToCart}>
-              <Entypo name="minus" size={24} color={COLORS.primaryWhite} />
+              <Icons.MinusIcon color={COLORS.primaryWhite} />
               <Text style={styles.cartNumber}>100</Text>
-              <Entypo name="plus" size={24} color={COLORS.primaryWhite} />
+              <Icons.PlusIcon color={COLORS.primaryWhite} />
             </View>
           </View>
           <Layouts.HSpace value={8} />
@@ -86,6 +88,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     flexDirection: 'row',
+    top: -4,
   },
   image: {
     width: 200 * 0.64,

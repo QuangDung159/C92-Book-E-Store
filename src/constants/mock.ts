@@ -4,7 +4,7 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
   {
     name: 'The Picture of Dorian Gray The Picture of Dorian Gray',
     author: 'Oscar Wilde',
-    price: 25000.999,
+    price: 25000999,
     isLiked: false,
     description:
       'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
@@ -14,7 +14,7 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
   {
     name: 'Nine Liars',
     author: 'Oscar Wilde',
-    price: 25.99,
+    price: 259900,
     isLiked: true,
     category: 'Classics',
     id: '2',
@@ -22,7 +22,7 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
   {
     name: 'The Picture of Dorian Gray 12',
     author: 'Oscar Wilde 123',
-    price: 25,
+    price: 25000,
     isLiked: false,
     description:
       'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
@@ -32,7 +32,7 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
   {
     name: 'The Picture of Dorian 44v',
     author: 'Oscar Wilde 44',
-    price: 19,
+    price: 19000,
     isLiked: false,
     description:
       'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
@@ -42,7 +42,7 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
   {
     name: 'The Picture of Dorian Gray 12',
     author: 'Oscar Wilde 123',
-    price: 25,
+    price: 250000,
     isLiked: false,
     description:
       'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
@@ -52,7 +52,7 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
   {
     name: 'The Picture of Dorian 44v',
     author: 'Oscar Wilde 44',
-    price: 19,
+    price: 190000,
     isLiked: false,
     description:
       'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
@@ -62,7 +62,7 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
   {
     name: 'The Picture of Dorian Gray 12',
     author: 'Oscar Wilde 123',
-    price: 25,
+    price: 25000,
     isLiked: false,
     description:
       'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
@@ -72,7 +72,7 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
   {
     name: 'The Picture of Dorian 44v',
     author: 'Oscar Wilde 44',
-    price: 19,
+    price: 19000,
     isLiked: false,
     description:
       'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
@@ -82,7 +82,7 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
   {
     name: 'The Picture of Dorian Gray 12',
     author: 'Oscar Wilde 123',
-    price: 25,
+    price: 250000,
     isLiked: false,
     description:
       'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
@@ -92,7 +92,7 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
   {
     name: 'The Picture of Dorian 44v',
     author: 'Oscar Wilde 44',
-    price: 19,
+    price: 1900,
     isLiked: false,
     description:
       'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',

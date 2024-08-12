@@ -1,9 +1,9 @@
-import { AntDesign, Ionicons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import React from 'react';
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { ImageAssets } from '@assets';
-import { Layouts } from '@components';
+import { Icons, Layouts } from '@components';
 import { DataModels } from '@models';
 import { COLORS, FONT_STYLES } from '@themes';
 
@@ -23,30 +23,17 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
       <View
         style={[
           styles.conatiner,
-          index % 2 === 0
-            ? {
-                marginRight: 6,
-              }
-            : {
-                marginLeft: 6,
-              },
+          index % 2 === 0 ? styles.left : styles.right,
           containerStyle,
         ]}
       >
         <View style={styles.imageWrapper}>
-          <View
-            style={{
-              position: 'absolute',
-              right: 6,
-              top: 10,
-            }}
-          >
-            <Ionicons
-              name="heart-outline"
-              size={20}
-              color={COLORS.primaryBlack}
-            />
-            <Ionicons name="eye" size={20} />
+          <View style={styles.iconsWrapper}>
+            {bookCardItem.isLiked ? (
+              <Icons.HeartIcon size={20} />
+            ) : (
+              <Icons.HeartOutlineIcon size={20} />
+            )}
           </View>
           <Image
             style={styles.image}
@@ -148,6 +135,17 @@ const styles = StyleSheet.create({
   stock: {
     ...FONT_STYLES.SEMIBOLD_14,
     color: COLORS.primaryWhite,
+  },
+  left: {
+    marginRight: 6,
+  },
+  right: {
+    marginLeft: 6,
+  },
+  iconsWrapper: {
+    position: 'absolute',
+    right: 6,
+    top: 10,
   },
 });
 

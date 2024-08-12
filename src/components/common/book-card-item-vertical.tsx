@@ -1,4 +1,4 @@
-import { AntDesign, Entypo, Ionicons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import React from 'react';
 import {
@@ -10,9 +10,10 @@ import {
   ViewStyle,
 } from 'react-native';
 import { ImageAssets } from '@assets';
-import { Layouts } from '@components';
+import { Icons, Layouts } from '@components';
 import { DataModels } from '@models';
 import { COLORS, FONT_STYLES } from '@themes';
+import { StringHelpers } from '@utils';
 
 interface BookCardItemVerticalProps {
   bookCardItem: DataModels.IBook;
@@ -44,33 +45,36 @@ const BookCardItemVertical: React.FC<BookCardItemVerticalProps> = ({
               },
             ]}
           >
-            <Text numberOfLines={2} style={styles.title}>
-              {bookCardItem.name}
-            </Text>
-            <Text style={styles.subTitle}>{bookCardItem.author}</Text>
-            <Text style={styles.subTitle}>Rating: 4.9</Text>
             <View
               style={{
                 flexDirection: 'row',
-                alignItems: 'center',
               }}
             >
-              <Text style={styles.stock}>In stock: 10 pcs</Text>
+              <Text numberOfLines={2} style={styles.title}>
+                {bookCardItem.name}
+              </Text>
               <Layouts.MaxSpace />
-              <Ionicons name="heart-outline" size={20} />
-              <Layouts.HSpace value={8} />
-              <Ionicons name="eye" size={20} />
+              {bookCardItem.isLiked ? (
+                <Icons.HeartIcon size={20} />
+              ) : (
+                <Icons.HeartOutlineIcon size={20} />
+              )}
             </View>
+            <Text style={styles.subTitle}>{bookCardItem.author}</Text>
+            <Text style={styles.subTitle}>Rating: 4.9</Text>
+            <Text style={styles.stock}>In stock: 10 pcs</Text>
           </View>
         </View>
         <View style={styles.priceWrapper}>
-          <Text style={styles.price}>{bookCardItem.price}đ</Text>
+          <Text style={styles.price}>
+            {StringHelpers.formatCurrency(bookCardItem.price)}
+          </Text>
           <Layouts.MaxSpace />
           <View style={styles.addToCartWrapper}>
             <View style={styles.addToCart}>
-              <Entypo name="minus" size={24} color={COLORS.primaryWhite} />
+              <Icons.MinusIcon color={COLORS.primaryWhite} />
               <Text style={styles.cartNumber}>100</Text>
-              <Entypo name="plus" size={24} color={COLORS.primaryWhite} />
+              <Icons.PlusIcon color={COLORS.primaryWhite} />
             </View>
           </View>
           <Layouts.HSpace value={8} />
@@ -111,6 +115,7 @@ const styles = StyleSheet.create({
   },
   title: {
     ...FONT_STYLES.SEMIBOLD_16,
+    width: '90%',
   },
   subTitle: {
     ...FONT_STYLES.REGULAR_10,

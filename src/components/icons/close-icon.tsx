@@ -2,12 +2,12 @@ import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { COLORS } from '@themes';
 
-interface CloseProps {
+interface CloseIconProps {
   size?: number;
   color?: string;
 }
 
-const CloseIcon: React.FC<CloseProps> = ({
+const CloseIcon: React.FC<CloseIconProps> = ({
   size = 24,
   color = COLORS.primaryBlack,
 }) => {
