@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Collapsible from 'react-native-collapsible';
-import { Inputs, Layouts, MinusIcon, PlusIcon } from '@components';
+import { Icons, Inputs, Layouts } from '@components';
 import { DataModels } from '@models';
 import { FONT_STYLES } from '@themes';
 import { ListCheckBoxFilter } from './list-check-box-filter';
@@ -41,9 +41,9 @@ const CollapsibleList: React.FC<CollapsibleListProps> = ({
         </Text>
         <Layouts.MaxSpace />
         {isCollapse ? (
-          <PlusIcon onPress={() => setIsCollapse(true)} />
+          <Icons.PlusIcon onPress={() => setIsCollapse(true)} />
         ) : (
-          <MinusIcon onPress={() => setIsCollapse(false)} />
+          <Icons.MinusIcon onPress={() => setIsCollapse(false)} />
         )}
       </View>
       <Collapsible collapsed={isCollapse}>

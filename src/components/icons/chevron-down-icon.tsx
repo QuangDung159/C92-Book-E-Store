@@ -2,16 +2,16 @@ import { Entypo } from '@expo/vector-icons';
 import React from 'react';
 import { COLORS } from '@themes';
 
-interface ChevronDownProps {
+interface ChevronDownIconProps {
   size?: number;
   color?: string;
 }
 
-const ChevronDown: React.FC<ChevronDownProps> = ({
+const ChevronDownIcon: React.FC<ChevronDownIconProps> = ({
   size = 24,
   color = COLORS.primaryBlack,
 }) => {
   return <Entypo name="chevron-down" size={size} color={color} />;
 };
 
-export { ChevronDown };
+export { ChevronDownIcon };

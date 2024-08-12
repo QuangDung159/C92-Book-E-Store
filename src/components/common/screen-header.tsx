@@ -6,9 +6,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Layouts } from '@components';
+import { Icons, Layouts } from '@components';
 import { COLORS, FONT_STYLES } from '@themes';
-import { ChevronLeft } from './chevron-left';
 
 interface ScreenHeaderProps {
   title?: string;
@@ -35,7 +34,7 @@ const ScreenHeader: React.FC<ScreenHeaderProps> = ({
     if (!leftComponent) {
       return (
         <TouchableOpacity onPress={goBack}>
-          <ChevronLeft />
+          <Icons.ChevronLeftIcon />
         </TouchableOpacity>
       );
     } else {
