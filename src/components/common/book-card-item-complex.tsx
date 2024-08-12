@@ -1,11 +1,11 @@
-import { AntDesign } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import React from 'react';
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { ImageAssets } from '@assets';
-import { Icons, Layouts } from '@components';
+import { AddToCartButton, Icons, Layouts } from '@components';
 import { DataModels } from '@models';
 import { COLORS, FONT_STYLES } from '@themes';
+import { StringHelpers } from '@utils';
 
 interface BookCardItemComplexProps {
   bookCardItem: DataModels.IBook;
@@ -42,32 +42,14 @@ const BookCardItemComplex: React.FC<BookCardItemComplexProps> = ({
         <Layouts.VSpace value={4} />
         <Text style={styles.stock}>In stock: 10 pcs</Text>
         <Layouts.VSpace value={4} />
-        <Text
-          style={{
-            ...FONT_STYLES.REGULAR_14,
-          }}
-        >
-          {bookCardItem.description}
-        </Text>
+        <Text style={styles.description}>{bookCardItem.description}</Text>
         <Layouts.VSpace value={4} />
         <View style={styles.priceWrapper}>
-          <Text style={styles.price}>{bookCardItem.price}đ</Text>
+          <Text style={styles.price}>
+            {StringHelpers.formatCurrency(bookCardItem.price)}
+          </Text>
           <Layouts.MaxSpace />
-          <View style={styles.addToCartWrapper}>
-            <View style={styles.addToCart}>
-              <Icons.MinusIcon color={COLORS.primaryWhite} />
-              <Text style={styles.cartNumber}>100</Text>
-              <Icons.PlusIcon color={COLORS.primaryWhite} />
-            </View>
-          </View>
-          <Layouts.HSpace value={8} />
-          <View style={styles.cartIconWrapper}>
-            <AntDesign
-              name="shoppingcart"
-              size={24}
-              color={COLORS.primaryWhite}
-            />
-          </View>
+          <AddToCartButton itemCount={10} />
         </View>
       </View>
       <Layouts.VSpace value={12} />
@@ -97,44 +79,19 @@ const styles = StyleSheet.create({
   title: {
     ...FONT_STYLES.BOLD_16,
   },
-  subTitle: {
-    ...FONT_STYLES.REGULAR_10,
-  },
   stock: {
     ...FONT_STYLES.SEMIBOLD_14,
   },
   price: {
-    ...FONT_STYLES.BOLD_18,
+    ...FONT_STYLES.SEMIBOLD_18,
   },
   priceWrapper: {
     marginTop: 4,
     flexDirection: 'row',
     alignItems: 'center',
   },
-  addToCartWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  addToCart: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: COLORS.primaryBlack,
-    borderRadius: 20,
-    paddingHorizontal: 8,
-    height: 40,
-  },
-  cartNumber: {
-    ...FONT_STYLES.SEMIBOLD_16,
-    paddingHorizontal: 8,
-    color: COLORS.primaryWhite,
-  },
-  cartIconWrapper: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: COLORS.primaryBlack,
+  description: {
+    ...FONT_STYLES.REGULAR_14,
   },
 });
 

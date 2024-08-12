@@ -1,4 +1,3 @@
-import { AntDesign } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import React from 'react';
 import {
@@ -10,7 +9,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import { ImageAssets } from '@assets';
-import { Icons, Layouts } from '@components';
+import { AddToCartButton, Icons, Layouts } from '@components';
 import { DataModels } from '@models';
 import { COLORS, FONT_STYLES } from '@themes';
 import { StringHelpers } from '@utils';
@@ -70,21 +69,7 @@ const BookCardItemVertical: React.FC<BookCardItemVerticalProps> = ({
             {StringHelpers.formatCurrency(bookCardItem.price)}
           </Text>
           <Layouts.MaxSpace />
-          <View style={styles.addToCartWrapper}>
-            <View style={styles.addToCart}>
-              <Icons.MinusIcon color={COLORS.primaryWhite} />
-              <Text style={styles.cartNumber}>100</Text>
-              <Icons.PlusIcon color={COLORS.primaryWhite} />
-            </View>
-          </View>
-          <Layouts.HSpace value={8} />
-          <View style={styles.cartIconWrapper}>
-            <AntDesign
-              name="shoppingcart"
-              size={24}
-              color={COLORS.primaryWhite}
-            />
-          </View>
+          <AddToCartButton itemCount={20} />
         </View>
       </View>
       <Layouts.VSpace value={12} />
@@ -130,7 +115,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   price: {
-    ...FONT_STYLES.BOLD_18,
+    ...FONT_STYLES.SEMIBOLD_18,
   },
   addToCartWrapper: {
     flexDirection: 'row',
