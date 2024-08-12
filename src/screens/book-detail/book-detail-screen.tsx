@@ -48,7 +48,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
             imageStyle={styles.image}
           />
         </View>
-        <Layouts.VSpace value={12} />
+        <Layouts.VSpace value={24} />
       </ScrollView>
     </View>
   );

@@ -1,5 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import {
+  StyleProp,
+  StyleSheet,
+  Text,
+  TextStyle,
+  TouchableOpacity,
+} from 'react-native';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
 import { FONT_STYLES } from '@themes';
@@ -7,9 +13,10 @@ import { FONT_STYLES } from '@themes';
 interface BookTitleProps {
   book: DataModels.IBook;
   navigation: any;
+  style?: StyleProp<TextStyle>;
 }
 
-const BookTitle: React.FC<BookTitleProps> = ({ book, navigation }) => {
+const BookTitle: React.FC<BookTitleProps> = ({ book, navigation, style }) => {
   const { openBookDetailScreen } = useNavigate(navigation);
 
   return (
@@ -18,7 +25,7 @@ const BookTitle: React.FC<BookTitleProps> = ({ book, navigation }) => {
         openBookDetailScreen(book);
       }}
     >
-      <Text style={styles.title} numberOfLines={2}>
+      <Text style={[styles.title, style]} numberOfLines={2}>
         {book.name}
       </Text>
     </TouchableOpacity>

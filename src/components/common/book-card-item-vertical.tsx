@@ -1,4 +1,5 @@
 import { Image } from 'expo-image';
+import { useNavigation } from 'expo-router';
 import React from 'react';
 import {
   Dimensions,
@@ -9,7 +10,13 @@ import {
   ViewStyle,
 } from 'react-native';
 import { ImageAssets } from '@assets';
-import { AddToCartButton, BookCardPrice, Icons, Layouts } from '@components';
+import {
+  AddToCartButton,
+  BookCardPrice,
+  BookTitle,
+  Icons,
+  Layouts,
+} from '@components';
 import { DataModels } from '@models';
 import { COLORS, FONT_STYLES } from '@themes';
 
@@ -24,6 +31,7 @@ const BookCardItemVertical: React.FC<BookCardItemVerticalProps> = ({
 }) => {
   const { width } = Dimensions.get('window');
   const cardWidth = width - 48;
+  const navigation = useNavigation();
 
   return (
     <React.Fragment key={bookCardItem.id}>
@@ -48,9 +56,13 @@ const BookCardItemVertical: React.FC<BookCardItemVerticalProps> = ({
                 flexDirection: 'row',
               }}
             >
-              <Text numberOfLines={2} style={styles.title}>
-                {bookCardItem.name}
-              </Text>
+              <View style={styles.title}>
+                <BookTitle
+                  style={styles.title}
+                  navigation={navigation}
+                  book={bookCardItem}
+                />
+              </View>
               <Layouts.MaxSpace />
               {bookCardItem.isLiked ? (
                 <Icons.HeartIcon size={20} />
@@ -100,7 +112,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   title: {
-    ...FONT_STYLES.SEMIBOLD_16,
     width: '90%',
   },
   stock: {

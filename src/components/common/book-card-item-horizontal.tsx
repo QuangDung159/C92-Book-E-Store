@@ -1,8 +1,9 @@
 import { Image } from 'expo-image';
+import { useNavigation } from 'expo-router';
 import React from 'react';
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { ImageAssets } from '@assets';
-import { BookCardPrice, Layouts } from '@components';
+import { BookCardPrice, BookTitle, Layouts } from '@components';
 import { DataModels } from '@models';
 import { COLORS, FONT_STYLES } from '@themes';
 
@@ -17,6 +18,7 @@ const BookCardItemHorizontal: React.FC<BookCardItemHorizontalProps> = ({
   isLastItem,
   containerStyle,
 }) => {
+  const navigation = useNavigation();
   return (
     <React.Fragment key={bookCardItem.id}>
       <View
@@ -41,9 +43,11 @@ const BookCardItemHorizontal: React.FC<BookCardItemHorizontalProps> = ({
               height: 60,
             }}
           >
-            <Text style={styles.title} numberOfLines={2}>
-              {bookCardItem.name}
-            </Text>
+            <BookTitle
+              style={styles.title}
+              navigation={navigation}
+              book={bookCardItem}
+            />
             <Layouts.VSpace value={8} />
             <Text style={styles.subTitle}>{bookCardItem.author}</Text>
           </View>
@@ -90,7 +94,6 @@ const styles = StyleSheet.create({
     lineHeight: 10,
   },
   title: {
-    ...FONT_STYLES.SEMIBOLD_16,
     color: COLORS.primaryWhite,
   },
 });

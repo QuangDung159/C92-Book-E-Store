@@ -1,3 +1,4 @@
+import { useNavigation } from 'expo-router';
 import React from 'react';
 import {
   Dimensions,
@@ -12,6 +13,7 @@ import {
   AddToCartButton,
   BookCardCarousel,
   BookCardPrice,
+  BookTitle,
   Icons,
   Layouts,
 } from '@components';
@@ -31,6 +33,8 @@ const BookCardItemComplex: React.FC<BookCardItemComplexProps> = ({
 
   const carouselWidth = width - 48;
   const carouselHeight = carouselWidth * 0.6;
+
+  const navigation = useNavigation();
 
   const data = [
     ImageAssets.bookImage1,
@@ -61,7 +65,7 @@ const BookCardItemComplex: React.FC<BookCardItemComplexProps> = ({
           />
         </View>
         <Layouts.VSpace value={12} />
-        <Text style={styles.title}>{bookCardItem.name}</Text>
+        <BookTitle navigation={navigation} book={bookCardItem} />
         <Text style={styles.stock}>{bookCardItem.author}</Text>
         <Layouts.VSpace value={6} />
         <Text style={styles.stock}>{bookCardItem.category}</Text>
@@ -101,9 +105,6 @@ const styles = StyleSheet.create({
   image: {
     width: 200 * 0.64,
     height: 200,
-  },
-  title: {
-    ...FONT_STYLES.BOLD_16,
   },
   stock: {
     ...FONT_STYLES.SEMIBOLD_10,
