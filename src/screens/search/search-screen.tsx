@@ -14,6 +14,7 @@ import { LIST_SORT_OPTION, SEARCH_VIEW_STYLE, TOP_BOOKS } from '@constants';
 import { useNavigate } from '@hooks';
 import { referenceOptionsStore, searchStore } from '@store';
 import { COLORS } from '@themes';
+import { StringHelpers } from '@utils';
 import { ListChipByListFilter, SortPopup, SortSection } from './components';
 
 const SearchScreen = ({ route, navigation }: any) => {
@@ -44,7 +45,7 @@ const SearchScreen = ({ route, navigation }: any) => {
           )}
 
           <Chip
-            label={`${searchStore.searchFilter.min}đ - ${searchStore.searchFilter.max}đ`}
+            label={`${StringHelpers.formatCurrency(searchStore.searchFilter.min)} - ${StringHelpers.formatCurrency(searchStore.searchFilter.max)}`}
             onRemove={() => {}}
             value={`${searchStore.searchFilter.min}đ - ${searchStore.searchFilter.max}đ`}
             showRemove

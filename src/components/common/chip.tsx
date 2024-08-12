@@ -1,7 +1,6 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Layouts } from '@components';
+import { StyleSheet, Text, View } from 'react-native';
+import { Icons, Layouts } from '@components';
 import { COLORS, FONT_STYLES } from '@themes';
 
 interface ChipProps {
@@ -10,6 +9,7 @@ interface ChipProps {
   showRemove?: boolean;
   value: string;
   isLastItem?: boolean;
+  disabled?: boolean;
 }
 
 const Chip: React.FC<ChipProps> = ({
@@ -18,6 +18,7 @@ const Chip: React.FC<ChipProps> = ({
   showRemove,
   value,
   isLastItem,
+  disabled,
 }) => {
   return (
     <View
@@ -33,9 +34,13 @@ const Chip: React.FC<ChipProps> = ({
       {showRemove && (
         <>
           <Layouts.HSpace value={4} />
-          <TouchableOpacity onPress={onRemove}>
-            <MaterialCommunityIcons name="close-circle" size={20} />
-          </TouchableOpacity>
+          <Icons.CloseCircleIcon
+            size={20}
+            onPress={() => {
+              onRemove?.();
+            }}
+            disabled={disabled}
+          />
         </>
       )}
     </View>

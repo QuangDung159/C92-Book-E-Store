@@ -52,20 +52,8 @@ const SearchBar: React.FC<SearchBarProps> = ({
             flex: 1,
           }}
         >
-          <Text
-            style={{
-              ...FONT_STYLES.SEMIBOLD_16,
-            }}
-          >
-            Good afternoon! My friend
-          </Text>
-          <Text
-            style={{
-              ...FONT_STYLES.THIN_14,
-            }}
-          >
-            Ho Chi Minh City
-          </Text>
+          <Text style={styles.goodText}>Good afternoon, Joe!</Text>
+          <Text style={styles.position}>Ho Chi Minh City</Text>
         </View>
       )}
       <Layouts.HSpace value={8} />
@@ -95,6 +83,12 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
+  },
+  goodText: {
+    ...FONT_STYLES.SEMIBOLD_16,
+  },
+  position: {
+    ...FONT_STYLES.THIN_14,
   },
 });
 
