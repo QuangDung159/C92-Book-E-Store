@@ -1,8 +1,20 @@
-import { Image } from 'expo-image';
 import React from 'react';
-import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
+import {
+  Dimensions,
+  StyleProp,
+  StyleSheet,
+  Text,
+  View,
+  ViewStyle,
+} from 'react-native';
 import { ImageAssets } from '@assets';
-import { AddToCartButton, BookCardPrice, Icons, Layouts } from '@components';
+import {
+  AddToCartButton,
+  BookCardCarousel,
+  BookCardPrice,
+  Icons,
+  Layouts,
+} from '@components';
 import { DataModels } from '@models';
 import { COLORS, FONT_STYLES } from '@themes';
 
@@ -15,22 +27,37 @@ const BookCardItemComplex: React.FC<BookCardItemComplexProps> = ({
   bookCardItem,
   containerStyle,
 }) => {
+  const { width } = Dimensions.get('window');
+
+  const carouselWidth = width - 48;
+  const carouselHeight = carouselWidth * 0.6;
+
+  const data = [
+    ImageAssets.bookImage1,
+    ImageAssets.bookImage1,
+    ImageAssets.bookImage1,
+    ImageAssets.bookImage1,
+    ImageAssets.bookImage1,
+    ImageAssets.bookImage1,
+  ];
+
   return (
     <React.Fragment key={bookCardItem.id}>
       <View style={[styles.container, containerStyle]}>
         <View style={styles.imageWrapper}>
-          <View style={styles.likeViewIcon}>
+          <View style={styles.heartIconWrapper}>
             {bookCardItem.isLiked ? (
               <Icons.HeartIcon size={20} />
             ) : (
               <Icons.HeartOutlineIcon size={20} />
             )}
           </View>
-          <Image
-            style={styles.image}
-            source={ImageAssets.bookImage1}
-            contentFit="contain"
-            transition={500}
+          <BookCardCarousel
+            carouselHeight={carouselHeight}
+            carouselWidth={carouselWidth}
+            data={data}
+            imageStyle={styles.image}
+            dotStyle={styles.dot}
           />
         </View>
         <Layouts.VSpace value={12} />
@@ -65,7 +92,7 @@ const styles = StyleSheet.create({
   imageWrapper: {
     alignItems: 'center',
   },
-  likeViewIcon: {
+  heartIconWrapper: {
     position: 'absolute',
     right: 0,
     flexDirection: 'row',
@@ -88,6 +115,9 @@ const styles = StyleSheet.create({
   },
   description: {
     ...FONT_STYLES.REGULAR_14,
+  },
+  dot: {
+    marginTop: 12,
   },
 });
 
