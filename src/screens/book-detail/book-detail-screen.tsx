@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Dimensions,
   ScrollView,
@@ -59,6 +59,8 @@ const BookDetailScreen = ({ route, navigation }: any) => {
     setIsCollapseInformation(true);
     setIsCollapseReview(true);
     //
+    scrollToTop();
+    //
     delay(500).then(() => {
       setIsCollapseDescription(false);
     });
@@ -72,6 +74,14 @@ const BookDetailScreen = ({ route, navigation }: any) => {
     ImageAssets.bookImage1,
     ImageAssets.bookImage1,
   ];
+
+  const scrollRef = useRef<ScrollView>();
+
+  const scrollToTop = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({ x: 0, y: 0, animated: true });
+    }
+  };
 
   const renderRatingBar = (
     title: string,
@@ -297,7 +307,11 @@ const BookDetailScreen = ({ route, navigation }: any) => {
         }}
       />
       {book && (
-        <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          ref={scrollRef}
+          scrollEnabled={true}
+        >
           <View style={styles.imageWrapper}>
             <View style={styles.heartIconWrapper}>
               {book.isLiked ? (
