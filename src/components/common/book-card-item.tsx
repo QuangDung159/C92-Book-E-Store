@@ -8,6 +8,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
+import { StarRatingDisplay } from 'react-native-star-rating-widget';
 import { ImageAssets } from '@assets';
 import {
   BookCardCarousel,
@@ -77,8 +78,14 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
             <BookTitle navigation={navigation} book={bookCardItem} />
             <Text style={styles.stock}>{bookCardItem.author.name}</Text>
           </View>
-          <Layouts.VSpace value={6} />
-          <Text style={styles.stock}>Rating: 4.9</Text>
+          <StarRatingDisplay
+            rating={bookCardItem.rating}
+            starSize={16}
+            color={COLORS.error50}
+            starStyle={{
+              marginLeft: -2,
+            }}
+          />
           <Layouts.VSpace value={6} />
           <Text style={styles.stock}>In stock: 10 pcs</Text>
           <Layouts.VSpace value={6} />
@@ -120,7 +127,7 @@ const styles = StyleSheet.create({
     height: 60,
   },
   stock: {
-    ...FONT_STYLES.SEMIBOLD_10,
+    ...FONT_STYLES.SEMIBOLD_12,
   },
   left: {
     marginRight: 6,

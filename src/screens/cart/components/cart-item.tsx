@@ -5,12 +5,12 @@ import {
   Dimensions,
   StyleProp,
   StyleSheet,
-  Text,
   View,
   ViewStyle,
 } from 'react-native';
 import { ImageAssets } from '@assets';
 import {
+  BookCardInfo,
   BookCardPrice,
   BookTitle,
   CartUpdateNumber,
@@ -66,13 +66,7 @@ const CartItem: React.FC<CartItemProps> = ({
               <Layouts.MaxSpace />
               <Icons.CloseIcon />
             </View>
-            <Text style={styles.stock}>{bookCartItem.author.name}</Text>
-            <Layouts.VSpace value={6} />
-            <Text style={styles.stock}>{bookCartItem.category.name}</Text>
-            <Layouts.VSpace value={6} />
-            <Text style={styles.stock}>Rating: 4.9</Text>
-            <Layouts.VSpace value={6} />
-            <Text style={styles.stock}>In stock: 10 pcs</Text>
+            <BookCardInfo book={bookCartItem} />
           </View>
         </View>
         <View style={styles.priceWrapper}>
@@ -109,9 +103,6 @@ const styles = StyleSheet.create({
   },
   title: {
     width: '90%',
-  },
-  stock: {
-    ...FONT_STYLES.SEMIBOLD_10,
   },
   priceWrapper: {
     marginHorizontal: 12,

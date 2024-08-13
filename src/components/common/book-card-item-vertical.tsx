@@ -5,13 +5,13 @@ import {
   Dimensions,
   StyleProp,
   StyleSheet,
-  Text,
   View,
   ViewStyle,
 } from 'react-native';
 import { ImageAssets } from '@assets';
 import {
   AddToCartButton,
+  BookCardInfo,
   BookCardPrice,
   BookTitle,
   Icons,
@@ -70,13 +70,7 @@ const BookCardItemVertical: React.FC<BookCardItemVerticalProps> = ({
                 <Icons.HeartOutlineIcon size={20} />
               )}
             </View>
-            <Text style={styles.stock}>{bookCardItem.author.name}</Text>
-            <Layouts.VSpace value={6} />
-            <Text style={styles.stock}>{bookCardItem.category.name}</Text>
-            <Layouts.VSpace value={6} />
-            <Text style={styles.stock}>Rating: 4.9</Text>
-            <Layouts.VSpace value={6} />
-            <Text style={styles.stock}>In stock: 10 pcs</Text>
+            <BookCardInfo book={bookCardItem} />
           </View>
         </View>
         <View style={styles.priceWrapper}>
@@ -113,9 +107,6 @@ const styles = StyleSheet.create({
   },
   title: {
     width: '90%',
-  },
-  stock: {
-    ...FONT_STYLES.SEMIBOLD_10,
   },
   priceWrapper: {
     marginHorizontal: 12,

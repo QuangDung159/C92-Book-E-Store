@@ -1,5 +1,6 @@
 export * from './add-to-cart-button';
 export * from './book-card-carousel';
+export * from './book-card-info';
 export * from './book-card-item';
 export * from './book-card-item-complex';
 export * from './book-card-item-horizontal';

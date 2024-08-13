@@ -12,6 +12,7 @@ import { ImageAssets } from '@assets';
 import {
   AddToCartButton,
   BookCardCarousel,
+  BookCardInfo,
   BookCardPrice,
   BookTitle,
   Icons,
@@ -33,7 +34,6 @@ const BookCardItemComplex: React.FC<BookCardItemComplexProps> = ({
 
   const carouselWidth = width - 48;
   const carouselHeight = carouselWidth * 0.6;
-
   const navigation = useNavigation();
 
   const data = [
@@ -66,13 +66,8 @@ const BookCardItemComplex: React.FC<BookCardItemComplexProps> = ({
         </View>
         <Layouts.VSpace value={12} />
         <BookTitle navigation={navigation} book={bookCardItem} />
-        <Text style={styles.stock}>{bookCardItem.author.name}</Text>
         <Layouts.VSpace value={6} />
-        <Text style={styles.stock}>{bookCardItem.category.name}</Text>
-        <Layouts.VSpace value={6} />
-        <Text style={styles.stock}>Rating: 4.9</Text>
-        <Layouts.VSpace value={6} />
-        <Text style={styles.stock}>In stock: 10 pcs</Text>
+        <BookCardInfo book={bookCardItem} />
         <Layouts.VSpace value={6} />
         <Text style={styles.description}>{bookCardItem.description}</Text>
         <Layouts.VSpace value={6} />
@@ -105,9 +100,6 @@ const styles = StyleSheet.create({
   image: {
     width: 200 * 0.64,
     height: 200,
-  },
-  stock: {
-    ...FONT_STYLES.SEMIBOLD_10,
   },
   priceWrapper: {
     marginTop: 4,
