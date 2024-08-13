@@ -29,10 +29,17 @@ export const useNavigate = (navigation: any) => {
     });
   };
 
+  const openPaymentScreen = () => {
+    navigation.navigate(SCREEN_NAME.CART_NAVIGATOR, {
+      screen: SCREEN_NAME.PAYMENT_SCREEN,
+    });
+  };
+
   return {
     openSearchScreen,
     openFilterScreen,
     openBookDetailScreen,
     openCartScreen,
+    openPaymentScreen,
   };
 };

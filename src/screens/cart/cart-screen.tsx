@@ -2,12 +2,15 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Buttons, Layouts, ScreenHeader } from '@components';
+import { useNavigate } from '@hooks';
 import { searchStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { StringHelpers } from '@utils';
 import { ListCartItem } from './components/list-cart-item';
 
 const CartScreen = ({ navigation }: any) => {
+  const { openPaymentScreen } = useNavigate(navigation);
+
   const renderOrderInfoRow = (
     title: string,
     value: number,
@@ -54,7 +57,7 @@ const CartScreen = ({ navigation }: any) => {
           </Text>
           <Buttons.CButton
             onPress={() => {
-              navigation.goBack();
+              openPaymentScreen();
             }}
             label="Checkout"
             buttonType="primary"

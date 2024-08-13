@@ -8,7 +8,7 @@ const PaymentScreen = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
       <ScreenHeader
-        title="Filter"
+        title="Checkout"
         navigation={navigation}
         onGoBack={() => {}}
       />
