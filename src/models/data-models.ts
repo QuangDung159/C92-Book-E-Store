@@ -6,6 +6,11 @@ export interface IBook {
   author: string;
   category: string;
   description?: string;
+  rating?: number;
+  pageCount?: number;
+  height?: number;
+  width?: number;
+  thick?: number;
 }
 
 export interface ITopBooksFilter {

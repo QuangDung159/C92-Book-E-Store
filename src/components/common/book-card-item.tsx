@@ -88,6 +88,9 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
             onPress={() => {}}
             buttonType="primary"
             label="Add to cart"
+            style={{
+              borderRadius: 50,
+            }}
           />
         </View>
       </View>

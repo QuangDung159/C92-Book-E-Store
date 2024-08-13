@@ -2,8 +2,9 @@ import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
 import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Collapsible from 'react-native-collapsible';
+import { StarRatingDisplay } from 'react-native-star-rating-widget';
 import { ImageAssets } from '@assets';
-import { BookCardCarousel, Icons, Layouts } from '@components';
+import { AddToCartButton, BookCardCarousel, Icons, Layouts } from '@components';
 import { DataModels } from '@models';
 import { COLORS, FONT_STYLES } from '@themes';
 import { InformationTitle, InfoRow } from './components';
@@ -60,19 +61,29 @@ const BookDetailScreen = ({ route, navigation }: any) => {
         <Layouts.VSpace value={12} />
         <Text
           style={{
-            ...FONT_STYLES.BOLD_18,
+            ...FONT_STYLES.BOLD_22,
           }}
         >
           {book.name}
         </Text>
         <Layouts.VSpace value={12} />
-        <Text
+        <View
           style={{
-            ...FONT_STYLES.REGULAR_14,
+            flexDirection: 'row',
+            alignItems: 'center',
           }}
         >
-          Rating: 4.9
-        </Text>
+          {/* <StarRating starSize={24} rating={rating} onChange={setRating} /> */}
+          <StarRatingDisplay rating={book.rating} starSize={24} />
+          <Layouts.MaxSpace />
+          <Text
+            style={{
+              ...FONT_STYLES.REGULAR_14,
+            }}
+          >
+            5 review(s)
+          </Text>
+        </View>
         <Layouts.VSpace value={12} />
         <Text
           style={{
@@ -81,7 +92,16 @@ const BookDetailScreen = ({ route, navigation }: any) => {
         >
           Stock: 12 pcs
         </Text>
-        <Layouts.VSpace value={12} />
+        <Layouts.VSpace value={24} />
+        <AddToCartButton
+          itemCount={1}
+          containerStyle={{
+            flexDirection: 'row',
+            alignSelf: 'center',
+          }}
+          buttonType="text-icon"
+        />
+        <Layouts.VSpace value={24} />
         <InformationTitle
           isCollapse={isCollapseDescription}
           setIsCollapse={(isCollapse) => {
