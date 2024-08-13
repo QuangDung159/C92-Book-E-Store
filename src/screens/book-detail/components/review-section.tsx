@@ -34,51 +34,14 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
   const renderComment = (review: DataModels.IReview) => {
     return (
       <View>
-        <View
-          style={{
-            borderTopWidth: 1,
-            paddingTop: 24,
-            borderTopColor: COLORS.gray200,
-          }}
-        >
-          <View
-            style={{
-              flexDirection: 'row',
-            }}
-          >
-            <View
-              style={{
-                height: 40,
-                width: 40,
-                backgroundColor: COLORS.gray,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 40,
-              }}
-            >
-              <Text
-                style={{
-                  ...FONT_STYLES.BOLD_22,
-                  color: COLORS.primaryWhite,
-                }}
-              >
-                {review.userName[0]}
-              </Text>
+        <View style={styles.listCommentContainer}>
+          <View style={styles.commentHeader}>
+            <View style={styles.commentUserNameWrapper}>
+              <Text style={styles.commentUserName}>{review.userName[0]}</Text>
             </View>
             <Layouts.HSpace value={12} />
-            <View
-              style={{
-                justifyContent: 'space-between',
-                alignSelf: 'center',
-                flexShrink: 2,
-              }}
-            >
-              <Text
-                style={{
-                  ...FONT_STYLES.BOLD_14,
-                }}
-                numberOfLines={2}
-              >
+            <View style={styles.commnetUserNameTextWrapper}>
+              <Text style={styles.commentUserFullName} numberOfLines={2}>
                 {review.userName}
               </Text>
               <Text
@@ -248,26 +211,13 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
       <View style={styles.container}>
         <View>
           <View style={styles.ratingContainer}>
-            <Text
-              style={{
-                ...FONT_STYLES.BOLD_22,
-              }}
-            >
-              {book.rating}
-            </Text>
+            <Text style={styles.ratingText}>{book.rating}</Text>
           </View>
-          <View
-            style={{
-              marginLeft: -3,
-              marginTop: 8,
-            }}
-          >
+          <View style={styles.ratingStar}>
             <StarRatingDisplay
               rating={book.rating}
               starSize={20}
-              starStyle={{
-                marginRight: -6,
-              }}
+              starStyle={styles.starStyle}
               color={COLORS.error50}
             />
           </View>
@@ -277,28 +227,13 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
               setListReview(book.reviews || []);
             }}
           >
-            <View
-              style={{
-                alignItems: 'center',
-              }}
-            >
-              <Text
-                style={{
-                  ...FONT_STYLES.BOLD_14,
-                }}
-              >
-                {`${(book.reviews || []).length} review(s)`}
-              </Text>
-            </View>
+            <Text style={styles.reviewText}>
+              {`${(book.reviews || []).length} review(s)`}
+            </Text>
           </TouchableOpacity>
         </View>
         <Layouts.HSpace value={24} />
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'flex-start',
-          }}
-        >
+        <View style={styles.ratingBarContainer}>
           {renderRatingBar(
             '5',
             countNumberReview()[4].percent,
@@ -354,6 +289,52 @@ const styles = StyleSheet.create({
     height: 60,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  ratingText: {
+    ...FONT_STYLES.BOLD_22,
+  },
+  ratingStar: {
+    marginLeft: -3,
+    marginTop: 8,
+  },
+  starStyle: {
+    marginRight: -6,
+  },
+  reviewText: {
+    ...FONT_STYLES.BOLD_14,
+    textAlign: 'center',
+  },
+  ratingBarContainer: {
+    flex: 1,
+    justifyContent: 'flex-start',
+  },
+  listCommentContainer: {
+    borderTopWidth: 1,
+    paddingTop: 24,
+    borderTopColor: COLORS.gray200,
+  },
+  commentHeader: {
+    flexDirection: 'row',
+  },
+  commentUserNameWrapper: {
+    height: 40,
+    width: 40,
+    backgroundColor: COLORS.gray,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 40,
+  },
+  commentUserName: {
+    ...FONT_STYLES.BOLD_22,
+    color: COLORS.primaryWhite,
+  },
+  commnetUserNameTextWrapper: {
+    justifyContent: 'space-between',
+    alignSelf: 'center',
+    flexShrink: 2,
+  },
+  commentUserFullName: {
+    ...FONT_STYLES.BOLD_14,
   },
 });
 
