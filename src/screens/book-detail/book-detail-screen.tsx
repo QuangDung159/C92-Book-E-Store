@@ -259,6 +259,9 @@ const BookDetailScreen = ({ route, navigation }: any) => {
         onDismiss={() => {
           setIsShowReviewPopup(false);
         }}
+        onSubmit={(data) => {
+          console.log('data :>> ', data);
+        }}
       />
       <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}>
         <View style={styles.imageWrapper}>
@@ -301,11 +304,13 @@ const BookDetailScreen = ({ route, navigation }: any) => {
             alignItems: 'center',
           }}
         >
-          {/* <StarRating starSize={24} rating={rating} onChange={setRating} /> */}
           <StarRatingDisplay
             rating={book.rating}
             starSize={24}
             color={COLORS.error50}
+            starStyle={{
+              marginLeft: -2,
+            }}
           />
           <Layouts.MaxSpace />
           <TouchableOpacity

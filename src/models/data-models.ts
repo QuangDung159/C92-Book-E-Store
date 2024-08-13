@@ -1,3 +1,10 @@
+export interface IReviewInput {
+  rating: number;
+  createdAt: string; // MM/dd/yyyy hh:mm:ss tt
+  content: string;
+  userName: string;
+}
+
 export interface IReview {
   rating: number;
   createdAt: string; // MM/dd/yyyy hh:mm:ss tt

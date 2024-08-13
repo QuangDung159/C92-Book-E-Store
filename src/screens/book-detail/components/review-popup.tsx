@@ -1,18 +1,28 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useRef } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import StarRating from 'react-native-star-rating-widget';
 import { Buttons, Inputs, Layouts } from '@components';
-import { PopupHeader } from 'components/layouts';
+import { DataModels } from '@models';
+import { FONT_STYLES } from '@themes';
+import { ReviewViewModel } from '../view-models';
 
 interface ReviewPopupProps {
   visible: boolean;
   onDismiss: () => void;
+  onSubmit: (data: DataModels.IReviewInput) => void;
 }
 
-const ReviewPopup: React.FC<ReviewPopupProps> = ({ visible, onDismiss }) => {
+const ReviewPopup: React.FC<ReviewPopupProps> = ({
+  visible,
+  onDismiss,
+  onSubmit,
+}) => {
+  const reviewVM = useRef(new ReviewViewModel()).current;
+
   return (
     <Layouts.BottomPopup visible={visible}>
-      <PopupHeader
+      <Layouts.PopupHeader
         label="Leave your review"
         onDismiss={() => {
           onDismiss();
@@ -22,15 +32,55 @@ const ReviewPopup: React.FC<ReviewPopupProps> = ({ visible, onDismiss }) => {
         <Inputs.CTextInput
           label="Your name *"
           placeholder="Please enter your name"
+          onChangeText={(value) => {
+            reviewVM.setReview({
+              ...reviewVM.review,
+              userName: value,
+            });
+          }}
         />
         <Layouts.VSpace value={16} />
-        <Inputs.CTextInput multiline label="Your name *" />
+        <Text
+          style={{
+            ...FONT_STYLES.BOLD_16,
+          }}
+        >
+          Rating
+        </Text>
+        <Layouts.VSpace value={8} />
+        <StarRating
+          starSize={30}
+          rating={reviewVM.review?.rating}
+          onChange={(value) => {
+            reviewVM.setReview({
+              ...reviewVM.review,
+              rating: value,
+            });
+          }}
+          enableHalfStar={false}
+          style={{
+            marginLeft: -8,
+          }}
+        />
+        <Layouts.VSpace value={16} />
+        <Inputs.CTextInput
+          multiline
+          label="Your review"
+          placeholder="Please enter your review"
+          onChangeText={(value) => {
+            reviewVM.setReview({
+              ...reviewVM.review,
+              content: value,
+            });
+          }}
+        />
       </View>
       <Layouts.VSpace value={24} />
       <Buttons.CButton
         label="Submit"
         onPress={() => {
           onDismiss();
+          onSubmit(reviewVM.review);
         }}
         buttonType="primary"
       />

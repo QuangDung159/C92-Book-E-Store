@@ -67,12 +67,12 @@ const CTextInput: FC<CTextInputProps> = ({
       )}
       <TextInput
         multiline={multiline}
-        numberOfLines={multiline ? 6 : 1}
+        numberOfLines={multiline ? 4 : 1}
         placeholder={placeholder}
         style={[
           styles.searchInput,
           multiline && {
-            height: 180,
+            height: 120,
           },
           style,
         ]}
