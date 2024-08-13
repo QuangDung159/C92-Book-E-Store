@@ -20,15 +20,15 @@ const ReviewPopup: React.FC<ReviewPopupProps> = ({
 }) => {
   const reviewVM = useRef(new ReviewViewModel()).current;
 
+  const closePopup = () => {
+    onDismiss();
+    reviewVM.resetReview();
+  };
+
   return (
     <Layouts.BottomPopup visible={visible}>
-      <Layouts.PopupHeader
-        label="Leave your review"
-        onDismiss={() => {
-          onDismiss();
-        }}
-      />
-      <View style={styles.contentWrapper}>
+      <Layouts.PopupHeader label="Leave your review" onDismiss={closePopup} />
+      <View>
         <Inputs.CTextInput
           label="Your name *"
           placeholder="Please enter your name"
@@ -40,13 +40,7 @@ const ReviewPopup: React.FC<ReviewPopupProps> = ({
           }}
         />
         <Layouts.VSpace value={16} />
-        <Text
-          style={{
-            ...FONT_STYLES.BOLD_16,
-          }}
-        >
-          Rating
-        </Text>
+        <Text style={styles.title}>Rating</Text>
         <Layouts.VSpace value={8} />
         <StarRating
           starSize={30}
@@ -58,9 +52,7 @@ const ReviewPopup: React.FC<ReviewPopupProps> = ({
             });
           }}
           enableHalfStar={false}
-          style={{
-            marginLeft: -8,
-          }}
+          style={styles.rating}
         />
         <Layouts.VSpace value={16} />
         <Inputs.CTextInput
@@ -79,7 +71,7 @@ const ReviewPopup: React.FC<ReviewPopupProps> = ({
       <Buttons.CButton
         label="Submit"
         onPress={() => {
-          onDismiss();
+          closePopup();
           onSubmit(reviewVM.review);
         }}
         buttonType="primary"
@@ -90,7 +82,12 @@ const ReviewPopup: React.FC<ReviewPopupProps> = ({
 };
 
 const styles = StyleSheet.create({
-  contentWrapper: {},
+  title: {
+    ...FONT_STYLES.BOLD_16,
+  },
+  rating: {
+    marginLeft: -8,
+  },
 });
 
 const observable = observer(ReviewPopup);
