@@ -77,7 +77,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
           const listByStar = book?.reviews?.filter(
             (item) => item.rating === +title,
           );
-
+          //
           setListReview(listByStar);
         }}
       >
@@ -490,7 +490,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
                       ...FONT_STYLES.BOLD_14,
                     }}
                   >
-                    {book.reviews?.length} review(s)
+                    {`${(book.reviews || []).length} review(s)`}
                   </Text>
                 </View>
               </TouchableOpacity>
