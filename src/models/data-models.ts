@@ -32,6 +32,36 @@ export interface IBook {
   publisher?: IPublisher;
 }
 
+export interface ICartItem {
+  id: string;
+  book: IBook;
+  count: number;
+}
+
+export interface IShippingAddress {
+  id: string;
+  address: string;
+  district: string;
+  ward: string;
+  city: string;
+}
+
+export interface IPaymentMethod {
+  id: string;
+  paymentType: string;
+  paymentInfo: any;
+}
+
+export interface ICart {
+  id: string;
+  listCartItem: ICartItem[];
+  subTotal: number;
+  shipping: number;
+  discount: number;
+  shippingAddress: string;
+  paymentMethod: string;
+}
+
 export interface ITopBooksFilter {
   value: string;
   label: string;
