@@ -418,7 +418,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
           <Collapsible collapsed={isCollapseInformation}>
             <InfoRow
               title="Category"
-              value={book.category}
+              value={book.category.name}
               hasCheckBox
               onCheck={(value) => {
                 setSearchFilter({

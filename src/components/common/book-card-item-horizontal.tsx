@@ -36,7 +36,7 @@ const BookCardItemHorizontal: React.FC<BookCardItemHorizontalProps> = ({
           />
         </View>
         <View style={styles.info}>
-          <Text style={styles.subTitle}>{bookCardItem.category}</Text>
+          <Text style={styles.subTitle}>{bookCardItem.category.name}</Text>
           <Layouts.VSpace value={4} />
           <View
             style={{

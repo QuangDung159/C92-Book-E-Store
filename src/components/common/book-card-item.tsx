@@ -71,7 +71,7 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
         />
         <Layouts.VSpace value={12} />
         <View style={styles.info}>
-          <Text style={styles.stock}>{bookCardItem.category}</Text>
+          <Text style={styles.stock}>{bookCardItem.category.name}</Text>
           <Layouts.VSpace value={4} />
           <View style={styles.inforSection}>
             <BookTitle navigation={navigation} book={bookCardItem} />
