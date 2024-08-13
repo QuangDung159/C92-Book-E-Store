@@ -31,7 +31,6 @@ const SearchScreen = ({ route, navigation }: any) => {
 
   useEffect(() => {
     const searchFilter = route.params?.searchFilter;
-    console.log('searchFilter :>> ', searchFilter);
     if (searchFilter) {
       searchStore.setSearchFilter({
         ...searchStore.searchFilter,
