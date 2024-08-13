@@ -4,6 +4,7 @@ export interface IReview {
   content: string;
   userName: string;
   avartar?: string;
+  id: string;
 }
 export interface IBook {
   id: string;

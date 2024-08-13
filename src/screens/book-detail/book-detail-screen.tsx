@@ -159,6 +159,77 @@ const BookDetailScreen = ({ route, navigation }: any) => {
     ];
   };
 
+  const renderComment = (review: DataModels.IReview) => {
+    return (
+      <View>
+        <View
+          style={{
+            borderTopWidth: 1,
+            paddingTop: 24,
+            borderTopColor: COLORS.gray200,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: 'row',
+            }}
+          >
+            <View
+              style={{
+                height: 40,
+                width: 40,
+                backgroundColor: COLORS.gray,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 40,
+              }}
+            >
+              <Text
+                style={{
+                  ...FONT_STYLES.BOLD_22,
+                  color: COLORS.primaryWhite,
+                }}
+              >
+                {review.userName[0]}
+              </Text>
+            </View>
+            <Layouts.HSpace value={12} />
+            <View
+              style={{
+                justifyContent: 'space-between',
+                alignSelf: 'center',
+              }}
+            >
+              <Text
+                style={{
+                  ...FONT_STYLES.BOLD_14,
+                }}
+              >
+                {review.userName}
+              </Text>
+              <Text
+                style={{
+                  ...FONT_STYLES.REGULAR_10,
+                }}
+              >
+                {review.createdAt}
+              </Text>
+            </View>
+          </View>
+          <Layouts.VSpace value={12} />
+          <Text
+            style={{
+              ...FONT_STYLES.REGULAR_14,
+            }}
+          >
+            {review.content}
+          </Text>
+        </View>
+        <Layouts.VSpace value={24} />
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}>
@@ -388,6 +459,14 @@ const BookDetailScreen = ({ route, navigation }: any) => {
               )}
             </View>
           </View>
+          <Layouts.VSpace value={24} />
+          {book.reviews?.map((item) => {
+            return (
+              <React.Fragment key={item.id}>
+                {renderComment(item)}
+              </React.Fragment>
+            );
+          })}
         </Collapsible>
         <Layouts.VSpace value={24} />
       </ScrollView>
