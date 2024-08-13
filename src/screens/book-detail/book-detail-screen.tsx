@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import Collapsible from 'react-native-collapsible';
+import { MD3Colors, ProgressBar } from 'react-native-paper';
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
 import { ImageAssets } from '@assets';
 import { AddToCartButton, BookCardCarousel, Icons, Layouts } from '@components';
@@ -24,6 +25,8 @@ const BookDetailScreen = ({ route, navigation }: any) => {
   const carouselWidth = width - 48;
   const carouselHeight = carouselWidth * 0.6;
 
+  const ratingBarWidth = width - 48 - 100 - 24 - 80 - 5;
+
   const [isCollapseDescription, setIsCollapseDescription] = useState(false);
   const [isCollapseInformation, setIsCollapseInformation] = useState(true);
   const [isCollapseReview, setIsCollapseReview] = useState(true);
@@ -36,6 +39,125 @@ const BookDetailScreen = ({ route, navigation }: any) => {
     ImageAssets.bookImage1,
     ImageAssets.bookImage1,
   ];
+
+  const renderRatingBar = (
+    title: string,
+    value: number,
+    ratingCount: number,
+  ) => {
+    return (
+      <>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <Text
+            style={{
+              ...FONT_STYLES.SEMIBOLD_14,
+            }}
+          >
+            {title} starts
+          </Text>
+          <ProgressBar
+            style={{
+              width: ratingBarWidth,
+              borderRadius: 10,
+              height: 8,
+            }}
+            progress={value}
+            color={MD3Colors.error50}
+          />
+          <Text
+            style={{
+              ...FONT_STYLES.SEMIBOLD_14,
+            }}
+          >
+            {ratingCount}
+          </Text>
+        </View>
+        <Layouts.VSpace value={8} />
+      </>
+    );
+  };
+
+  const countNumberReview = () => {
+    if (!book.reviews || book.reviews.length === 0) {
+      return [
+        {
+          count: 0,
+          percent: 0,
+        },
+        {
+          count: 0,
+          percent: 0,
+        },
+        {
+          count: 0,
+          percent: 0,
+        },
+        {
+          count: 0,
+          percent: 0,
+        },
+        {
+          count: 0,
+          percent: 0,
+        },
+      ];
+    }
+
+    let count1 = 0;
+    let count2 = 0;
+    let count3 = 0;
+    let count4 = 0;
+    let count5 = 0;
+    book.reviews.forEach((item) => {
+      switch (item.rating) {
+        case 1:
+          count1 += 1;
+          break;
+        case 2:
+          count2 += 1;
+          break;
+        case 3:
+          count3 += 1;
+          break;
+        case 4:
+          count4 += 1;
+          break;
+        default:
+        case 5:
+          count5 += 1;
+          break;
+      }
+    });
+
+    return [
+      {
+        count: count1,
+        percent: count1 !== 0 ? 1 / count1 : 0,
+      },
+      {
+        count: count2,
+        percent: count2 !== 0 ? 1 / count2 : 0,
+      },
+      {
+        count: count3,
+        percent: count3 !== 0 ? 1 / count3 : 0,
+      },
+      {
+        count: count4,
+        percent: count4 !== 0 ? 1 / count4 : 0,
+      },
+      {
+        count: count5,
+        percent: count5 !== 0 ? 1 / count5 : 0,
+      },
+    ];
+  };
 
   return (
     <View style={styles.container}>
@@ -143,7 +265,6 @@ const BookDetailScreen = ({ route, navigation }: any) => {
         <InformationTitle
           isCollapse={isCollapseInformation}
           setIsCollapse={(isCollapse) => {
-            console.log('isCollapse :>> ', isCollapse);
             if (!isCollapse) {
               setIsCollapseInformation(isCollapse);
               setIsCollapseDescription(!isCollapse);
@@ -174,11 +295,99 @@ const BookDetailScreen = ({ route, navigation }: any) => {
         />
         <Layouts.VSpace value={12} />
         <Collapsible collapsed={isCollapseReview}>
-          <InfoRow title="Form" value="Form 1" />
-          <InfoRow title="Form" value="Form 1" />
-          <InfoRow title="Form" value="Form 1" />
-          <InfoRow title="Form" value="Form 1" />
-          <InfoRow title="Form" value="Form 1" />
+          <View
+            style={{
+              flexDirection: 'row',
+            }}
+          >
+            <View>
+              <View
+                style={{
+                  width: 100,
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: COLORS.gray200,
+                    borderRadius: 8,
+                    width: 100,
+                    height: 60,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Text
+                    style={{
+                      ...FONT_STYLES.BOLD_22,
+                    }}
+                  >
+                    4.55
+                  </Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  marginLeft: -3,
+                  marginTop: 8,
+                }}
+              >
+                <StarRatingDisplay
+                  rating={book.rating}
+                  starSize={20}
+                  starStyle={{
+                    marginRight: -6,
+                  }}
+                />
+              </View>
+              <Layouts.VSpace value={8} />
+              <View
+                style={{
+                  alignItems: 'center',
+                }}
+              >
+                <Text
+                  style={{
+                    ...FONT_STYLES.BOLD_14,
+                  }}
+                >
+                  {book.reviews?.length} review(s)
+                </Text>
+              </View>
+            </View>
+            <Layouts.HSpace value={24} />
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'flex-start',
+              }}
+            >
+              {renderRatingBar(
+                '5',
+                countNumberReview()[4].percent,
+                countNumberReview()[4].count,
+              )}
+              {renderRatingBar(
+                '4',
+                countNumberReview()[3].percent,
+                countNumberReview()[3].count,
+              )}
+              {renderRatingBar(
+                '3',
+                countNumberReview()[2].percent,
+                countNumberReview()[2].count,
+              )}
+              {renderRatingBar(
+                '2',
+                countNumberReview()[1].percent,
+                countNumberReview()[1].count,
+              )}
+              {renderRatingBar(
+                '1',
+                countNumberReview()[0].percent,
+                countNumberReview()[0].count,
+              )}
+            </View>
+          </View>
         </Collapsible>
         <Layouts.VSpace value={24} />
       </ScrollView>
