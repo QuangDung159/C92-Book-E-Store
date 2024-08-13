@@ -130,30 +130,61 @@ const THIN_18: TextStyle = {
   fontWeight: '200',
 };
 
+const FONT_20: TextStyle = {
+  lineHeight: 22,
+  fontSize: 20,
+  color: '#121212',
+};
+
+const BOLD_20: TextStyle = {
+  ...FONT_20,
+  fontWeight: 'bold',
+};
+
+const REGULAR_20: TextStyle = {
+  ...FONT_20,
+  fontWeight: 'regular',
+};
+
+const SEMIBOLD_20: TextStyle = {
+  ...FONT_20,
+  fontWeight: '600',
+};
+
+const THIN_20: TextStyle = {
+  ...FONT_20,
+  fontWeight: '200',
+};
+
 export {
   BOLD_10,
   BOLD_14,
   BOLD_16,
   BOLD_18,
+  BOLD_20,
   BOLD_22,
   FONT_10,
   FONT_14,
   FONT_16,
   FONT_18,
+  FONT_20,
   FONT_22,
   REGULAR_10,
   REGULAR_14,
   REGULAR_16,
   REGULAR_18,
+  REGULAR_20,
   REGULAR_22,
   SEMIBOLD_10,
   SEMIBOLD_14,
   SEMIBOLD_16,
   SEMIBOLD_18,
+  SEMIBOLD_20,
   SEMIBOLD_22,
   THIN_10,
   THIN_14,
   THIN_16,
   THIN_18,
+  THIN_20,
   THIN_22,
 };

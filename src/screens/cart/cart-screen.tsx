@@ -8,6 +8,22 @@ import { StringHelpers } from '@utils';
 import { ListCartItem } from './components/list-cart-item';
 
 const CartScreen = ({ navigation }: any) => {
+  const renderOrderInfoRow = (
+    title: string,
+    value: number,
+    isTotal?: boolean,
+  ) => {
+    return (
+      <View style={styles.rowContainer}>
+        <Text style={[styles.rowTitle, isTotal && styles.rowTitleTotal]}>
+          {title}
+        </Text>
+        <Text style={[styles.rowValue, isTotal && styles.rowValueTotal]}>
+          {StringHelpers.formatCurrency(value)}
+        </Text>
+      </View>
+    );
+  };
   return (
     <View style={styles.container}>
       <ScreenHeader title="Cart" navigation={navigation} onGoBack={() => {}} />
@@ -17,21 +33,23 @@ const CartScreen = ({ navigation }: any) => {
         contentContainerStyle={styles.wrapper}
       >
         <ListCartItem listItem={searchStore.listBook} />
+        <View>
+          <Text style={styles.summaryTitle}>Order summary</Text>
+          <Layouts.VSpace value={12} />
+          {renderOrderInfoRow('Subtotal', 100000)}
+          <Layouts.VSpace value={12} />
+          {renderOrderInfoRow('Shipping', 10000)}
+          <Layouts.VSpace value={12} />
+          <View style={styles.divider} />
+          <Layouts.VSpace value={12} />
+          {renderOrderInfoRow('Subtotal', 100000, true)}
+        </View>
+        <Layouts.VSpace value={24} />
       </ScrollView>
       <View style={styles.buttonWrapper}>
         <Layouts.VSpace value={12} />
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Text
-            style={{
-              ...FONT_STYLES.BOLD_22,
-            }}
-          >
+        <View style={styles.totalWrapper}>
+          <Text style={styles.total}>
             {StringHelpers.formatCurrency(250000000)}
           </Text>
           <Buttons.CButton
@@ -60,6 +78,39 @@ const styles = StyleSheet.create({
     borderTopColor: COLORS.gray200,
     borderTopWidth: 1,
     height: 64,
+  },
+  //
+  rowContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  rowTitle: {
+    ...FONT_STYLES.REGULAR_16,
+  },
+  rowTitleTotal: {
+    ...FONT_STYLES.REGULAR_20,
+  },
+  rowValue: {
+    ...FONT_STYLES.BOLD_16,
+  },
+  rowValueTotal: {
+    ...FONT_STYLES.BOLD_20,
+  },
+  summaryTitle: {
+    ...FONT_STYLES.BOLD_20,
+  },
+  divider: {
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.gray200,
+  },
+  totalWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  total: {
+    ...FONT_STYLES.BOLD_22,
   },
 });
 
