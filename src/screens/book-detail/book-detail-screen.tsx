@@ -20,7 +20,7 @@ import {
   Layouts,
   ListBookCardHorizontal,
 } from '@components';
-import { TOP_BOOKS } from '@constants';
+import { CATEGORY, TOP_BOOKS } from '@constants';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
 import { referenceOptionsStore } from '@store';
@@ -422,9 +422,10 @@ const BookDetailScreen = ({ route, navigation }: any) => {
               value={book.category.name}
               hasCheckBox
               onCheck={(value) => {
+                const item = CATEGORY.find((item) => item.name === value);
                 setSearchFilter({
                   ...searchFilter,
-                  category: value,
+                  category: item?.id || '',
                 });
               }}
             />
