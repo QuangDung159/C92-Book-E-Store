@@ -29,7 +29,7 @@ const PopupHeader: React.FC<PopupHeaderProps> = ({
       <View style={styles.container}>
         <View
           style={{
-            flex: 1,
+            flex: 2,
           }}
         >
           {leftComponent
@@ -40,7 +40,7 @@ const PopupHeader: React.FC<PopupHeaderProps> = ({
         </View>
         <View
           style={{
-            flex: 1,
+            flex: 6,
             alignItems: 'center',
           }}
         >
@@ -48,7 +48,7 @@ const PopupHeader: React.FC<PopupHeaderProps> = ({
         </View>
         <View
           style={{
-            flex: 1,
+            flex: 2,
             alignItems: 'flex-end',
           }}
         >

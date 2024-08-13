@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Inputs, Layouts } from '@components';
+import { Buttons, Inputs, Layouts } from '@components';
 import { PopupHeader } from 'components/layouts';
 
 interface ReviewPopupProps {
@@ -13,7 +13,7 @@ const ReviewPopup: React.FC<ReviewPopupProps> = ({ visible, onDismiss }) => {
   return (
     <Layouts.BottomPopup visible={visible}>
       <PopupHeader
-        label="Sort"
+        label="Leave your review"
         onDismiss={() => {
           onDismiss();
         }}
@@ -26,7 +26,15 @@ const ReviewPopup: React.FC<ReviewPopupProps> = ({ visible, onDismiss }) => {
         <Layouts.VSpace value={16} />
         <Inputs.CTextInput multiline label="Your name *" />
       </View>
-      <Layouts.VSpace value={12} />
+      <Layouts.VSpace value={24} />
+      <Buttons.CButton
+        label="Submit"
+        onPress={() => {
+          onDismiss();
+        }}
+        buttonType="primary"
+      />
+      <Layouts.VSpace value={24} />
     </Layouts.BottomPopup>
   );
 };
