@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import Modal from 'react-native-modal';
 import { COLORS } from '@themes';
 
@@ -21,11 +21,9 @@ const BottomPopup = ({
       animationOutTiming={500}
       avoidKeyboard
     >
-      <TouchableWithoutFeedback>
-        <View style={styles.overlay}>
-          <View style={styles.popupContainer}>{children}</View>
-        </View>
-      </TouchableWithoutFeedback>
+      <ScrollView contentContainerStyle={styles.overlay}>
+        <View style={styles.popupContainer}>{children}</View>
+      </ScrollView>
     </Modal>
   );
 };
