@@ -33,6 +33,14 @@ const CButton: FC<CButtonProps> = ({
   iconRight,
 }) => {
   const getColor = () => {
+    if (disabled) {
+      return {
+        backgroundColor:
+          buttonType === 'primary' ? COLORS.gray : COLORS.primaryWhite,
+        color: buttonType === 'primary' ? COLORS.gray200 : COLORS.gray,
+      };
+    }
+
     return {
       backgroundColor:
         buttonType === 'primary' ? COLORS.primaryBlack : COLORS.primaryWhite,

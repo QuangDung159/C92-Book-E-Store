@@ -28,6 +28,8 @@ export interface IBook {
   thick?: number;
   reviews?: IReview[];
   stock?: number;
+  form?: string;
+  publisher?: string;
 }
 
 export interface ITopBooksFilter {

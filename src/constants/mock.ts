@@ -14,6 +14,8 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
     description:
       'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
     category: 'Classics',
+    form: 'Form 1',
+    publisher: 'Publisher 1',
     id: '1',
     reviews: [
       {
@@ -58,6 +60,8 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
     thick: 3,
     pageCount: 200,
     category: 'Classics',
+    form: 'Form 1',
+    publisher: 'Publisher 1',
     id: '2',
   },
   {
@@ -73,6 +77,8 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
     description:
       'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
     category: 'Classics',
+    form: 'Form 1',
+    publisher: 'Publisher 1',
     id: '3',
   },
   {
@@ -88,6 +94,8 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
     description:
       'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
     category: 'Fantasy',
+    form: 'Form 1',
+    publisher: 'Publisher 1',
     id: '4',
   },
   {
@@ -103,6 +111,8 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
     description:
       'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
     category: 'Classics',
+    form: 'Form 1',
+    publisher: 'Publisher 1',
     id: '5',
   },
   {
@@ -118,6 +128,8 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
     description:
       'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
     category: 'Fantasy',
+    form: 'Form 1',
+    publisher: 'Publisher 1',
     id: '6',
   },
   {
@@ -133,6 +145,8 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
     description:
       'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
     category: 'Classics',
+    form: 'Form 1',
+    publisher: 'Publisher 1',
     id: '7',
   },
   {
@@ -148,6 +162,8 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
     description:
       'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
     category: 'Fantasy',
+    form: 'Form 1',
+    publisher: 'Publisher 1',
     id: '8',
   },
   {
@@ -163,6 +179,8 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
     description:
       'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
     category: 'Classics',
+    form: 'Form 1',
+    publisher: 'Publisher 1',
     id: '9',
   },
   {
@@ -178,6 +196,8 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
     description:
       'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
     category: 'Fantasy',
+    form: 'Form 1',
+    publisher: 'Publisher 1',
     id: '10',
   },
 ];

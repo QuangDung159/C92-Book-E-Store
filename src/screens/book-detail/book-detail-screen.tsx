@@ -42,6 +42,8 @@ const BookDetailScreen = ({ route, navigation }: any) => {
 
   const [isShowReviewPopup, setIsShowReviewPopup] = useState(false);
   const [listReview, setListReview] = useState<DataModels.IReview[]>([]);
+  const [searchFilter, setSearchFilter] =
+    useState<DataModels.ISearchFilter>(null);
 
   useEffect(() => {
     setListReview(book?.reviews || []);
@@ -410,11 +412,58 @@ const BookDetailScreen = ({ route, navigation }: any) => {
           />
           <Layouts.VSpace value={12} />
           <Collapsible collapsed={isCollapseInformation}>
-            <InfoRow title="Form" value={book.author} />
-            <InfoRow title="Form" value="Form 1" />
-            <InfoRow title="Form" value="Form 1" />
-            <InfoRow title="Form" value="Form 1" />
-            <InfoRow title="Form" value="Form 1" />
+            <InfoRow
+              title="Category"
+              value={book.category}
+              hasCheckBox
+              onCheck={(value) => {
+                setSearchFilter({
+                  ...searchFilter,
+                  category: value,
+                });
+              }}
+            />
+            <InfoRow
+              title="Form"
+              value={book.form}
+              hasCheckBox
+              onCheck={(value) => {
+                setSearchFilter({
+                  ...searchFilter,
+                  form: [value],
+                });
+              }}
+            />
+            <InfoRow
+              title="Size"
+              value={`${book.width} x ${book.height} x ${book.thick} cm`}
+            />
+            <InfoRow title="Page count" value={book.pageCount.toString()} />
+            <InfoRow
+              title="Author"
+              value={book.author}
+              hasCheckBox
+              onCheck={(value) => {
+                setSearchFilter({
+                  ...searchFilter,
+                  author: [value],
+                });
+              }}
+            />
+            <InfoRow
+              title="Publisher"
+              value={book.publisher}
+              hasCheckBox
+              onCheck={(value) => {
+                setSearchFilter({
+                  ...searchFilter,
+                  publisher: [value],
+                });
+              }}
+            />
+            <Layouts.VSpace value={8} />
+            <Buttons.CButton label="Find similar" onPress={() => {}} />
+            <Layouts.VSpace value={24} />
           </Collapsible>
           <Layouts.VSpace value={12} />
           <InformationTitle
