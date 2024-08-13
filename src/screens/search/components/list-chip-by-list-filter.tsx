@@ -20,6 +20,9 @@ const ListChipByListFilter: React.FC<ListChipByListFilterProps> = ({
     <>
       {listItemId.map((itemId, index) => {
         const filterChip = dataSource.find((item) => item.value === itemId);
+        if (!filterChip) {
+          return null;
+        }
 
         return (
           <Chip

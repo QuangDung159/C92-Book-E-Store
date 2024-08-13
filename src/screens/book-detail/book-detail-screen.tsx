@@ -21,6 +21,7 @@ import {
   ListBookCardHorizontal,
 } from '@components';
 import { TOP_BOOKS } from '@constants';
+import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
 import { COLORS, FONT_STYLES } from '@themes';
 import { delay } from '@utils';
@@ -28,6 +29,8 @@ import { InformationTitle, InfoRow, ReviewPopup } from './components';
 
 const BookDetailScreen = ({ route, navigation }: any) => {
   const book = route.params?.book as DataModels.IBook;
+
+  const { openSearchScreen } = useNavigate(navigation);
 
   const { width } = Dimensions.get('window');
 
@@ -465,7 +468,9 @@ const BookDetailScreen = ({ route, navigation }: any) => {
             <Layouts.VSpace value={8} />
             <Buttons.CButton
               label="Find similar"
-              onPress={() => {}}
+              onPress={() => {
+                openSearchScreen({ searchFilter });
+              }}
               disabled={
                 !(
                   searchFilter.author?.length ||

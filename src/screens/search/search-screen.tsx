@@ -1,6 +1,6 @@
 import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
 import { observer } from 'mobx-react-lite';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import {
   Chip,
@@ -27,6 +27,16 @@ const SearchScreen = ({ route, navigation }: any) => {
   const { openFilterScreen } = useNavigate(navigation);
 
   const [isShowSortPopup, setIsShowSortPopup] = useState(false);
+
+  useEffect(() => {
+    const searchFilter = route.params?.searchFilter;
+    if (searchFilter) {
+      searchStore.setSearchFilter({
+        ...searchStore.searchFilter,
+        ...searchFilter,
+      });
+    }
+  }, [route.params]);
 
   const renderFilter = () => {
     return (
