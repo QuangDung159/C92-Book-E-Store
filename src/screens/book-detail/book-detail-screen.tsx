@@ -430,12 +430,17 @@ const BookDetailScreen = ({ route, navigation }: any) => {
             />
             <InfoRow
               title="Form"
-              value={book.form}
+              value={book.form.name}
               hasCheckBox
               onCheck={(value) => {
+                const item = StringHelpers.getItemFromDataSource(
+                  value,
+                  'label',
+                  referenceOptionsStore.formDataSource,
+                );
                 setSearchFilter({
                   ...searchFilter,
-                  form: value !== '' ? [value] : [],
+                  form: item ? [item.value] : [],
                 });
               }}
             />
@@ -443,7 +448,9 @@ const BookDetailScreen = ({ route, navigation }: any) => {
               title="Size"
               value={`${book.width} x ${book.height} x ${book.thick} cm`}
             />
+            <Layouts.VSpace value={12} />
             <InfoRow title="Page count" value={book.pageCount.toString()} />
+            <Layouts.VSpace value={12} />
             <InfoRow
               title="Author"
               value={book.author.name}
@@ -462,12 +469,17 @@ const BookDetailScreen = ({ route, navigation }: any) => {
             />
             <InfoRow
               title="Publisher"
-              value={book.publisher}
+              value={book.publisher.name}
               hasCheckBox
               onCheck={(value) => {
+                const item = StringHelpers.getItemFromDataSource(
+                  value,
+                  'label',
+                  referenceOptionsStore.publisherDataSource,
+                );
                 setSearchFilter({
                   ...searchFilter,
-                  publisher: value !== '' ? [value] : [],
+                  publisher: item ? [item.value] : [],
                 });
               }}
             />

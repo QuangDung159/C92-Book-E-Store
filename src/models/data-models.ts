@@ -28,8 +28,8 @@ export interface IBook {
   thick?: number;
   reviews?: IReview[];
   stock?: number;
-  form?: string;
-  publisher?: string;
+  form?: IForm;
+  publisher?: IPublisher;
 }
 
 export interface ITopBooksFilter {
@@ -64,6 +64,11 @@ export interface IAuthor {
 }
 
 export interface IForm {
+  id: string;
+  name: string;
+}
+
+export interface IPublisher {
   id: string;
   name: string;
 }

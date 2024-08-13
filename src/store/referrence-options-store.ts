@@ -35,7 +35,7 @@ class ReferrenceOptionsStore {
     this.formDataSource = listForm;
   }
 
-  setPublisherDataSource(values: DataModels.IForm[]) {
+  setPublisherDataSource(values: DataModels.IPublisher[]) {
     const listPublisher: DataModels.IReferenceOptions[] = values.map(
       (item) => ({
         label: item.name,
