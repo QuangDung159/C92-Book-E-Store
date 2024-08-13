@@ -12,7 +12,7 @@ import {
 import { TextInput } from 'react-native-paper';
 import { COLORS, FONT_STYLES } from '@themes';
 
-interface CTextInputProps {
+interface CTextAreaProps {
   disabled?: boolean;
   style?: StyleProp<TextStyle>;
   outlineStyle?: StyleProp<ViewStyle>;
@@ -28,10 +28,9 @@ interface CTextInputProps {
   label?: string;
   messageError?: string;
   labelStyle?: StyleProp<TextStyle>;
-  multiline?: boolean;
 }
 
-const CTextInput: FC<CTextInputProps> = ({
+const CTextArea: FC<CTextAreaProps> = ({
   style,
   outlineStyle,
   disabled,
@@ -45,7 +44,6 @@ const CTextInput: FC<CTextInputProps> = ({
   label,
   messageError,
   labelStyle,
-  multiline,
 }) => {
   return (
     <>
@@ -66,16 +64,8 @@ const CTextInput: FC<CTextInputProps> = ({
         </Text>
       )}
       <TextInput
-        multiline={multiline}
-        numberOfLines={multiline ? 6 : 1}
         placeholder={placeholder}
-        style={[
-          styles.searchInput,
-          multiline && {
-            height: 180,
-          },
-          style,
-        ]}
+        style={[styles.searchInput, style]}
         mode="outlined"
         activeOutlineColor={messageError ? COLORS.error50 : COLORS.primaryBlack}
         outlineStyle={[
@@ -121,4 +111,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { CTextInput };
+export { CTextArea };

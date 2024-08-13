@@ -12,10 +12,16 @@ import Collapsible from 'react-native-collapsible';
 import { ProgressBar } from 'react-native-paper';
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
 import { ImageAssets } from '@assets';
-import { AddToCartButton, BookCardCarousel, Icons, Layouts } from '@components';
+import {
+  AddToCartButton,
+  BookCardCarousel,
+  Buttons,
+  Icons,
+  Layouts,
+} from '@components';
 import { DataModels } from '@models';
 import { COLORS, FONT_STYLES } from '@themes';
-import { InformationTitle, InfoRow } from './components';
+import { InformationTitle, InfoRow, ReviewPopup } from './components';
 
 const BookDetailScreen = ({ route, navigation }: any) => {
   const book = route.params?.book as DataModels.IBook;
@@ -30,6 +36,8 @@ const BookDetailScreen = ({ route, navigation }: any) => {
   const [isCollapseDescription, setIsCollapseDescription] = useState(false);
   const [isCollapseInformation, setIsCollapseInformation] = useState(true);
   const [isCollapseReview, setIsCollapseReview] = useState(true);
+
+  const [isShowReviewPopup, setIsShowReviewPopup] = useState(false);
 
   const data = [
     ImageAssets.bookImage1,
@@ -246,6 +254,12 @@ const BookDetailScreen = ({ route, navigation }: any) => {
 
   return (
     <View style={styles.container}>
+      <ReviewPopup
+        visible={isShowReviewPopup}
+        onDismiss={() => {
+          setIsShowReviewPopup(false);
+        }}
+      />
       <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}>
         <View style={styles.imageWrapper}>
           <View style={styles.heartIconWrapper}>
@@ -303,7 +317,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
           >
             <Text
               style={{
-                ...FONT_STYLES.REGULAR_14,
+                ...FONT_STYLES.SEMIBOLD_14,
               }}
             >
               {book.reviews?.length} review(s)
@@ -486,6 +500,13 @@ const BookDetailScreen = ({ route, navigation }: any) => {
               </React.Fragment>
             );
           })}
+          <Buttons.CButton
+            label="Leave your review"
+            buttonType="primary"
+            onPress={() => {
+              setIsShowReviewPopup(true);
+            }}
+          />
         </Collapsible>
         <Layouts.VSpace value={24} />
       </ScrollView>
