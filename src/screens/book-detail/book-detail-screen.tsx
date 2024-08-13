@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Dimensions,
   ScrollView,
@@ -38,6 +38,13 @@ const BookDetailScreen = ({ route, navigation }: any) => {
   const [isCollapseReview, setIsCollapseReview] = useState(true);
 
   const [isShowReviewPopup, setIsShowReviewPopup] = useState(false);
+  const [listReview, setListReview] = useState<DataModels.IReview[]>([]);
+
+  useEffect(() => {
+    if (book?.reviews && book.reviews.length) {
+      setListReview(book.reviews);
+    }
+  }, [book?.reviews]);
 
   const data = [
     ImageAssets.bookImage1,
@@ -54,7 +61,15 @@ const BookDetailScreen = ({ route, navigation }: any) => {
     ratingCount: number,
   ) => {
     return (
-      <>
+      <TouchableOpacity
+        onPress={() => {
+          const listByStar = book?.reviews?.filter(
+            (item) => item.rating === +title,
+          );
+
+          setListReview(listByStar);
+        }}
+      >
         <View
           style={{
             flexDirection: 'row',
@@ -87,7 +102,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
           </Text>
         </View>
         <Layouts.VSpace value={8} />
-      </>
+      </TouchableOpacity>
     );
   };
 
@@ -449,19 +464,25 @@ const BookDetailScreen = ({ route, navigation }: any) => {
                 />
               </View>
               <Layouts.VSpace value={8} />
-              <View
-                style={{
-                  alignItems: 'center',
+              <TouchableOpacity
+                onPress={() => {
+                  setListReview(book?.reviews || []);
                 }}
               >
-                <Text
+                <View
                   style={{
-                    ...FONT_STYLES.BOLD_14,
+                    alignItems: 'center',
                   }}
                 >
-                  {book.reviews?.length} review(s)
-                </Text>
-              </View>
+                  <Text
+                    style={{
+                      ...FONT_STYLES.BOLD_14,
+                    }}
+                  >
+                    {book.reviews?.length} review(s)
+                  </Text>
+                </View>
+              </TouchableOpacity>
             </View>
             <Layouts.HSpace value={24} />
             <View
@@ -498,7 +519,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
             </View>
           </View>
           <Layouts.VSpace value={24} />
-          {book.reviews?.map((item) => {
+          {(listReview || []).map((item) => {
             return (
               <React.Fragment key={item.id}>
                 {renderComment(item)}

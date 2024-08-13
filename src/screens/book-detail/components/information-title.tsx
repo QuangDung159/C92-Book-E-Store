@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Icons, Layouts } from '@components';
 import { FONT_STYLES } from '@themes';
 
@@ -15,8 +15,13 @@ const InformationTitle: React.FC<InformationTitleProps> = ({
   setIsCollapse,
 }) => {
   return (
-    <TouchableWithoutFeedback
+    <TouchableOpacity
+      activeOpacity={isCollapse ? 0.6 : 1}
       onPress={() => {
+        if (!isCollapse) {
+          return;
+        }
+
         setIsCollapse(!isCollapse);
       }}
     >
@@ -29,7 +34,7 @@ const InformationTitle: React.FC<InformationTitleProps> = ({
           <Icons.ChevronUpIcon size={20} disabled />
         )}
       </View>
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   );
 };
 
