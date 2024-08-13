@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Dimensions,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { Icons, Layouts } from '@components';
 import { COLORS, FONT_STYLES } from '@themes';
 
@@ -32,11 +26,7 @@ const ScreenHeader: React.FC<ScreenHeaderProps> = ({
 
   const renderLeftComponent = () => {
     if (!leftComponent) {
-      return (
-        <TouchableOpacity onPress={goBack}>
-          <Icons.ChevronLeftIcon />
-        </TouchableOpacity>
-      );
+      return <Icons.ChevronLeftIcon onPress={goBack} />;
     } else {
       return leftComponent();
     }
