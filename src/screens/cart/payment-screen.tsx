@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Buttons, Layouts, ScreenHeader } from '@components';
 import { COLORS, FONT_STYLES } from '@themes';
 
-const CartScreen = ({ navigation }: any) => {
+const PaymentScreen = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
       <ScreenHeader
@@ -56,5 +56,5 @@ const styles = StyleSheet.create({
   },
 });
 
-const observable = observer(CartScreen);
-export { observable as CartScreen };
+const observable = observer(PaymentScreen);
+export { observable as PaymentScreen };

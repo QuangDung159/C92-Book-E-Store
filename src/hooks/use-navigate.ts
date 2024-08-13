@@ -23,5 +23,16 @@ export const useNavigate = (navigation: any) => {
     });
   };
 
-  return { openSearchScreen, openFilterScreen, openBookDetailScreen };
+  const openCartScreen = () => {
+    navigation.navigate(SCREEN_NAME.CART_NAVIGATOR, {
+      screen: SCREEN_NAME.CART_SCREEN,
+    });
+  };
+
+  return {
+    openSearchScreen,
+    openFilterScreen,
+    openBookDetailScreen,
+    openCartScreen,
+  };
 };
