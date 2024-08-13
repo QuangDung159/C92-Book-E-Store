@@ -227,6 +227,7 @@ const FilterScreen = ({ route, navigation }: any) => {
         <Buttons.CButton
           onPress={() => {
             navigation.goBack();
+            searchStore.submitSearch();
           }}
           label="Apply"
           buttonType="primary"

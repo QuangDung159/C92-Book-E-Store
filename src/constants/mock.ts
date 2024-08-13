@@ -263,7 +263,7 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
     pageCount: 100,
     description:
       'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
-    category: CATEGORY[0],
+    category: CATEGORY[2],
     form: LIST_FORM[0],
     publisher: LIST_PUBLISHER[0],
     id: '1',
@@ -309,7 +309,7 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
     height: 60,
     thick: 3,
     pageCount: 200,
-    category: CATEGORY[0],
+    category: CATEGORY[3],
     form: LIST_FORM[0],
     publisher: LIST_PUBLISHER[0],
     id: '2',

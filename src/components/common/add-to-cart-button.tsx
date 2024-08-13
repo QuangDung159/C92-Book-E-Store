@@ -15,7 +15,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   buttonType = 'icon',
 }) => {
   return (
-    <View style={containerStyle}>
+    <View style={[styles.addToCartWrapper, containerStyle]}>
       <View style={styles.addToCartWrapper}>
         <View style={styles.addToCart}>
           <Icons.MinusIcon color={COLORS.primaryWhite} />

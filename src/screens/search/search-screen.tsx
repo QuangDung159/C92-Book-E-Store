@@ -15,7 +15,6 @@ import {
   DEFAULT_PRICE_RANGE,
   LIST_SORT_OPTION,
   SEARCH_VIEW_STYLE,
-  TOP_BOOKS,
 } from '@constants';
 import { useNavigate } from '@hooks';
 import { referenceOptionsStore, searchStore } from '@store';
@@ -93,6 +92,8 @@ const SearchScreen = ({ route, navigation }: any) => {
               searchStore.setSearchFilter({
                 author: listSelected,
               });
+
+              searchStore.submitSearch();
             }}
           />
           <ListChipByListFilter
@@ -171,13 +172,13 @@ const SearchScreen = ({ route, navigation }: any) => {
         {renderFilter()}
         <Layouts.VSpace value={12} />
         {searchStore.viewStyle === SEARCH_VIEW_STYLE.grid && (
-          <ListBookCardVerticalRow listItem={TOP_BOOKS} />
+          <ListBookCardVerticalRow listItem={searchStore.listBook} />
         )}
         {searchStore.viewStyle === SEARCH_VIEW_STYLE.list && (
-          <ListBookCardVertical listItem={TOP_BOOKS} />
+          <ListBookCardVertical listItem={searchStore.listBook} />
         )}
         {searchStore.viewStyle === SEARCH_VIEW_STYLE.complex && (
-          <ListBookCardComplex listItem={TOP_BOOKS} />
+          <ListBookCardComplex listItem={searchStore.listBook} />
         )}
       </ScrollView>
       <View style={styles.scrollTop}>

@@ -4,6 +4,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Icons, Inputs, Layouts } from '@components';
 import { useNavigate } from '@hooks';
+import { searchStore } from '@store';
 import { FONT_STYLES } from '@themes';
 import { CartIconWithBadge } from './cart-icon-with-badge';
 
@@ -59,6 +60,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
       <View style={styles.iconWrapper}>
         <Icons.SearchIcon
           onPress={() => {
+            searchStore.resetSeachFilter();
             openSearchScreen({
               autoFocus: true,
             });
