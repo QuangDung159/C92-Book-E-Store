@@ -11,9 +11,9 @@ import {
 } from 'react-native';
 import { ImageAssets } from '@assets';
 import {
-  AddToCartButton,
   BookCardPrice,
   BookTitle,
+  CartUpdateNumber,
   Icons,
   Layouts,
 } from '@components';
@@ -64,11 +64,7 @@ const CartItem: React.FC<CartItemProps> = ({
                 />
               </View>
               <Layouts.MaxSpace />
-              {bookCartItem.isLiked ? (
-                <Icons.HeartIcon size={20} />
-              ) : (
-                <Icons.HeartOutlineIcon size={20} />
-              )}
+              <Icons.CloseIcon />
             </View>
             <Text style={styles.stock}>{bookCartItem.author.name}</Text>
             <Layouts.VSpace value={6} />
@@ -82,7 +78,7 @@ const CartItem: React.FC<CartItemProps> = ({
         <View style={styles.priceWrapper}>
           <BookCardPrice price={bookCartItem.price} />
           <Layouts.MaxSpace />
-          <AddToCartButton itemCount={20} />
+          <CartUpdateNumber itemCount={20} />
         </View>
       </View>
       <Layouts.VSpace value={12} />

@@ -7,6 +7,7 @@ export * from './book-card-item-vertical';
 export * from './book-card-price';
 export * from './book-title';
 export * from './cart-icon-with-badge';
+export * from './cart-update-number';
 export * from './chip';
 export * from './list-book-card-complex';
 export * from './list-book-card-horizontal';
