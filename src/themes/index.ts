@@ -5,6 +5,7 @@ const COLORS = {
   primaryWhite: '#FFFFFF',
   gray: '#B8B8B8',
   gray200: '#eeeeee',
+  error50: 'rgba(220, 54, 46, 1)',
 };
 
 export { COLORS, FONT_STYLES };

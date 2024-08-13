@@ -17,10 +17,11 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
     id: '1',
     reviews: [
       {
-        content: '123',
+        content:
+          '123 asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd',
         createdAt: '12/12/12 12:12:12 PM',
         rating: 4,
-        userName: 'asd',
+        userName: 'asd asd asd asd asd asd asd asd asd asd asd',
         id: '1',
       },
       {

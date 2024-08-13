@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import Collapsible from 'react-native-collapsible';
-import { MD3Colors, ProgressBar } from 'react-native-paper';
+import { ProgressBar } from 'react-native-paper';
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
 import { ImageAssets } from '@assets';
 import { AddToCartButton, BookCardCarousel, Icons, Layouts } from '@components';
@@ -68,7 +68,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
               height: 8,
             }}
             progress={value}
-            color={MD3Colors.error50}
+            color={COLORS.error50}
           />
           <Text
             style={{
@@ -114,6 +114,9 @@ const BookDetailScreen = ({ route, navigation }: any) => {
     let count3 = 0;
     let count4 = 0;
     let count5 = 0;
+
+    const reviewCount = book.reviews.length;
+
     book.reviews.forEach((item) => {
       switch (item.rating) {
         case 1:
@@ -138,23 +141,23 @@ const BookDetailScreen = ({ route, navigation }: any) => {
     return [
       {
         count: count1,
-        percent: count1 !== 0 ? 1 / count1 : 0,
+        percent: count1 / reviewCount,
       },
       {
         count: count2,
-        percent: count2 !== 0 ? 1 / count2 : 0,
+        percent: count2 / reviewCount,
       },
       {
         count: count3,
-        percent: count3 !== 0 ? 1 / count3 : 0,
+        percent: count3 / reviewCount,
       },
       {
         count: count4,
-        percent: count4 !== 0 ? 1 / count4 : 0,
+        percent: count4 / reviewCount,
       },
       {
         count: count5,
-        percent: count5 !== 0 ? 1 / count5 : 0,
+        percent: count5 / reviewCount,
       },
     ];
   };
@@ -198,12 +201,14 @@ const BookDetailScreen = ({ route, navigation }: any) => {
               style={{
                 justifyContent: 'space-between',
                 alignSelf: 'center',
+                flexShrink: 2,
               }}
             >
               <Text
                 style={{
                   ...FONT_STYLES.BOLD_14,
                 }}
+                numberOfLines={2}
               >
                 {review.userName}
               </Text>
@@ -215,6 +220,15 @@ const BookDetailScreen = ({ route, navigation }: any) => {
                 {review.createdAt}
               </Text>
             </View>
+            <Layouts.MaxSpace />
+            <StarRatingDisplay
+              rating={review.rating}
+              starSize={16}
+              starStyle={{
+                marginLeft: -6,
+              }}
+              color={COLORS.error50}
+            />
           </View>
           <Layouts.VSpace value={12} />
           <Text
@@ -274,7 +288,11 @@ const BookDetailScreen = ({ route, navigation }: any) => {
           }}
         >
           {/* <StarRating starSize={24} rating={rating} onChange={setRating} /> */}
-          <StarRatingDisplay rating={book.rating} starSize={24} />
+          <StarRatingDisplay
+            rating={book.rating}
+            starSize={24}
+            color={COLORS.error50}
+          />
           <Layouts.MaxSpace />
           <TouchableOpacity
             onPress={() => {
@@ -408,6 +426,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
                   starStyle={{
                     marginRight: -6,
                   }}
+                  color={COLORS.error50}
                 />
               </View>
               <Layouts.VSpace value={8} />
