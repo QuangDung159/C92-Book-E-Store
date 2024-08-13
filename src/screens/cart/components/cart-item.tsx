@@ -1,3 +1,4 @@
+import { Image } from 'expo-image';
 import { useNavigation } from 'expo-router';
 import React from 'react';
 import {
@@ -11,7 +12,6 @@ import {
 import { ImageAssets } from '@assets';
 import {
   AddToCartButton,
-  BookCardCarousel,
   BookCardPrice,
   BookTitle,
   Icons,
@@ -30,56 +30,59 @@ const CartItem: React.FC<CartItemProps> = ({
   containerStyle,
 }) => {
   const { width } = Dimensions.get('window');
-
-  const carouselWidth = width - 48;
-  const carouselHeight = carouselWidth * 0.6;
-
+  const cardWidth = width - 48;
   const navigation = useNavigation();
-
-  const data = [
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-  ];
 
   return (
     <React.Fragment key={bookCartItem.id}>
-      <View style={[styles.container, containerStyle]}>
-        <View style={styles.imageWrapper}>
-          <View style={styles.heartIconWrapper}>
-            {bookCartItem.isLiked ? (
-              <Icons.HeartIcon size={20} />
-            ) : (
-              <Icons.HeartOutlineIcon size={20} />
-            )}
-          </View>
-          <BookCardCarousel
-            carouselHeight={carouselHeight}
-            carouselWidth={carouselWidth}
-            data={data}
-            imageStyle={styles.image}
-            dotStyle={styles.dot}
+      <View style={[styles.container, { width: width - 48 }, containerStyle]}>
+        <View style={styles.info}>
+          <Image
+            style={styles.image}
+            contentFit="contain"
+            source={ImageAssets.bookImage1}
+            transition={500}
           />
+          <View
+            style={[
+              styles.infoWrapper,
+              {
+                width: cardWidth - 90,
+              },
+            ]}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+              }}
+            >
+              <View style={styles.title}>
+                <BookTitle
+                  style={styles.title}
+                  navigation={navigation}
+                  book={bookCartItem}
+                />
+              </View>
+              <Layouts.MaxSpace />
+              {bookCartItem.isLiked ? (
+                <Icons.HeartIcon size={20} />
+              ) : (
+                <Icons.HeartOutlineIcon size={20} />
+              )}
+            </View>
+            <Text style={styles.stock}>{bookCartItem.author.name}</Text>
+            <Layouts.VSpace value={6} />
+            <Text style={styles.stock}>{bookCartItem.category.name}</Text>
+            <Layouts.VSpace value={6} />
+            <Text style={styles.stock}>Rating: 4.9</Text>
+            <Layouts.VSpace value={6} />
+            <Text style={styles.stock}>In stock: 10 pcs</Text>
+          </View>
         </View>
-        <Layouts.VSpace value={12} />
-        <BookTitle navigation={navigation} book={bookCartItem} />
-        <Text style={styles.stock}>{bookCartItem.author.name}</Text>
-        <Layouts.VSpace value={6} />
-        <Text style={styles.stock}>{bookCartItem.category.name}</Text>
-        <Layouts.VSpace value={6} />
-        <Text style={styles.stock}>Rating: 4.9</Text>
-        <Layouts.VSpace value={6} />
-        <Text style={styles.stock}>In stock: 10 pcs</Text>
-        <Layouts.VSpace value={6} />
-        <Text style={styles.description}>{bookCartItem.description}</Text>
-        <Layouts.VSpace value={6} />
         <View style={styles.priceWrapper}>
           <BookCardPrice price={bookCartItem.price} />
           <Layouts.MaxSpace />
-          <AddToCartButton itemCount={10} />
+          <AddToCartButton itemCount={20} />
         </View>
       </View>
       <Layouts.VSpace value={12} />
@@ -89,36 +92,61 @@ const CartItem: React.FC<CartItemProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 8,
     backgroundColor: COLORS.gray200,
-    padding: 12,
+    height: 178,
+    borderRadius: 8,
   },
-  imageWrapper: {
-    alignItems: 'center',
-  },
-  heartIconWrapper: {
-    position: 'absolute',
-    right: 0,
+  info: {
     flexDirection: 'row',
-    top: -4,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    height: 120,
   },
   image: {
-    width: 200 * 0.64,
-    height: 200,
+    height: 100,
+    width: 90,
+  },
+  infoWrapper: {
+    alignSelf: 'flex-start',
+    paddingRight: 12,
+    marginTop: 10,
+  },
+  title: {
+    width: '90%',
   },
   stock: {
     ...FONT_STYLES.SEMIBOLD_10,
   },
   priceWrapper: {
+    marginHorizontal: 12,
     marginTop: 4,
     flexDirection: 'row',
     alignItems: 'center',
   },
-  description: {
-    ...FONT_STYLES.REGULAR_14,
+  addToCartWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  dot: {
-    marginTop: 12,
+  addToCart: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: COLORS.primaryBlack,
+    borderRadius: 20,
+    paddingHorizontal: 8,
+    height: 40,
+  },
+  cartNumber: {
+    ...FONT_STYLES.SEMIBOLD_16,
+    paddingHorizontal: 8,
+    color: COLORS.primaryWhite,
+  },
+  cartIconWrapper: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.primaryBlack,
   },
 });
 

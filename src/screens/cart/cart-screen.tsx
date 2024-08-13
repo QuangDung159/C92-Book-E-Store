@@ -2,40 +2,46 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Buttons, Layouts, ScreenHeader } from '@components';
+import { searchStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
+import { StringHelpers } from '@utils';
+import { ListCartItem } from './components/list-cart-item';
 
 const CartScreen = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
-      <ScreenHeader
-        title="Filter"
-        navigation={navigation}
-        onGoBack={() => {}}
-      />
+      <ScreenHeader title="Cart" navigation={navigation} onGoBack={() => {}} />
       <ScrollView
         scrollEnabled={true}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.wrapper}
       >
-        <Layouts.VSpace value={24} />
-        <Text
-          style={{
-            ...FONT_STYLES.BOLD_18,
-          }}
-        >
-          Price
-        </Text>
-        <Layouts.VSpace value={24} />
+        <ListCartItem listItem={searchStore.listBook} />
       </ScrollView>
       <View style={styles.buttonWrapper}>
         <Layouts.VSpace value={12} />
-        <Buttons.CButton
-          onPress={() => {
-            navigation.goBack();
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
           }}
-          label="Apply"
-          buttonType="primary"
-        />
+        >
+          <Text
+            style={{
+              ...FONT_STYLES.BOLD_22,
+            }}
+          >
+            {StringHelpers.formatCurrency(250000000)}
+          </Text>
+          <Buttons.CButton
+            onPress={() => {
+              navigation.goBack();
+            }}
+            label="Checkout"
+            buttonType="primary"
+          />
+        </View>
       </View>
     </View>
   );
@@ -53,6 +59,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     borderTopColor: COLORS.gray200,
     borderTopWidth: 1,
+    height: 64,
   },
 });
 
