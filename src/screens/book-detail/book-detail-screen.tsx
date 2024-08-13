@@ -74,7 +74,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
     return (
       <TouchableOpacity
         onPress={() => {
-          const listByStar = book?.reviews?.filter(
+          const listByStar = book.reviews?.filter(
             (item) => item.rating === +title,
           );
           //
@@ -289,266 +289,270 @@ const BookDetailScreen = ({ route, navigation }: any) => {
           console.log('data :>> ', data);
         }}
       />
-      <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}>
-        <View style={styles.imageWrapper}>
-          <View style={styles.heartIconWrapper}>
-            {book.isLiked ? (
-              <Icons.HeartIcon size={20} />
-            ) : (
-              <Icons.HeartOutlineIcon size={20} />
-            )}
-          </View>
-          <View style={styles.backIcon}>
-            <Icons.ChevronLeftIcon
-              onPress={() => {
-                navigation.goBack();
+      {book && (
+        <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}>
+          <View style={styles.imageWrapper}>
+            <View style={styles.heartIconWrapper}>
+              {book.isLiked ? (
+                <Icons.HeartIcon size={20} />
+              ) : (
+                <Icons.HeartOutlineIcon size={20} />
+              )}
+            </View>
+            <View style={styles.backIcon}>
+              <Icons.ChevronLeftIcon
+                onPress={() => {
+                  navigation.goBack();
+                }}
+              />
+            </View>
+            <BookCardCarousel
+              carouselHeight={carouselHeight}
+              carouselWidth={carouselWidth}
+              data={data}
+              imageStyle={styles.image}
+              dotStyle={{
+                marginTop: 12,
               }}
             />
           </View>
-          <BookCardCarousel
-            carouselHeight={carouselHeight}
-            carouselWidth={carouselWidth}
-            data={data}
-            imageStyle={styles.image}
-            dotStyle={{
-              marginTop: 12,
-            }}
-          />
-        </View>
-        <Layouts.VSpace value={12} />
-        <Text
-          style={{
-            ...FONT_STYLES.BOLD_22,
-          }}
-        >
-          {book.name}
-        </Text>
-        <Layouts.VSpace value={12} />
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}
-        >
-          <StarRatingDisplay
-            rating={book.rating}
-            starSize={24}
-            color={COLORS.error50}
-            starStyle={{
-              marginLeft: -2,
-            }}
-          />
-          <Layouts.MaxSpace />
-          <TouchableOpacity
-            onPress={() => {
-              setIsCollapseReview(false);
-              setIsCollapseDescription(true);
-              setIsCollapseInformation(true);
-            }}
-          >
-            <Text
-              style={{
-                ...FONT_STYLES.SEMIBOLD_14,
-              }}
-            >
-              {book.reviews?.length} review(s)
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <Layouts.VSpace value={12} />
-        <Text
-          style={{
-            ...FONT_STYLES.REGULAR_14,
-          }}
-        >
-          Stock: 12 pcs
-        </Text>
-        <Layouts.VSpace value={24} />
-        <AddToCartButton
-          itemCount={1}
-          containerStyle={{
-            flexDirection: 'row',
-            alignSelf: 'center',
-          }}
-          buttonType="text-icon"
-        />
-        <Layouts.VSpace value={24} />
-        <InformationTitle
-          isCollapse={isCollapseDescription}
-          setIsCollapse={(isCollapse) => {
-            if (!isCollapse) {
-              setIsCollapseDescription(isCollapse);
-              setIsCollapseInformation(!isCollapse);
-              setIsCollapseReview(!isCollapse);
-            }
-          }}
-          title="Description"
-        />
-        <Layouts.VSpace value={12} />
-        <Collapsible collapsed={isCollapseDescription}>
+          <Layouts.VSpace value={12} />
           <Text
             style={{
-              ...FONT_STYLES.REGULAR_14,
-              lineHeight: 20,
+              ...FONT_STYLES.BOLD_22,
             }}
           >
-            {book.description || 'Empty'}
+            {book.name}
           </Text>
-        </Collapsible>
-        <Layouts.VSpace value={12} />
-        <InformationTitle
-          isCollapse={isCollapseInformation}
-          setIsCollapse={(isCollapse) => {
-            if (!isCollapse) {
-              setIsCollapseInformation(isCollapse);
-              setIsCollapseDescription(!isCollapse);
-              setIsCollapseReview(!isCollapse);
-            }
-          }}
-          title="Information"
-        />
-        <Layouts.VSpace value={12} />
-        <Collapsible collapsed={isCollapseInformation}>
-          <InfoRow title="Form" value="Form 1" />
-          <InfoRow title="Form" value="Form 1" />
-          <InfoRow title="Form" value="Form 1" />
-          <InfoRow title="Form" value="Form 1" />
-          <InfoRow title="Form" value="Form 1" />
-        </Collapsible>
-        <Layouts.VSpace value={12} />
-        <InformationTitle
-          isCollapse={isCollapseReview}
-          setIsCollapse={(isCollapse) => {
-            if (!isCollapse) {
-              setIsCollapseReview(isCollapse);
-              setIsCollapseDescription(!isCollapse);
-              setIsCollapseInformation(!isCollapse);
-            }
-          }}
-          title="Reviews"
-        />
-        <Layouts.VSpace value={12} />
-        <Collapsible collapsed={isCollapseReview}>
+          <Layouts.VSpace value={12} />
           <View
             style={{
               flexDirection: 'row',
+              alignItems: 'center',
             }}
           >
-            <View>
-              <View
-                style={{
-                  width: 100,
-                }}
-              >
-                <View
-                  style={{
-                    backgroundColor: COLORS.gray200,
-                    borderRadius: 8,
-                    width: 100,
-                    height: 60,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <Text
-                    style={{
-                      ...FONT_STYLES.BOLD_22,
-                    }}
-                  >
-                    4.55
-                  </Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  marginLeft: -3,
-                  marginTop: 8,
-                }}
-              >
-                <StarRatingDisplay
-                  rating={book.rating}
-                  starSize={20}
-                  starStyle={{
-                    marginRight: -6,
-                  }}
-                  color={COLORS.error50}
-                />
-              </View>
-              <Layouts.VSpace value={8} />
-              <TouchableOpacity
-                onPress={() => {
-                  setListReview(book?.reviews || []);
-                }}
-              >
-                <View
-                  style={{
-                    alignItems: 'center',
-                  }}
-                >
-                  <Text
-                    style={{
-                      ...FONT_STYLES.BOLD_14,
-                    }}
-                  >
-                    {`${(book.reviews || []).length} review(s)`}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-            <Layouts.HSpace value={24} />
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'flex-start',
+            <StarRatingDisplay
+              rating={book.rating}
+              starSize={24}
+              color={COLORS.error50}
+              starStyle={{
+                marginLeft: -2,
+              }}
+            />
+            <Layouts.MaxSpace />
+            <TouchableOpacity
+              onPress={() => {
+                setIsCollapseReview(false);
+                setIsCollapseDescription(true);
+                setIsCollapseInformation(true);
               }}
             >
-              {renderRatingBar(
-                '5',
-                countNumberReview()[4].percent,
-                countNumberReview()[4].count,
-              )}
-              {renderRatingBar(
-                '4',
-                countNumberReview()[3].percent,
-                countNumberReview()[3].count,
-              )}
-              {renderRatingBar(
-                '3',
-                countNumberReview()[2].percent,
-                countNumberReview()[2].count,
-              )}
-              {renderRatingBar(
-                '2',
-                countNumberReview()[1].percent,
-                countNumberReview()[1].count,
-              )}
-              {renderRatingBar(
-                '1',
-                countNumberReview()[0].percent,
-                countNumberReview()[0].count,
-              )}
-            </View>
+              <Text
+                style={{
+                  ...FONT_STYLES.SEMIBOLD_14,
+                }}
+              >
+                {book.reviews?.length} review(s)
+              </Text>
+            </TouchableOpacity>
           </View>
-          <Layouts.VSpace value={24} />
-          {(listReview || []).map((item) => {
-            return (
-              <React.Fragment key={item.id}>
-                {renderComment(item)}
-              </React.Fragment>
-            );
-          })}
-          <Buttons.CButton
-            label="Leave your review"
-            buttonType="primary"
-            onPress={() => {
-              setIsShowReviewPopup(true);
+          <Layouts.VSpace value={12} />
+          <Text
+            style={{
+              ...FONT_STYLES.REGULAR_14,
             }}
+          >
+            Stock: 12 pcs
+          </Text>
+          <Layouts.VSpace value={24} />
+          <AddToCartButton
+            itemCount={1}
+            containerStyle={{
+              flexDirection: 'row',
+              alignSelf: 'center',
+            }}
+            buttonType="text-icon"
           />
-        </Collapsible>
-        <Layouts.VSpace value={24} />
-        <ListBookCardHorizontal listItem={TOP_BOOKS} />
-        <Layouts.VSpace value={24} />
-      </ScrollView>
+          <Layouts.VSpace value={24} />
+          <InformationTitle
+            isCollapse={isCollapseDescription}
+            setIsCollapse={(isCollapse) => {
+              if (!isCollapse) {
+                setIsCollapseDescription(isCollapse);
+                setIsCollapseInformation(!isCollapse);
+                setIsCollapseReview(!isCollapse);
+              }
+            }}
+            title="Description"
+          />
+          <Layouts.VSpace value={12} />
+          <Collapsible collapsed={isCollapseDescription}>
+            <Text
+              style={{
+                ...FONT_STYLES.REGULAR_14,
+                lineHeight: 20,
+              }}
+            >
+              {book.description || 'N/a'}
+            </Text>
+          </Collapsible>
+          <Layouts.VSpace value={12} />
+          <InformationTitle
+            isCollapse={isCollapseInformation}
+            setIsCollapse={(isCollapse) => {
+              if (!isCollapse) {
+                setIsCollapseInformation(isCollapse);
+                setIsCollapseDescription(!isCollapse);
+                setIsCollapseReview(!isCollapse);
+              }
+            }}
+            title="Information"
+          />
+          <Layouts.VSpace value={12} />
+          <Collapsible collapsed={isCollapseInformation}>
+            <InfoRow title="Form" value={book.author} />
+            <InfoRow title="Form" value="Form 1" />
+            <InfoRow title="Form" value="Form 1" />
+            <InfoRow title="Form" value="Form 1" />
+            <InfoRow title="Form" value="Form 1" />
+          </Collapsible>
+          <Layouts.VSpace value={12} />
+          <InformationTitle
+            isCollapse={isCollapseReview}
+            setIsCollapse={(isCollapse) => {
+              if (!isCollapse) {
+                setIsCollapseReview(isCollapse);
+                setIsCollapseDescription(!isCollapse);
+                setIsCollapseInformation(!isCollapse);
+              }
+            }}
+            title={`${(book.reviews || []).length} Review(s)`}
+          />
+          <Layouts.VSpace value={12} />
+          <Collapsible collapsed={isCollapseReview}>
+            <View
+              style={{
+                flexDirection: 'row',
+              }}
+            >
+              <View>
+                <View
+                  style={{
+                    width: 100,
+                  }}
+                >
+                  <View
+                    style={{
+                      backgroundColor: COLORS.gray200,
+                      borderRadius: 8,
+                      width: 100,
+                      height: 60,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <Text
+                      style={{
+                        ...FONT_STYLES.BOLD_22,
+                      }}
+                    >
+                      {book.rating}
+                    </Text>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    marginLeft: -3,
+                    marginTop: 8,
+                  }}
+                >
+                  <StarRatingDisplay
+                    rating={book.rating}
+                    starSize={20}
+                    starStyle={{
+                      marginRight: -6,
+                    }}
+                    color={COLORS.error50}
+                  />
+                </View>
+                <Layouts.VSpace value={8} />
+                <TouchableOpacity
+                  onPress={() => {
+                    setListReview(book.reviews || []);
+                  }}
+                >
+                  <View
+                    style={{
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Text
+                      style={{
+                        ...FONT_STYLES.BOLD_14,
+                      }}
+                    >
+                      {`${(book.reviews || []).length} review(s)`}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+              <Layouts.HSpace value={24} />
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'flex-start',
+                }}
+              >
+                {renderRatingBar(
+                  '5',
+                  countNumberReview()[4].percent,
+                  countNumberReview()[4].count,
+                )}
+                {renderRatingBar(
+                  '4',
+                  countNumberReview()[3].percent,
+                  countNumberReview()[3].count,
+                )}
+                {renderRatingBar(
+                  '3',
+                  countNumberReview()[2].percent,
+                  countNumberReview()[2].count,
+                )}
+                {renderRatingBar(
+                  '2',
+                  countNumberReview()[1].percent,
+                  countNumberReview()[1].count,
+                )}
+                {renderRatingBar(
+                  '1',
+                  countNumberReview()[0].percent,
+                  countNumberReview()[0].count,
+                )}
+              </View>
+            </View>
+            <Layouts.VSpace value={24} />
+            {(listReview || []).map((item) => {
+              return (
+                <React.Fragment key={item.id}>
+                  {renderComment(item)}
+                </React.Fragment>
+              );
+            })}
+            <Buttons.CButton
+              label="Leave your review"
+              buttonType="primary"
+              onPress={() => {
+                setIsShowReviewPopup(true);
+              }}
+            />
+          </Collapsible>
+          <Layouts.VSpace value={24} />
+          <Text style={{ ...FONT_STYLES.BOLD_18 }}>Recommand</Text>
+          <Layouts.VSpace value={12} />
+          <ListBookCardHorizontal listItem={TOP_BOOKS} />
+          <Layouts.VSpace value={24} />
+        </ScrollView>
+      )}
     </View>
   );
 };

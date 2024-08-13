@@ -30,11 +30,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    ...FONT_STYLES.SEMIBOLD_14,
+    ...FONT_STYLES.REGULAR_14,
     lineHeight: 20,
   },
   value: {
-    ...FONT_STYLES.REGULAR_14,
+    ...FONT_STYLES.SEMIBOLD_14,
     lineHeight: 20,
   },
 });

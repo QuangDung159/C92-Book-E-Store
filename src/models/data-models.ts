@@ -27,6 +27,7 @@ export interface IBook {
   width?: number;
   thick?: number;
   reviews?: IReview[];
+  stock?: number;
 }
 
 export interface ITopBooksFilter {
