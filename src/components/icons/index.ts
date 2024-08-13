@@ -6,6 +6,7 @@ export * from './chevron-up-icon';
 export * from './close-circle-icon';
 export * from './close-icon';
 export * from './eye-icon';
+export * from './filter-icon';
 export * from './heart-icon';
 export * from './heart-outline-icon';
 export * from './minus-icon';

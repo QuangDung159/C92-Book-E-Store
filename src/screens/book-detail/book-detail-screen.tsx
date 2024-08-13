@@ -42,8 +42,9 @@ const BookDetailScreen = ({ route, navigation }: any) => {
 
   const [isShowReviewPopup, setIsShowReviewPopup] = useState(false);
   const [listReview, setListReview] = useState<DataModels.IReview[]>([]);
-  const [searchFilter, setSearchFilter] =
-    useState<DataModels.ISearchFilter>(null);
+  const [searchFilter, setSearchFilter] = useState<DataModels.ISearchFilter>(
+    {},
+  );
 
   useEffect(() => {
     setListReview(book?.reviews || []);
@@ -430,7 +431,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
               onCheck={(value) => {
                 setSearchFilter({
                   ...searchFilter,
-                  form: [value],
+                  form: value !== '' ? [value] : [],
                 });
               }}
             />
@@ -446,7 +447,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
               onCheck={(value) => {
                 setSearchFilter({
                   ...searchFilter,
-                  author: [value],
+                  author: value !== '' ? [value] : [],
                 });
               }}
             />
@@ -457,12 +458,23 @@ const BookDetailScreen = ({ route, navigation }: any) => {
               onCheck={(value) => {
                 setSearchFilter({
                   ...searchFilter,
-                  publisher: [value],
+                  publisher: value !== '' ? [value] : [],
                 });
               }}
             />
             <Layouts.VSpace value={8} />
-            <Buttons.CButton label="Find similar" onPress={() => {}} />
+            <Buttons.CButton
+              label="Find similar"
+              onPress={() => {}}
+              disabled={
+                !(
+                  searchFilter.author?.length ||
+                  searchFilter.category ||
+                  searchFilter.publisher?.length ||
+                  searchFilter.form?.length
+                )
+              }
+            />
             <Layouts.VSpace value={24} />
           </Collapsible>
           <Layouts.VSpace value={12} />
