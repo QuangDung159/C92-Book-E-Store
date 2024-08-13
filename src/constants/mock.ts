@@ -253,7 +253,7 @@ const LIST_SORT_OPTION = [
 const TOP_BOOKS: Array<DataModels.IBook> = [
   {
     name: 'The Picture of Dorian Gray The Picture of Dorian Gray',
-    author: 'Oscar Wilde',
+    author: LIST_AUTHOR[0],
     price: 25000999,
     isLiked: false,
     rating: 4.7,
@@ -301,7 +301,7 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
   },
   {
     name: 'Nine Liars',
-    author: 'Oscar Wilde',
+    author: LIST_AUTHOR[0],
     price: 259900,
     isLiked: true,
     rating: 4,
@@ -316,7 +316,7 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
   },
   {
     name: 'The Picture of Dorian Gray 12',
-    author: 'Oscar Wilde 123',
+    author: LIST_AUTHOR[1],
     price: 25000,
     isLiked: true,
     rating: 4,
@@ -333,7 +333,7 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
   },
   {
     name: 'The Picture of Dorian 44v',
-    author: 'Oscar Wilde 44',
+    author: LIST_AUTHOR[2],
     price: 19000,
     isLiked: false,
     rating: 4.7,
@@ -350,7 +350,7 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
   },
   {
     name: 'The Picture of Dorian Gray 12',
-    author: 'Oscar Wilde 123',
+    author: LIST_AUTHOR[1],
     price: 250000,
     isLiked: true,
     rating: 4,
@@ -367,7 +367,7 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
   },
   {
     name: 'The Picture of Dorian 44v',
-    author: 'Oscar Wilde 44',
+    author: LIST_AUTHOR[2],
     price: 190000,
     isLiked: false,
     rating: 4.7,
@@ -384,7 +384,7 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
   },
   {
     name: 'The Picture of Dorian Gray 12',
-    author: 'Oscar Wilde 123',
+    author: LIST_AUTHOR[1],
     price: 25000,
     isLiked: false,
     rating: 4.7,
@@ -401,7 +401,7 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
   },
   {
     name: 'The Picture of Dorian 44v',
-    author: 'Oscar Wilde 44',
+    author: LIST_AUTHOR[3],
     price: 19000,
     isLiked: false,
     rating: 4.7,
@@ -418,7 +418,7 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
   },
   {
     name: 'The Picture of Dorian Gray 12',
-    author: 'Oscar Wilde 123',
+    author: LIST_AUTHOR[1],
     price: 250000,
     isLiked: false,
     rating: 4.7,
@@ -435,7 +435,7 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
   },
   {
     name: 'The Picture of Dorian 44v',
-    author: 'Oscar Wilde 44',
+    author: LIST_AUTHOR[3],
     price: 1900,
     isLiked: false,
     rating: 4.7,

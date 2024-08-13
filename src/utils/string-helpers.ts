@@ -22,13 +22,14 @@ export const searchByFirstLetter = (
   });
 };
 
-export const getLabel = (
+export const getItemFromDataSource = (
   value: string,
+  field: string,
   listRef: DataModels.IReferenceOptions[],
 ) => {
-  const result = listRef.find((item) => item.value === value);
+  const result = listRef.find((item) => item[field] === value);
   if (result) {
-    return result.label;
+    return result;
   }
   return null;
 };

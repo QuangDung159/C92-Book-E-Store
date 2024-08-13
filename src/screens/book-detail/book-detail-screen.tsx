@@ -23,8 +23,9 @@ import {
 import { TOP_BOOKS } from '@constants';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
+import { referenceOptionsStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
-import { delay } from '@utils';
+import { delay, StringHelpers } from '@utils';
 import { InformationTitle, InfoRow, ReviewPopup } from './components';
 
 const BookDetailScreen = ({ route, navigation }: any) => {
@@ -445,12 +446,17 @@ const BookDetailScreen = ({ route, navigation }: any) => {
             <InfoRow title="Page count" value={book.pageCount.toString()} />
             <InfoRow
               title="Author"
-              value={book.author}
+              value={book.author.name}
               hasCheckBox
               onCheck={(value) => {
+                const item = StringHelpers.getItemFromDataSource(
+                  value,
+                  'label',
+                  referenceOptionsStore.authorDataSource,
+                );
                 setSearchFilter({
                   ...searchFilter,
-                  author: value !== '' ? [value] : [],
+                  author: item ? [item.value] : [],
                 });
               }}
             />

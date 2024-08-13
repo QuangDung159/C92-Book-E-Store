@@ -49,7 +49,7 @@ const BookCardItemHorizontal: React.FC<BookCardItemHorizontalProps> = ({
               book={bookCardItem}
             />
             <Layouts.VSpace value={8} />
-            <Text style={styles.subTitle}>{bookCardItem.author}</Text>
+            <Text style={styles.subTitle}>{bookCardItem.author.name}</Text>
           </View>
           <Layouts.VSpace value={8} />
           <BookCardPrice price={bookCardItem.price} style={styles.price} />

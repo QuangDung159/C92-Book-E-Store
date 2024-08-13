@@ -18,7 +18,7 @@ export interface IBook {
   name: string;
   price: number;
   isLiked: boolean;
-  author: string;
+  author: IAuthor;
   category: ICategory;
   description?: string;
   rating?: number;

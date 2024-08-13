@@ -66,7 +66,7 @@ const BookCardItemComplex: React.FC<BookCardItemComplexProps> = ({
         </View>
         <Layouts.VSpace value={12} />
         <BookTitle navigation={navigation} book={bookCardItem} />
-        <Text style={styles.stock}>{bookCardItem.author}</Text>
+        <Text style={styles.stock}>{bookCardItem.author.name}</Text>
         <Layouts.VSpace value={6} />
         <Text style={styles.stock}>{bookCardItem.category.name}</Text>
         <Layouts.VSpace value={6} />
