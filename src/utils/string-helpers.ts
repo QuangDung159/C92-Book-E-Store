@@ -22,6 +22,17 @@ export const searchByFirstLetter = (
   });
 };
 
+export const getLabel = (
+  value: string,
+  listRef: DataModels.IReferenceOptions[],
+) => {
+  const result = listRef.find((item) => item.value === value);
+  if (result) {
+    return result.label;
+  }
+  return null;
+};
+
 export const formatCurrency = (amount: number) => {
   return amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
 };

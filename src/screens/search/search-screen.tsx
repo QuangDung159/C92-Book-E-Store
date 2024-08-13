@@ -11,6 +11,7 @@ import {
   SearchBar,
 } from '@components';
 import {
+  CATEGORY,
   DEFAULT_PRICE_RANGE,
   LIST_SORT_OPTION,
   SEARCH_VIEW_STYLE,
@@ -52,7 +53,11 @@ const SearchScreen = ({ route, navigation }: any) => {
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {searchStore.searchFilter.category && (
             <Chip
-              label={searchStore.searchFilter.category}
+              label={
+                CATEGORY.find(
+                  (item) => item.id === searchStore.searchFilter.category,
+                )?.name
+              }
               onRemove={() => {
                 searchStore.setSearchFilter({
                   category: null,
