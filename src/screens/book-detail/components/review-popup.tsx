@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import StarRating from 'react-native-star-rating-widget';
 import { Buttons, Inputs, Layouts } from '@components';
 import { DataModels } from '@models';
-import { FONT_STYLES } from '@themes';
+import { COLORS, FONT_STYLES } from '@themes';
 import { ReviewViewModel } from '../view-models';
 
 interface ReviewPopupProps {
@@ -53,6 +53,7 @@ const ReviewPopup: React.FC<ReviewPopupProps> = ({
           }}
           enableHalfStar={false}
           style={styles.rating}
+          color={COLORS.error50}
         />
         <Layouts.VSpace value={16} />
         <Inputs.CTextInput

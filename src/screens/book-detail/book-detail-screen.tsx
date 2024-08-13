@@ -18,9 +18,12 @@ import {
   Buttons,
   Icons,
   Layouts,
+  ListBookCardHorizontal,
 } from '@components';
+import { TOP_BOOKS } from '@constants';
 import { DataModels } from '@models';
 import { COLORS, FONT_STYLES } from '@themes';
+import { delay } from '@utils';
 import { InformationTitle, InfoRow, ReviewPopup } from './components';
 
 const BookDetailScreen = ({ route, navigation }: any) => {
@@ -33,7 +36,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
 
   const ratingBarWidth = width - 48 - 100 - 24 - 80 - 5;
 
-  const [isCollapseDescription, setIsCollapseDescription] = useState(false);
+  const [isCollapseDescription, setIsCollapseDescription] = useState(true);
   const [isCollapseInformation, setIsCollapseInformation] = useState(true);
   const [isCollapseReview, setIsCollapseReview] = useState(true);
 
@@ -41,10 +44,18 @@ const BookDetailScreen = ({ route, navigation }: any) => {
   const [listReview, setListReview] = useState<DataModels.IReview[]>([]);
 
   useEffect(() => {
-    if (book?.reviews && book.reviews.length) {
-      setListReview(book.reviews);
-    }
+    setListReview(book?.reviews || []);
   }, [book?.reviews]);
+
+  useEffect(() => {
+    setIsCollapseDescription(true);
+    setIsCollapseInformation(true);
+    setIsCollapseReview(true);
+    //
+    delay(500).then(() => {
+      setIsCollapseDescription(false);
+    });
+  }, [book]);
 
   const data = [
     ImageAssets.bookImage1,
@@ -381,7 +392,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
               lineHeight: 20,
             }}
           >
-            {book.description}
+            {book.description || 'Empty'}
           </Text>
         </Collapsible>
         <Layouts.VSpace value={12} />
@@ -534,6 +545,8 @@ const BookDetailScreen = ({ route, navigation }: any) => {
             }}
           />
         </Collapsible>
+        <Layouts.VSpace value={24} />
+        <ListBookCardHorizontal listItem={TOP_BOOKS} />
         <Layouts.VSpace value={24} />
       </ScrollView>
     </View>
