@@ -15,6 +15,32 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
       'CHUYỆN KỂ VỀ TÌNH YÊU VÀ BÓNG TỐI  là hồi ký về những năm tháng đầu đời của Amos Oz. Những ký ức thời thơ ấu, từ căn nhà đã chật chội lại còn ngập trong sách, người bố thiên kinh vạn quyển ưa tầm chương trích cú, người mẹ học thức dịu dàng mà cũng bí ẩn khôn dò, cho tới những lớp học của cô...',
     category: 'Classics',
     id: '1',
+    reviews: [
+      {
+        content: '123',
+        createdAt: '12/12/12 12:12:12 PM',
+        rating: 4,
+        userName: 'asd',
+      },
+      {
+        content: '123 123 123',
+        createdAt: '12/12/12 12:12:12 PM',
+        rating: 4,
+        userName: 'asd 123',
+      },
+      {
+        content: '123 45 345',
+        createdAt: '12/12/12 12:12:12 AM',
+        rating: 2,
+        userName: 'asd 345',
+      },
+      {
+        content: '123',
+        createdAt: '12/12/12 12:12:12 PM',
+        rating: 4,
+        userName: 'asd',
+      },
+    ],
   },
   {
     name: 'Nine Liars',

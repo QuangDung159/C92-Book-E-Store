@@ -1,3 +1,10 @@
+export interface IReview {
+  rating: number;
+  createdAt: string; // MM/dd/yyyy hh:mm:ss tt
+  content: string;
+  userName: string;
+  avartar?: string;
+}
 export interface IBook {
   id: string;
   name: string;
@@ -11,6 +18,7 @@ export interface IBook {
   height?: number;
   width?: number;
   thick?: number;
+  reviews?: IReview[];
 }
 
 export interface ITopBooksFilter {

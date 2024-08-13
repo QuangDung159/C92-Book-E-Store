@@ -1,6 +1,13 @@
 import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
-import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  Dimensions,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
 import { ImageAssets } from '@assets';
@@ -76,13 +83,21 @@ const BookDetailScreen = ({ route, navigation }: any) => {
           {/* <StarRating starSize={24} rating={rating} onChange={setRating} /> */}
           <StarRatingDisplay rating={book.rating} starSize={24} />
           <Layouts.MaxSpace />
-          <Text
-            style={{
-              ...FONT_STYLES.REGULAR_14,
+          <TouchableOpacity
+            onPress={() => {
+              setIsCollapseReview(false);
+              setIsCollapseDescription(true);
+              setIsCollapseInformation(true);
             }}
           >
-            5 review(s)
-          </Text>
+            <Text
+              style={{
+                ...FONT_STYLES.REGULAR_14,
+              }}
+            >
+              {book.reviews?.length} review(s)
+            </Text>
+          </TouchableOpacity>
         </View>
         <Layouts.VSpace value={12} />
         <Text
@@ -149,7 +164,6 @@ const BookDetailScreen = ({ route, navigation }: any) => {
         <InformationTitle
           isCollapse={isCollapseReview}
           setIsCollapse={(isCollapse) => {
-            console.log('isCollapse :>> ', isCollapse);
             if (!isCollapse) {
               setIsCollapseReview(isCollapse);
               setIsCollapseDescription(!isCollapse);
