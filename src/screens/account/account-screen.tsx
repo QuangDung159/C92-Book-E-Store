@@ -1,5 +1,7 @@
 import React from 'react';
 import { Button, Text, View } from 'react-native';
+import { USER } from '@constants';
+import { userStore } from '@store';
 
 const AccountScreen = ({ navigation }: any) => {
   return (
@@ -7,7 +9,9 @@ const AccountScreen = ({ navigation }: any) => {
       <Text>AccountScreen</Text>
       <Button
         title="Go to account screen"
-        onPress={() => navigation.navigate('account')}
+        onPress={() => {
+          userStore.setUserProfile(USER);
+        }}
       />
     </View>
   );
