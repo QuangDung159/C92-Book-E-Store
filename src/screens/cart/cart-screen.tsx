@@ -1,13 +1,11 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { SwipeListView } from 'react-native-swipe-list-view';
 import { Buttons, Layouts, ScreenHeader } from '@components';
 import { useNavigate } from '@hooks';
 import { cartStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { StringHelpers } from '@utils';
-import { CartItem } from './components';
 import { ListCartItem } from './components/list-cart-item';
 
 const CartScreen = ({ navigation }: any) => {
