@@ -22,7 +22,7 @@ const ListCartItem: React.FC<ListCartItemProps> = ({ listItem }) => {
       <FlashList
         showsVerticalScrollIndicator={false}
         data={listItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.book.id}
         estimatedItemSize={186}
         renderItem={({ item }) => {
           return <CartItem bookCartItem={item} />;

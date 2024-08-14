@@ -19,6 +19,7 @@ import {
   Layouts,
 } from '@components';
 import { DataModels } from '@models';
+import { cartStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 
 interface BookCardItemProps {
@@ -92,7 +93,12 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
           <BookCardPrice price={bookCardItem.price} />
           <Layouts.VSpace value={6} />
           <Buttons.CButton
-            onPress={() => {}}
+            onPress={() => {
+              cartStore.addToCart({
+                book: bookCardItem,
+                count: 1,
+              });
+            }}
             buttonType="primary"
             label="Add to cart"
             style={{

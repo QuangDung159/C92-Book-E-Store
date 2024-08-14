@@ -112,18 +112,17 @@ class CartStore {
 
   addToCart = async (addToCartItem: DataModels.ICartItem) => {
     const cartItemExistIndex = this.listCartItem.findIndex(
-      (item) => item.id === addToCartItem.id,
+      (item) => item.book.id === addToCartItem.book.id,
     );
 
     let list = [...this.listCartItem];
 
     if (cartItemExistIndex !== -1) {
-      //
-      const cartItemUpdateCount = this.listCartItem[cartItemExistIndex];
-      list = this.listCartItem.splice(cartItemExistIndex, 1, {
-        ...cartItemUpdateCount,
-        count: addToCartItem.count,
-      });
+      const cartItemUpdate = this.listCartItem[cartItemExistIndex];
+
+      cartItemUpdate.count = cartItemUpdate.count + addToCartItem.count;
+
+      list = this.listCartItem.splice(cartItemExistIndex, 1, cartItemUpdate);
     } else {
       list.push(addToCartItem);
     }

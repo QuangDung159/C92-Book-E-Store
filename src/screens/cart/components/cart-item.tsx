@@ -34,7 +34,7 @@ const CartItem: React.FC<CartItemProps> = ({
   const navigation = useNavigation();
 
   return (
-    <React.Fragment key={bookCartItem.id}>
+    <React.Fragment key={bookCartItem.book.id}>
       <View style={[styles.container, { width: width - 48 }, containerStyle]}>
         <View style={styles.info}>
           <Image
@@ -72,7 +72,7 @@ const CartItem: React.FC<CartItemProps> = ({
         <View style={styles.priceWrapper}>
           <BookCardPrice price={bookCartItem.book.price} />
           <Layouts.MaxSpace />
-          <CartUpdateNumber itemCount={20} />
+          <CartUpdateNumber itemCount={bookCartItem.count} />
         </View>
       </View>
       <Layouts.VSpace value={12} />
