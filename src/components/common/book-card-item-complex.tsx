@@ -69,7 +69,9 @@ const BookCardItemComplex: React.FC<BookCardItemComplexProps> = ({
         <Layouts.VSpace value={6} />
         <BookCardInfo book={bookCardItem} />
         <Layouts.VSpace value={6} />
-        <Text style={styles.description}>{bookCardItem.description}</Text>
+        <Text style={styles.description}>
+          {bookCardItem.description || 'N/a'}
+        </Text>
         <Layouts.VSpace value={6} />
         <View style={styles.priceWrapper}>
           <BookCardPrice

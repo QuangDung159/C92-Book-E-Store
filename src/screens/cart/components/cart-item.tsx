@@ -75,7 +75,10 @@ const CartItem: React.FC<CartItemProps> = ({
           </View>
         </View>
         <View style={styles.priceWrapper}>
-          <BookCardPrice price={bookCartItem.book.price} />
+          <BookCardPrice
+            price={bookCartItem.book.price}
+            priceNotSale={bookCartItem.book.priceNotSale}
+          />
           <Layouts.MaxSpace />
           <CartUpdateNumber
             itemCount={bookCartItem.count}

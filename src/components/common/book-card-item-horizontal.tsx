@@ -52,7 +52,11 @@ const BookCardItemHorizontal: React.FC<BookCardItemHorizontalProps> = ({
             <Text style={styles.subTitle}>{bookCardItem.author.name}</Text>
           </View>
           <Layouts.VSpace value={8} />
-          <BookCardPrice price={bookCardItem.price} style={styles.price} />
+          <BookCardPrice
+            price={bookCardItem.price}
+            style={styles.price}
+            priceNotSale={bookCardItem.priceNotSale}
+          />
         </View>
       </View>
     </React.Fragment>

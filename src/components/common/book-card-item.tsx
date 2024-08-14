@@ -95,10 +95,7 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
           <BookCardPrice
             price={bookCardItem.price}
             priceNotSale={bookCardItem.priceNotSale}
-            containerStyle={{
-              height: 40,
-              justifyContent: 'flex-end',
-            }}
+            containerStyle={styles.priceContainer}
           />
           <Layouts.VSpace value={6} />
           <Buttons.CButton
@@ -158,6 +155,10 @@ const styles = StyleSheet.create({
     right: 8,
     zIndex: 99,
     top: 8,
+  },
+  priceContainer: {
+    height: 40,
+    justifyContent: 'flex-end',
   },
 });
 
