@@ -35,11 +35,18 @@ export const useNavigate = (navigation: any) => {
     });
   };
 
+  const openHomeScreen = () => {
+    navigation.navigate(SCREEN_NAME.BOTTOM_TAB_NAVIGATOR, {
+      screen: SCREEN_NAME.HOME_SCREEN,
+    });
+  };
+
   return {
     openSearchScreen,
     openFilterScreen,
     openBookDetailScreen,
     openCartScreen,
     openPaymentScreen,
+    openHomeScreen,
   };
 };

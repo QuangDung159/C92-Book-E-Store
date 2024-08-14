@@ -1,7 +1,9 @@
 import { FlashList } from '@shopify/flash-list';
+import { useNavigation } from 'expo-router';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { Buttons } from '@components';
+import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
 import { CartItem } from './cart-item';
 
@@ -10,6 +12,9 @@ interface ListCartItemProps {
 }
 
 const ListCartItem: React.FC<ListCartItemProps> = ({ listItem }) => {
+  const navigation = useNavigation();
+
+  const { openHomeScreen } = useNavigate(navigation);
   return (
     <View
       style={{
@@ -29,7 +34,12 @@ const ListCartItem: React.FC<ListCartItemProps> = ({ listItem }) => {
           return (
             <View>
               <Text>{`Let's shop now`}</Text>
-              <Buttons.CButton label={`Let's shop now`} onPress={() => {}} />
+              <Buttons.CButton
+                label={`Let's shop now`}
+                onPress={() => {
+                  openHomeScreen();
+                }}
+              />
             </View>
           );
         }}

@@ -43,7 +43,7 @@ function BottomTabNavigator() {
           tabBarLabel: 'Trang chủ',
           tabBarStyle: styles.tabBarStyle,
         }}
-        name={SCREEN_NAME.HOME}
+        name={SCREEN_NAME.HOME_SCREEN}
         component={HomeScreen}
       />
       <Tab.Screen

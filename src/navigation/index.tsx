@@ -27,7 +27,10 @@ const Navigation = () => {
           headerShown: false,
         }}
       >
-        <Stack.Screen name="app" component={BottomTabNavigator} />
+        <Stack.Screen
+          name={SCREEN_NAME.BOTTOM_TAB_NAVIGATOR}
+          component={BottomTabNavigator}
+        />
         <Stack.Screen
           name={SCREEN_NAME.SEARCH_NAVIGATOR}
           component={SearchNavigator}
