@@ -5,12 +5,18 @@ import {
   observable,
   runInAction,
 } from 'mobx';
+import { TOP_BOOKS } from '@constants';
 import { DataModels } from '@models';
 import { ReferenceOptionsStore } from './reference-options-store';
 import { UserStore } from './user-store';
 
 class CartStore {
-  listCartItem: DataModels.ICartItem[] = [];
+  listCartItem: DataModels.ICartItem[] = [
+    {
+      book: TOP_BOOKS[0],
+      count: 1,
+    },
+  ];
   listVoucher: DataModels.IVoucher[] = [];
   listPaymentMethod: DataModels.IPaymentMethod[] = [];
   listVoucherIdSelected: string[] = [];
@@ -128,21 +134,20 @@ class CartStore {
   };
 
   addToCart = async (addToCartItem: DataModels.ICartItem) => {
-    const cartItemExist = this.getCartItemByBook(addToCartItem.book.id);
-
-    let list = [...this.listCartItem];
-
-    if (cartItemExist.cartItem) {
-      const cartItemUpdate = cartItemExist.cartItem;
-
-      cartItemUpdate.count = cartItemUpdate.count + addToCartItem.count;
-
-      list = list.splice(cartItemExist.index, 1, cartItemUpdate);
-    } else {
-      list.push(addToCartItem);
-    }
-
     runInAction(() => {
+      const cartItemExist = this.getCartItemByBook(addToCartItem.book.id);
+
+      const list = [...this.listCartItem];
+
+      if (cartItemExist.cartItem) {
+        const cartItemUpdate = cartItemExist.cartItem;
+
+        cartItemUpdate.count = cartItemUpdate.count + addToCartItem.count;
+
+        list.splice(cartItemExist.index, 1, cartItemUpdate);
+      } else {
+        list.push(addToCartItem);
+      }
       this.listCartItem = list;
     });
   };
@@ -151,22 +156,21 @@ class CartStore {
     cartItem: DataModels.ICartItem,
     removeCount: number,
   ) => {
-    const cartItemExist = this.getCartItemByBook(cartItem.book.id);
-
-    let list = [...this.listCartItem];
-
-    if (cartItemExist.cartItem) {
-      const cartItemUpdate = cartItemExist.cartItem;
-
-      if (removeCount >= cartItemUpdate.count) {
-        list.splice(cartItemExist.index, 1);
-      } else {
-        cartItemUpdate.count = cartItemUpdate.count - removeCount;
-        list = list.splice(cartItemExist.index, 1, cartItemUpdate);
-      }
-    }
-
     runInAction(() => {
+      const cartItemExist = this.getCartItemByBook(cartItem.book.id);
+
+      let list = [...this.listCartItem];
+
+      if (cartItemExist.cartItem) {
+        const cartItemUpdate = cartItemExist.cartItem;
+
+        if (removeCount >= cartItemUpdate.count) {
+          list.splice(cartItemExist.index, 1);
+        } else {
+          cartItemUpdate.count = cartItemUpdate.count - removeCount;
+          list = list.splice(cartItemExist.index, 1, cartItemUpdate);
+        }
+      }
       this.listCartItem = list;
     });
   };

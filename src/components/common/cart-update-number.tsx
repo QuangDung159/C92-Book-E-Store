@@ -31,7 +31,7 @@ const CartUpdateNumber: React.FC<CartUpdateNumberProps> = ({
             color={COLORS.primaryWhite}
             onPress={() =>
               cartStore.addToCart({
-                book: bookCartItem.book,
+                ...bookCartItem,
                 count: 1,
               })
             }
