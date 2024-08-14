@@ -1,5 +1,6 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 import { DataModels } from '@models';
+import { ReferenceOptionsStore } from './reference-options-store';
 import { UserStore } from './user-store';
 
 class CartStore {
@@ -9,8 +10,13 @@ class CartStore {
   listVoucherIdSelected: string[] = [];
   shippingAddressSelected: string = '';
   listShippingAddress: DataModels.IShippingAddress[] = [];
+  referenceOptionsStore: ReferenceOptionsStore | null = null;
+  userStore: UserStore | null = null;
 
-  constructor(userStore: UserStore) {
+  constructor(
+    userStore: UserStore,
+    referenceOptionsStore: ReferenceOptionsStore,
+  ) {
     makeObservable(this, {
       listCartItem: observable,
       listVoucher: observable,
@@ -18,6 +24,8 @@ class CartStore {
       listVoucherIdSelected: observable,
       shippingAddressSelected: observable,
       listShippingAddress: observable,
+      userStore: observable,
+      referenceOptionsStore: observable,
       setListShippingAddress: action,
       setListVoucherIdSelected: action,
       setShippingAddressSelected: action,
@@ -29,11 +37,12 @@ class CartStore {
       subTotal: computed,
     });
 
-    console.log('userStore?.userProfile :>> ', userStore?.userProfile);
-    console.log('userStore :>> ', userStore);
+    this.userStore = userStore;
 
     this.listShippingAddress =
       userStore?.userProfile?.listShippingAddress || [];
+
+    this.referenceOptionsStore = referenceOptionsStore;
   }
 
   setListCartItem(values: DataModels.ICartItem[]) {

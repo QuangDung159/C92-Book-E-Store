@@ -1,7 +1,8 @@
-import { LIST_AUTHOR, LIST_FORM, LIST_PUBLISHER, USER } from '@constants';
+import { LIST_AUTHOR, LIST_FORM, LIST_PUBLISHER } from '@constants';
+import { DataModels } from '@models';
 import { CartStore } from './cart-store';
 import { CategoryStore } from './category-store';
-import { ReferrenceOptionsStore } from './referrence-options-store';
+import { ReferenceOptionsStore } from './reference-options-store';
 import { SearchStore } from './search-store';
 import { UserStore } from './user-store';
 
@@ -9,19 +10,23 @@ class AppModel {
   cartStore: CartStore;
   categoryStore: CategoryStore;
   searchStore: SearchStore;
-  referenceOptionsStore: ReferrenceOptionsStore;
+  referenceOptionsStore: ReferenceOptionsStore;
   userStore: UserStore;
 
   constructor() {
     this.userStore = new UserStore();
-    this.cartStore = new CartStore(this.userStore);
+    this.referenceOptionsStore = new ReferenceOptionsStore();
+    this.cartStore = new CartStore(this.userStore, this.referenceOptionsStore);
     this.categoryStore = new CategoryStore();
     this.searchStore = new SearchStore();
-    this.referenceOptionsStore = new ReferrenceOptionsStore();
   }
 
   async appInit() {
-    this.userStore.setUserProfile(USER);
+    // this.userStore.setUserProfile(USER);
+  }
+
+  async login(user: DataModels.IUser) {
+    this.userStore.setUserProfile(user);
   }
 
   async loadMasterData() {

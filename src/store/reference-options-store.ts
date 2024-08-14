@@ -1,7 +1,7 @@
 import { action, makeObservable, observable } from 'mobx';
 import { DataModels } from '@models';
 
-class ReferrenceOptionsStore {
+class ReferenceOptionsStore {
   authorDataSource: DataModels.IReferenceOptions[] = [];
   formDataSource: DataModels.IReferenceOptions[] = [];
   publisherDataSource: DataModels.IReferenceOptions[] = [];
@@ -47,4 +47,4 @@ class ReferrenceOptionsStore {
   }
 }
 
-export { ReferrenceOptionsStore };
+export { ReferenceOptionsStore };
