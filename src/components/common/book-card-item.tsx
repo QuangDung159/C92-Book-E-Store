@@ -21,6 +21,7 @@ import {
 import { DataModels } from '@models';
 import { cartStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
+import { ToastHelpers } from '@utils';
 
 interface BookCardItemProps {
   bookCardItem: DataModels.IBook;
@@ -104,6 +105,8 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
                 book: bookCardItem,
                 count: 1,
               });
+
+              ToastHelpers.showToast('Add to cart success', 'success');
             }}
             buttonType="primary"
             label="Add to cart"

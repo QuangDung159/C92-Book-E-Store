@@ -1,6 +1,7 @@
 import * as StringHelpers from './string-helpers';
+import * as ToastHelpers from './toast-helpers';
 
-export { StringHelpers };
+export { StringHelpers, ToastHelpers };
 
 export const delay = async (milliseconds: number) => {
   return new Promise((resolve) => {

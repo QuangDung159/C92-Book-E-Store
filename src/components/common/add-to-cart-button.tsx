@@ -4,6 +4,7 @@ import { Buttons, Icons, Layouts } from '@components';
 import { DataModels } from '@models';
 import { cartStore, searchStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
+import { ToastHelpers } from '@utils';
 
 interface AddToCartButtonProps {
   itemCount: number;
@@ -20,6 +21,20 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   onUpdateCount,
   bookCardItem,
 }) => {
+  const onAddToCart = () => {
+    cartStore.addToCart({
+      book: bookCardItem,
+      count: bookCardItem.count,
+    });
+
+    searchStore.updateBookItem({
+      ...bookCardItem,
+      count: 1,
+    });
+
+    ToastHelpers.showToast('Add to cart success', 'success');
+  };
+
   return (
     <View style={[styles.addToCartWrapper, containerStyle]}>
       <View style={styles.addToCartWrapper}>
@@ -40,24 +55,11 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
       <Layouts.HSpace value={8} />
       {buttonType === 'icon' ? (
         <View style={styles.cartIconWrapper}>
-          <Icons.CartIcon
-            color={COLORS.primaryWhite}
-            onPress={() => {
-              cartStore.addToCart({
-                book: bookCardItem,
-                count: bookCardItem.count,
-              });
-
-              searchStore.updateBookItem({
-                ...bookCardItem,
-                count: 1,
-              });
-            }}
-          />
+          <Icons.CartIcon color={COLORS.primaryWhite} onPress={onAddToCart} />
         </View>
       ) : (
         <Buttons.CButton
-          onPress={() => {}}
+          onPress={onAddToCart}
           buttonType="primary"
           label="Add to cart"
           style={{
