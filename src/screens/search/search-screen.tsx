@@ -17,6 +17,7 @@ import {
   SEARCH_VIEW_STYLE,
 } from '@constants';
 import { useNavigate } from '@hooks';
+import { DataModels } from '@models';
 import { referenceOptionsStore, searchStore } from '@store';
 import { COLORS } from '@themes';
 import { StringHelpers } from '@utils';
@@ -37,6 +38,13 @@ const SearchScreen = ({ route, navigation }: any) => {
       });
     }
   }, [route.params]);
+
+  const onUpdateCount = (count: number, bookItem: DataModels.IBook) => {
+    searchStore.updateBookItem({
+      ...bookItem,
+      count: bookItem.count + count,
+    });
+  };
 
   const renderFilter = () => {
     return (
@@ -175,7 +183,10 @@ const SearchScreen = ({ route, navigation }: any) => {
           <ListBookCardVerticalRow listItem={searchStore.listBook} />
         )}
         {searchStore.viewStyle === SEARCH_VIEW_STYLE.list && (
-          <ListBookCardVertical listItem={searchStore.listBook} />
+          <ListBookCardVertical
+            listItem={searchStore.listBook}
+            onUpdateCount={onUpdateCount}
+          />
         )}
         {searchStore.viewStyle === SEARCH_VIEW_STYLE.complex && (
           <ListBookCardComplex listItem={searchStore.listBook} />

@@ -25,7 +25,7 @@ const BookCardInfo: React.FC<BookCardInfoProps> = ({ book }) => {
         }}
       />
       <Layouts.VSpace value={4} />
-      <Text style={styles.stock}>In stock: 10 pcs</Text>
+      <Text style={styles.stock}>{`In stock: ${book.stock} pcs`}</Text>
     </React.Fragment>
   );
 };

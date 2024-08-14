@@ -1,26 +1,39 @@
 import React from 'react';
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { Buttons, Icons, Layouts } from '@components';
+import { DataModels } from '@models';
 import { COLORS, FONT_STYLES } from '@themes';
 
 interface AddToCartButtonProps {
   itemCount: number;
   containerStyle?: StyleProp<ViewStyle>;
   buttonType?: 'icon' | 'text-icon';
+  onUpdateCount?: (countNumber: number) => void;
+  bookCardItem: DataModels.IBook;
 }
 
 const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   itemCount,
   containerStyle,
   buttonType = 'icon',
+  onUpdateCount,
+  bookCardItem,
 }) => {
   return (
     <View style={[styles.addToCartWrapper, containerStyle]}>
       <View style={styles.addToCartWrapper}>
         <View style={styles.addToCart}>
-          <Icons.MinusIcon color={COLORS.primaryWhite} />
+          <Icons.MinusIcon
+            disabled={itemCount === 1}
+            onPress={() => onUpdateCount(-1)}
+            color={COLORS.primaryWhite}
+          />
           <Text style={styles.cartNumber}>{itemCount}</Text>
-          <Icons.PlusIcon color={COLORS.primaryWhite} />
+          <Icons.PlusIcon
+            onPress={() => onUpdateCount(1)}
+            disabled={itemCount >= bookCardItem.stock}
+            color={COLORS.primaryWhite}
+          />
         </View>
       </View>
       <Layouts.HSpace value={8} />

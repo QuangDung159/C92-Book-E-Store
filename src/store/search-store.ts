@@ -122,6 +122,21 @@ class SearchStore {
       });
     });
   }
+
+  updateBookItem = (bookItem: IBook) => {
+    const listBook = [...this.listBook];
+    const index = listBook.findIndex((item) => item.id === bookItem.id);
+
+    if (index === -1) {
+      return;
+    }
+
+    listBook.splice(index, 1, bookItem);
+
+    runInAction(() => {
+      this.listBook = listBook;
+    });
+  };
 }
 
 export { SearchStore };

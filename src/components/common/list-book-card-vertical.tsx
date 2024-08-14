@@ -6,10 +6,12 @@ import { DataModels } from '@models';
 
 interface ListBookCardVerticalProps {
   listItem: Array<DataModels.IBook>;
+  onUpdateCount?: (countNumber: number, bookItem: DataModels.IBook) => void;
 }
 
 const ListBookCardVertical: React.FC<ListBookCardVerticalProps> = ({
   listItem,
+  onUpdateCount,
 }) => {
   return (
     <View
@@ -23,7 +25,14 @@ const ListBookCardVertical: React.FC<ListBookCardVerticalProps> = ({
         keyExtractor={(item) => item.id}
         estimatedItemSize={186}
         renderItem={({ item }) => {
-          return <BookCardItemVertical bookCardItem={item} />;
+          return (
+            <BookCardItemVertical
+              bookCardItem={item}
+              onUpdateCount={(count) => {
+                onUpdateCount(count, item);
+              }}
+            />
+          );
         }}
         ListEmptyComponent={() => {
           return (

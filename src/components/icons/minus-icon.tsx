@@ -7,16 +7,31 @@ interface MinusIconProps {
   size?: number;
   color?: string;
   onPress?: () => void;
+  disabled?: boolean;
+  disabledColor?: string;
 }
 
 const MinusIcon: React.FC<MinusIconProps> = ({
   size = 24,
   color = COLORS.primaryBlack,
   onPress,
+  disabled,
+  disabledColor = COLORS.gray,
 }) => {
   return (
-    <TouchableOpacity activeOpacity={0.6} onPress={onPress}>
-      <Entypo name="minus" size={size} color={color} />
+    <TouchableOpacity
+      activeOpacity={disabled ? 1 : 0.6}
+      onPress={() => {
+        if (!disabled) {
+          onPress?.();
+        }
+      }}
+    >
+      <Entypo
+        name="minus"
+        size={size}
+        color={disabled ? disabledColor : color}
+      />
     </TouchableOpacity>
   );
 };

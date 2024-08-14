@@ -23,11 +23,13 @@ import { COLORS, FONT_STYLES } from '@themes';
 interface BookCardItemVerticalProps {
   bookCardItem: DataModels.IBook;
   containerStyle?: StyleProp<ViewStyle>;
+  onUpdateCount?: (countNumber: number) => void;
 }
 
 const BookCardItemVertical: React.FC<BookCardItemVerticalProps> = ({
   bookCardItem,
   containerStyle,
+  onUpdateCount,
 }) => {
   const { width } = Dimensions.get('window');
   const cardWidth = width - 48;
@@ -76,7 +78,11 @@ const BookCardItemVertical: React.FC<BookCardItemVerticalProps> = ({
         <View style={styles.priceWrapper}>
           <BookCardPrice price={bookCardItem.price} />
           <Layouts.MaxSpace />
-          <AddToCartButton itemCount={20} />
+          <AddToCartButton
+            itemCount={bookCardItem.count}
+            onUpdateCount={onUpdateCount}
+            bookCardItem={bookCardItem}
+          />
         </View>
       </View>
       <Layouts.VSpace value={12} />

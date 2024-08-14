@@ -31,6 +31,7 @@ export interface IBook {
   form?: IForm;
   publisher?: IPublisher;
   saleOffPrice?: number;
+  count?: number;
 }
 
 export interface ICartItem {

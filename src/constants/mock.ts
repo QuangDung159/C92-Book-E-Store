@@ -266,6 +266,8 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
     category: CATEGORY[2],
     form: LIST_FORM[0],
     publisher: LIST_PUBLISHER[0],
+    count: 1,
+    stock: 5,
     id: '1',
     reviews: [
       {
@@ -312,6 +314,8 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
     category: CATEGORY[3],
     form: LIST_FORM[0],
     publisher: LIST_PUBLISHER[0],
+    count: 1,
+    stock: 5,
     id: '2',
   },
   {
@@ -329,6 +333,8 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
     category: CATEGORY[1],
     form: LIST_FORM[0],
     publisher: LIST_PUBLISHER[1],
+    count: 1,
+    stock: 5,
     id: '3',
   },
   {
@@ -346,6 +352,8 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
     category: CATEGORY[2],
     form: LIST_FORM[1],
     publisher: LIST_PUBLISHER[2],
+    count: 1,
+    stock: 5,
     id: '4',
   },
   {
@@ -363,6 +371,8 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
     category: CATEGORY[1],
     form: LIST_FORM[1],
     publisher: LIST_PUBLISHER[0],
+    count: 1,
+    stock: 5,
     id: '5',
   },
   {
@@ -380,6 +390,8 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
     category: CATEGORY[2],
     form: LIST_FORM[2],
     publisher: LIST_PUBLISHER[2],
+    count: 1,
+    stock: 5,
     id: '6',
   },
   {
@@ -397,6 +409,8 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
     category: CATEGORY[1],
     form: LIST_FORM[2],
     publisher: LIST_PUBLISHER[3],
+    count: 1,
+    stock: 5,
     id: '7',
   },
   {
@@ -414,6 +428,8 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
     category: CATEGORY[2],
     form: LIST_FORM[4],
     publisher: LIST_PUBLISHER[1],
+    count: 1,
+    stock: 5,
     id: '8',
   },
   {
@@ -431,6 +447,8 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
     category: CATEGORY[1],
     form: LIST_FORM[4],
     publisher: LIST_PUBLISHER[5],
+    count: 1,
+    stock: 5,
     id: '9',
   },
   {
@@ -448,6 +466,8 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
     category: CATEGORY[2],
     form: LIST_FORM[5],
     publisher: LIST_PUBLISHER[4],
+    count: 1,
+    stock: 5,
     id: '10',
   },
 ];
