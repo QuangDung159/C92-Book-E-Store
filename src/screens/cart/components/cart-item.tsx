@@ -18,6 +18,7 @@ import {
   Layouts,
 } from '@components';
 import { DataModels } from '@models';
+import { cartStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 
 interface CartItemProps {
@@ -64,7 +65,11 @@ const CartItem: React.FC<CartItemProps> = ({
                 />
               </View>
               <Layouts.MaxSpace />
-              <Icons.CloseIcon />
+              <Icons.CloseIcon
+                onPress={() => {
+                  cartStore.removeCartItem(bookCartItem, bookCartItem.count);
+                }}
+              />
             </View>
             <BookCardInfo book={bookCartItem.book} />
           </View>

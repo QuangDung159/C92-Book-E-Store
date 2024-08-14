@@ -145,6 +145,30 @@ class CartStore {
     });
   };
 
+  removeCartItem = async (
+    cartItem: DataModels.ICartItem,
+    removeCount: number,
+  ) => {
+    const cartItemExist = this.getCartItemByBook(cartItem.book.id);
+
+    let list = [...this.listCartItem];
+
+    if (cartItemExist.cartItem) {
+      const cartItemUpdate = cartItemExist.cartItem;
+
+      if (removeCount >= cartItemUpdate.count) {
+        list.splice(cartItemExist.index, 1);
+      } else {
+        cartItemUpdate.count = cartItemUpdate.count - removeCount;
+        list = list.splice(cartItemExist.index, 1, cartItemUpdate);
+      }
+    }
+
+    runInAction(() => {
+      this.listCartItem = list;
+    });
+  };
+
   get cartCount() {
     return this.listCartItem.length;
   }
