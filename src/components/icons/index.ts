@@ -13,3 +13,4 @@ export * from './heart-outline-icon';
 export * from './minus-icon';
 export * from './plus-icon';
 export * from './search-icon';
+export * from './trash-icon';

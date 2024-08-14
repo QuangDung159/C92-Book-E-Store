@@ -1,11 +1,18 @@
-import { FlashList } from '@shopify/flash-list';
 import { useNavigation } from 'expo-router';
 import React from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { SwipeListView } from 'react-native-swipe-list-view';
 import { Buttons, Icons, Layouts } from '@components';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
-import { FONT_STYLES } from '@themes';
+import { cartStore } from '@store';
+import { COLORS, FONT_STYLES } from '@themes';
 import { CartItem } from './cart-item';
 
 interface ListCartItemProps {
@@ -14,19 +21,52 @@ interface ListCartItemProps {
 
 const ListCartItem: React.FC<ListCartItemProps> = ({ listItem }) => {
   const navigation = useNavigation();
-  const { height } = Dimensions.get('window');
+  const { height, width } = Dimensions.get('window');
+  const cardWidth = width - 48;
 
   const { openHomeScreen } = useNavigate(navigation);
   return (
     <View style={styles.container}>
-      <FlashList
-        showsVerticalScrollIndicator={false}
+      <SwipeListView
         data={listItem}
-        keyExtractor={(item) => item.book.id}
-        estimatedItemSize={186}
-        renderItem={({ item }) => {
-          return <CartItem bookCartItem={item} />;
+        renderItem={({ item }) => <CartItem bookCartItem={item} />}
+        disableRightSwipe
+        renderHiddenItem={({ item }) => {
+          return (
+            <TouchableOpacity
+              style={{
+                backgroundColor: COLORS.error50,
+                height: 178,
+                borderRadius: 8,
+                width: cardWidth - 5,
+                alignSelf: 'flex-end',
+                flexDirection: 'row',
+              }}
+              onPress={() => cartStore.removeCartItem(item, item.count)}
+            >
+              <View
+                style={{
+                  width: cardWidth - 75 - 5,
+                }}
+              ></View>
+              <View
+                style={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: 75,
+                }}
+              >
+                <Icons.TrashIcon
+                  color={COLORS.primaryWhite}
+                  size={24}
+                  onPress={() => cartStore.removeCartItem(item, item.count)}
+                />
+              </View>
+            </TouchableOpacity>
+          );
         }}
+        leftOpenValue={75}
+        rightOpenValue={-75}
         ListEmptyComponent={() => {
           return (
             <View
