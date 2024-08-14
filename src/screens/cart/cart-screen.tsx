@@ -43,6 +43,8 @@ const CartScreen = ({ navigation }: any) => {
           <Layouts.VSpace value={12} />
           {renderOrderInfoRow('Shipping', 10000)}
           <Layouts.VSpace value={12} />
+          {renderOrderInfoRow('Discount', -10000)}
+          <Layouts.VSpace value={12} />
           <View style={styles.divider} />
           <Layouts.VSpace value={12} />
           {renderOrderInfoRow('Subtotal', 100000, true)}

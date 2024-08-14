@@ -452,12 +452,71 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
   },
 ];
 
+const LIST_SHIPPING_ADDRESS: DataModels.IShippingAddress[] = [
+  {
+    address: '115 Chu Thien',
+    city: 'Ho Chi Minh City',
+    district: 'Tan Phu District',
+    id: '1',
+    shippingFee: 10000,
+    ward: 'Hiep Tan Ward',
+  },
+  {
+    address: '117 Nguyen Cuu Dam',
+    city: 'Ho Chi Minh City',
+    district: 'Tan Phu District',
+    id: '2',
+    shippingFee: 17000,
+    ward: 'Ward 12',
+  },
+  {
+    address: '117 Nguyen Cuu Dam',
+    city: 'Ho Chi Minh City',
+    district: 'Tan Phu District',
+    id: '3',
+    shippingFee: 20000,
+    ward: 'Ward 17',
+  },
+];
+
+const LIST_VOUCHER: DataModels.IVoucher[] = [
+  {
+    code: 'discount-1',
+    id: '1',
+    description:
+      'discount 12 discount 12 discount 12 discount 12 discount 12 discount 12 discount 12 discount 12',
+    discountValue: 12000,
+  },
+  {
+    code: 'discount-2',
+    id: '2',
+    description:
+      'discount 2 discount 2 discount 2 discount 2 discount 2 discount 2 discount 2 discount 2',
+    discountValue: 17000,
+  },
+  {
+    code: 'discount-3',
+    id: '3',
+    description:
+      'discount 3 discount 3 discount 3 discount 3 discount 3 discount 3 discount 3 discount 3',
+    discountValue: 10000,
+  },
+];
+
+const USER: DataModels.IUser = {
+  username: 'Joe',
+  listShippingAddress: [LIST_SHIPPING_ADDRESS[0], LIST_SHIPPING_ADDRESS[1]],
+};
+
 export {
   CATEGORY,
   LIST_AUTHOR,
   LIST_FORM,
   LIST_PUBLISHER,
   LIST_SORT_OPTION,
+  LIST_VOUCHER,
   TOP_BOOKS,
   TOP_BOOKS_FILTER,
+  USER,
+  LIST_SHIPPING_ADDRESS,
 };

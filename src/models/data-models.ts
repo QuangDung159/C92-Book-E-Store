@@ -30,6 +30,7 @@ export interface IBook {
   stock?: number;
   form?: IForm;
   publisher?: IPublisher;
+  saleOffPrice?: number;
 }
 
 export interface ICartItem {
@@ -44,12 +45,20 @@ export interface IShippingAddress {
   district: string;
   ward: string;
   city: string;
+  shippingFee: number;
 }
 
 export interface IPaymentMethod {
   id: string;
   paymentType: string;
   paymentInfo: any;
+}
+
+export interface IVoucher {
+  id: string;
+  code: string;
+  description: string;
+  discountValue: number;
 }
 
 export interface ICart {
@@ -107,4 +116,9 @@ export interface IReferenceOptions {
   label: string;
   value: string;
   extraData?: any;
+}
+
+export interface IUser {
+  username: string;
+  listShippingAddress: IShippingAddress[];
 }

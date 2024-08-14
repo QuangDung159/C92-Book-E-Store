@@ -1,7 +1,13 @@
 import { appModel } from './app-model';
+import { UserStore } from './user-store';
 
-const { cartStore, categoryStore, searchStore, referenceOptionsStore } =
-  appModel;
+const {
+  cartStore,
+  categoryStore,
+  searchStore,
+  referenceOptionsStore,
+  userStore,
+} = appModel;
 
 export {
   appModel,
@@ -9,4 +15,7 @@ export {
   categoryStore,
   referenceOptionsStore,
   searchStore,
+  userStore,
 };
+
+export { UserStore };
