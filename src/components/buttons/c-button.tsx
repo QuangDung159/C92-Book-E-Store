@@ -55,6 +55,7 @@ const CButton: FC<CButtonProps> = ({
         styles.button,
         {
           backgroundColor: getColor().backgroundColor,
+          borderWidth: 0,
         },
         style,
       ]}

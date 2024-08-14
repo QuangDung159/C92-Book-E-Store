@@ -1,3 +1,4 @@
+export * from './cart-heart-icon';
 export * from './cart-icon';
 export * from './chevron-down-icon';
 export * from './chevron-left-icon';

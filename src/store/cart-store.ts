@@ -32,7 +32,6 @@ class CartStore {
       listShippingAddress: observable,
       userStore: observable,
       referenceOptionsStore: observable,
-      setListShippingAddress: action,
       setListVoucherIdSelected: action,
       setShippingAddressSelected: action,
       setListCartItem: action,
@@ -41,6 +40,7 @@ class CartStore {
       discount: computed,
       total: computed,
       subTotal: computed,
+      shipping: computed,
     });
 
     this.userStore = userStore;
@@ -71,8 +71,12 @@ class CartStore {
     this.shippingAddressSelected = value;
   }
 
-  setListShippingAddress(values: DataModels.IShippingAddress[]) {
-    this.listShippingAddress = values;
+  get shipping() {
+    const shippingData = this.listShippingAddress.find(
+      (item) => item.id === this.shippingAddressSelected,
+    );
+
+    return shippingData?.shippingFee || 0;
   }
 
   get discount() {

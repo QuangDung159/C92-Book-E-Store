@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Buttons, Layouts, ScreenHeader } from '@components';
 import { useNavigate } from '@hooks';
@@ -10,6 +10,11 @@ import { ListCartItem } from './components/list-cart-item';
 
 const CartScreen = ({ navigation }: any) => {
   const { openPaymentScreen } = useNavigate(navigation);
+
+  const cartEmpty = useMemo(
+    () => (cartStore.listCartItem || []).length === 0,
+    [],
+  );
 
   const renderOrderInfoRow = (
     title: string,
@@ -27,6 +32,7 @@ const CartScreen = ({ navigation }: any) => {
       </View>
     );
   };
+
   return (
     <View style={styles.container}>
       <ScreenHeader title="Cart" navigation={navigation} onGoBack={() => {}} />
@@ -36,26 +42,30 @@ const CartScreen = ({ navigation }: any) => {
         contentContainerStyle={styles.wrapper}
       >
         <ListCartItem listItem={cartStore.listCartItem} />
-        <View>
-          <Text style={styles.summaryTitle}>Order summary</Text>
-          <Layouts.VSpace value={12} />
-          {renderOrderInfoRow('Subtotal', 100000)}
-          <Layouts.VSpace value={12} />
-          {renderOrderInfoRow('Shipping', 10000)}
-          <Layouts.VSpace value={12} />
-          {renderOrderInfoRow('Discount', -10000)}
-          <Layouts.VSpace value={12} />
-          <View style={styles.divider} />
-          <Layouts.VSpace value={12} />
-          {renderOrderInfoRow('Subtotal', 100000, true)}
-        </View>
-        <Layouts.VSpace value={24} />
+        {!cartEmpty && (
+          <>
+            <View>
+              <Text style={styles.summaryTitle}>Order summary</Text>
+              <Layouts.VSpace value={12} />
+              {renderOrderInfoRow('Subtotal', cartStore.subTotal)}
+              <Layouts.VSpace value={12} />
+              {renderOrderInfoRow('Shipping', cartStore.shipping)}
+              <Layouts.VSpace value={12} />
+              {renderOrderInfoRow('Discount', -cartStore.discount)}
+              <Layouts.VSpace value={12} />
+              <View style={styles.divider} />
+              <Layouts.VSpace value={12} />
+              {renderOrderInfoRow('Total', cartStore.total, true)}
+            </View>
+            <Layouts.VSpace value={24} />
+          </>
+        )}
       </ScrollView>
       <View style={styles.buttonWrapper}>
         <Layouts.VSpace value={12} />
         <View style={styles.totalWrapper}>
           <Text style={styles.total}>
-            {StringHelpers.formatCurrency(250000000)}
+            {StringHelpers.formatCurrency(cartStore.total)}
           </Text>
           <Buttons.CButton
             onPress={() => {
@@ -63,6 +73,7 @@ const CartScreen = ({ navigation }: any) => {
             }}
             label="Checkout"
             buttonType="primary"
+            disabled={cartEmpty}
           />
         </View>
       </View>
