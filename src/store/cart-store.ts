@@ -111,19 +111,31 @@ class CartStore {
     return this.subTotal + (shippingAddress?.shippingFee || 0) - this.discount;
   }
 
-  addToCart = async (addToCartItem: DataModels.ICartItem) => {
+  getCartItemByBook = (bookId: string) => {
     const cartItemExistIndex = this.listCartItem.findIndex(
-      (item) => item.book.id === addToCartItem.book.id,
+      (item) => item.book.id === bookId,
     );
+
+    return {
+      index: cartItemExistIndex,
+      cartItem:
+        cartItemExistIndex !== -1
+          ? this.listCartItem[cartItemExistIndex]
+          : null,
+    };
+  };
+
+  addToCart = async (addToCartItem: DataModels.ICartItem) => {
+    const cartItemExist = this.getCartItemByBook(addToCartItem.book.id);
 
     let list = [...this.listCartItem];
 
-    if (cartItemExistIndex !== -1) {
-      const cartItemUpdate = this.listCartItem[cartItemExistIndex];
+    if (cartItemExist.cartItem) {
+      const cartItemUpdate = cartItemExist.cartItem;
 
       cartItemUpdate.count = cartItemUpdate.count + addToCartItem.count;
 
-      list = this.listCartItem.splice(cartItemExistIndex, 1, cartItemUpdate);
+      list = list.splice(cartItemExist.index, 1, cartItemUpdate);
     } else {
       list.push(addToCartItem);
     }

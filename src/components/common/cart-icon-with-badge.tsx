@@ -1,6 +1,6 @@
 import { useNavigation } from 'expo-router';
 import { observer } from 'mobx-react-lite';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import { Badge } from 'react-native-paper';
 import { Icons, Layouts } from '@components';
@@ -15,13 +15,13 @@ const CartIconWithBadge: React.FC<CartIconWithBadge> = ({ containerStyle }) => {
   const navigation = useNavigation();
   const { openCartScreen } = useNavigate(navigation);
 
-  const badgeNumber = useMemo(() => {
+  const badgeNumber = () => {
     if (cartStore.cartCount > 0 && cartStore.cartCount <= 99) {
       return cartStore.cartCount;
     } else {
       return '99+';
     }
-  }, []);
+  };
 
   return (
     <>
@@ -33,7 +33,7 @@ const CartIconWithBadge: React.FC<CartIconWithBadge> = ({ containerStyle }) => {
       />
       {cartStore.cartCount > 0 ? (
         <View style={[styles.cartIconContainer, containerStyle]}>
-          <Badge>{badgeNumber}</Badge>
+          <Badge>{badgeNumber()}</Badge>
         </View>
       ) : null}
     </>
