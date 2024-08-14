@@ -96,8 +96,10 @@ class CartStore {
   get subTotal() {
     let subTotalValue = 0;
 
-    this.listCartItem.forEach((item) => {
-      subTotalValue += item.book.price;
+    const list = [...this.listCartItem];
+
+    list.forEach((item) => {
+      subTotalValue += item.book.price * item.count;
     });
 
     return subTotalValue;

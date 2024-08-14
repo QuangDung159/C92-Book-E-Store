@@ -1,24 +1,41 @@
 import React from 'react';
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { Icons } from '@components';
+import { DataModels } from '@models';
+import { cartStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 
 interface CartUpdateNumberProps {
   itemCount: number;
   containerStyle?: StyleProp<ViewStyle>;
+  bookCartItem: DataModels.ICartItem;
 }
 
 const CartUpdateNumber: React.FC<CartUpdateNumberProps> = ({
   itemCount,
   containerStyle,
+  bookCartItem,
 }) => {
   return (
     <View style={[styles.addToCartWrapper, containerStyle]}>
       <View style={styles.addToCartWrapper}>
         <View style={styles.addToCart}>
-          <Icons.MinusIcon color={COLORS.primaryWhite} />
+          <Icons.MinusIcon
+            color={COLORS.primaryWhite}
+            onPress={() => cartStore.removeCartItem(bookCartItem, 1)}
+            disabled={itemCount <= 1}
+          />
           <Text style={styles.cartNumber}>{itemCount}</Text>
-          <Icons.PlusIcon color={COLORS.primaryWhite} />
+          <Icons.PlusIcon
+            disabled={itemCount >= bookCartItem.book.stock}
+            color={COLORS.primaryWhite}
+            onPress={() =>
+              cartStore.addToCart({
+                book: bookCartItem.book,
+                count: 1,
+              })
+            }
+          />
         </View>
       </View>
     </View>
