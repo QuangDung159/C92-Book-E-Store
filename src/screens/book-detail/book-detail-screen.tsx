@@ -137,7 +137,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
               ...FONT_STYLES.REGULAR_14,
             }}
           >
-            Stock: 12 pcs
+            {`Stock: ${book.stock} pcs`}
           </Text>
           <Layouts.VSpace value={24} />
           <AddToCartButton
@@ -147,6 +147,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
               alignSelf: 'center',
             }}
             buttonType="text-icon"
+            bookCardItem={book}
           />
           <Layouts.VSpace value={24} />
           <InformationTitle
