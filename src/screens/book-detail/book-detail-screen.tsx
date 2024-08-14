@@ -139,16 +139,34 @@ const BookDetailScreen = ({ route, navigation }: any) => {
           >
             {`Stock: ${book.stock} pcs`}
           </Text>
-          <Layouts.VSpace value={24} />
-          <AddToCartButton
-            itemCount={1}
-            containerStyle={{
+          <Layouts.VSpace value={12} />
+          <View
+            style={{
               flexDirection: 'row',
-              alignSelf: 'center',
+              alignItems: 'center',
+              justifyContent: 'space-between',
             }}
-            buttonType="text-icon"
-            bookCardItem={book}
-          />
+          >
+            <View>
+              {Boolean(book.priceNotSale) && (
+                <Text style={styles.priceNotSale}>
+                  {StringHelpers.formatCurrency(book.priceNotSale)}
+                </Text>
+              )}
+              <Text style={styles.price}>
+                {StringHelpers.formatCurrency(book.price)}
+              </Text>
+            </View>
+            <AddToCartButton
+              itemCount={1}
+              containerStyle={{
+                flexDirection: 'row',
+                alignSelf: 'center',
+              }}
+              buttonType="icon"
+              bookCardItem={book}
+            />
+          </View>
           <Layouts.VSpace value={24} />
           <InformationTitle
             isCollapse={isCollapseDescription}
@@ -308,6 +326,15 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primaryWhite,
     paddingHorizontal: 24,
     paddingTop: 12,
+  },
+  priceNotSale: {
+    ...FONT_STYLES.REGULAR_16,
+    textDecorationLine: 'line-through',
+    textAlign: 'right',
+    color: COLORS.gray60,
+  },
+  price: {
+    ...FONT_STYLES.BOLD_20,
   },
 });
 

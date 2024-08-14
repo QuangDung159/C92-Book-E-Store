@@ -30,7 +30,7 @@ export interface IBook {
   stock?: number;
   form?: IForm;
   publisher?: IPublisher;
-  saleOffPrice?: number;
+  priceNotSale?: number;
   count?: number;
 }
 

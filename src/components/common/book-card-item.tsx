@@ -92,7 +92,14 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
             style={styles.stock}
           >{`In stock: ${bookCardItem.stock} pcs`}</Text>
           <Layouts.VSpace value={6} />
-          <BookCardPrice price={bookCardItem.price} />
+          <BookCardPrice
+            price={bookCardItem.price}
+            priceNotSale={bookCardItem.priceNotSale}
+            containerStyle={{
+              height: 40,
+              justifyContent: 'flex-end',
+            }}
+          />
           <Layouts.VSpace value={6} />
           <Buttons.CButton
             onPress={() => {

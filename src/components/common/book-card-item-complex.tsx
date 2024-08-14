@@ -72,7 +72,10 @@ const BookCardItemComplex: React.FC<BookCardItemComplexProps> = ({
         <Text style={styles.description}>{bookCardItem.description}</Text>
         <Layouts.VSpace value={6} />
         <View style={styles.priceWrapper}>
-          <BookCardPrice price={bookCardItem.price} />
+          <BookCardPrice
+            price={bookCardItem.price}
+            priceNotSale={bookCardItem.priceNotSale}
+          />
           <Layouts.MaxSpace />
           <AddToCartButton
             itemCount={bookCardItem.count}

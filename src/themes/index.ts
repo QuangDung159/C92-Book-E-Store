@@ -1,3 +1,4 @@
+import { MD3Colors } from 'react-native-paper';
 import * as FONT_STYLES from './font-styles';
 
 const COLORS = {
@@ -5,7 +6,9 @@ const COLORS = {
   primaryWhite: '#FFFFFF',
   gray: '#B8B8B8',
   gray200: '#eeeeee',
-  error50: 'rgba(220, 54, 46, 1)',
+  gray40: MD3Colors.neutralVariant40,
+  gray60: MD3Colors.neutral60,
+  error50: MD3Colors.error50,
 };
 
 export { COLORS, FONT_STYLES };

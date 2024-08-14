@@ -76,7 +76,10 @@ const BookCardItemVertical: React.FC<BookCardItemVerticalProps> = ({
           </View>
         </View>
         <View style={styles.priceWrapper}>
-          <BookCardPrice price={bookCardItem.price} />
+          <BookCardPrice
+            price={bookCardItem.price}
+            priceNotSale={bookCardItem.priceNotSale}
+          />
           <Layouts.MaxSpace />
           <AddToCartButton
             itemCount={bookCardItem.count}
