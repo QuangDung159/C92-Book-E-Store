@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Buttons, Layouts, ScreenHeader } from '@components';
 import { useNavigate } from '@hooks';
@@ -10,11 +10,6 @@ import { ListCartItem } from './components/list-cart-item';
 
 const CartScreen = ({ navigation }: any) => {
   const { openPaymentScreen } = useNavigate(navigation);
-
-  const cartEmpty = useMemo(
-    () => (cartStore.listCartItem || []).length === 0,
-    [],
-  );
 
   const renderOrderInfoRow = (
     title: string,
@@ -42,7 +37,7 @@ const CartScreen = ({ navigation }: any) => {
         contentContainerStyle={styles.wrapper}
       >
         <ListCartItem listItem={cartStore.listCartItem} />
-        {!cartEmpty && (
+        {cartStore.cartCount !== 0 && (
           <>
             <View>
               <Text style={styles.summaryTitle}>Order summary</Text>
@@ -73,7 +68,7 @@ const CartScreen = ({ navigation }: any) => {
             }}
             label="Checkout"
             buttonType="primary"
-            disabled={cartEmpty}
+            disabled={cartStore.cartCount === 0}
           />
         </View>
       </View>
