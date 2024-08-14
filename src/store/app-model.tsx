@@ -4,6 +4,7 @@ import { CartStore } from './cart-store';
 import { CategoryStore } from './category-store';
 import { ReferenceOptionsStore } from './reference-options-store';
 import { SearchStore } from './search-store';
+import { SharedStore } from './shared-store';
 import { UserStore } from './user-store';
 
 class AppModel {
@@ -12,6 +13,7 @@ class AppModel {
   searchStore: SearchStore;
   referenceOptionsStore: ReferenceOptionsStore;
   userStore: UserStore;
+  sharedStore: SharedStore;
 
   constructor() {
     this.userStore = new UserStore();
@@ -19,6 +21,7 @@ class AppModel {
     this.cartStore = new CartStore(this.userStore, this.referenceOptionsStore);
     this.categoryStore = new CategoryStore();
     this.searchStore = new SearchStore();
+    this.sharedStore = new SharedStore();
   }
 
   async appInit() {

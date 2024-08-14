@@ -3,6 +3,7 @@ import { CartStore } from './cart-store';
 import { CategoryStore } from './category-store';
 import { ReferenceOptionsStore } from './reference-options-store';
 import { SearchStore } from './search-store';
+import { SharedStore } from './shared-store';
 import { UserStore } from './user-store';
 
 const {
@@ -11,6 +12,7 @@ const {
   searchStore,
   referenceOptionsStore,
   userStore,
+  sharedStore,
 } = appModel;
 
 export {
@@ -19,6 +21,7 @@ export {
   categoryStore,
   referenceOptionsStore,
   searchStore,
+  sharedStore,
   userStore,
 };
 
@@ -27,5 +30,6 @@ export {
   CategoryStore,
   ReferenceOptionsStore,
   SearchStore,
+  SharedStore,
   UserStore,
 };

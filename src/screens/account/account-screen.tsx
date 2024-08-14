@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Text, View } from 'react-native';
 import { USER } from '@constants';
 import { useNavigate } from '@hooks';
-import { appModel } from '@store';
+import { appModel, sharedStore } from '@store';
 import { delay } from '@utils';
 
 const AccountScreen = ({ navigation }: any) => {
@@ -15,7 +15,11 @@ const AccountScreen = ({ navigation }: any) => {
         title="Go to account screen"
         onPress={() => {
           appModel.login(USER);
-          delay(1000).then(() => openCartScreen());
+          sharedStore.setShowLoading(true);
+          delay(1000).then(() => {
+            sharedStore.setShowLoading(false);
+            openCartScreen();
+          });
         }}
       />
     </View>

@@ -1,6 +1,10 @@
 import { createStackNavigator } from '@react-navigation/stack';
+import { observer } from 'mobx-react-lite';
 import React from 'react';
+import Spinner from 'react-native-loading-spinner-overlay';
 import { SCREEN_NAME } from '@constants';
+import { sharedStore } from '@store';
+import { COLORS } from '@themes';
 import { BookDetailNavigator } from './book-detail-navigator';
 import { BottomTabNavigator } from './bottom-tab-navigator';
 import { CartNavigator } from './cart-navigator';
@@ -8,26 +12,37 @@ import { SearchNavigator } from './search-navigator';
 
 const Stack = createStackNavigator();
 
-export default function Navigation() {
+const Navigation = () => {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Stack.Screen name="app" component={BottomTabNavigator} />
-      <Stack.Screen
-        name={SCREEN_NAME.SEARCH_NAVIGATOR}
-        component={SearchNavigator}
+    <>
+      <Spinner
+        visible={sharedStore.showLoading}
+        textContent={'Loading...'}
+        textStyle={{
+          color: COLORS.primaryWhite,
+        }}
       />
-      <Stack.Screen
-        name={SCREEN_NAME.BOOK_DETAIL_NAVIGATOR}
-        component={BookDetailNavigator}
-      />
-      <Stack.Screen
-        name={SCREEN_NAME.CART_NAVIGATOR}
-        component={CartNavigator}
-      />
-    </Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen name="app" component={BottomTabNavigator} />
+        <Stack.Screen
+          name={SCREEN_NAME.SEARCH_NAVIGATOR}
+          component={SearchNavigator}
+        />
+        <Stack.Screen
+          name={SCREEN_NAME.BOOK_DETAIL_NAVIGATOR}
+          component={BookDetailNavigator}
+        />
+        <Stack.Screen
+          name={SCREEN_NAME.CART_NAVIGATOR}
+          component={CartNavigator}
+        />
+      </Stack.Navigator>
+    </>
   );
-}
+};
+const observable = observer(Navigation);
+export { observable as Navigation };
