@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { Buttons, Icons, Layouts } from '@components';
 import { DataModels } from '@models';
+import { cartStore, searchStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 
 interface AddToCartButtonProps {
@@ -39,7 +40,20 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
       <Layouts.HSpace value={8} />
       {buttonType === 'icon' ? (
         <View style={styles.cartIconWrapper}>
-          <Icons.CartIcon color={COLORS.primaryWhite} />
+          <Icons.CartIcon
+            color={COLORS.primaryWhite}
+            onPress={() => {
+              cartStore.addToCart({
+                book: bookCardItem,
+                count: bookCardItem.count,
+              });
+
+              searchStore.updateBookItem({
+                ...bookCardItem,
+                count: 1,
+              });
+            }}
+          />
         </View>
       ) : (
         <Buttons.CButton
