@@ -41,6 +41,7 @@ class CartStore {
       total: computed,
       subTotal: computed,
       shipping: computed,
+      cartCount: computed,
     });
 
     this.userStore = userStore;
@@ -131,6 +132,10 @@ class CartStore {
       this.listCartItem = list;
     });
   };
+
+  get cartCount() {
+    return this.listCartItem.length;
+  }
 }
 
 export { CartStore };
