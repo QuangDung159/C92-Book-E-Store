@@ -34,7 +34,7 @@ export interface IBook {
 }
 
 export interface ICartItem {
-  id: string;
+  id?: string;
   book: IBook;
   count: number;
 }

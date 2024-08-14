@@ -1,4 +1,10 @@
-import { action, computed, makeObservable, observable } from 'mobx';
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+  runInAction,
+} from 'mobx';
 import { DataModels } from '@models';
 import { ReferenceOptionsStore } from './reference-options-store';
 import { UserStore } from './user-store';
@@ -99,6 +105,29 @@ class CartStore {
 
     return this.subTotal + (shippingAddress?.shippingFee || 0) - this.discount;
   }
+
+  addToCart = async (addToCartItem: DataModels.ICartItem) => {
+    const cartItemExistIndex = this.listCartItem.findIndex(
+      (item) => item.id === addToCartItem.id,
+    );
+
+    let list = [...this.listCartItem];
+
+    if (cartItemExistIndex !== -1) {
+      //
+      const cartItemUpdateCount = this.listCartItem[cartItemExistIndex];
+      list = this.listCartItem.splice(cartItemExistIndex, 1, {
+        ...cartItemUpdateCount,
+        count: addToCartItem.count,
+      });
+    } else {
+      list.push(addToCartItem);
+    }
+
+    runInAction(() => {
+      this.listCartItem = list;
+    });
+  };
 }
 
 export { CartStore };

@@ -21,7 +21,7 @@ import { DataModels } from '@models';
 import { COLORS, FONT_STYLES } from '@themes';
 
 interface CartItemProps {
-  bookCartItem: DataModels.IBook;
+  bookCartItem: DataModels.ICartItem;
   containerStyle?: StyleProp<ViewStyle>;
 }
 
@@ -60,17 +60,17 @@ const CartItem: React.FC<CartItemProps> = ({
                 <BookTitle
                   style={styles.title}
                   navigation={navigation}
-                  book={bookCartItem}
+                  book={bookCartItem.book}
                 />
               </View>
               <Layouts.MaxSpace />
               <Icons.CloseIcon />
             </View>
-            <BookCardInfo book={bookCartItem} />
+            <BookCardInfo book={bookCartItem.book} />
           </View>
         </View>
         <View style={styles.priceWrapper}>
-          <BookCardPrice price={bookCartItem.price} />
+          <BookCardPrice price={bookCartItem.book.price} />
           <Layouts.MaxSpace />
           <CartUpdateNumber itemCount={20} />
         </View>

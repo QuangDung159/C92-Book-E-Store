@@ -3,7 +3,7 @@ import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Buttons, Layouts, ScreenHeader } from '@components';
 import { useNavigate } from '@hooks';
-import { searchStore } from '@store';
+import { cartStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { StringHelpers } from '@utils';
 import { ListCartItem } from './components/list-cart-item';
@@ -35,7 +35,7 @@ const CartScreen = ({ navigation }: any) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.wrapper}
       >
-        <ListCartItem listItem={searchStore.listBook} />
+        <ListCartItem listItem={cartStore.listCartItem} />
         <View>
           <Text style={styles.summaryTitle}>Order summary</Text>
           <Layouts.VSpace value={12} />

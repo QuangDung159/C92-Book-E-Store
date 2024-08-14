@@ -1,11 +1,12 @@
 import { FlashList } from '@shopify/flash-list';
 import React from 'react';
 import { Text, View } from 'react-native';
+import { Buttons } from '@components';
 import { DataModels } from '@models';
 import { CartItem } from './cart-item';
 
 interface ListCartItemProps {
-  listItem: Array<DataModels.IBook>;
+  listItem: Array<DataModels.ICartItem>;
 }
 
 const ListCartItem: React.FC<ListCartItemProps> = ({ listItem }) => {
@@ -27,7 +28,8 @@ const ListCartItem: React.FC<ListCartItemProps> = ({ listItem }) => {
         ListEmptyComponent={() => {
           return (
             <View>
-              <Text>No data</Text>
+              <Text>{`Let's shop now`}</Text>
+              <Buttons.CButton label={`Let's shop now`} onPress={() => {}} />
             </View>
           );
         }}
