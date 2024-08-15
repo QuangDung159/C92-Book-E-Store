@@ -1,6 +1,8 @@
+import { useNavigation } from 'expo-router';
 import React from 'react';
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { Buttons, Icons, Layouts } from '@components';
+import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
 import { cartStore, searchStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
@@ -21,6 +23,9 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   onUpdateCount,
   bookCardItem,
 }) => {
+  const navigation = useNavigation();
+  const { openCartScreen } = useNavigate(navigation);
+
   const onAddToCart = () => {
     cartStore.addToCart({
       book: bookCardItem,
@@ -32,7 +37,11 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
       count: 1,
     });
 
-    ToastHelpers.showToast('Add to cart success', 'success');
+    ToastHelpers.showToast({
+      title: 'Add to cart success',
+      content: 'View cart',
+      onPress: () => openCartScreen(),
+    });
   };
 
   return (

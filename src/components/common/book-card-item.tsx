@@ -18,6 +18,7 @@ import {
   Icons,
   Layouts,
 } from '@components';
+import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
 import { cartStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
@@ -36,6 +37,7 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
 }) => {
   const { width } = Dimensions.get('window');
   const navigation = useNavigation();
+  const { openCartScreen } = useNavigate(navigation);
 
   const carouselWidth = (width - 48 - 12) / 2;
   const carouselHeight = carouselWidth * 1.2;
@@ -106,7 +108,11 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
                 count: 1,
               });
 
-              ToastHelpers.showToast('Add to cart success', 'success');
+              ToastHelpers.showToast({
+                title: 'Add to cart success',
+                content: 'View cart',
+                onPress: () => openCartScreen(),
+              });
             }}
             buttonType="primary"
             label="Add to cart"
