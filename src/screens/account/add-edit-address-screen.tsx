@@ -1,7 +1,13 @@
 import { observer } from 'mobx-react-lite';
 import React, { useRef } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Divider, Switch } from 'react-native-paper';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { Divider } from 'react-native-paper';
 import {
   BottomButtonSection,
   Buttons,
@@ -35,31 +41,13 @@ const AddEditAddress = ({ navigation, route }: any) => {
         contentContainerStyle={styles.wrapper}
       >
         <Layouts.VSpace value={12} />
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
+        <Buttons.CSwitch
+          value={addEditVM.primary}
+          onValueChange={(value) => {
+            addEditVM.setPrimary(value);
           }}
-        >
-          <Text
-            style={{
-              ...FONT_STYLES.SEMIBOLD_16,
-            }}
-          >
-            Set as default
-          </Text>
-          <Switch
-            style={{
-              transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }],
-              marginRight: -10,
-            }}
-            value={addEditVM.primary}
-            onValueChange={(value) => {
-              addEditVM.setPrimary(value);
-            }}
-          />
-        </View>
+          title="Set as default"
+        />
         <Layouts.VSpace value={12} />
         <Divider />
         <Layouts.VSpace value={12} />
@@ -88,20 +76,16 @@ const AddEditAddress = ({ navigation, route }: any) => {
         <Layouts.VSpace value={12} />
         <Divider />
         <Layouts.VSpace value={16} />
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <View>
-            <Text style={styles.addressInfo}>{addEditVM.city}</Text>
-            <Text style={styles.addressInfo}>{addEditVM.district}</Text>
-            <Text style={styles.addressInfo}>{addEditVM.ward}</Text>
+        <TouchableOpacity>
+          <View style={styles.addressContainer}>
+            <View>
+              <Text style={styles.addressInfo}>{addEditVM.city}</Text>
+              <Text style={styles.addressInfo}>{addEditVM.district}</Text>
+              <Text style={styles.addressInfo}>{addEditVM.ward}</Text>
+            </View>
+            <Icons.ChevronRightIcon size={20} />
           </View>
-          <Icons.ChevronRightIcon size={20} />
-        </View>
+        </TouchableOpacity>
         <Layouts.VSpace value={16} />
         <Divider />
         <Layouts.VSpace value={12} />
@@ -152,6 +136,11 @@ const styles = StyleSheet.create({
     marginHorizontal: -16,
     marginRight: -6,
     height: 30,
+  },
+  addressContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 });
 
