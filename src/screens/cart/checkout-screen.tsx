@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import { RadioButton } from 'react-native-paper';
-import { Buttons, Layouts, ScreenHeader } from '@components';
+import { Buttons, Icons, Layouts, ScreenHeader } from '@components';
 import { LIST_PAYMENT_METHOD } from '@constants';
 import { cartStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
@@ -30,7 +30,7 @@ const PaymentScreen = ({ navigation }: any) => {
       >
         <Layouts.VSpace value={24} />
         <SectionTitle title="Delivering Address" />
-        <Layouts.VSpace value={24} />
+        <Layouts.VSpace value={12} />
         <View
           style={{
             flexDirection: 'row',
@@ -68,34 +68,51 @@ const PaymentScreen = ({ navigation }: any) => {
           type="short"
           allowSwipe={false}
         />
-        <Layouts.VSpace value={36} />
         <SectionTitle title="Payment Method" />
-        <Layouts.VSpace value={24} />
-        <RadioButton.Group onValueChange={(value) => {}} value={'name_asc'}>
+        <Layouts.VSpace value={12} />
+        <RadioButton.Group
+          onValueChange={(value) => {
+            cartStore.setPaymentSelected({
+              paymentType: value,
+              paymentInfo: {},
+            });
+          }}
+          value={cartStore.paymentSelected.paymentType}
+        >
           {LIST_PAYMENT_METHOD.map((item) => {
             return (
-              <View key={item.value} style={{}}>
+              <View
+                key={item.value}
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginLeft: -8,
+                }}
+              >
                 <RadioButton.Android value={item.value} />
                 <Text style={{}}>{item.label}</Text>
+                {item.value !== 'cod' && (
+                  <>
+                    <Layouts.MaxSpace />
+                    <Icons.ChevronDownIcon />
+                  </>
+                )}
                 <Layouts.VSpace value={12} />
               </View>
             );
           })}
         </RadioButton.Group>
-        <Layouts.VSpace value={36} />
+        <Layouts.VSpace value={12} />
         {cartStore.cartCount !== 0 && (
-          <>
-            <View>
-              <SectionTitle title="Summary" />
-              <CartInfoRow title="Subtotal" value={cartStore.subTotal} />
-              <CartInfoRow title="Shipping" value={cartStore.shipping} />
-              <CartInfoRow title="Discount" value={-cartStore.discount} />
-              <Layouts.VSpace value={12} />
-              <View style={styles.divider} />
-              <CartInfoRow title="Total" value={cartStore.total} isTotal />
-            </View>
-            <Layouts.VSpace value={24} />
-          </>
+          <View>
+            <SectionTitle title="Summary" />
+            <CartInfoRow title="Subtotal" value={cartStore.subTotal} />
+            <CartInfoRow title="Shipping" value={cartStore.shipping} />
+            <CartInfoRow title="Discount" value={-cartStore.discount} />
+            <Layouts.VSpace value={12} />
+            <View style={styles.divider} />
+            <CartInfoRow title="Total" value={cartStore.total} isTotal />
+          </View>
         )}
         <Layouts.VSpace value={24} />
       </ScrollView>

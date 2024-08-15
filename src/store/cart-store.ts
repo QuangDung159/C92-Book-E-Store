@@ -5,7 +5,7 @@ import {
   observable,
   runInAction,
 } from 'mobx';
-import { TOP_BOOKS } from '@constants';
+import { LIST_PAYMENT_METHOD, TOP_BOOKS } from '@constants';
 import { DataModels } from '@models';
 import { ReferenceOptionsStore } from './reference-options-store';
 import { UserStore } from './user-store';
@@ -23,6 +23,7 @@ class CartStore {
   shippingAddressSelected: string = '';
   referenceOptionsStore: ReferenceOptionsStore | null = null;
   userStore: UserStore | null = null;
+  paymentSelected: DataModels.IPaymentMethod | null = null;
 
   constructor(
     userStore: UserStore,
@@ -36,6 +37,8 @@ class CartStore {
       shippingAddressSelected: observable,
       userStore: observable,
       referenceOptionsStore: observable,
+      paymentSelected: observable,
+      setPaymentSelected: action,
       setListVoucherIdSelected: action,
       setShippingAddressSelected: action,
       setListCartItem: action,
@@ -52,6 +55,14 @@ class CartStore {
     this.userStore = userStore;
 
     this.referenceOptionsStore = referenceOptionsStore;
+
+    this.paymentSelected = {
+      paymentType: LIST_PAYMENT_METHOD[0].value,
+    };
+  }
+
+  setPaymentSelected(value: DataModels.IPaymentMethod) {
+    this.paymentSelected = value;
   }
 
   setListCartItem(values: DataModels.ICartItem[]) {

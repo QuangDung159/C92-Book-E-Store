@@ -544,9 +544,28 @@ const LIST_VOUCHER: DataModels.IVoucher[] = [
   },
 ];
 
+const LIST_CREDIT_CARD: DataModels.ICreditCard[] = [
+  {
+    cardHolder: 'LU QUANG DUNG',
+    cartType: 'visa',
+    cardNumber: '3214xxxxxxxx2345',
+  },
+  {
+    cardHolder: 'LU QUANG DUNG',
+    cartType: 'jcb',
+    cardNumber: '3212xxxxxxxx2344',
+  },
+  {
+    cardHolder: 'LU QUANG DUNG',
+    cartType: 'master-card',
+    cardNumber: '3214xxxxxxxx2345',
+  },
+];
+
 const USER: DataModels.IUser = {
   username: 'Joe',
   listShippingAddress: [LIST_SHIPPING_ADDRESS[0], LIST_SHIPPING_ADDRESS[1]],
+  listCreditCard: [LIST_CREDIT_CARD[0], LIST_CREDIT_CARD[1]],
 };
 
 export {

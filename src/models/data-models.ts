@@ -50,9 +50,8 @@ export interface IShippingAddress {
 }
 
 export interface IPaymentMethod {
-  id: string;
   paymentType: string;
-  paymentInfo: any;
+  paymentInfo?: any;
 }
 
 export interface IVoucher {
@@ -69,8 +68,7 @@ export interface ICart {
   shipping: number;
   discount: number;
   shippingAddress: string;
-  paymentMethod: string;
-  paymentInfo?: any;
+  paymentMethod: IPaymentMethod;
 }
 
 export interface ITopBooksFilter {
@@ -120,7 +118,14 @@ export interface IReferenceOptions {
   extraData?: any;
 }
 
+export interface ICreditCard {
+  cardNumber: string;
+  cardHolder: string;
+  cartType: string;
+}
+
 export interface IUser {
   username: string;
   listShippingAddress: IShippingAddress[];
+  listCreditCard: ICreditCard[];
 }
