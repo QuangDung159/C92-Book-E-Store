@@ -47,6 +47,7 @@ const AddEditAddress = ({ navigation, route }: any) => {
             addEditVM.setPrimary(value);
           }}
           title="Set as default"
+          labelStyle={styles.defaultText}
         />
         <Layouts.VSpace value={12} />
         <Divider />
@@ -141,6 +142,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  defaultText: {
+    fontWeight: '600',
   },
 });
 
