@@ -1,5 +1,6 @@
 export * from './cart-heart-icon';
 export * from './cart-icon';
+export * from './check-square-icon';
 export * from './chevron-down-icon';
 export * from './chevron-left-icon';
 export * from './chevron-right-icon';
