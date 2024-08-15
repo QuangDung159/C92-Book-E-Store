@@ -19,9 +19,9 @@ import {
 import { LIST_PAYMENT_METHOD, PAYMENT_TYPE } from '@constants';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
-import { cartStore, userStore } from '@store';
+import { cartStore, sharedStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
-import { ListHelpers, StringHelpers } from '@utils';
+import { delay, ListHelpers, StringHelpers } from '@utils';
 import { CartInfoRow, ListCreditCard, SectionTitle } from './components';
 import { ListCartItem } from './components/list-cart-item';
 
@@ -70,7 +70,7 @@ const CheckoutScreen = ({ navigation }: any) => {
         contentContainerStyle={styles.wrapper}
       >
         <Layouts.VSpace value={24} />
-        <SectionTitle title="Delivering Address" />
+        <SectionTitle title="Shipping Address" />
         <Layouts.VSpace value={12} />
         <View
           style={{
@@ -192,7 +192,13 @@ const CheckoutScreen = ({ navigation }: any) => {
         <Layouts.VSpace value={24} />
       </ScrollView>
       <BottomCheckoutSection
-        onPress={openPaymentSuccessScreen}
+        onPress={() => {
+          sharedStore.setShowLoading(true);
+          delay(1000).then(() => {
+            sharedStore.setShowLoading(false);
+            openPaymentSuccessScreen();
+          });
+        }}
         priceDisplay={cartStore.total}
         disabled={cartStore.cartCount === 0}
         buttonTitle="Submit"

@@ -9,6 +9,7 @@ interface ScreenHeaderProps {
   rightConponent?: () => React.ReactNode;
   navigation: any;
   onGoBack?: () => void;
+  showBackIcon?: boolean;
 }
 
 const ScreenHeader: React.FC<ScreenHeaderProps> = ({
@@ -17,6 +18,7 @@ const ScreenHeader: React.FC<ScreenHeaderProps> = ({
   rightConponent,
   navigation,
   onGoBack,
+  showBackIcon = true,
 }) => {
   const { width } = Dimensions.get('window');
   const goBack = () => {
@@ -26,7 +28,10 @@ const ScreenHeader: React.FC<ScreenHeaderProps> = ({
 
   const renderLeftComponent = () => {
     if (!leftComponent) {
-      return <Icons.ChevronLeftIcon onPress={goBack} />;
+      if (showBackIcon) {
+        return <Icons.ChevronLeftIcon onPress={goBack} />;
+      }
+      return null;
     } else {
       return leftComponent();
     }
