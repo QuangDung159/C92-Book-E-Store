@@ -8,12 +8,14 @@ interface BottomCheckoutSectionProps {
   onPress: () => void;
   priceDisplay: number;
   disabled?: boolean;
+  buttonTitle?: string;
 }
 
 const BottomCheckoutSection: React.FC<BottomCheckoutSectionProps> = ({
   onPress,
   priceDisplay,
   disabled,
+  buttonTitle,
 }) => {
   return (
     <View style={styles.buttonWrapper}>
@@ -23,8 +25,9 @@ const BottomCheckoutSection: React.FC<BottomCheckoutSectionProps> = ({
           {StringHelpers.formatCurrency(priceDisplay)}
         </Text>
         <Buttons.CButton
+          style={styles.buttonStyle}
           onPress={() => onPress?.()}
-          label="Checkout"
+          label={buttonTitle || 'Checkout'}
           buttonType="primary"
           disabled={disabled}
         />
@@ -47,6 +50,9 @@ const styles = StyleSheet.create({
   },
   total: {
     ...FONT_STYLES.BOLD_22,
+  },
+  buttonStyle: {
+    width: 150,
   },
 });
 

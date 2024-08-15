@@ -195,6 +195,7 @@ const CheckoutScreen = ({ navigation }: any) => {
         onPress={openPaymentSuccessScreen}
         priceDisplay={cartStore.total}
         disabled={cartStore.cartCount === 0}
+        buttonTitle="Submit"
       />
     </View>
   );
