@@ -1,6 +1,7 @@
 import { useNavigation } from 'expo-router';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Divider } from 'react-native-paper';
 import { Layouts } from '@components';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
@@ -39,11 +40,11 @@ const AddressItem: React.FC<AddressItemProps> = ({ addressItem }) => {
       <Layouts.VSpace value={8} />
       {addressItem.primary && (
         <View style={styles.defaultTag}>
-          <Text style={styles.textStyle}>Default</Text>
+          <Text style={[styles.textStyle, styles.tagText]}>Default</Text>
         </View>
       )}
-      <Layouts.VSpace value={24} />
-      <Layouts.Divider />
+      <Layouts.VSpace value={12} />
+      <Divider />
       <Layouts.VSpace value={24} />
     </TouchableOpacity>
   );
@@ -73,6 +74,9 @@ const styles = StyleSheet.create({
   textStyle: {
     ...FONT_STYLES.REGULAR_14,
     lineHeight: 18,
+  },
+  tagText: {
+    color: COLORS.error50,
   },
 });
 

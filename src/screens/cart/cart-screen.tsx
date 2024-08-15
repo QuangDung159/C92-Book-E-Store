@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
+import { Divider } from 'react-native-paper';
 import { BottomCheckoutSection, Layouts, ScreenHeader } from '@components';
 import { TOP_BOOKS } from '@constants';
 import { useNavigate } from '@hooks';
@@ -25,7 +26,7 @@ const CartScreen = ({ navigation }: any) => {
         contentContainerStyle={styles.wrapper}
       >
         <ListCartItem listItem={cartStore.listCartItem} />
-        <Layouts.Divider />
+        <Divider />
         <Layouts.VSpace value={12} />
         <HorizontalListCard listItem={TOP_BOOKS} title="Maybe you will like" />
         <Layouts.VSpace value={24} />

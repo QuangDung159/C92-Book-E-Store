@@ -66,6 +66,7 @@ const CTextInput: FC<CTextInputProps> = ({
         </Text>
       )}
       <TextInput
+        clearButtonMode="always"
         multiline={multiline}
         numberOfLines={multiline ? 4 : 1}
         placeholder={placeholder}
@@ -92,6 +93,9 @@ const CTextInput: FC<CTextInputProps> = ({
         value={value}
         onFocus={onFocus}
         autoFocus={autoFocus}
+        contentStyle={{
+          fontSize: 14,
+        }}
       />
       {messageError && (
         <Text

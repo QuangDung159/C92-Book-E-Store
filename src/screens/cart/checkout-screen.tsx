@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect, useMemo, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import Collapsible from 'react-native-collapsible';
-import { RadioButton } from 'react-native-paper';
+import { Divider, RadioButton } from 'react-native-paper';
 import {
   BottomCheckoutSection,
   Icons,
@@ -81,7 +81,7 @@ const CheckoutScreen = ({ navigation }: any) => {
           type="short"
           allowSwipe={false}
         />
-        <Layouts.Divider />
+        <Divider />
         <Layouts.VSpace value={16} />
         <SectionTitle title="Payment Method" />
         <Layouts.VSpace value={12} />
@@ -148,14 +148,14 @@ const CheckoutScreen = ({ navigation }: any) => {
         <Layouts.VSpace value={12} />
         {cartStore.cartCount !== 0 && (
           <View>
-            <Layouts.Divider />
+            <Divider />
             <Layouts.VSpace value={12} />
             <SectionTitle title="Summary" />
             <CartInfoRow title="Subtotal" value={cartStore.subTotal} />
             <CartInfoRow title="Shipping" value={cartStore.shipping} />
             <CartInfoRow title="Discount" value={-cartStore.discount} />
             <Layouts.VSpace value={12} />
-            <Layouts.Divider />
+            <Divider />
             <CartInfoRow title="Total" value={cartStore.total} isTotal />
           </View>
         )}
