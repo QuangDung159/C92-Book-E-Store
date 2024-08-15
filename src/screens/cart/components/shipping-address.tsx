@@ -14,17 +14,24 @@ const ShippingAddress: React.FC<ShippingAddressProps> = ({
 }) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => onPressChange?.()}>
-        <View style={styles.addressContainer}>
+      <View style={styles.addressContainer}>
+        <TouchableOpacity onPress={() => onPressChange?.()}>
           <Text style={styles.address}>
             {address || 'Add your shipping address'}
           </Text>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </View>
       <Layouts.HSpace value={24} />
+      <Layouts.MaxSpace />
       {address && (
         <TouchableOpacity onPress={() => onPressChange?.()}>
-          <Text style={styles.changeText}>Change</Text>
+          <View
+            style={{
+              width: 60,
+            }}
+          >
+            <Text style={styles.changeText}>Change</Text>
+          </View>
         </TouchableOpacity>
       )}
     </View>

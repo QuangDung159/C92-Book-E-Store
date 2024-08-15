@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   titleWrapper: {
-    flex: 1,
+    flex: 8,
     alignItems: 'center',
   },
   right: {
