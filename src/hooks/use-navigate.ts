@@ -53,6 +53,15 @@ export const useNavigate = (navigation: any) => {
     });
   };
 
+  const openAddEditAddressScreen = (
+    shippingAddress?: DataModels.IShippingAddress,
+  ) => {
+    navigation.navigate(SCREEN_NAME.ACCOUNT_NAVIGATOR, {
+      screen: SCREEN_NAME.ADD_EDIT_ADDRESS_SCREEN,
+      params: { shippingAddress },
+    });
+  };
+
   return {
     openSearchScreen,
     openFilterScreen,
@@ -62,5 +71,6 @@ export const useNavigate = (navigation: any) => {
     openHomeScreen,
     openPaymentSuccessScreen,
     openAddressScreen,
+    openAddEditAddressScreen,
   };
 };

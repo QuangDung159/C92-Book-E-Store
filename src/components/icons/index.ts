@@ -5,6 +5,7 @@ export * from './chevron-down-icon';
 export * from './chevron-left-icon';
 export * from './chevron-right-icon';
 export * from './chevron-up-icon';
+export * from './close-box-outline-icon';
 export * from './close-circle-icon';
 export * from './close-icon';
 export * from './eye-icon';

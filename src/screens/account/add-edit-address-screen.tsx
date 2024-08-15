@@ -2,31 +2,30 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { BottomButtonSection, Layouts, ScreenHeader } from '@components';
-import { useNavigate } from '@hooks';
-import { userStore } from '@store';
+import { DataModels } from '@models';
 import { COLORS } from '@themes';
-import { ListAddressItem } from './components';
+import { AddressItem } from './components';
 
-const AddressScreen = ({ navigation }: any) => {
-  const { openAddEditAddressScreen } = useNavigate(navigation);
+const AddEditAddress = ({ navigation, route }: any) => {
+  const shippingAddress: DataModels.IShippingAddress =
+    route.params?.shippingAddress;
+
   return (
     <View style={styles.container}>
-      <ScreenHeader title="Shipping Address" navigation={navigation} />
+      <ScreenHeader
+        title={`${shippingAddress ? 'Edit' : 'Add'} Shipping Address`}
+        navigation={navigation}
+      />
       <ScrollView
         scrollEnabled={true}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.wrapper}
       >
         <Layouts.VSpace value={24} />
-        <ListAddressItem
-          listAddress={userStore.userProfile?.listShippingAddress || []}
-        />
+        {shippingAddress && <AddressItem addressItem={shippingAddress} />}
         <Layouts.VSpace value={24} />
       </ScrollView>
-      <BottomButtonSection
-        onPress={() => openAddEditAddressScreen()}
-        buttonTitle="Add new Shipping Address"
-      />
+      <BottomButtonSection onPress={() => {}} buttonTitle="Submit" />
     </View>
   );
 };
@@ -41,5 +40,5 @@ const styles = StyleSheet.create({
   },
 });
 
-const observable = observer(AddressScreen);
-export { observable as AddressScreen };
+const observable = observer(AddEditAddress);
+export { observable as AddEditAddress };

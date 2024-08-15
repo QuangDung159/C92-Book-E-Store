@@ -12,6 +12,7 @@ export * from './bottom-checkout-section';
 export * from './cart-icon-with-badge';
 export * from './cart-update-number';
 export * from './chip';
+export * from './empty-list-component';
 export * from './list-book-card-complex';
 export * from './list-book-card-horizontal';
 export * from './list-book-card-vertical';
