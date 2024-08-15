@@ -6,6 +6,7 @@ import { useNavigate } from '@hooks';
 import { cartStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { StringHelpers } from '@utils';
+import { SectionTitle } from './components';
 import { ListCartItem } from './components/list-cart-item';
 
 const CartScreen = ({ navigation }: any) => {
@@ -40,7 +41,7 @@ const CartScreen = ({ navigation }: any) => {
         {cartStore.cartCount !== 0 && (
           <>
             <View>
-              <Text style={styles.summaryTitle}>Order summary</Text>
+              <SectionTitle title="Delivering Address" />
               <Layouts.VSpace value={12} />
               {renderOrderInfoRow('Subtotal', cartStore.subTotal)}
               <Layouts.VSpace value={12} />
@@ -106,9 +107,6 @@ const styles = StyleSheet.create({
     ...FONT_STYLES.BOLD_16,
   },
   rowValueTotal: {
-    ...FONT_STYLES.BOLD_20,
-  },
-  summaryTitle: {
     ...FONT_STYLES.BOLD_20,
   },
   divider: {

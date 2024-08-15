@@ -1,8 +1,15 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { Buttons, Layouts, ScreenHeader } from '@components';
 import { COLORS, FONT_STYLES } from '@themes';
+import { SectionTitle } from './components';
 
 const PaymentScreen = ({ navigation }: any) => {
   return (
@@ -18,13 +25,48 @@ const PaymentScreen = ({ navigation }: any) => {
         contentContainerStyle={styles.wrapper}
       >
         <Layouts.VSpace value={24} />
-        <Text
+        <SectionTitle title="Delivering Address" />
+        <Layouts.VSpace value={24} />
+        <View
           style={{
-            ...FONT_STYLES.BOLD_18,
+            flexDirection: 'row',
+            backgroundColor: COLORS.primaryBlack,
+            padding: 12,
+            borderRadius: 8,
+            alignItems: 'center',
           }}
         >
-          Price
-        </Text>
+          <View
+            style={{
+              flexShrink: 1,
+            }}
+          >
+            <Text
+              style={{
+                ...FONT_STYLES.REGULAR_16,
+                color: COLORS.primaryWhite,
+              }}
+            >
+              111 Chu Thien, Hiep Tan Ward, Tan Phu District, Ho Chi Minh City
+            </Text>
+          </View>
+          <Layouts.HSpace value={24} />
+          <TouchableOpacity>
+            <Text
+              style={{ ...FONT_STYLES.REGULAR_16, color: COLORS.primaryWhite }}
+            >
+              Change
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <Layouts.VSpace value={24} />
+        <Buttons.CButton
+          label="Add new Delivery Address"
+          onPress={() => {}}
+          buttonType="secondary"
+        />
+        <Layouts.VSpace value={36} />
+        <SectionTitle title="Payment Method" />
         <Layouts.VSpace value={24} />
       </ScrollView>
       <View style={styles.buttonWrapper}>
