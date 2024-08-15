@@ -37,3 +37,7 @@ export const getItemFromDataSource = (
 export const formatCurrency = (amount: number) => {
   return amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
 };
+
+export const getFullAddress = (address: DataModels.IShippingAddress) => {
+  return `${address.address}, ${address.ward}, ${address.district}, ${address.city}`;
+};

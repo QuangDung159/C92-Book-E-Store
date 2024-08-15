@@ -18,8 +18,9 @@ import {
 } from '@components';
 import { LIST_PAYMENT_METHOD, PAYMENT_TYPE } from '@constants';
 import { useNavigate } from '@hooks';
-import { cartStore } from '@store';
+import { cartStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
+import { StringHelpers } from '@utils';
 import { CartInfoRow, ListCreditCard, SectionTitle } from './components';
 import { ListCartItem } from './components/list-cart-item';
 
@@ -31,7 +32,7 @@ const CheckoutScreen = ({ navigation }: any) => {
     setIsShowListCreditCart(!isShowListCreditCart);
 
   const listCreditCard = useMemo(
-    () => cartStore.userStore.userProfile?.listCreditCard || [],
+    () => userStore.userProfile?.listCreditCard || [],
     [],
   );
 
@@ -76,7 +77,9 @@ const CheckoutScreen = ({ navigation }: any) => {
                 color: COLORS.primaryWhite,
               }}
             >
-              111 Chu Thien, Hiep Tan Ward, Tan Phu District, Ho Chi Minh City
+              {StringHelpers.getFullAddress(
+                userStore.userProfile?.listShippingAddress[0],
+              )}
             </Text>
           </View>
           <Layouts.HSpace value={24} />
@@ -175,7 +178,7 @@ const CheckoutScreen = ({ navigation }: any) => {
       </ScrollView>
       <BottomCheckoutSection
         onPress={openPaymentSuccessScreen}
-        priceDisplay={cartStore.subTotal}
+        priceDisplay={cartStore.total}
         disabled={cartStore.cartCount === 0}
       />
     </View>
