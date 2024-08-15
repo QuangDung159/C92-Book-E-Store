@@ -256,6 +256,14 @@ const LIST_PAYMENT_METHOD = [
     label: 'Cash on Delivery',
   },
   {
+    value: 'momo',
+    label: 'Momo',
+  },
+  {
+    value: 'zalo_pay',
+    label: 'Zalo Pay',
+  },
+  {
     value: 'credit_card',
     label: 'Credit Card',
   },

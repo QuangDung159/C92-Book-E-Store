@@ -1,6 +1,7 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { RadioButton } from 'react-native-paper';
+import { Buttons } from '@components';
 import { DataModels } from '@models';
 import { CreditCardItem } from './credit-card-item';
 
@@ -28,10 +29,19 @@ const ListCreditCard: React.FC<ListCreditCardProps> = ({
           })}
         </RadioButton.Group>
       ) : (
-        <Text>Add new credit card</Text>
+        <View style={styles.addNew}>
+          <Buttons.CButton onPress={() => {}} label="Add new Credit Card" />
+        </View>
       )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  addNew: {
+    marginTop: 12,
+    height: 48,
+  },
+});
 
 export { ListCreditCard };

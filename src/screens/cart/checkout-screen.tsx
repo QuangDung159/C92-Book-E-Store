@@ -109,8 +109,14 @@ const PaymentScreen = ({ navigation }: any) => {
                 }}
               >
                 <RadioButton.Android value={item.value} />
-                <Text style={{}}>{item.label}</Text>
-                {item.value !== 'cod' && (
+                <Text
+                  style={{
+                    ...FONT_STYLES.SEMIBOLD_16,
+                  }}
+                >
+                  {item.label}
+                </Text>
+                {item.value === 'credit_card' && (
                   <>
                     <Layouts.MaxSpace />
                     {isShowListCreditCart ? (

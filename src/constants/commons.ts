@@ -23,7 +23,7 @@ const PAYMENT_TYPE = {
   cod: 'cod',
   creditCard: 'credit_card',
   momo: 'momo',
-  zaloPay: 'zalo-pay',
+  zalo_pay: 'zalo_pay',
 };
 
 export {
