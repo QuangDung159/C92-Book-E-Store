@@ -15,19 +15,25 @@ const CartScreen = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
-      <ScreenHeader title="Cart" navigation={navigation} onGoBack={() => {}} />
+      <ScreenHeader
+        title={`Cart (${cartStore.cartCount})`}
+        navigation={navigation}
+        onGoBack={() => {}}
+      />
       <ScrollView
         scrollEnabled={true}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.wrapper}
       >
         <ListCartItem listItem={cartStore.listCartItem} />
-        <Text style={styles.endCartText}>----- End of cart -----</Text>
+        <Layouts.Divider />
+        <Layouts.VSpace value={12} />
+        <HorizontalListCard listItem={TOP_BOOKS} title="Maybe you will like" />
         <Layouts.VSpace value={24} />
         <HorizontalListCard
           listItem={TOP_BOOKS}
-          title="Maybe you will like"
-          showSeeMore={false}
+          title="Viewed"
+          showSeeMore={true}
         />
         <Layouts.VSpace value={24} />
       </ScrollView>

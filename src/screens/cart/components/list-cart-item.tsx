@@ -27,7 +27,7 @@ const ListCartItem: React.FC<ListCartItemProps> = ({
   allowSwipe = true,
 }) => {
   const navigation = useNavigation();
-  const { height, width } = Dimensions.get('window');
+  const { width } = Dimensions.get('window');
   const cardWidth = width - 48;
 
   const isFull = type === 'full';
@@ -78,14 +78,7 @@ const ListCartItem: React.FC<ListCartItemProps> = ({
         rightOpenValue={-75}
         ListEmptyComponent={() => {
           return (
-            <View
-              style={[
-                styles.emptyContainer,
-                {
-                  height: height * 0.7,
-                },
-              ]}
-            >
+            <View style={[styles.emptyContainer]}>
               <Icons.CartHeartIcon size={60} />
               <Layouts.VSpace value={12} />
               <Text style={styles.textEmpty}>Cart empty</Text>
@@ -109,6 +102,7 @@ const styles = StyleSheet.create({
   emptyContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 12,
   },
   textEmpty: {
     ...FONT_STYLES.REGULAR_16,

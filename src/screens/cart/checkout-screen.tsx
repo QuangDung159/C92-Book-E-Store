@@ -73,6 +73,8 @@ const PaymentScreen = ({ navigation }: any) => {
           type="short"
           allowSwipe={false}
         />
+        <Layouts.Divider />
+        <Layouts.VSpace value={16} />
         <SectionTitle title="Payment Method" />
         <Layouts.VSpace value={12} />
         <RadioButton.Group
@@ -121,12 +123,14 @@ const PaymentScreen = ({ navigation }: any) => {
         <Layouts.VSpace value={12} />
         {cartStore.cartCount !== 0 && (
           <View>
+            <Layouts.Divider />
+            <Layouts.VSpace value={12} />
             <SectionTitle title="Summary" />
             <CartInfoRow title="Subtotal" value={cartStore.subTotal} />
             <CartInfoRow title="Shipping" value={cartStore.shipping} />
             <CartInfoRow title="Discount" value={-cartStore.discount} />
             <Layouts.VSpace value={12} />
-            <View style={styles.divider} />
+            <Layouts.Divider />
             <CartInfoRow title="Total" value={cartStore.total} isTotal />
           </View>
         )}
@@ -159,10 +163,6 @@ const styles = StyleSheet.create({
     borderTopColor: COLORS.gray200,
     borderTopWidth: 1,
     height: 64,
-  },
-  divider: {
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.gray200,
   },
 });
 
