@@ -5,6 +5,7 @@ import {
   Dimensions,
   StyleProp,
   StyleSheet,
+  Text,
   View,
   ViewStyle,
 } from 'react-native';
@@ -24,19 +25,32 @@ import { COLORS, FONT_STYLES } from '@themes';
 interface CartItemProps {
   bookCartItem: DataModels.ICartItem;
   containerStyle?: StyleProp<ViewStyle>;
+  type?: 'full' | 'short';
 }
 
 const CartItem: React.FC<CartItemProps> = ({
   bookCartItem,
   containerStyle,
+  type = 'full',
 }) => {
   const { width } = Dimensions.get('window');
   const cardWidth = width - 48;
   const navigation = useNavigation();
 
+  const isFull = type === 'full';
+
   return (
     <React.Fragment key={bookCartItem.book.id}>
-      <View style={[styles.container, { width: width - 48 }, containerStyle]}>
+      <View
+        style={[
+          styles.container,
+          { width: width - 48 },
+          !isFull && {
+            height: 120,
+          },
+          containerStyle,
+        ]}
+      >
         <View style={styles.info}>
           <Image
             style={styles.image}
@@ -57,34 +71,80 @@ const CartItem: React.FC<CartItemProps> = ({
                 flexDirection: 'row',
               }}
             >
-              <View style={styles.title}>
+              <View
+                style={[
+                  styles.title,
+                  !isFull && {
+                    width: '100%',
+                  },
+                ]}
+              >
                 <BookTitle
-                  style={styles.title}
+                  style={[
+                    styles.title,
+                    !isFull && {
+                      width: '100%',
+                    },
+                  ]}
                   navigation={navigation}
                   book={bookCartItem.book}
+                  showFullName={!isFull}
                 />
               </View>
-              <Layouts.MaxSpace />
-              <Icons.CloseIcon
-                onPress={() => {
-                  cartStore.removeCartItem(bookCartItem, bookCartItem.count);
-                }}
-              />
+              {isFull && (
+                <>
+                  <Layouts.MaxSpace />
+                  <Icons.CloseIcon
+                    onPress={() => {
+                      cartStore.removeCartItem(
+                        bookCartItem,
+                        bookCartItem.count,
+                      );
+                    }}
+                  />
+                </>
+              )}
             </View>
-            <BookCardInfo book={bookCartItem.book} />
+            {isFull ? (
+              <BookCardInfo book={bookCartItem.book} />
+            ) : (
+              <>
+                <Layouts.MaxSpace />
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'flex-end',
+                  }}
+                >
+                  <BookCardPrice
+                    price={bookCartItem.book.price}
+                    priceNotSale={bookCartItem.book.priceNotSale}
+                  />
+                  <Text
+                    style={{
+                      ...FONT_STYLES.SEMIBOLD_16,
+                    }}
+                  >{`x${bookCartItem.count}`}</Text>
+                </View>
+                <Layouts.VSpace value={10} />
+              </>
+            )}
           </View>
         </View>
-        <View style={styles.priceWrapper}>
-          <BookCardPrice
-            price={bookCartItem.book.price}
-            priceNotSale={bookCartItem.book.priceNotSale}
-          />
-          <Layouts.MaxSpace />
-          <CartUpdateNumber
-            itemCount={bookCartItem.count}
-            bookCartItem={bookCartItem}
-          />
-        </View>
+        {isFull && (
+          <View style={styles.priceWrapper}>
+            <BookCardPrice
+              price={bookCartItem.book.price}
+              priceNotSale={bookCartItem.book.priceNotSale}
+            />
+            <Layouts.MaxSpace />
+            <CartUpdateNumber
+              itemCount={bookCartItem.count}
+              bookCartItem={bookCartItem}
+            />
+          </View>
+        )}
       </View>
       <Layouts.VSpace value={12} />
     </React.Fragment>

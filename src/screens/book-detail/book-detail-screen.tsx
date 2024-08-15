@@ -10,18 +10,14 @@ import {
 import Collapsible from 'react-native-collapsible';
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
 import { ImageAssets } from '@assets';
-import {
-  AddToCartButton,
-  Buttons,
-  Layouts,
-  ListBookCardHorizontal,
-} from '@components';
+import { AddToCartButton, Buttons, Layouts } from '@components';
 import { CATEGORY, TOP_BOOKS } from '@constants';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
 import { referenceOptionsStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { delay, StringHelpers } from '@utils';
+import { HorizontalListCard } from 'screens/home/components';
 import {
   BookImage,
   InformationTitle,
@@ -310,9 +306,11 @@ const BookDetailScreen = ({ route, navigation }: any) => {
             />
           </Collapsible>
           <Layouts.VSpace value={24} />
-          <Text style={{ ...FONT_STYLES.BOLD_18 }}>Recommand</Text>
-          <Layouts.VSpace value={12} />
-          <ListBookCardHorizontal listItem={TOP_BOOKS} />
+          <HorizontalListCard
+            listItem={TOP_BOOKS}
+            title="Maybe you will like"
+            showSeeMore={false}
+          />
           <Layouts.VSpace value={24} />
         </ScrollView>
       )}

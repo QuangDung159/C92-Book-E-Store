@@ -21,7 +21,6 @@ class CartStore {
   listPaymentMethod: DataModels.IPaymentMethod[] = [];
   listVoucherIdSelected: string[] = [];
   shippingAddressSelected: string = '';
-  listShippingAddress: DataModels.IShippingAddress[] = [];
   referenceOptionsStore: ReferenceOptionsStore | null = null;
   userStore: UserStore | null = null;
 
@@ -35,7 +34,6 @@ class CartStore {
       listPaymentMethod: observable,
       listVoucherIdSelected: observable,
       shippingAddressSelected: observable,
-      listShippingAddress: observable,
       userStore: observable,
       referenceOptionsStore: observable,
       setListVoucherIdSelected: action,
@@ -48,12 +46,10 @@ class CartStore {
       subTotal: computed,
       shipping: computed,
       cartCount: computed,
+      shippingSelectedData: computed,
     });
 
     this.userStore = userStore;
-
-    this.listShippingAddress =
-      userStore?.userProfile?.listShippingAddress || [];
 
     this.referenceOptionsStore = referenceOptionsStore;
   }
@@ -78,12 +74,19 @@ class CartStore {
     this.shippingAddressSelected = value;
   }
 
-  get shipping() {
-    const shippingData = this.listShippingAddress.find(
+  get shippingSelectedData() {
+    const listShippingAddress =
+      this.userStore?.userProfile?.listShippingAddress || [];
+
+    const shippingData = listShippingAddress.find(
       (item) => item.id === this.shippingAddressSelected,
     );
 
-    return shippingData?.shippingFee || 0;
+    return shippingData;
+  }
+
+  get shipping() {
+    return this.shippingSelectedData?.shippingFee || 0;
   }
 
   get discount() {
@@ -112,11 +115,11 @@ class CartStore {
   }
 
   get total() {
-    const shippingAddress = this.listShippingAddress.find(
-      (item) => item.id === this.shippingAddressSelected,
+    return (
+      this.subTotal +
+      (this.shippingSelectedData?.shippingFee || 0) -
+      this.discount
     );
-
-    return this.subTotal + (shippingAddress?.shippingFee || 0) - this.discount;
   }
 
   getCartItemByBook = (bookId: string) => {

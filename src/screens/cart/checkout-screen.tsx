@@ -7,9 +7,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { RadioButton } from 'react-native-paper';
 import { Buttons, Layouts, ScreenHeader } from '@components';
+import { LIST_PAYMENT_METHOD } from '@constants';
+import { cartStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
-import { SectionTitle } from './components';
+import { CartInfoRow, SectionTitle } from './components';
+import { ListCartItem } from './components/list-cart-item';
 
 const PaymentScreen = ({ navigation }: any) => {
   return (
@@ -59,14 +63,40 @@ const PaymentScreen = ({ navigation }: any) => {
             </Text>
           </TouchableOpacity>
         </View>
-        <Layouts.VSpace value={24} />
-        <Buttons.CButton
-          label="Add new Delivery Address"
-          onPress={() => {}}
-          buttonType="secondary"
+        <ListCartItem
+          listItem={cartStore.listCartItem}
+          type="short"
+          allowSwipe={false}
         />
         <Layouts.VSpace value={36} />
         <SectionTitle title="Payment Method" />
+        <Layouts.VSpace value={24} />
+        <RadioButton.Group onValueChange={(value) => {}} value={'name_asc'}>
+          {LIST_PAYMENT_METHOD.map((item) => {
+            return (
+              <View key={item.value} style={{}}>
+                <RadioButton.Android value={item.value} />
+                <Text style={{}}>{item.label}</Text>
+                <Layouts.VSpace value={12} />
+              </View>
+            );
+          })}
+        </RadioButton.Group>
+        <Layouts.VSpace value={36} />
+        {cartStore.cartCount !== 0 && (
+          <>
+            <View>
+              <SectionTitle title="Summary" />
+              <CartInfoRow title="Subtotal" value={cartStore.subTotal} />
+              <CartInfoRow title="Shipping" value={cartStore.shipping} />
+              <CartInfoRow title="Discount" value={-cartStore.discount} />
+              <Layouts.VSpace value={12} />
+              <View style={styles.divider} />
+              <CartInfoRow title="Total" value={cartStore.total} isTotal />
+            </View>
+            <Layouts.VSpace value={24} />
+          </>
+        )}
         <Layouts.VSpace value={24} />
       </ScrollView>
       <View style={styles.buttonWrapper}>
@@ -96,6 +126,10 @@ const styles = StyleSheet.create({
     borderTopColor: COLORS.gray200,
     borderTopWidth: 1,
     height: 64,
+  },
+  divider: {
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.gray200,
   },
 });
 

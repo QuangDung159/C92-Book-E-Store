@@ -70,6 +70,7 @@ export interface ICart {
   discount: number;
   shippingAddress: string;
   paymentMethod: string;
+  paymentInfo?: any;
 }
 
 export interface ITopBooksFilter {

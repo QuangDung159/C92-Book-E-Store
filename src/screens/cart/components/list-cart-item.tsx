@@ -17,26 +17,35 @@ import { CartItem } from './cart-item';
 
 interface ListCartItemProps {
   listItem: Array<DataModels.ICartItem>;
+  type?: 'full' | 'short';
+  allowSwipe?: boolean;
 }
 
-const ListCartItem: React.FC<ListCartItemProps> = ({ listItem }) => {
+const ListCartItem: React.FC<ListCartItemProps> = ({
+  listItem,
+  type = 'full',
+  allowSwipe = true,
+}) => {
   const navigation = useNavigation();
   const { height, width } = Dimensions.get('window');
   const cardWidth = width - 48;
+
+  const isFull = type === 'full';
 
   const { openHomeScreen } = useNavigate(navigation);
   return (
     <View style={styles.container}>
       <SwipeListView
         data={listItem}
-        renderItem={({ item }) => <CartItem bookCartItem={item} />}
+        renderItem={({ item }) => <CartItem bookCartItem={item} type={type} />}
         disableRightSwipe
+        disableLeftSwipe={!allowSwipe}
         renderHiddenItem={({ item }) => {
           return (
             <TouchableOpacity
               style={{
                 backgroundColor: COLORS.error50,
-                height: 178,
+                height: isFull ? 178 : 120,
                 borderRadius: 8,
                 width: cardWidth - 5,
                 alignSelf: 'flex-end',

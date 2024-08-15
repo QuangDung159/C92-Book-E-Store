@@ -250,9 +250,20 @@ const LIST_SORT_OPTION = [
   },
 ];
 
+const LIST_PAYMENT_METHOD = [
+  {
+    value: 'cod',
+    label: 'Cash on Delivery',
+  },
+  {
+    value: 'credit_card',
+    label: 'Credit Card',
+  },
+];
+
 const TOP_BOOKS: Array<DataModels.IBook> = [
   {
-    name: 'The Picture of Dorian Gray The Picture of Dorian Gray',
+    name: 'The The The The The The The The The The The The The The The The The The The The The The The The',
     author: LIST_AUTHOR[0],
     price: 25000999,
     priceNotSale: 0,
@@ -542,11 +553,12 @@ export {
   CATEGORY,
   LIST_AUTHOR,
   LIST_FORM,
+  LIST_PAYMENT_METHOD,
   LIST_PUBLISHER,
+  LIST_SHIPPING_ADDRESS,
   LIST_SORT_OPTION,
   LIST_VOUCHER,
   TOP_BOOKS,
   TOP_BOOKS_FILTER,
   USER,
-  LIST_SHIPPING_ADDRESS,
 };

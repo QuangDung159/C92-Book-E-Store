@@ -2,32 +2,16 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Buttons, Layouts, ScreenHeader } from '@components';
+import { TOP_BOOKS } from '@constants';
 import { useNavigate } from '@hooks';
 import { cartStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { StringHelpers } from '@utils';
-import { SectionTitle } from './components';
+import { HorizontalListCard } from 'screens/home/components';
 import { ListCartItem } from './components/list-cart-item';
 
 const CartScreen = ({ navigation }: any) => {
   const { openPaymentScreen } = useNavigate(navigation);
-
-  const renderOrderInfoRow = (
-    title: string,
-    value: number,
-    isTotal?: boolean,
-  ) => {
-    return (
-      <View style={styles.rowContainer}>
-        <Text style={[styles.rowTitle, isTotal && styles.rowTitleTotal]}>
-          {title}
-        </Text>
-        <Text style={[styles.rowValue, isTotal && styles.rowValueTotal]}>
-          {StringHelpers.formatCurrency(value)}
-        </Text>
-      </View>
-    );
-  };
 
   return (
     <View style={styles.container}>
@@ -38,30 +22,20 @@ const CartScreen = ({ navigation }: any) => {
         contentContainerStyle={styles.wrapper}
       >
         <ListCartItem listItem={cartStore.listCartItem} />
-        {cartStore.cartCount !== 0 && (
-          <>
-            <View>
-              <SectionTitle title="Delivering Address" />
-              <Layouts.VSpace value={12} />
-              {renderOrderInfoRow('Subtotal', cartStore.subTotal)}
-              <Layouts.VSpace value={12} />
-              {renderOrderInfoRow('Shipping', cartStore.shipping)}
-              <Layouts.VSpace value={12} />
-              {renderOrderInfoRow('Discount', -cartStore.discount)}
-              <Layouts.VSpace value={12} />
-              <View style={styles.divider} />
-              <Layouts.VSpace value={12} />
-              {renderOrderInfoRow('Total', cartStore.total, true)}
-            </View>
-            <Layouts.VSpace value={24} />
-          </>
-        )}
+        <Text style={styles.endCartText}>----- End of cart -----</Text>
+        <Layouts.VSpace value={24} />
+        <HorizontalListCard
+          listItem={TOP_BOOKS}
+          title="Maybe you will like"
+          showSeeMore={false}
+        />
+        <Layouts.VSpace value={24} />
       </ScrollView>
       <View style={styles.buttonWrapper}>
         <Layouts.VSpace value={12} />
         <View style={styles.totalWrapper}>
           <Text style={styles.total}>
-            {StringHelpers.formatCurrency(cartStore.total)}
+            {StringHelpers.formatCurrency(cartStore.subTotal)}
           </Text>
           <Buttons.CButton
             onPress={() => {
@@ -91,24 +65,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     height: 64,
   },
-  //
-  rowContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  rowTitle: {
-    ...FONT_STYLES.REGULAR_16,
-  },
-  rowTitleTotal: {
-    ...FONT_STYLES.REGULAR_20,
-  },
-  rowValue: {
-    ...FONT_STYLES.BOLD_16,
-  },
-  rowValueTotal: {
-    ...FONT_STYLES.BOLD_20,
-  },
   divider: {
     borderBottomWidth: 1,
     borderBottomColor: COLORS.gray200,
@@ -120,6 +76,11 @@ const styles = StyleSheet.create({
   },
   total: {
     ...FONT_STYLES.BOLD_22,
+  },
+  endCartText: {
+    ...FONT_STYLES.SEMIBOLD_12,
+    color: COLORS.gray70,
+    textAlign: 'center',
   },
 });
 

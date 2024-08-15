@@ -47,7 +47,6 @@ const HorizontalListCard: React.FC<HorizontalListCardProps> = ({
           <Layouts.VSpace value={24} />
         </>
       )}
-      <Layouts.VSpace value={12} />
       <ListBookCardHorizontal listItem={listItem} />
     </>
   );

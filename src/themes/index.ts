@@ -8,6 +8,7 @@ const COLORS = {
   gray200: '#eeeeee',
   gray40: MD3Colors.neutralVariant40,
   gray60: MD3Colors.neutral60,
+  gray70: MD3Colors.neutral70,
   error50: MD3Colors.error50,
 };
 

@@ -14,9 +14,15 @@ interface BookTitleProps {
   book: DataModels.IBook;
   navigation: any;
   style?: StyleProp<TextStyle>;
+  showFullName?: boolean;
 }
 
-const BookTitle: React.FC<BookTitleProps> = ({ book, navigation, style }) => {
+const BookTitle: React.FC<BookTitleProps> = ({
+  book,
+  navigation,
+  style,
+  showFullName,
+}) => {
   const { openBookDetailScreen } = useNavigate(navigation);
 
   return (
@@ -25,7 +31,7 @@ const BookTitle: React.FC<BookTitleProps> = ({ book, navigation, style }) => {
         openBookDetailScreen(book);
       }}
     >
-      <Text style={[styles.title, style]} numberOfLines={2}>
+      <Text style={[styles.title, style]} numberOfLines={showFullName ? 3 : 2}>
         {book.name}
       </Text>
     </TouchableOpacity>
