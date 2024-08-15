@@ -62,6 +62,15 @@ export const useNavigate = (navigation: any) => {
     });
   };
 
+  const openLocationScreen = (
+    shippingAddress?: DataModels.IShippingAddress,
+  ) => {
+    navigation.navigate(SCREEN_NAME.ACCOUNT_NAVIGATOR, {
+      screen: SCREEN_NAME.LOCATION_SCREEN,
+      params: { shippingAddress },
+    });
+  };
+
   return {
     openSearchScreen,
     openFilterScreen,
@@ -72,5 +81,6 @@ export const useNavigate = (navigation: any) => {
     openPaymentSuccessScreen,
     openAddressScreen,
     openAddEditAddressScreen,
+    openLocationScreen,
   };
 };

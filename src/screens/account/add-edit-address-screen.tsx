@@ -16,14 +16,17 @@ import {
   Layouts,
   ScreenHeader,
 } from '@components';
+import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
 import { COLORS, FONT_STYLES } from '@themes';
 
 import { AddEditAddressViewModel } from './view-models';
 
-const AddEditAddress = ({ navigation, route }: any) => {
+const AddEditAddressScreen = ({ navigation, route }: any) => {
   const shippingAddress: DataModels.IShippingAddress =
     route.params?.shippingAddress;
+
+  const { openLocationScreen } = useNavigate(navigation);
 
   const addEditVM = useRef(
     new AddEditAddressViewModel(shippingAddress),
@@ -77,7 +80,11 @@ const AddEditAddress = ({ navigation, route }: any) => {
         <Layouts.VSpace value={12} />
         <Divider />
         <Layouts.VSpace value={16} />
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            openLocationScreen(shippingAddress);
+          }}
+        >
           <View style={styles.addressContainer}>
             <View>
               <Text style={styles.addressInfo}>{addEditVM.city}</Text>
@@ -148,5 +155,5 @@ const styles = StyleSheet.create({
   },
 });
 
-const observable = observer(AddEditAddress);
-export { observable as AddEditAddress };
+const observable = observer(AddEditAddressScreen);
+export { observable as AddEditAddressScreen };

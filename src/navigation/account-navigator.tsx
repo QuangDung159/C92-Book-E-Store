@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import { AddEditAddress, AddressScreen } from '@screens';
+import { AddEditAddressScreen, AddressScreen, LocationScreen } from '@screens';
 
 import { SCREEN_NAME } from '../constants';
 
@@ -19,7 +19,11 @@ function AccountNavigator() {
       />
       <Stack.Screen
         name={SCREEN_NAME.ADD_EDIT_ADDRESS_SCREEN}
-        component={AddEditAddress}
+        component={AddEditAddressScreen}
+      />
+      <Stack.Screen
+        name={SCREEN_NAME.LOCATION_SCREEN}
+        component={LocationScreen}
       />
     </Stack.Navigator>
   );
