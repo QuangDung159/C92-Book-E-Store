@@ -47,6 +47,12 @@ export const useNavigate = (navigation: any) => {
     });
   };
 
+  const openAddressScreen = () => {
+    navigation.navigate(SCREEN_NAME.ACCOUNT_NAVIGATOR, {
+      screen: SCREEN_NAME.ADDRESS_SCREEN,
+    });
+  };
+
   return {
     openSearchScreen,
     openFilterScreen,
@@ -55,5 +61,6 @@ export const useNavigate = (navigation: any) => {
     openCheckoutScreen,
     openHomeScreen,
     openPaymentSuccessScreen,
+    openAddressScreen,
   };
 };

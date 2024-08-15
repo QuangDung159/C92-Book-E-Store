@@ -1,13 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useMemo, useState } from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import { RadioButton } from 'react-native-paper';
 import {
@@ -22,11 +16,17 @@ import { DataModels } from '@models';
 import { cartStore, sharedStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { delay, ListHelpers, StringHelpers } from '@utils';
-import { CartInfoRow, ListCreditCard, SectionTitle } from './components';
+import {
+  CartInfoRow,
+  ListCreditCard,
+  SectionTitle,
+  ShippingAddress,
+} from './components';
 import { ListCartItem } from './components/list-cart-item';
 
 const CheckoutScreen = ({ navigation }: any) => {
-  const { openPaymentSuccessScreen } = useNavigate(navigation);
+  const { openPaymentSuccessScreen, openAddressScreen } =
+    useNavigate(navigation);
   const [isShowListCreditCart, setIsShowListCreditCart] = useState(false);
 
   const toggleListCreditCart = () =>
@@ -59,11 +59,7 @@ const CheckoutScreen = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
-      <ScreenHeader
-        title="Checkout"
-        navigation={navigation}
-        onGoBack={() => {}}
-      />
+      <ScreenHeader title="Checkout" navigation={navigation} />
       <ScrollView
         scrollEnabled={true}
         showsVerticalScrollIndicator={false}
@@ -72,40 +68,14 @@ const CheckoutScreen = ({ navigation }: any) => {
         <Layouts.VSpace value={24} />
         <SectionTitle title="Shipping Address" />
         <Layouts.VSpace value={12} />
-        <View
-          style={{
-            flexDirection: 'row',
-            backgroundColor: COLORS.primaryBlack,
-            padding: 12,
-            borderRadius: 8,
-            alignItems: 'center',
-          }}
-        >
-          <View
-            style={{
-              flexShrink: 1,
-            }}
-          >
-            <Text
-              style={{
-                ...FONT_STYLES.REGULAR_16,
-                color: COLORS.primaryWhite,
-              }}
-            >
-              {cartStore.shippingAddressData
-                ? StringHelpers.getFullAddress(cartStore.shippingAddressData)
-                : 'Please add your shipping address'}
-            </Text>
-          </View>
-          <Layouts.HSpace value={24} />
-          <TouchableOpacity>
-            <Text
-              style={{ ...FONT_STYLES.REGULAR_16, color: COLORS.primaryWhite }}
-            >
-              Change
-            </Text>
-          </TouchableOpacity>
-        </View>
+        <ShippingAddress
+          address={
+            cartStore.shippingAddressData
+              ? StringHelpers.getFullAddress(cartStore.shippingAddressData)
+              : ''
+          }
+          onPressChange={() => openAddressScreen()}
+        />
         <ListCartItem
           listItem={cartStore.listCartItem}
           type="short"

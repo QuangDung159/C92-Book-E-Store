@@ -13,11 +13,7 @@ const AddressScreen = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
-      <ScreenHeader
-        title="Account"
-        navigation={navigation}
-        showBackIcon={false}
-      />
+      <ScreenHeader title="Shipping Address" navigation={navigation} />
       <View
         style={{
           flex: 1,

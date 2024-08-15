@@ -5,6 +5,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { SCREEN_NAME } from '@constants';
 import { sharedStore } from '@store';
 import { COLORS } from '@themes';
+import { AccountNavigator } from './account-navigator';
 import { BookDetailNavigator } from './book-detail-navigator';
 import { BottomTabNavigator } from './bottom-tab-navigator';
 import { CartNavigator } from './cart-navigator';
@@ -43,6 +44,10 @@ const Navigation = () => {
         <Stack.Screen
           name={SCREEN_NAME.CART_NAVIGATOR}
           component={CartNavigator}
+        />
+        <Stack.Screen
+          name={SCREEN_NAME.ACCOUNT_NAVIGATOR}
+          component={AccountNavigator}
         />
       </Stack.Navigator>
     </>

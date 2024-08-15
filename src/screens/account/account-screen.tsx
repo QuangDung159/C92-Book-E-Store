@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Buttons, ScreenHeader } from '@components';
+import { Buttons, Layouts, ScreenHeader } from '@components';
 import { USER } from '@constants';
 import { useNavigate } from '@hooks';
 import { appModel, sharedStore } from '@store';
@@ -9,7 +9,7 @@ import { COLORS } from '@themes';
 import { delay, ToastHelpers } from '@utils';
 
 const AccountScreen = ({ navigation }: any) => {
-  const { openHomeScreen } = useNavigate(navigation);
+  const { openHomeScreen, openAddressScreen } = useNavigate(navigation);
 
   return (
     <View style={styles.container}>
@@ -39,6 +39,8 @@ const AccountScreen = ({ navigation }: any) => {
             });
           }}
         />
+        <Layouts.VSpace value={12} />
+        <Buttons.CButton label="Address" onPress={openAddressScreen} />
       </View>
     </View>
   );
