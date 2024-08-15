@@ -83,6 +83,10 @@ const PaymentScreen = ({ navigation }: any) => {
               paymentType: value,
               paymentInfo: {},
             });
+
+            if (value === 'credit_card') {
+              setIsShowListCreditCart(true);
+            }
           }}
           value={cartStore.paymentSelected.paymentType}
         >
@@ -102,11 +106,11 @@ const PaymentScreen = ({ navigation }: any) => {
                   <>
                     <Layouts.MaxSpace />
                     {isShowListCreditCart ? (
-                      <Icons.ChevronDownIcon
+                      <Icons.ChevronUpIcon
                         onPress={() => toggleListCreditCart()}
                       />
                     ) : (
-                      <Icons.ChevronUpIcon
+                      <Icons.ChevronDownIcon
                         onPress={() => toggleListCreditCart()}
                       />
                     )}
@@ -117,7 +121,7 @@ const PaymentScreen = ({ navigation }: any) => {
             );
           })}
         </RadioButton.Group>
-        <Collapsible collapsed={isShowListCreditCart}>
+        <Collapsible collapsed={!isShowListCreditCart}>
           <Text>asd</Text>
         </Collapsible>
         <Layouts.VSpace value={12} />
