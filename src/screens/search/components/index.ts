@@ -1,4 +1,4 @@
-export * from './collapsible-list';
+export * from './filter-collapsible-list';
 export * from './list-check-box-filter';
 export * from './list-chip-by-list-filter';
 export * from './price-multi-slider';

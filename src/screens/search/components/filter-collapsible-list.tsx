@@ -7,7 +7,7 @@ import { DataModels } from '@models';
 import { FONT_STYLES } from '@themes';
 import { ListCheckBoxFilter } from './list-check-box-filter';
 
-interface CollapsibleListProps {
+interface FilterCollapsibleListProps {
   isCollapse: boolean;
   dataSource: DataModels.IReferenceOptions[];
   listItemReferForSearch: string[];
@@ -18,7 +18,7 @@ interface CollapsibleListProps {
   setIsCollapse: (value: boolean) => void;
 }
 
-const CollapsibleList: React.FC<CollapsibleListProps> = ({
+const FilterCollapsibleList: React.FC<FilterCollapsibleListProps> = ({
   isCollapse,
   dataSource,
   listItemReferForSearch,
@@ -88,5 +88,5 @@ const styles = StyleSheet.create({
   },
 });
 
-const observable = observer(CollapsibleList);
-export { observable as CollapsibleList };
+const observable = observer(FilterCollapsibleList);
+export { observable as FilterCollapsibleList };

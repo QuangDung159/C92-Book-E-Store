@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Collapsible from 'react-native-collapsible';
 import { RadioButton } from 'react-native-paper';
 import { Buttons, Icons, Layouts, ScreenHeader } from '@components';
 import { LIST_PAYMENT_METHOD } from '@constants';
@@ -16,6 +17,10 @@ import { CartInfoRow, SectionTitle } from './components';
 import { ListCartItem } from './components/list-cart-item';
 
 const PaymentScreen = ({ navigation }: any) => {
+  const [isShowListCreditCart, setIsShowListCreditCart] = useState(false);
+  const toggleListCreditCart = () =>
+    setIsShowListCreditCart(!isShowListCreditCart);
+
   return (
     <View style={styles.container}>
       <ScreenHeader
@@ -94,7 +99,15 @@ const PaymentScreen = ({ navigation }: any) => {
                 {item.value !== 'cod' && (
                   <>
                     <Layouts.MaxSpace />
-                    <Icons.ChevronDownIcon />
+                    {isShowListCreditCart ? (
+                      <Icons.ChevronDownIcon
+                        onPress={() => toggleListCreditCart()}
+                      />
+                    ) : (
+                      <Icons.ChevronUpIcon
+                        onPress={() => toggleListCreditCart()}
+                      />
+                    )}
                   </>
                 )}
                 <Layouts.VSpace value={12} />
@@ -102,6 +115,9 @@ const PaymentScreen = ({ navigation }: any) => {
             );
           })}
         </RadioButton.Group>
+        <Collapsible collapsed={isShowListCreditCart}>
+          <Text>asd</Text>
+        </Collapsible>
         <Layouts.VSpace value={12} />
         {cartStore.cartCount !== 0 && (
           <View>

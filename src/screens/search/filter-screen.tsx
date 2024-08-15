@@ -8,7 +8,7 @@ import { DataModels } from '@models';
 import { referenceOptionsStore, searchStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { delay, StringHelpers } from '@utils';
-import { CollapsibleList, PriceMultiSlider } from './components';
+import { FilterCollapsibleList, PriceMultiSlider } from './components';
 
 const FilterScreen = ({ route, navigation }: any) => {
   const priceRange = route.params?.priceRange || DEFAULT_PRICE_RANGE;
@@ -143,7 +143,7 @@ const FilterScreen = ({ route, navigation }: any) => {
           }}
         />
         <Layouts.VSpace value={24} />
-        <CollapsibleList
+        <FilterCollapsibleList
           isCollapse={!isShowAuthorList}
           dataSource={
             listAuthor.length > 0
@@ -169,7 +169,7 @@ const FilterScreen = ({ route, navigation }: any) => {
           setIsCollapse={setIsShowAuthorList}
         />
         <Layouts.VSpace value={12} />
-        <CollapsibleList
+        <FilterCollapsibleList
           isCollapse={!isShowFormList}
           dataSource={
             listForm.length > 0
@@ -195,7 +195,7 @@ const FilterScreen = ({ route, navigation }: any) => {
           setIsCollapse={setIsShowFormList}
         />
         <Layouts.VSpace value={12} />
-        <CollapsibleList
+        <FilterCollapsibleList
           isCollapse={!isShowPublisherList}
           dataSource={
             listPublisher.length > 0
