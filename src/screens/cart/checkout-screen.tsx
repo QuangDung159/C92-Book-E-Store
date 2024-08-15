@@ -10,15 +10,23 @@ import {
 } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import { RadioButton } from 'react-native-paper';
-import { Buttons, Icons, Layouts, ScreenHeader } from '@components';
+import {
+  BottomCheckoutSection,
+  Icons,
+  Layouts,
+  ScreenHeader,
+} from '@components';
 import { LIST_PAYMENT_METHOD, PAYMENT_TYPE } from '@constants';
+import { useNavigate } from '@hooks';
 import { cartStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { CartInfoRow, ListCreditCard, SectionTitle } from './components';
 import { ListCartItem } from './components/list-cart-item';
 
-const PaymentScreen = ({ navigation }: any) => {
+const CheckoutScreen = ({ navigation }: any) => {
+  const { openPaymentSuccessScreen } = useNavigate(navigation);
   const [isShowListCreditCart, setIsShowListCreditCart] = useState(false);
+
   const toggleListCreditCart = () =>
     setIsShowListCreditCart(!isShowListCreditCart);
 
@@ -165,16 +173,11 @@ const PaymentScreen = ({ navigation }: any) => {
         )}
         <Layouts.VSpace value={24} />
       </ScrollView>
-      <View style={styles.buttonWrapper}>
-        <Layouts.VSpace value={12} />
-        <Buttons.CButton
-          onPress={() => {
-            navigation.goBack();
-          }}
-          label="Apply"
-          buttonType="primary"
-        />
-      </View>
+      <BottomCheckoutSection
+        onPress={openPaymentSuccessScreen}
+        priceDisplay={cartStore.subTotal}
+        disabled={cartStore.cartCount === 0}
+      />
     </View>
   );
 };
@@ -195,5 +198,5 @@ const styles = StyleSheet.create({
   },
 });
 
-const observable = observer(PaymentScreen);
-export { observable as PaymentScreen };
+const observable = observer(CheckoutScreen);
+export { observable as CheckoutScreen };

@@ -29,9 +29,9 @@ export const useNavigate = (navigation: any) => {
     });
   };
 
-  const openPaymentScreen = () => {
+  const openCheckoutScreen = () => {
     navigation.navigate(SCREEN_NAME.CART_NAVIGATOR, {
-      screen: SCREEN_NAME.PAYMENT_SCREEN,
+      screen: SCREEN_NAME.CHECKOUT_SCREEN,
     });
   };
 
@@ -41,12 +41,19 @@ export const useNavigate = (navigation: any) => {
     });
   };
 
+  const openPaymentSuccessScreen = () => {
+    navigation.navigate(SCREEN_NAME.CART_NAVIGATOR, {
+      screen: SCREEN_NAME.PAYMENT_SUCCESS_SCREEN,
+    });
+  };
+
   return {
     openSearchScreen,
     openFilterScreen,
     openBookDetailScreen,
     openCartScreen,
-    openPaymentScreen,
+    openCheckoutScreen,
     openHomeScreen,
+    openPaymentSuccessScreen,
   };
 };

@@ -1,17 +1,16 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Buttons, Layouts, ScreenHeader } from '@components';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { BottomCheckoutSection, Layouts, ScreenHeader } from '@components';
 import { TOP_BOOKS } from '@constants';
 import { useNavigate } from '@hooks';
 import { cartStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
-import { StringHelpers } from '@utils';
 import { HorizontalListCard } from 'screens/home/components';
 import { ListCartItem } from './components/list-cart-item';
 
 const CartScreen = ({ navigation }: any) => {
-  const { openPaymentScreen } = useNavigate(navigation);
+  const { openCheckoutScreen } = useNavigate(navigation);
 
   return (
     <View style={styles.container}>
@@ -37,22 +36,11 @@ const CartScreen = ({ navigation }: any) => {
         />
         <Layouts.VSpace value={24} />
       </ScrollView>
-      <View style={styles.buttonWrapper}>
-        <Layouts.VSpace value={12} />
-        <View style={styles.totalWrapper}>
-          <Text style={styles.total}>
-            {StringHelpers.formatCurrency(cartStore.subTotal)}
-          </Text>
-          <Buttons.CButton
-            onPress={() => {
-              openPaymentScreen();
-            }}
-            label="Checkout"
-            buttonType="primary"
-            disabled={cartStore.cartCount === 0}
-          />
-        </View>
-      </View>
+      <BottomCheckoutSection
+        onPress={openCheckoutScreen}
+        priceDisplay={cartStore.subTotal}
+        disabled={cartStore.cartCount === 0}
+      />
     </View>
   );
 };
@@ -65,24 +53,11 @@ const styles = StyleSheet.create({
   wrapper: {
     paddingHorizontal: 24,
   },
-  buttonWrapper: {
-    paddingHorizontal: 24,
-    borderTopColor: COLORS.gray200,
-    borderTopWidth: 1,
-    height: 64,
-  },
   divider: {
     borderBottomWidth: 1,
     borderBottomColor: COLORS.gray200,
   },
-  totalWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  total: {
-    ...FONT_STYLES.BOLD_22,
-  },
+
   endCartText: {
     ...FONT_STYLES.SEMIBOLD_12,
     color: COLORS.gray70,
