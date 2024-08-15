@@ -41,3 +41,7 @@ export const formatCurrency = (amount: number) => {
 export const getFullAddress = (address: DataModels.IShippingAddress) => {
   return `${address.address}, ${address.ward}, ${address.district}, ${address.city}`;
 };
+
+export const getShortAddress = (address: DataModels.IShippingAddress) => {
+  return `${address.ward}, ${address.district}, ${address.city}`;
+};

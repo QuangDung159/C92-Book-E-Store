@@ -510,6 +510,8 @@ const LIST_SHIPPING_ADDRESS: DataModels.IShippingAddress[] = [
     shippingFee: 10000,
     ward: 'Hiep Tan Ward',
     primary: false,
+    name: 'Lu Quang Dung',
+    phoneNumber: '0933522615',
   },
   {
     address: '117 Nguyen Cuu Dam',
@@ -519,6 +521,8 @@ const LIST_SHIPPING_ADDRESS: DataModels.IShippingAddress[] = [
     shippingFee: 17000,
     ward: 'Ward 12',
     primary: true,
+    name: 'Quang Dung Quang Dung',
+    phoneNumber: '0933522615',
   },
   {
     address: '117 Nguyen Cuu Dam',
@@ -528,6 +532,8 @@ const LIST_SHIPPING_ADDRESS: DataModels.IShippingAddress[] = [
     shippingFee: 20000,
     ward: 'Ward 17',
     primary: false,
+    name: 'Quang Dung',
+    phoneNumber: '0933522615',
   },
 ];
 

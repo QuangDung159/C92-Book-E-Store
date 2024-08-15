@@ -48,6 +48,8 @@ export interface IShippingAddress {
   city: string;
   shippingFee: number;
   primary: boolean;
+  name: string;
+  phoneNumber: string;
 }
 
 export interface IPaymentMethod {

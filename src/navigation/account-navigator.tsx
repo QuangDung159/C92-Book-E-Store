@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import { AccountScreen, AddressScreen } from '@screens';
+import { AddressScreen } from '@screens';
 
 import { SCREEN_NAME } from '../constants';
 
@@ -13,10 +13,6 @@ function AccountNavigator() {
         headerShown: false,
       }}
     >
-      <Stack.Screen
-        name={SCREEN_NAME.ACCOUNT_SCREEN}
-        component={AccountScreen}
-      />
       <Stack.Screen
         name={SCREEN_NAME.ADDRESS_SCREEN}
         component={AddressScreen}

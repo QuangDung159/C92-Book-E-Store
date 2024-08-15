@@ -2,8 +2,12 @@ import { Entypo, MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { CategoriesScreen, HomeScreen, NotificationsScreen } from '@screens';
-import { AccountNavigator } from './account-navigator';
+import {
+  AccountScreen,
+  CategoriesScreen,
+  HomeScreen,
+  NotificationsScreen,
+} from '@screens';
 import { SCREEN_NAME } from '../constants';
 import { COLORS } from '../themes';
 
@@ -98,8 +102,8 @@ function BottomTabNavigator() {
           tabBarLabel: 'Tài khoản',
           tabBarStyle: styles.tabBarStyle,
         }}
-        name={SCREEN_NAME.ACCOUNT_NAVIGATOR}
-        component={AccountNavigator}
+        name={SCREEN_NAME.ACCOUNT_SCREEN}
+        component={AccountScreen}
       />
     </Tab.Navigator>
   );

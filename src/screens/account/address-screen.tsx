@@ -1,41 +1,30 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Buttons, ScreenHeader } from '@components';
-import { USER } from '@constants';
-import { useNavigate } from '@hooks';
-import { appModel, sharedStore } from '@store';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { BottomButtonSection, Layouts, ScreenHeader } from '@components';
+import { userStore } from '@store';
 import { COLORS } from '@themes';
-import { delay, ToastHelpers } from '@utils';
+import { ListAddressItem } from './components';
 
 const AddressScreen = ({ navigation }: any) => {
-  const { openHomeScreen } = useNavigate(navigation);
-
   return (
     <View style={styles.container}>
       <ScreenHeader title="Shipping Address" navigation={navigation} />
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
+      <ScrollView
+        scrollEnabled={true}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.wrapper}
       >
-        <Buttons.CButton
-          label="Login"
-          onPress={() => {
-            sharedStore.setShowLoading(true);
-            delay(1000).then(() => {
-              ToastHelpers.showToast({
-                title: 'Login success',
-              });
-              sharedStore.setShowLoading(false);
-              appModel.login(USER);
-              openHomeScreen();
-            });
-          }}
+        <Layouts.VSpace value={24} />
+        <ListAddressItem
+          listAddress={userStore.userProfile?.listShippingAddress || []}
         />
-      </View>
+        <Layouts.VSpace value={24} />
+      </ScrollView>
+      <BottomButtonSection
+        onPress={() => {}}
+        buttonTitle="Add new Shipping Address"
+      />
     </View>
   );
 };
@@ -44,6 +33,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.primaryWhite,
+  },
+  wrapper: {
+    paddingHorizontal: 24,
   },
 });
 
