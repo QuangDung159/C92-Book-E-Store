@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { observer } from 'mobx-react-lite';
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -10,7 +11,7 @@ import {
 import Collapsible from 'react-native-collapsible';
 import { RadioButton } from 'react-native-paper';
 import { Buttons, Icons, Layouts, ScreenHeader } from '@components';
-import { LIST_PAYMENT_METHOD } from '@constants';
+import { LIST_PAYMENT_METHOD, PAYMENT_TYPE } from '@constants';
 import { cartStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { CartInfoRow, SectionTitle } from './components';
@@ -20,6 +21,17 @@ const PaymentScreen = ({ navigation }: any) => {
   const [isShowListCreditCart, setIsShowListCreditCart] = useState(false);
   const toggleListCreditCart = () =>
     setIsShowListCreditCart(!isShowListCreditCart);
+
+  const listCreditCard = useMemo(
+    () => cartStore.userStore.userProfile?.listCreditCard || [],
+    [],
+  );
+
+  useEffect(() => {
+    setIsShowListCreditCart(
+      cartStore.paymentSelected.paymentType === PAYMENT_TYPE.creditCard,
+    );
+  }, [cartStore.paymentSelected.paymentType]);
 
   return (
     <View style={styles.container}>
@@ -84,9 +96,9 @@ const PaymentScreen = ({ navigation }: any) => {
               paymentInfo: {},
             });
 
-            if (value === 'credit_card') {
-              setIsShowListCreditCart(true);
-            }
+            // if (value === PAYMENT_TYPE.creditCard) {
+            //   setIsShowListCreditCart(true);
+            // }
           }}
           value={cartStore.paymentSelected.paymentType}
         >
@@ -122,7 +134,14 @@ const PaymentScreen = ({ navigation }: any) => {
           })}
         </RadioButton.Group>
         <Collapsible collapsed={!isShowListCreditCart}>
-          <Text>asd</Text>
+          <Text>as</Text>
+          {listCreditCard.map((item) => {
+            return (
+              <View key={item.cardNumber}>
+                <Text>{item.cardNumber}</Text>
+              </View>
+            );
+          })}
         </Collapsible>
         <Layouts.VSpace value={12} />
         {cartStore.cartCount !== 0 && (

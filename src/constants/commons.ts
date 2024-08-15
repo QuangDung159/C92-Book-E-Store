@@ -13,4 +13,24 @@ const PRICE_STEP = 1000;
 
 const DEFAULT_PRICE_RANGE: number[] = [0, 2000000];
 
-export { DEFAULT_PRICE_RANGE, DEFAULT_SORT, PRICE_STEP, SEARCH_VIEW_STYLE };
+const CARD_TYPE = {
+  masterCard: 'master-card',
+  jcb: 'jcb',
+  visa: 'visa',
+};
+
+const PAYMENT_TYPE = {
+  cod: 'cod',
+  creditCard: 'credit_card',
+  momo: 'momo',
+  zaloPay: 'zalo-pay',
+};
+
+export {
+  CARD_TYPE,
+  DEFAULT_PRICE_RANGE,
+  DEFAULT_SORT,
+  PAYMENT_TYPE,
+  PRICE_STEP,
+  SEARCH_VIEW_STYLE,
+};
