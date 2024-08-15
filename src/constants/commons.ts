@@ -13,7 +13,7 @@ const PRICE_STEP = 1000;
 
 const DEFAULT_PRICE_RANGE: number[] = [0, 2000000];
 
-const CARD_TYPE = {
+const CREDIT_CARD_TYPE = {
   masterCard: 'master-card',
   jcb: 'jcb',
   visa: 'visa',
@@ -27,7 +27,7 @@ const PAYMENT_TYPE = {
 };
 
 export {
-  CARD_TYPE,
+  CREDIT_CARD_TYPE,
   DEFAULT_PRICE_RANGE,
   DEFAULT_SORT,
   PAYMENT_TYPE,

@@ -14,7 +14,7 @@ import { Buttons, Icons, Layouts, ScreenHeader } from '@components';
 import { LIST_PAYMENT_METHOD, PAYMENT_TYPE } from '@constants';
 import { cartStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
-import { CartInfoRow, SectionTitle } from './components';
+import { CartInfoRow, ListCreditCard, SectionTitle } from './components';
 import { ListCartItem } from './components/list-cart-item';
 
 const PaymentScreen = ({ navigation }: any) => {
@@ -95,10 +95,6 @@ const PaymentScreen = ({ navigation }: any) => {
               paymentType: value,
               paymentInfo: {},
             });
-
-            // if (value === PAYMENT_TYPE.creditCard) {
-            //   setIsShowListCreditCart(true);
-            // }
           }}
           value={cartStore.paymentSelected.paymentType}
         >
@@ -134,14 +130,18 @@ const PaymentScreen = ({ navigation }: any) => {
           })}
         </RadioButton.Group>
         <Collapsible collapsed={!isShowListCreditCart}>
-          <Text>as</Text>
-          {listCreditCard.map((item) => {
-            return (
-              <View key={item.cardNumber}>
-                <Text>{item.cardNumber}</Text>
-              </View>
-            );
-          })}
+          <ListCreditCard
+            listCreditCard={listCreditCard}
+            onValueChange={(value) => {
+              cartStore.setPaymentSelected({
+                paymentType: PAYMENT_TYPE.creditCard,
+                paymentInfo: {},
+              });
+
+              cartStore.setCreditCardSelected(value);
+            }}
+            selectedValue={cartStore.creditCardSelected?.cardNumber}
+          />
         </Collapsible>
         <Layouts.VSpace value={12} />
         {cartStore.cartCount !== 0 && (

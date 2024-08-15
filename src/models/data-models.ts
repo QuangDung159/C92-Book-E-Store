@@ -51,7 +51,7 @@ export interface IShippingAddress {
 
 export interface IPaymentMethod {
   paymentType: string;
-  paymentInfo?: any;
+  paymentInfo?: any | ICreditCard;
 }
 
 export interface IVoucher {

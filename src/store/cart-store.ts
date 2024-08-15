@@ -24,6 +24,7 @@ class CartStore {
   referenceOptionsStore: ReferenceOptionsStore | null = null;
   userStore: UserStore | null = null;
   paymentSelected: DataModels.IPaymentMethod | null = null;
+  creditCardSelected: DataModels.ICreditCard | null = null;
 
   constructor(
     userStore: UserStore,
@@ -38,6 +39,8 @@ class CartStore {
       userStore: observable,
       referenceOptionsStore: observable,
       paymentSelected: observable,
+      creditCardSelected: observable,
+      setCreditCardSelected: action,
       setPaymentSelected: action,
       setListVoucherIdSelected: action,
       setShippingAddressSelected: action,
@@ -59,6 +62,16 @@ class CartStore {
     this.paymentSelected = {
       paymentType: LIST_PAYMENT_METHOD[0].value,
     };
+  }
+
+  setCreditCardSelected(cardNumber: string) {
+    const creditCard = (this.userStore.userProfile.listCreditCard || []).find(
+      (item) => item.cardNumber === cardNumber,
+    );
+
+    if (creditCard) {
+      this.creditCardSelected = creditCard;
+    }
   }
 
   setPaymentSelected(value: DataModels.IPaymentMethod) {
