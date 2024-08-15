@@ -509,6 +509,7 @@ const LIST_SHIPPING_ADDRESS: DataModels.IShippingAddress[] = [
     id: '1',
     shippingFee: 10000,
     ward: 'Hiep Tan Ward',
+    primary: false,
   },
   {
     address: '117 Nguyen Cuu Dam',
@@ -517,6 +518,7 @@ const LIST_SHIPPING_ADDRESS: DataModels.IShippingAddress[] = [
     id: '2',
     shippingFee: 17000,
     ward: 'Ward 12',
+    primary: true,
   },
   {
     address: '117 Nguyen Cuu Dam',
@@ -525,6 +527,7 @@ const LIST_SHIPPING_ADDRESS: DataModels.IShippingAddress[] = [
     id: '3',
     shippingFee: 20000,
     ward: 'Ward 17',
+    primary: false,
   },
 ];
 

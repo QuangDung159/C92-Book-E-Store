@@ -18,9 +18,10 @@ import {
 } from '@components';
 import { LIST_PAYMENT_METHOD, PAYMENT_TYPE } from '@constants';
 import { useNavigate } from '@hooks';
+import { DataModels } from '@models';
 import { cartStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
-import { StringHelpers } from '@utils';
+import { ListHelpers, StringHelpers } from '@utils';
 import { CartInfoRow, ListCreditCard, SectionTitle } from './components';
 import { ListCartItem } from './components/list-cart-item';
 
@@ -35,6 +36,20 @@ const CheckoutScreen = ({ navigation }: any) => {
     () => userStore.userProfile?.listCreditCard || [],
     [],
   );
+
+  useEffect(() => {
+    const shippingAddress = ListHelpers.getItemByField(
+      userStore.userProfile?.listShippingAddress || [],
+      true,
+      'primary',
+    );
+
+    if (shippingAddress) {
+      cartStore.setShippingAddressSelected(
+        (shippingAddress.data as DataModels.IShippingAddress).id,
+      );
+    }
+  }, []);
 
   useEffect(() => {
     setIsShowListCreditCart(
@@ -77,9 +92,9 @@ const CheckoutScreen = ({ navigation }: any) => {
                 color: COLORS.primaryWhite,
               }}
             >
-              {StringHelpers.getFullAddress(
-                userStore.userProfile?.listShippingAddress[0],
-              )}
+              {cartStore.shippingAddressData
+                ? StringHelpers.getFullAddress(cartStore.shippingAddressData)
+                : 'Please add your shipping address'}
             </Text>
           </View>
           <Layouts.HSpace value={24} />

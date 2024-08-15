@@ -47,6 +47,7 @@ export interface IShippingAddress {
   ward: string;
   city: string;
   shippingFee: number;
+  primary: boolean;
 }
 
 export interface IPaymentMethod {

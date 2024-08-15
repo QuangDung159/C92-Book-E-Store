@@ -53,6 +53,7 @@ class CartStore {
       shipping: computed,
       cartCount: computed,
       shippingSelectedData: computed,
+      shippingAddressData: computed,
     });
 
     this.userStore = userStore;
@@ -65,7 +66,7 @@ class CartStore {
   }
 
   setCreditCardSelected(cardNumber: string) {
-    const creditCard = (this.userStore.userProfile.listCreditCard || []).find(
+    const creditCard = (this.userStore.userProfile?.listCreditCard || []).find(
       (item) => item.cardNumber === cardNumber,
     );
 
@@ -204,6 +205,14 @@ class CartStore {
 
   get cartCount() {
     return this.listCartItem.length;
+  }
+
+  get shippingAddressData() {
+    const shippingAddress = (
+      this.userStore.userProfile?.listShippingAddress || []
+    ).find((item) => item.id === this.shippingAddressSelected);
+
+    return shippingAddress;
   }
 }
 
