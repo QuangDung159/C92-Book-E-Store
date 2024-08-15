@@ -1,23 +1,23 @@
 import { observer } from 'mobx-react-lite';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Divider, Switch } from 'react-native-paper';
 import {
   BottomButtonSection,
+  Buttons,
+  Icons,
   Inputs,
   Layouts,
   ScreenHeader,
 } from '@components';
 import { DataModels } from '@models';
 import { COLORS, FONT_STYLES } from '@themes';
-import { AddressItem } from './components';
+
 import { AddEditAddressViewModel } from './view-models';
 
 const AddEditAddress = ({ navigation, route }: any) => {
   const shippingAddress: DataModels.IShippingAddress =
     route.params?.shippingAddress;
-
-  const [primary, setPrimary] = useState(shippingAddress.primary);
 
   const addEditVM = useRef(
     new AddEditAddressViewModel(shippingAddress),
@@ -52,9 +52,12 @@ const AddEditAddress = ({ navigation, route }: any) => {
           <Switch
             style={{
               transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }],
+              marginRight: -10,
             }}
-            value={primary}
-            onValueChange={setPrimary}
+            value={addEditVM.primary}
+            onValueChange={(value) => {
+              addEditVM.setPrimary(value);
+            }}
           />
         </View>
         <Layouts.VSpace value={12} />
@@ -69,10 +72,7 @@ const AddEditAddress = ({ navigation, route }: any) => {
           outlineStyle={{
             borderWidth: 0,
           }}
-          style={{
-            marginHorizontal: -16,
-            height: 30,
-          }}
+          style={styles.input}
         />
         <Inputs.CTextInput
           value={addEditVM.phoneNumber}
@@ -83,13 +83,52 @@ const AddEditAddress = ({ navigation, route }: any) => {
           outlineStyle={{
             borderWidth: 0,
           }}
-          style={{
-            marginHorizontal: -16,
-            height: 30,
-          }}
+          style={styles.input}
         />
         <Layouts.VSpace value={12} />
-        {shippingAddress && <AddressItem addressItem={shippingAddress} />}
+        <Divider />
+        <Layouts.VSpace value={16} />
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <View>
+            <Text style={styles.addressInfo}>{addEditVM.city}</Text>
+            <Text style={styles.addressInfo}>{addEditVM.district}</Text>
+            <Text style={styles.addressInfo}>{addEditVM.ward}</Text>
+          </View>
+          <Icons.ChevronRightIcon size={20} />
+        </View>
+        <Layouts.VSpace value={16} />
+        <Divider />
+        <Layouts.VSpace value={12} />
+        <Inputs.CTextInput
+          value={addEditVM.name}
+          placeholder="Enter contact name"
+          onChangeText={(value) => {
+            addEditVM.setName(value);
+          }}
+          outlineStyle={{
+            borderWidth: 0,
+          }}
+          style={styles.input}
+        />
+        <Layouts.VSpace value={12} />
+        <Divider />
+        <Layouts.VSpace value={24} />
+        <Buttons.CButton
+          label="Delete address"
+          onPress={() => {}}
+          labelStyle={{
+            color: COLORS.error50,
+          }}
+          style={{
+            borderColor: COLORS.error50,
+          }}
+        />
         <Layouts.VSpace value={24} />
       </ScrollView>
       <BottomButtonSection onPress={() => {}} buttonTitle="Submit" />
@@ -104,6 +143,15 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     paddingHorizontal: 24,
+  },
+  addressInfo: {
+    ...FONT_STYLES.REGULAR_14,
+    lineHeight: 20,
+  },
+  input: {
+    marginHorizontal: -16,
+    marginRight: -6,
+    height: 30,
   },
 });
 

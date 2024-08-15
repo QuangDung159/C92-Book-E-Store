@@ -94,7 +94,7 @@ const CTextInput: FC<CTextInputProps> = ({
         onFocus={onFocus}
         autoFocus={autoFocus}
         contentStyle={{
-          fontSize: 14,
+          ...FONT_STYLES.REGULAR_14,
         }}
       />
       {messageError && (
