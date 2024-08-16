@@ -14,7 +14,7 @@ import {
   ScreenHeader,
   SectionTitle,
 } from '@components';
-import { ADMINISTRATIVE, LIST_ADMINITRATIVE_UNIT } from '@constants';
+import { LIST_ADMINITRATIVE_UNIT } from '@constants';
 import { DataModels } from '@models';
 import { referenceOptionsStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
@@ -28,12 +28,6 @@ const LocationScreen = ({ navigation, route }: any) => {
   const addEditVM = useRef(
     new LocationViewModel(referenceOptionsStore, shippingAddress),
   ).current;
-
-  const onReset = () => {
-    addEditVM.setCity(ADMINISTRATIVE.city);
-    addEditVM.setDistrict(ADMINISTRATIVE.district);
-    addEditVM.setWard(ADMINISTRATIVE.ward);
-  };
 
   const renderAdministrativeUnitItem = () => {
     return (
@@ -56,8 +50,8 @@ const LocationScreen = ({ navigation, route }: any) => {
                   borderWidth: 1,
                   borderColor: COLORS.primaryWhite,
                   borderRadius: 8,
-                  height: 50,
-                  marginBottom: 12,
+                  height: 45,
+                  marginBottom: 8,
                   paddingHorizontal: 4,
                 },
                 checked && {
@@ -132,7 +126,7 @@ const LocationScreen = ({ navigation, route }: any) => {
           }}
         >
           <SectionTitle title="Selected Area" />
-          <TouchableOpacity onPress={onReset}>
+          <TouchableOpacity onPress={addEditVM.onReset}>
             <Text
               style={{
                 ...FONT_STYLES.SEMIBOLD_16,
@@ -153,12 +147,12 @@ const LocationScreen = ({ navigation, route }: any) => {
           title={`Select ${addEditVM.administrativeSelected}`}
         />
       </View>
+      <Layouts.VSpace value={12} />
       <ScrollView
         scrollEnabled={true}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.wrapper}
       >
-        <Layouts.VSpace value={12} />
         {renderListAdministrativeBySelected()}
         <Layouts.VSpace value={12} />
       </ScrollView>

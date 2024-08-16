@@ -1,4 +1,5 @@
 import { action, computed, makeObservable, observable } from 'mobx';
+import { ADMINISTRATIVE } from '@constants';
 import { DataModels } from '@models';
 import { ReferenceOptionsStore } from '@store';
 import { AdministrativeUnit } from '@types';
@@ -24,6 +25,7 @@ class LocationViewModel {
       setWard: action,
       setDistrict: action,
       fromJsonObject: action,
+      onReset: action,
       districtDataSource: computed,
       wardDataSource: computed,
       selectedAdministrativeValue: computed,
@@ -102,11 +104,20 @@ class LocationViewModel {
 
   setCity(value: string) {
     this.city = value;
+    this.district = ADMINISTRATIVE.district;
+    this.ward = ADMINISTRATIVE.ward;
   }
 
   setDistrict(value: string) {
     this.district = value;
+    this.ward = ADMINISTRATIVE.ward;
   }
+
+  onReset = () => {
+    this.setCity(ADMINISTRATIVE.city);
+    this.setDistrict(ADMINISTRATIVE.district);
+    this.setWard(ADMINISTRATIVE.ward);
+  };
 
   setWard(value: string) {
     this.ward = value;
