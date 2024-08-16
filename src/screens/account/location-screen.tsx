@@ -14,7 +14,7 @@ import {
   ScreenHeader,
   SectionTitle,
 } from '@components';
-import { LIST_ADMINITRATIVE_UNIT } from '@constants';
+import { ADMINISTRATIVE, LIST_ADMINITRATIVE_UNIT } from '@constants';
 import { DataModels } from '@models';
 import { COLORS, FONT_STYLES } from '@themes';
 
@@ -27,9 +27,9 @@ const LocationScreen = ({ navigation, route }: any) => {
   const [administrativeUnitSelected, setAdministrativeUnitSelected] =
     useState<administrativeUnit>('city');
 
-  const [city, setCity] = useState('City');
-  const [ward, setWard] = useState('Ward');
-  const [district, setDistrict] = useState('District');
+  const [city, setCity] = useState(ADMINISTRATIVE.city);
+  const [district, setDistrict] = useState(ADMINISTRATIVE.district);
+  const [ward, setWard] = useState(ADMINISTRATIVE.ward);
 
   useEffect(() => {
     if (shippingAddress) {
@@ -38,6 +38,12 @@ const LocationScreen = ({ navigation, route }: any) => {
       setDistrict(shippingAddress.district);
     }
   }, [shippingAddress]);
+
+  const onReset = () => {
+    setCity(ADMINISTRATIVE.city);
+    setDistrict(ADMINISTRATIVE.district);
+    setWard(ADMINISTRATIVE.ward);
+  };
 
   const renderAdministrativeUnitItem = () => {
     const getLabel = (administrative: administrativeUnit) => {
@@ -66,6 +72,15 @@ const LocationScreen = ({ navigation, route }: any) => {
       >
         {LIST_ADMINITRATIVE_UNIT.map((item) => {
           const checked = item.value === administrativeUnitSelected;
+          const label = getLabel(item.value as administrativeUnit);
+
+          if (
+            label === ADMINISTRATIVE.city ||
+            label === ADMINISTRATIVE.district ||
+            label === ADMINISTRATIVE.ward
+          ) {
+            return null;
+          }
 
           return (
             <View
@@ -123,7 +138,7 @@ const LocationScreen = ({ navigation, route }: any) => {
           }}
         >
           <SectionTitle title="Selected Area" />
-          <TouchableOpacity>
+          <TouchableOpacity onPress={onReset}>
             <Text
               style={{
                 ...FONT_STYLES.SEMIBOLD_16,

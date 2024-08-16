@@ -26,7 +26,14 @@ const PAYMENT_TYPE = {
   zalo_pay: 'zalo_pay',
 };
 
+const ADMINISTRATIVE = {
+  city: 'City',
+  district: 'District',
+  ward: 'Ward',
+};
+
 export {
+  ADMINISTRATIVE,
   CREDIT_CARD_TYPE,
   DEFAULT_PRICE_RANGE,
   DEFAULT_SORT,

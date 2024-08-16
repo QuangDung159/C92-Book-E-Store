@@ -1,5 +1,6 @@
 import { DataModels } from '@models';
 import { ILocation } from 'models/data-models';
+import { ADMINISTRATIVE } from './commons';
 
 const TOP_BOOKS_FILTER = [
   {
@@ -254,15 +255,15 @@ const LIST_SORT_OPTION = [
 const LIST_ADMINITRATIVE_UNIT = [
   {
     value: 'city',
-    label: 'City',
+    label: ADMINISTRATIVE?.city,
   },
   {
     value: 'district',
-    label: 'District',
+    label: ADMINISTRATIVE?.district,
   },
   {
     value: 'ward',
-    label: 'Ward',
+    label: ADMINISTRATIVE?.ward,
   },
 ];
 
