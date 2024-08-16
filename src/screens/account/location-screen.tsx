@@ -37,39 +37,53 @@ const LocationScreen = ({ navigation, route }: any) => {
         }
         value={addEditVM.administrativeSelected}
       >
-        {LIST_ADMINITRATIVE_UNIT.map((item) => {
+        {LIST_ADMINITRATIVE_UNIT.map((item, index) => {
           const checked = item.value === addEditVM.administrativeSelected;
 
           return (
-            <View
-              key={item.value}
-              style={[
-                {
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderWidth: 1,
-                  borderColor: COLORS.primaryWhite,
-                  borderRadius: 8,
-                  height: 45,
-                  marginBottom: 8,
-                  paddingHorizontal: 4,
-                },
-                checked && {
-                  borderColor: COLORS.gray70,
-                },
-              ]}
-            >
-              <RadioButton.Android value={item.value} />
-              <Text
-                style={{
-                  ...FONT_STYLES.REGULAR_14,
-                  marginLeft: 8,
-                }}
+            <React.Fragment key={item.value}>
+              <View
+                style={[
+                  {
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderWidth: 1,
+                    borderColor: COLORS.primaryWhite,
+                    borderRadius: 8,
+                    height: 44,
+                    paddingHorizontal: 4,
+                    zIndex: 99,
+                  },
+                  checked && {
+                    borderColor: COLORS.gray70,
+                    backgroundColor: COLORS.primaryWhite,
+                  },
+                ]}
               >
-                {addEditVM.getlabelSelected(item.value as AdministrativeUnit)}
-              </Text>
-              <Layouts.VSpace value={12} />
-            </View>
+                <RadioButton.Android value={item.value} />
+                <Text
+                  style={{
+                    ...FONT_STYLES.REGULAR_14,
+                    marginLeft: 8,
+                  }}
+                >
+                  {addEditVM.getlabelSelected(item.value as AdministrativeUnit)}
+                </Text>
+              </View>
+              {LIST_ADMINITRATIVE_UNIT.length - 1 !== index ? (
+                <View
+                  style={{
+                    height: 36,
+                    borderLeftColor: COLORS.gray70,
+                    borderLeftWidth: 1,
+                    marginLeft: 24,
+                    zIndex: 1,
+                  }}
+                ></View>
+              ) : (
+                <Layouts.VSpace value={12} />
+              )}
+            </React.Fragment>
           );
         })}
       </RadioButton.Group>
