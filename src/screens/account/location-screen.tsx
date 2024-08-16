@@ -14,7 +14,7 @@ import {
   ScreenHeader,
   SectionTitle,
 } from '@components';
-import { LIST_ADMINITRATIVE_UNIT } from '@constants';
+import { ADMINISTRATIVE, LIST_ADMINITRATIVE_UNIT } from '@constants';
 import { DataModels } from '@models';
 import { referenceOptionsStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
@@ -29,7 +29,17 @@ const LocationScreen = ({ navigation, route }: any) => {
     new LocationViewModel(referenceOptionsStore, shippingAddress),
   ).current;
 
-  const renderAdministrativeUnitItem = () => {
+  const renderAdministrativeUnitItem = (
+    value: string,
+    isShow?: boolean,
+    isLastItem?: boolean,
+  ) => {
+    const checked = value === addEditVM.administrativeSelected;
+
+    if (!isShow) {
+      return null;
+    }
+
     return (
       <RadioButton.Group
         onValueChange={(value) =>
@@ -37,55 +47,49 @@ const LocationScreen = ({ navigation, route }: any) => {
         }
         value={addEditVM.administrativeSelected}
       >
-        {LIST_ADMINITRATIVE_UNIT.map((item, index) => {
-          const checked = item.value === addEditVM.administrativeSelected;
-
-          return (
-            <React.Fragment key={item.value}>
-              <View
-                style={[
-                  {
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderWidth: 1,
-                    borderColor: COLORS.primaryWhite,
-                    borderRadius: 8,
-                    height: 44,
-                    paddingHorizontal: 4,
-                    zIndex: 99,
-                  },
-                  checked && {
-                    borderColor: COLORS.gray70,
-                    backgroundColor: COLORS.primaryWhite,
-                  },
-                ]}
-              >
-                <RadioButton.Android value={item.value} />
-                <Text
-                  style={{
-                    ...FONT_STYLES.REGULAR_14,
-                    marginLeft: 8,
-                  }}
-                >
-                  {addEditVM.getlabelSelected(item.value as AdministrativeUnit)}
-                </Text>
-              </View>
-              {LIST_ADMINITRATIVE_UNIT.length - 1 !== index ? (
-                <View
-                  style={{
-                    height: 36,
-                    borderLeftColor: COLORS.gray70,
-                    borderLeftWidth: 1,
-                    marginLeft: 24,
-                    zIndex: 1,
-                  }}
-                ></View>
-              ) : (
-                <Layouts.VSpace value={12} />
-              )}
-            </React.Fragment>
-          );
-        })}
+        <React.Fragment key={value}>
+          <View
+            style={[
+              {
+                flexDirection: 'row',
+                alignItems: 'center',
+                borderWidth: 1,
+                borderColor: COLORS.primaryWhite,
+                borderRadius: 8,
+                height: 44,
+                paddingHorizontal: 4,
+                zIndex: 99,
+              },
+              checked && {
+                borderColor: COLORS.gray70,
+                backgroundColor: COLORS.primaryWhite,
+              },
+            ]}
+          >
+            <RadioButton.Android value={value} />
+            <Text
+              style={{
+                ...FONT_STYLES.REGULAR_14,
+                marginLeft: 8,
+              }}
+            >
+              {addEditVM.getlabelSelected(value as AdministrativeUnit)}
+            </Text>
+          </View>
+          {!isLastItem ? (
+            <View
+              style={{
+                height: 24,
+                borderLeftColor: COLORS.gray70,
+                borderLeftWidth: 1,
+                marginLeft: 23,
+                zIndex: 1,
+              }}
+            ></View>
+          ) : (
+            <Layouts.VSpace value={12} />
+          )}
+        </React.Fragment>
       </RadioButton.Group>
     );
   };
@@ -159,7 +163,16 @@ const LocationScreen = ({ navigation, route }: any) => {
           </TouchableOpacity>
         </View>
         <Layouts.VSpace value={12} />
-        {renderAdministrativeUnitItem()}
+        {renderAdministrativeUnitItem(LIST_ADMINITRATIVE_UNIT[0].value, true)}
+        {renderAdministrativeUnitItem(
+          LIST_ADMINITRATIVE_UNIT[1].value,
+          addEditVM.city !== ADMINISTRATIVE.city,
+        )}
+        {renderAdministrativeUnitItem(
+          LIST_ADMINITRATIVE_UNIT[2].value,
+          addEditVM.district !== ADMINISTRATIVE.district,
+          true,
+        )}
         <Divider />
         <Layouts.VSpace value={24} />
         <SectionTitle

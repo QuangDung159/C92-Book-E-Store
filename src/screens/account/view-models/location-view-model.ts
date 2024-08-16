@@ -103,12 +103,20 @@ class LocationViewModel {
   }
 
   setCity(value: string) {
+    if (this.city === value) {
+      return;
+    }
+
     this.city = value;
     this.district = ADMINISTRATIVE.district;
     this.ward = ADMINISTRATIVE.ward;
   }
 
   setDistrict(value: string) {
+    if (this.district === value) {
+      return;
+    }
+
     this.district = value;
     this.ward = ADMINISTRATIVE.ward;
   }
