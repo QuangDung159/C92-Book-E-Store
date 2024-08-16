@@ -8,6 +8,8 @@ export * from './chevron-up-icon';
 export * from './close-box-outline-icon';
 export * from './close-circle-icon';
 export * from './close-icon';
+export * from './dot-circle-icon';
+export * from './dot-single-icon';
 export * from './eye-icon';
 export * from './filter-icon';
 export * from './heart-icon';

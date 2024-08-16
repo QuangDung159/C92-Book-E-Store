@@ -251,6 +251,21 @@ const LIST_SORT_OPTION = [
   },
 ];
 
+const LIST_ADMINITRATIVE_UNIT = [
+  {
+    value: 'city',
+    label: 'City',
+  },
+  {
+    value: 'district',
+    label: 'District',
+  },
+  {
+    value: 'ward',
+    label: 'Ward',
+  },
+];
+
 const LIST_PAYMENT_METHOD = [
   {
     value: 'cod',
@@ -771,6 +786,7 @@ export {
   CATEGORY,
   CITY,
   DISTRICT,
+  LIST_ADMINITRATIVE_UNIT,
   LIST_AUTHOR,
   LIST_FORM,
   LIST_PAYMENT_METHOD,
