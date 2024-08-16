@@ -101,18 +101,31 @@ const LocationScreen = ({ navigation, route }: any) => {
           value={administrativeUnitSelected}
         >
           {LIST_ADMINITRATIVE_UNIT.map((item) => {
+            const checked = item.value === administrativeUnitSelected;
+
             return (
               <View
                 key={item.value}
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
+                style={[
+                  {
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderWidth: 1,
+                    borderColor: COLORS.primaryWhite,
+                    borderRadius: 8,
+                    height: 50,
+                    marginBottom: 12,
+                  },
+                  checked && {
+                    borderColor: COLORS.gray70,
+                  },
+                ]}
               >
                 <RadioButton.Android value={item.value} />
                 <Text
                   style={{
                     ...FONT_STYLES.REGULAR_14,
+                    marginLeft: 8,
                   }}
                 >
                   {item.label}
