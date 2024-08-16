@@ -14,14 +14,9 @@ import {
   ScreenHeader,
   SectionTitle,
 } from '@components';
-import {
-  ADMINISTRATIVE,
-  LIST_ADMINITRATIVE_UNIT,
-  LIST_CITY,
-  LIST_DISTRICT,
-  LIST_WARD,
-} from '@constants';
+import { ADMINISTRATIVE, LIST_ADMINITRATIVE_UNIT } from '@constants';
 import { DataModels } from '@models';
+import { referenceOptionsStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { AdministrativeUnit } from '@types';
 
@@ -36,6 +31,14 @@ const LocationScreen = ({ navigation, route }: any) => {
   const [district, setDistrict] = useState(ADMINISTRATIVE.district);
   const [ward, setWard] = useState(ADMINISTRATIVE.ward);
 
+  const [districtDataSource, setDistrictDataSource] = useState<
+    DataModels.IReferenceOptions[]
+  >([]);
+
+  const [wardDataSource, setWardDataSource] = useState<
+    DataModels.IReferenceOptions[]
+  >([]);
+
   useEffect(() => {
     if (shippingAddress) {
       setCity(shippingAddress.city);
@@ -43,6 +46,26 @@ const LocationScreen = ({ navigation, route }: any) => {
       setDistrict(shippingAddress.district);
     }
   }, [shippingAddress]);
+
+  useEffect(() => {
+    if (city) {
+      const list = referenceOptionsStore.districtDataSource.filter(
+        (item) => item.extraData?.parent === city,
+      );
+
+      setDistrictDataSource(list);
+    }
+  }, [city]);
+
+  useEffect(() => {
+    if (district) {
+      const list = referenceOptionsStore.wardDataSource.filter(
+        (item) => item.extraData?.parent === district,
+      );
+
+      setWardDataSource(list);
+    }
+  }, [district]);
 
   const onReset = () => {
     setCity(ADMINISTRATIVE.city);
@@ -149,17 +172,17 @@ const LocationScreen = ({ navigation, route }: any) => {
   };
 
   const renderListAdministrativeBySelected = () => {
-    let list: DataModels.ILocation[] = [];
+    let list: DataModels.IReferenceOptions[] = [];
 
     switch (administrativeUnitSelected) {
       case 'city':
-        list = LIST_CITY;
+        list = referenceOptionsStore.cityDataSource;
         break;
       case 'district':
-        list = LIST_DISTRICT;
+        list = districtDataSource;
         break;
       default:
-        list = LIST_WARD;
+        list = wardDataSource;
         break;
     }
 
@@ -170,7 +193,7 @@ const LocationScreen = ({ navigation, route }: any) => {
       >
         {list.map((item) => {
           return (
-            <React.Fragment key={item.name}>
+            <React.Fragment key={item.value}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -179,8 +202,8 @@ const LocationScreen = ({ navigation, route }: any) => {
                   height: 50,
                 }}
               >
-                <Text>{item.name}</Text>
-                <RadioButton.IOS value={item.name} />
+                <Text>{item.label}</Text>
+                <RadioButton.IOS value={item.label} />
               </View>
               <Divider />
             </React.Fragment>

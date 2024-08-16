@@ -1,10 +1,10 @@
 import {
-  CITY,
-  DISTRICT,
   LIST_AUTHOR,
+  LIST_CITY,
+  LIST_DISTRICT,
   LIST_FORM,
   LIST_PUBLISHER,
-  WARD,
+  LIST_WARD,
 } from '@constants';
 import { DataModels } from '@models';
 import { CartStore } from './cart-store';
@@ -43,9 +43,9 @@ class AppModel {
     this.referenceOptionsStore.setAuthorDataSource(LIST_AUTHOR);
     this.referenceOptionsStore.setFormDataSource(LIST_FORM);
     this.referenceOptionsStore.setPublisherDataSource(LIST_PUBLISHER);
-    this.referenceOptionsStore.setCityDataSource(CITY);
-    this.referenceOptionsStore.setDistrictDataSource(DISTRICT);
-    this.referenceOptionsStore.setWardDataSource(WARD);
+    this.referenceOptionsStore.setCityDataSource(LIST_CITY);
+    this.referenceOptionsStore.setDistrictDataSource(LIST_DISTRICT);
+    this.referenceOptionsStore.setWardDataSource(LIST_WARD);
   }
 }
 
