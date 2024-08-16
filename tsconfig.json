@@ -13,6 +13,7 @@
       "@constants": ["constants"],
       "@hooks": ["hooks"],
       "@utils": ["utils"],
+      "@types": ["types"],
     },
     "target": "esnext",
     "module": "commonjs",

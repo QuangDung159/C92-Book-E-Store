@@ -17,15 +17,14 @@ import {
 import { ADMINISTRATIVE, LIST_ADMINITRATIVE_UNIT } from '@constants';
 import { DataModels } from '@models';
 import { COLORS, FONT_STYLES } from '@themes';
-
-type administrativeUnit = 'city' | 'district' | 'ward';
+import { AdministrativeUnit } from '@types';
 
 const LocationScreen = ({ navigation, route }: any) => {
   const shippingAddress: DataModels.IShippingAddress =
     route.params?.shippingAddress;
 
   const [administrativeUnitSelected, setAdministrativeUnitSelected] =
-    useState<administrativeUnit>('city');
+    useState<AdministrativeUnit>('city');
 
   const [city, setCity] = useState(ADMINISTRATIVE.city);
   const [district, setDistrict] = useState(ADMINISTRATIVE.district);
@@ -46,7 +45,7 @@ const LocationScreen = ({ navigation, route }: any) => {
   };
 
   const renderAdministrativeUnitItem = () => {
-    const getLabel = (administrative: administrativeUnit) => {
+    const getLabel = (administrative: AdministrativeUnit) => {
       let label = '';
       switch (administrative) {
         case 'city':
@@ -66,13 +65,13 @@ const LocationScreen = ({ navigation, route }: any) => {
     return (
       <RadioButton.Group
         onValueChange={(value) =>
-          setAdministrativeUnitSelected(value as administrativeUnit)
+          setAdministrativeUnitSelected(value as AdministrativeUnit)
         }
         value={administrativeUnitSelected}
       >
         {LIST_ADMINITRATIVE_UNIT.map((item) => {
           const checked = item.value === administrativeUnitSelected;
-          const label = getLabel(item.value as administrativeUnit);
+          const label = getLabel(item.value as AdministrativeUnit);
 
           if (
             label === ADMINISTRATIVE.city ||
@@ -108,7 +107,7 @@ const LocationScreen = ({ navigation, route }: any) => {
                   marginLeft: 8,
                 }}
               >
-                {getLabel(item.value as administrativeUnit)}
+                {getLabel(item.value as AdministrativeUnit)}
               </Text>
               <Layouts.VSpace value={12} />
             </View>
