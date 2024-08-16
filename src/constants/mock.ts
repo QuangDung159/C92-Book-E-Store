@@ -602,7 +602,7 @@ const USER: DataModels.IUser = {
   listCreditCard: [LIST_CREDIT_CARD[0], LIST_CREDIT_CARD[1]],
 };
 
-const CITY: DataModels.ILocation[] = [
+const LIST_CITY: DataModels.ILocation[] = [
   {
     name: 'Ho Chi Minh City',
   },
@@ -641,7 +641,7 @@ const CITY: DataModels.ILocation[] = [
   },
 ];
 
-const DISTRICT: ILocation[] = [
+const LIST_DISTRICT: ILocation[] = [
   {
     name: 'Tan Phu District',
     parent: 'Ho Chi Minh City',
@@ -712,7 +712,7 @@ const DISTRICT: ILocation[] = [
   },
 ];
 
-const WARD: ILocation[] = [
+const LIST_WARD: ILocation[] = [
   {
     parent: 'Tan Phu District',
     name: 'Hiep Tan Ward',
@@ -785,18 +785,18 @@ const WARD: ILocation[] = [
 
 export {
   CATEGORY,
-  CITY,
-  DISTRICT,
   LIST_ADMINITRATIVE_UNIT,
   LIST_AUTHOR,
+  LIST_CITY,
+  LIST_DISTRICT,
   LIST_FORM,
   LIST_PAYMENT_METHOD,
   LIST_PUBLISHER,
   LIST_SHIPPING_ADDRESS,
   LIST_SORT_OPTION,
   LIST_VOUCHER,
+  LIST_WARD,
   TOP_BOOKS,
   TOP_BOOKS_FILTER,
   USER,
-  WARD,
 };

@@ -7,14 +7,20 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { RadioButton } from 'react-native-paper';
+import { Divider, RadioButton } from 'react-native-paper';
 import {
   BottomButtonSection,
   Layouts,
   ScreenHeader,
   SectionTitle,
 } from '@components';
-import { ADMINISTRATIVE, LIST_ADMINITRATIVE_UNIT } from '@constants';
+import {
+  ADMINISTRATIVE,
+  LIST_ADMINITRATIVE_UNIT,
+  LIST_CITY,
+  LIST_DISTRICT,
+  LIST_WARD,
+} from '@constants';
 import { DataModels } from '@models';
 import { COLORS, FONT_STYLES } from '@themes';
 import { AdministrativeUnit } from '@types';
@@ -117,18 +123,74 @@ const LocationScreen = ({ navigation, route }: any) => {
     );
   };
 
+  const onAdminitrativeChecked = (value: string) => {
+    switch (administrativeUnitSelected) {
+      case 'city':
+        setCity(value);
+        break;
+      case 'district':
+        setDistrict(value);
+        break;
+      default:
+        setWard(value);
+        break;
+    }
+  };
+
+  const renderListAdministrativeBySelected = () => {
+    let list: DataModels.ILocation[] = [];
+
+    switch (administrativeUnitSelected) {
+      case 'city':
+        list = LIST_CITY;
+        break;
+      case 'district':
+        list = LIST_DISTRICT;
+        break;
+      default:
+        list = LIST_WARD;
+        break;
+    }
+
+    return (
+      <RadioButton.Group
+        onValueChange={(value) => onAdminitrativeChecked(value)}
+        value={city}
+      >
+        {list.map((item) => {
+          return (
+            <React.Fragment key={item.name}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  height: 50,
+                }}
+              >
+                <Text>{item.name}</Text>
+                <RadioButton.IOS value={item.name} />
+              </View>
+              <Divider />
+            </React.Fragment>
+          );
+        })}
+      </RadioButton.Group>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <ScreenHeader
         title={`${shippingAddress ? 'Edit' : 'Add'} Shipping Address`}
         navigation={navigation}
       />
-      <ScrollView
-        scrollEnabled={true}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.wrapper}
+      <Layouts.VSpace value={24} />
+      <View
+        style={{
+          paddingHorizontal: 24,
+        }}
       >
-        <Layouts.VSpace value={24} />
         <View
           style={{
             flexDirection: 'row',
@@ -149,6 +211,22 @@ const LocationScreen = ({ navigation, route }: any) => {
         </View>
         <Layouts.VSpace value={12} />
         {renderAdministrativeUnitItem()}
+        <Divider />
+        <Layouts.VSpace value={24} />
+        <SectionTitle
+          style={{
+            ...FONT_STYLES.BOLD_14,
+          }}
+          title={`Select ${administrativeUnitSelected}`}
+        />
+      </View>
+      <ScrollView
+        scrollEnabled={true}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.wrapper}
+      >
+        <Layouts.VSpace value={12} />
+        {renderListAdministrativeBySelected()}
         <Layouts.VSpace value={12} />
       </ScrollView>
       <BottomButtonSection onPress={() => {}} buttonTitle="Submit" />
