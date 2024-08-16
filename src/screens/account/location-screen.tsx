@@ -54,7 +54,7 @@ const LocationScreen = ({ navigation, route }: any) => {
             <View
               style={{
                 height: 24,
-                borderLeftColor: COLORS.gray70,
+                borderLeftColor: COLORS.gray90,
                 borderLeftWidth: 1,
                 marginLeft: 23,
                 zIndex: 1,
