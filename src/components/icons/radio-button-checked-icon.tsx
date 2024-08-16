@@ -1,9 +1,9 @@
-import { FontAwesome } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { COLORS } from '@themes';
 
-interface DotCircleIconProps {
+interface RadioButtonCheckedIconProps {
   size?: number;
   color?: string;
   onPress?: () => void;
@@ -11,7 +11,7 @@ interface DotCircleIconProps {
   disabledColor?: string;
 }
 
-const DotCircleIcon: React.FC<DotCircleIconProps> = ({
+const RadioButtonCheckedIcon: React.FC<RadioButtonCheckedIconProps> = ({
   size = 24,
   color = COLORS.primaryBlack,
   onPress,
@@ -27,8 +27,8 @@ const DotCircleIcon: React.FC<DotCircleIconProps> = ({
         }
       }}
     >
-      <FontAwesome
-        name="dot-circle-o"
+      <MaterialIcons
+        name="radio-button-checked"
         size={size}
         color={disabled ? disabledColor : color}
       />
@@ -36,4 +36,4 @@ const DotCircleIcon: React.FC<DotCircleIconProps> = ({
   );
 };
 
-export { DotCircleIcon };
+export { RadioButtonCheckedIcon };
