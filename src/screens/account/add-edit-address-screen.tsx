@@ -130,17 +130,21 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
         />
         <Layouts.VSpace value={12} />
         <Divider />
-        <Layouts.VSpace value={24} />
-        <Buttons.CButton
-          label="Delete address"
-          onPress={() => {}}
-          labelStyle={{
-            color: COLORS.error50,
-          }}
-          style={{
-            borderColor: COLORS.error50,
-          }}
-        />
+        {shippingAddress && (
+          <>
+            <Layouts.VSpace value={24} />
+            <Buttons.CButton
+              label="Delete address"
+              onPress={() => {}}
+              labelStyle={{
+                color: COLORS.error50,
+              }}
+              style={{
+                borderColor: COLORS.error50,
+              }}
+            />
+          </>
+        )}
         <Layouts.VSpace value={24} />
       </ScrollView>
       <BottomButtonSection

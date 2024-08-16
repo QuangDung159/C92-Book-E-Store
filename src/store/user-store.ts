@@ -34,8 +34,6 @@ class UserStore {
       return;
     }
 
-    console.log('shippingAddressUpdated :>> ', shippingAddressUpdated);
-
     const list = ListHelpers.updateItemById(
       this.userProfile.listShippingAddress,
       shippingAddressUpdated,

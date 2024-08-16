@@ -15,7 +15,6 @@ const AddressScreen = ({ navigation }: any) => {
     shippingAddress: DataModels.IShippingAddress,
     isAddNew?: boolean,
   ) => {
-    console.log('isAddNew :>> ', isAddNew);
     userStore.updateListShippingAddress(shippingAddress, isAddNew);
   };
 
@@ -35,7 +34,7 @@ const AddressScreen = ({ navigation }: any) => {
         <Layouts.VSpace value={24} />
       </ScrollView>
       <BottomButtonSection
-        onPress={() => openAddEditAddressScreen()}
+        onPress={() => openAddEditAddressScreen(null, onSubmitShippingAddress)}
         buttonTitle="Add new Shipping Address"
       />
     </View>
