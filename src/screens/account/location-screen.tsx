@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -27,39 +27,35 @@ const LocationScreen = ({ navigation, route }: any) => {
   const [administrativeUnitSelected, setAdministrativeUnitSelected] =
     useState<administrativeUnit>('city');
 
-  const renderAdministrativeUnitItem = () => {
-    // const isChecked = administrativeUnitSelected === value;
-    // return (
-    //   <View
-    //     key={value}
-    //     style={[
-    //       {
-    //         flexDirection: 'row',
-    //         alignItems: 'center',
-    //         marginBottom: 4,
-    //         borderColor: COLORS.primaryWhite,
-    //         borderWidth: 1,
-    //         height: 50,
-    //       },
-    //       administrativeUnitSelected === value && {
-    //         borderRadius: 8,
-    //         borderWidth: 1,
-    //         borderColor: COLORS.gray70,
-    //       },
-    //     ]}
-    //   >
-    //     {isChecked ? <Icons.RadioButtonCheckedIcon /> : <Icons.DotSingleIcon />}
+  const [city, setCity] = useState('City');
+  const [ward, setWard] = useState('Ward');
+  const [district, setDistrict] = useState('District');
 
-    //     <Text
-    //       style={{
-    //         ...FONT_STYLES.REGULAR_14,
-    //       }}
-    //     >
-    //       {label}
-    //     </Text>
-    //     <Layouts.VSpace value={12} />
-    //   </View>
-    // );
+  useEffect(() => {
+    if (shippingAddress) {
+      setCity(shippingAddress.city);
+      setWard(shippingAddress.ward);
+      setDistrict(shippingAddress.district);
+    }
+  }, [shippingAddress]);
+
+  const renderAdministrativeUnitItem = () => {
+    const getLabel = (administrative: administrativeUnit) => {
+      let label = '';
+      switch (administrative) {
+        case 'city':
+          label = city;
+          break;
+        case 'district':
+          label = district;
+          break;
+        default:
+          label = ward;
+          break;
+      }
+
+      return label;
+    };
 
     return (
       <RadioButton.Group
@@ -83,6 +79,7 @@ const LocationScreen = ({ navigation, route }: any) => {
                   borderRadius: 8,
                   height: 50,
                   marginBottom: 12,
+                  paddingHorizontal: 4,
                 },
                 checked && {
                   borderColor: COLORS.gray70,
@@ -96,7 +93,7 @@ const LocationScreen = ({ navigation, route }: any) => {
                   marginLeft: 8,
                 }}
               >
-                {item.label}
+                {getLabel(item.value as administrativeUnit)}
               </Text>
               <Layouts.VSpace value={12} />
             </View>
