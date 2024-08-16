@@ -26,7 +26,8 @@ class LocationViewModel {
       fromJsonObject: action,
       districtDataSource: computed,
       wardDataSource: computed,
-      labelSelected: computed,
+      selectedAdministrativeValue: computed,
+      administrativeDataSource: computed,
     });
 
     if (shippingAddress) {
@@ -58,7 +59,18 @@ class LocationViewModel {
     return list;
   }
 
-  get labelSelected() {
+  getlabelSelected(administrative: AdministrativeUnit) {
+    switch (administrative) {
+      case 'city':
+        return this.city;
+      case 'district':
+        return this.district;
+      default:
+        return this.ward;
+    }
+  }
+
+  get selectedAdministrativeValue() {
     switch (this.administrativeSelected) {
       case 'city':
         return this.city;
@@ -66,6 +78,17 @@ class LocationViewModel {
         return this.district;
       default:
         return this.ward;
+    }
+  }
+
+  get administrativeDataSource() {
+    switch (this.administrativeSelected) {
+      case 'city':
+        return this.referenceOptionsStore.cityDataSource;
+      case 'district':
+        return this.districtDataSource;
+      default:
+        return this.wardDataSource;
     }
   }
 
@@ -88,6 +111,20 @@ class LocationViewModel {
   setWard(value: string) {
     this.ward = value;
   }
+
+  onSelectedAdministrativeItem = (value: string) => {
+    switch (this.administrativeSelected) {
+      case 'city':
+        this.setCity(value);
+        break;
+      case 'district':
+        this.setDistrict(value);
+        break;
+      default:
+        this.setWard(value);
+        break;
+    }
+  };
 }
 
 export { LocationViewModel };

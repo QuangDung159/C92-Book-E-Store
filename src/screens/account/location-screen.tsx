@@ -72,7 +72,7 @@ const LocationScreen = ({ navigation, route }: any) => {
                   marginLeft: 8,
                 }}
               >
-                {addEditVM.labelSelected}
+                {addEditVM.getlabelSelected(item.value as AdministrativeUnit)}
               </Text>
               <Layouts.VSpace value={12} />
             </View>
@@ -82,54 +82,15 @@ const LocationScreen = ({ navigation, route }: any) => {
     );
   };
 
-  // const onAdminitrativeChecked = (value: string) => {
-  //   switch (administrativeUnitSelected) {
-  //     case 'city':
-  //       setCity(value);
-  //       break;
-  //     case 'district':
-  //       setDistrict(value);
-  //       break;
-  //     default:
-  //       setWard(value);
-  //       break;
-  //   }
-  // };
-
-  // const getAdminitrativeSelected = () => {
-  //   switch (administrativeUnitSelected) {
-  //     case 'city':
-  //       return city;
-  //     case 'district':
-  //       return district;
-  //     default:
-  //       return ward;
-  //   }
-  // };
-
   const renderListAdministrativeBySelected = () => {
-    let list: DataModels.IReferenceOptions[] = [];
-
-    switch (addEditVM.administrativeSelected) {
-      case 'city':
-        list = referenceOptionsStore.cityDataSource;
-        break;
-      case 'district':
-        list = addEditVM.districtDataSource;
-        break;
-      default:
-        list = addEditVM.wardDataSource;
-        break;
-    }
-
     return (
       <RadioButton.Group
-        onValueChange={(value) =>
-          addEditVM.setAdministrativeSelected(value as AdministrativeUnit)
-        }
-        value={addEditVM.administrativeSelected}
+        onValueChange={(value) => {
+          addEditVM.onSelectedAdministrativeItem(value);
+        }}
+        value={addEditVM.selectedAdministrativeValue}
       >
-        {list.map((item) => {
+        {addEditVM.administrativeDataSource.map((item) => {
           return (
             <React.Fragment key={item.value}>
               <View
