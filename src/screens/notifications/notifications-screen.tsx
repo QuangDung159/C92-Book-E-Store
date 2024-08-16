@@ -1,12 +1,13 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { EmptyListComponent, Icons, ScreenHeader } from '@components';
 import { LIST_NOTIFICATION } from '@constants';
 import { COLORS, FONT_STYLES } from '@themes';
 
 const NotificationsScreen = ({ navigation }: any) => {
+  const { width } = Dimensions.get('window');
   const itemHeight = 75;
 
   return (
@@ -79,15 +80,20 @@ const NotificationsScreen = ({ navigation }: any) => {
               style={{
                 backgroundColor: COLORS.error50,
                 height: itemHeight,
-                width: 75,
+                width: width - 5,
                 alignSelf: 'flex-end',
-                alignContent: 'center',
-                justifyContent: 'center',
+                justifyContent: 'flex-end',
                 flexDirection: 'row',
               }}
             >
               <View
                 style={{
+                  width: width - 5 - 75,
+                }}
+              ></View>
+              <View
+                style={{
+                  width: 75,
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
