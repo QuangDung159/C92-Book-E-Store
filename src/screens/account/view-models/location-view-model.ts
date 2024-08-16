@@ -110,6 +110,8 @@ class LocationViewModel {
     this.city = value;
     this.district = ADMINISTRATIVE.district;
     this.ward = ADMINISTRATIVE.ward;
+
+    this.setAdministrativeSelected('district');
   }
 
   setDistrict(value: string) {
@@ -119,12 +121,16 @@ class LocationViewModel {
 
     this.district = value;
     this.ward = ADMINISTRATIVE.ward;
+
+    this.setAdministrativeSelected('ward');
   }
 
   onReset = () => {
     this.setCity(ADMINISTRATIVE.city);
     this.setDistrict(ADMINISTRATIVE.district);
     this.setWard(ADMINISTRATIVE.ward);
+
+    this.setAdministrativeSelected('city');
   };
 
   setWard(value: string) {

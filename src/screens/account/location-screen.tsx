@@ -32,7 +32,7 @@ const LocationScreen = ({ navigation, route }: any) => {
   const renderAdministrativeUnitItem = (
     value: string,
     isShow?: boolean,
-    isLastItem?: boolean,
+    isFirstItem?: boolean,
   ) => {
     const checked = value === addEditVM.administrativeSelected;
 
@@ -48,6 +48,19 @@ const LocationScreen = ({ navigation, route }: any) => {
         value={addEditVM.administrativeSelected}
       >
         <React.Fragment key={value}>
+          {isFirstItem ? (
+            <Layouts.VSpace value={12} />
+          ) : (
+            <View
+              style={{
+                height: 24,
+                borderLeftColor: COLORS.gray70,
+                borderLeftWidth: 1,
+                marginLeft: 23,
+                zIndex: 1,
+              }}
+            ></View>
+          )}
           <View
             style={[
               {
@@ -76,19 +89,6 @@ const LocationScreen = ({ navigation, route }: any) => {
               {addEditVM.getlabelSelected(value as AdministrativeUnit)}
             </Text>
           </View>
-          {!isLastItem ? (
-            <View
-              style={{
-                height: 24,
-                borderLeftColor: COLORS.gray70,
-                borderLeftWidth: 1,
-                marginLeft: 23,
-                zIndex: 1,
-              }}
-            ></View>
-          ) : (
-            <Layouts.VSpace value={12} />
-          )}
         </React.Fragment>
       </RadioButton.Group>
     );
@@ -163,7 +163,11 @@ const LocationScreen = ({ navigation, route }: any) => {
           </TouchableOpacity>
         </View>
         <Layouts.VSpace value={12} />
-        {renderAdministrativeUnitItem(LIST_ADMINITRATIVE_UNIT[0].value, true)}
+        {renderAdministrativeUnitItem(
+          LIST_ADMINITRATIVE_UNIT[0].value,
+          true,
+          true,
+        )}
         {renderAdministrativeUnitItem(
           LIST_ADMINITRATIVE_UNIT[1].value,
           addEditVM.city !== ADMINISTRATIVE.city,
@@ -171,8 +175,8 @@ const LocationScreen = ({ navigation, route }: any) => {
         {renderAdministrativeUnitItem(
           LIST_ADMINITRATIVE_UNIT[2].value,
           addEditVM.district !== ADMINISTRATIVE.district,
-          true,
         )}
+        <Layouts.VSpace value={24} />
         <Divider />
         <Layouts.VSpace value={24} />
         <SectionTitle
