@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { RadioButton } from 'react-native-paper';
 import {
   BottomButtonSection,
   Icons,
@@ -30,45 +31,35 @@ const LocationScreen = ({ navigation, route }: any) => {
   const renderAdministrativeUnitItem = (value: string, label: string) => {
     const isChecked = administrativeUnitSelected === value;
     return (
-      <TouchableOpacity
-        onPress={() => {
-          setAdministrativeUnitSelected(value as administrativeUnit);
-        }}
+      <View
+        key={value}
+        style={[
+          {
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginBottom: 4,
+            borderColor: COLORS.primaryWhite,
+            borderWidth: 1,
+            height: 50,
+          },
+          administrativeUnitSelected === value && {
+            borderRadius: 8,
+            borderWidth: 1,
+            borderColor: COLORS.gray70,
+          },
+        ]}
       >
-        <View
-          key={value}
-          style={[
-            {
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginBottom: 4,
-              borderColor: COLORS.primaryWhite,
-              borderWidth: 1,
-              height: 50,
-            },
-            administrativeUnitSelected === value && {
-              borderRadius: 8,
-              borderWidth: 1,
-              borderColor: COLORS.gray70,
-            },
-          ]}
-        >
-          {isChecked ? (
-            <Icons.RadioButtonCheckedIcon />
-          ) : (
-            <Icons.DotSingleIcon color={COLORS.gray60} size={50} />
-          )}
+        {isChecked ? <Icons.RadioButtonCheckedIcon /> : <Icons.DotSingleIcon />}
 
-          <Text
-            style={{
-              ...FONT_STYLES.REGULAR_14,
-            }}
-          >
-            {label}
-          </Text>
-          <Layouts.VSpace value={12} />
-        </View>
-      </TouchableOpacity>
+        <Text
+          style={{
+            ...FONT_STYLES.REGULAR_14,
+          }}
+        >
+          {label}
+        </Text>
+        <Layouts.VSpace value={12} />
+      </View>
     );
   };
 
@@ -103,13 +94,34 @@ const LocationScreen = ({ navigation, route }: any) => {
           </TouchableOpacity>
         </View>
         <Layouts.VSpace value={12} />
-        {LIST_ADMINITRATIVE_UNIT.map((item) => {
-          return (
-            <React.Fragment key={item.value}>
-              {renderAdministrativeUnitItem(item.value, item.label)}
-            </React.Fragment>
-          );
-        })}
+        <RadioButton.Group
+          onValueChange={(value) =>
+            setAdministrativeUnitSelected(value as administrativeUnit)
+          }
+          value={administrativeUnitSelected}
+        >
+          {LIST_ADMINITRATIVE_UNIT.map((item) => {
+            return (
+              <View
+                key={item.value}
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}
+              >
+                <RadioButton.Android value={item.value} />
+                <Text
+                  style={{
+                    ...FONT_STYLES.REGULAR_14,
+                  }}
+                >
+                  {item.label}
+                </Text>
+                <Layouts.VSpace value={12} />
+              </View>
+            );
+          })}
+        </RadioButton.Group>
 
         <Layouts.VSpace value={12} />
       </ScrollView>
