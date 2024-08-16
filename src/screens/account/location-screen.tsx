@@ -137,6 +137,17 @@ const LocationScreen = ({ navigation, route }: any) => {
     }
   };
 
+  const getAdminitrativeSelected = () => {
+    switch (administrativeUnitSelected) {
+      case 'city':
+        return city;
+      case 'district':
+        return district;
+      default:
+        return ward;
+    }
+  };
+
   const renderListAdministrativeBySelected = () => {
     let list: DataModels.ILocation[] = [];
 
@@ -155,7 +166,7 @@ const LocationScreen = ({ navigation, route }: any) => {
     return (
       <RadioButton.Group
         onValueChange={(value) => onAdminitrativeChecked(value)}
-        value={city}
+        value={getAdminitrativeSelected()}
       >
         {list.map((item) => {
           return (
