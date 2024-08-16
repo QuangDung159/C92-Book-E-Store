@@ -100,15 +100,6 @@ const LocationScreen = ({ navigation, route }: any) => {
       >
         {LIST_ADMINITRATIVE_UNIT.map((item) => {
           const checked = item.value === administrativeUnitSelected;
-          const label = getLabel(item.value as AdministrativeUnit);
-
-          if (
-            label === ADMINISTRATIVE.city ||
-            label === ADMINISTRATIVE.district ||
-            label === ADMINISTRATIVE.ward
-          ) {
-            return null;
-          }
 
           return (
             <View
