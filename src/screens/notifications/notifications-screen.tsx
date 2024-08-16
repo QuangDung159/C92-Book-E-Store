@@ -1,16 +1,52 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { Button, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Buttons, Layouts, ScreenHeader } from '@components';
+import { USER } from '@constants';
+import { appModel, sharedStore } from '@store';
+import { COLORS } from '@themes';
+import { delay, ToastHelpers } from '@utils';
 
 const NotificationsScreen = ({ navigation }: any) => {
   return (
-    <View>
-      <Text>NotificationsScreen</Text>
-      <Button
-        title="Go to Profile"
-        onPress={() => navigation.navigate('Profile')}
+    <View style={styles.container}>
+      <ScreenHeader
+        title="Account"
+        navigation={navigation}
+        showBackIcon={false}
       />
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Buttons.CButton
+          label="Login"
+          onPress={() => {
+            sharedStore.setShowLoading(true);
+            delay(1000).then(() => {
+              ToastHelpers.showToast({
+                title: 'Login success',
+              });
+              sharedStore.setShowLoading(false);
+              appModel.login(USER);
+            });
+          }}
+        />
+        <Layouts.VSpace value={12} />
+      </View>
     </View>
   );
 };
 
-export { NotificationsScreen };
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: COLORS.primaryWhite,
+  },
+});
+
+const observable = observer(NotificationsScreen);
+export { observable as NotificationsScreen };
