@@ -79,11 +79,24 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
           }}
         >
           <View style={styles.addressContainer}>
-            <View>
-              <Text style={styles.addressInfo}>{addEditVM.city}</Text>
-              <Text style={styles.addressInfo}>{addEditVM.district}</Text>
-              <Text style={styles.addressInfo}>{addEditVM.ward}</Text>
-            </View>
+            {shippingAddress ? (
+              <View>
+                <Text style={styles.addressInfo}>{addEditVM.city}</Text>
+                <Text style={styles.addressInfo}>{addEditVM.district}</Text>
+                <Text style={styles.addressInfo}>{addEditVM.ward}</Text>
+              </View>
+            ) : (
+              <Text
+                style={[
+                  styles.addressInfo,
+                  {
+                    fontWeight: '600',
+                  },
+                ]}
+              >
+                {'Add your shipping address'}
+              </Text>
+            )}
             <Icons.ChevronRightIcon size={20} />
           </View>
         </TouchableOpacity>

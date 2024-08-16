@@ -5,9 +5,9 @@ import { ReferenceOptionsStore } from '@store';
 import { AdministrativeUnitEnum } from '@types';
 
 class LocationViewModel {
-  city: string = '';
-  district: string = '';
-  ward: string = '';
+  city: string = ADMINISTRATIVE.city;
+  district: string = ADMINISTRATIVE.district;
+  ward: string = ADMINISTRATIVE.ward;
   referenceOptionsStore: ReferenceOptionsStore = null;
   administrativeSelected: AdministrativeUnitEnum = 'city';
 
