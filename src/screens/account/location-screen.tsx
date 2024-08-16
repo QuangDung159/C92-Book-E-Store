@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useState } from 'react';
+import React, { useRef } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -19,87 +19,32 @@ import { DataModels } from '@models';
 import { referenceOptionsStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { AdministrativeUnit } from '@types';
+import { LocationViewModel } from './view-models';
 
 const LocationScreen = ({ navigation, route }: any) => {
   const shippingAddress: DataModels.IShippingAddress =
     route.params?.shippingAddress;
 
-  const [administrativeUnitSelected, setAdministrativeUnitSelected] =
-    useState<AdministrativeUnit>('city');
-
-  const [city, setCity] = useState(ADMINISTRATIVE.city);
-  const [district, setDistrict] = useState(ADMINISTRATIVE.district);
-  const [ward, setWard] = useState(ADMINISTRATIVE.ward);
-
-  const [districtDataSource, setDistrictDataSource] = useState<
-    DataModels.IReferenceOptions[]
-  >([]);
-
-  const [wardDataSource, setWardDataSource] = useState<
-    DataModels.IReferenceOptions[]
-  >([]);
-
-  useEffect(() => {
-    if (shippingAddress) {
-      setCity(shippingAddress.city);
-      setWard(shippingAddress.ward);
-      setDistrict(shippingAddress.district);
-    }
-  }, [shippingAddress]);
-
-  useEffect(() => {
-    if (city) {
-      const list = referenceOptionsStore.districtDataSource.filter(
-        (item) => item.extraData?.parent === city,
-      );
-
-      setDistrictDataSource(list);
-    }
-  }, [city]);
-
-  useEffect(() => {
-    if (district) {
-      const list = referenceOptionsStore.wardDataSource.filter(
-        (item) => item.extraData?.parent === district,
-      );
-
-      setWardDataSource(list);
-    }
-  }, [district]);
+  const addEditVM = useRef(
+    new LocationViewModel(referenceOptionsStore, shippingAddress),
+  ).current;
 
   const onReset = () => {
-    setCity(ADMINISTRATIVE.city);
-    setDistrict(ADMINISTRATIVE.district);
-    setWard(ADMINISTRATIVE.ward);
+    addEditVM.setCity(ADMINISTRATIVE.city);
+    addEditVM.setDistrict(ADMINISTRATIVE.district);
+    addEditVM.setWard(ADMINISTRATIVE.ward);
   };
 
   const renderAdministrativeUnitItem = () => {
-    const getLabel = (administrative: AdministrativeUnit) => {
-      let label = '';
-      switch (administrative) {
-        case 'city':
-          label = city;
-          break;
-        case 'district':
-          label = district;
-          break;
-        default:
-          label = ward;
-          break;
-      }
-
-      return label;
-    };
-
     return (
       <RadioButton.Group
         onValueChange={(value) =>
-          setAdministrativeUnitSelected(value as AdministrativeUnit)
+          addEditVM.setAdministrativeSelected(value as AdministrativeUnit)
         }
-        value={administrativeUnitSelected}
+        value={addEditVM.administrativeSelected}
       >
         {LIST_ADMINITRATIVE_UNIT.map((item) => {
-          const checked = item.value === administrativeUnitSelected;
+          const checked = item.value === addEditVM.administrativeSelected;
 
           return (
             <View
@@ -127,7 +72,7 @@ const LocationScreen = ({ navigation, route }: any) => {
                   marginLeft: 8,
                 }}
               >
-                {getLabel(item.value as AdministrativeUnit)}
+                {addEditVM.labelSelected}
               </Text>
               <Layouts.VSpace value={12} />
             </View>
@@ -137,50 +82,52 @@ const LocationScreen = ({ navigation, route }: any) => {
     );
   };
 
-  const onAdminitrativeChecked = (value: string) => {
-    switch (administrativeUnitSelected) {
-      case 'city':
-        setCity(value);
-        break;
-      case 'district':
-        setDistrict(value);
-        break;
-      default:
-        setWard(value);
-        break;
-    }
-  };
+  // const onAdminitrativeChecked = (value: string) => {
+  //   switch (administrativeUnitSelected) {
+  //     case 'city':
+  //       setCity(value);
+  //       break;
+  //     case 'district':
+  //       setDistrict(value);
+  //       break;
+  //     default:
+  //       setWard(value);
+  //       break;
+  //   }
+  // };
 
-  const getAdminitrativeSelected = () => {
-    switch (administrativeUnitSelected) {
-      case 'city':
-        return city;
-      case 'district':
-        return district;
-      default:
-        return ward;
-    }
-  };
+  // const getAdminitrativeSelected = () => {
+  //   switch (administrativeUnitSelected) {
+  //     case 'city':
+  //       return city;
+  //     case 'district':
+  //       return district;
+  //     default:
+  //       return ward;
+  //   }
+  // };
 
   const renderListAdministrativeBySelected = () => {
     let list: DataModels.IReferenceOptions[] = [];
 
-    switch (administrativeUnitSelected) {
+    switch (addEditVM.administrativeSelected) {
       case 'city':
         list = referenceOptionsStore.cityDataSource;
         break;
       case 'district':
-        list = districtDataSource;
+        list = addEditVM.districtDataSource;
         break;
       default:
-        list = wardDataSource;
+        list = addEditVM.wardDataSource;
         break;
     }
 
     return (
       <RadioButton.Group
-        onValueChange={(value) => onAdminitrativeChecked(value)}
-        value={getAdminitrativeSelected()}
+        onValueChange={(value) =>
+          addEditVM.setAdministrativeSelected(value as AdministrativeUnit)
+        }
+        value={addEditVM.administrativeSelected}
       >
         {list.map((item) => {
           return (
@@ -242,7 +189,7 @@ const LocationScreen = ({ navigation, route }: any) => {
           style={{
             ...FONT_STYLES.BOLD_14,
           }}
-          title={`Select ${administrativeUnitSelected}`}
+          title={`Select ${addEditVM.administrativeSelected}`}
         />
       </View>
       <ScrollView
