@@ -1,4 +1,5 @@
 import { DataModels } from '@models';
+import { ILocation } from 'models/data-models';
 
 const TOP_BOOKS_FILTER = [
   {
@@ -585,8 +586,191 @@ const USER: DataModels.IUser = {
   listCreditCard: [LIST_CREDIT_CARD[0], LIST_CREDIT_CARD[1]],
 };
 
+const CITY: DataModels.ILocation[] = [
+  {
+    name: 'Ho Chi Minh City',
+  },
+  {
+    name: 'Dong Nai Province',
+  },
+  {
+    name: 'Tay Ninh Provice',
+  },
+  {
+    name: 'Can Tho City',
+  },
+  {
+    name: 'Tien Giang Province',
+  },
+  {
+    name: 'An Giang Province',
+  },
+  {
+    name: 'Bac Lieu Province',
+  },
+  {
+    name: 'Bac Giang Province',
+  },
+  {
+    name: 'Bac Ninh Province',
+  },
+  {
+    name: 'Ninh Thuan Provice',
+  },
+  {
+    name: 'Phu Yen Province',
+  },
+  {
+    name: 'Binh Dinh Province',
+  },
+];
+
+const DISTRICT: ILocation[] = [
+  {
+    name: 'Tan Phu District',
+    parent: 'Ho Chi Minh City',
+  },
+  {
+    name: 'Binh Tan District',
+    parent: 'Ho Chi Minh City',
+  },
+  {
+    name: 'Binh Chanh District',
+    parent: 'Ho Chi Minh City',
+  },
+  {
+    name: 'District 8',
+    parent: 'Ho Chi Minh City',
+  },
+  {
+    name: 'Bien Hoa City',
+    parent: 'Dong Nai Province',
+  },
+  {
+    name: 'Thong Nhat District',
+    parent: 'Dong Nai Province',
+  },
+  {
+    name: 'Dinh Quan District',
+    parent: 'Dong Nai Province',
+  },
+  {
+    name: 'Nhon Trach',
+    parent: 'Dong Nai Province',
+  },
+  {
+    name: 'Tay Ninh City',
+    parent: 'Tay Ninh Provice',
+  },
+  {
+    name: 'Ninh Kieu Ditrict',
+    parent: 'Can Tho City',
+  },
+  {
+    name: 'My Tho City',
+    parent: 'Tien Giang Province',
+  },
+  {
+    name: 'Chau Doc City',
+    parent: 'An Giang Province',
+  },
+  {
+    name: 'Bac Lieu City',
+    parent: 'Bac Lieu Province',
+  },
+  {
+    name: 'Bac Giang City',
+    parent: 'Bac Giang Province',
+  },
+  {
+    name: 'Phan Rang - Thap Cham City',
+    parent: 'Ninh Thuan Province',
+  },
+  {
+    name: 'Tuy Hoa City',
+    parent: 'Phu Yen Province',
+  },
+  {
+    name: 'Quy Nhon City',
+    parent: 'Binh Dinh Province',
+  },
+];
+
+const WARD: ILocation[] = [
+  {
+    parent: 'Tan Phu District',
+    name: 'Hiep Tan Ward',
+  },
+  {
+    parent: 'Binh Tan District',
+    name: 'Ward 1',
+  },
+  {
+    parent: 'Binh Chanh District',
+    name: 'Vinh Loc Ward',
+  },
+  {
+    parent: 'District 8',
+    name: 'Ward 1',
+  },
+  {
+    parent: 'Bien Hoa City',
+    name: 'Ward 1',
+  },
+  {
+    parent: 'Thong Nhat District',
+    name: 'Ward 1',
+  },
+  {
+    parent: 'Dinh Quan District',
+    name: 'Ward 1',
+  },
+  {
+    parent: 'Nhon Trach',
+    name: 'Ward 1',
+  },
+  {
+    parent: 'Tay Ninh City',
+    name: 'Ward 1',
+  },
+  {
+    parent: 'Ninh Kieu Ditrict',
+    name: 'Ward 1',
+  },
+  {
+    parent: 'My Tho City',
+    name: 'Ward 1',
+  },
+  {
+    parent: 'Chau Doc City',
+    name: 'Ward 1',
+  },
+  {
+    parent: 'Bac Lieu City',
+    name: 'Ward 1',
+  },
+  {
+    parent: 'Bac Giang City',
+    name: 'Ward 1',
+  },
+  {
+    parent: 'Phan Rang - Thap Cham City',
+    name: 'Ward 1',
+  },
+  {
+    parent: 'Tuy Hoa City',
+    name: 'Ward 1',
+  },
+  {
+    parent: 'Quy Nhon City',
+    name: 'Ward 1',
+  },
+];
+
 export {
   CATEGORY,
+  CITY,
+  DISTRICT,
   LIST_AUTHOR,
   LIST_FORM,
   LIST_PAYMENT_METHOD,
@@ -597,4 +781,5 @@ export {
   TOP_BOOKS,
   TOP_BOOKS_FILTER,
   USER,
+  WARD,
 };

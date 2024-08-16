@@ -1,4 +1,11 @@
-import { LIST_AUTHOR, LIST_FORM, LIST_PUBLISHER } from '@constants';
+import {
+  CITY,
+  DISTRICT,
+  LIST_AUTHOR,
+  LIST_FORM,
+  LIST_PUBLISHER,
+  WARD,
+} from '@constants';
 import { DataModels } from '@models';
 import { CartStore } from './cart-store';
 import { CategoryStore } from './category-store';
@@ -36,6 +43,9 @@ class AppModel {
     this.referenceOptionsStore.setAuthorDataSource(LIST_AUTHOR);
     this.referenceOptionsStore.setFormDataSource(LIST_FORM);
     this.referenceOptionsStore.setPublisherDataSource(LIST_PUBLISHER);
+    this.referenceOptionsStore.setCityDataSource(CITY);
+    this.referenceOptionsStore.setDistrictDataSource(DISTRICT);
+    this.referenceOptionsStore.setWardDataSource(WARD);
   }
 }
 
