@@ -68,10 +68,11 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
           }}
           title="Set as default"
           labelStyle={styles.defaultText}
+          disabled={shippingAddress?.primary}
         />
         <Layouts.VSpace value={12} />
         <Divider />
-        <Layouts.VSpace value={12} />
+        <Layouts.VSpace value={24} />
         <Inputs.CTextInput
           value={addEditVM.name}
           placeholder="Enter contact name"
@@ -88,7 +89,7 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
             addEditVM.setPhoneNumber(value);
           }}
         />
-        <Layouts.VSpace value={12} />
+        <Layouts.VSpace value={24} />
         <Divider />
         <Layouts.VSpace value={16} />
         <TouchableOpacity
@@ -120,7 +121,7 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
         </TouchableOpacity>
         <Layouts.VSpace value={16} />
         <Divider />
-        <Layouts.VSpace value={12} />
+        <Layouts.VSpace value={24} />
         <Inputs.CTextInput
           value={addEditVM.address}
           placeholder="Enter address (number, street)"
@@ -128,7 +129,7 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
             addEditVM.setAddress(value);
           }}
         />
-        <Layouts.VSpace value={12} />
+        <Layouts.VSpace value={24} />
         <Divider />
         {shippingAddress && (
           <>
@@ -142,6 +143,7 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
               style={{
                 borderColor: COLORS.error50,
               }}
+              disabled={shippingAddress.primary}
             />
           </>
         )}

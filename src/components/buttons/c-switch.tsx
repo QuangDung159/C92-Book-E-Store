@@ -8,6 +8,7 @@ interface CSwitchProps {
   onValueChange: (value: boolean) => void;
   title: string;
   labelStyle?: StyleProp<TextStyle>;
+  disabled?: boolean;
 }
 
 const CSwitch: FC<CSwitchProps> = ({
@@ -15,6 +16,7 @@ const CSwitch: FC<CSwitchProps> = ({
   onValueChange,
   title,
   labelStyle,
+  disabled,
 }) => {
   return (
     <View style={styles.container}>
@@ -26,6 +28,7 @@ const CSwitch: FC<CSwitchProps> = ({
         trackColor={{
           true: COLORS.primaryBlack,
         }}
+        disabled={disabled}
       />
     </View>
   );
