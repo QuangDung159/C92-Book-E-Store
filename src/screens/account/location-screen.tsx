@@ -77,6 +77,14 @@ const LocationScreen = ({ navigation, route }: any) => {
   };
 
   const renderListAdministrativeBySelected = () => {
+    if (addEditVM.administrativeDataSource?.length === 0) {
+      return (
+        <View>
+          <Text>Empty</Text>
+        </View>
+      );
+    }
+
     return (
       <RadioButton.Group
         onValueChange={(value) => {
