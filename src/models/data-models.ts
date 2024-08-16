@@ -137,3 +137,10 @@ export interface ILocation {
   name: string;
   parent?: string;
 }
+
+export interface INotification {
+  id: string;
+  title: string;
+  content: string;
+  readed: boolean;
+}

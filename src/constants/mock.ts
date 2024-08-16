@@ -783,6 +783,65 @@ const LIST_WARD: ILocation[] = [
   },
 ];
 
+const LIST_NOTIFICATION: DataModels.INotification[] = [
+  {
+    id: '1',
+    content:
+      'Notification 1, Notification 1, Notification 1, Notification 1, Notification 1, Notification 1, Notification 1, Notification 1',
+    title: 'Notification 1',
+    readed: true,
+  },
+  {
+    id: '2',
+    content:
+      'Notification 2, Notification 2, Notification 2, Notification 2, Notification 2, Notification 2, Notification 2, Notification 2, Notification 2',
+    title: 'Notification 2',
+    readed: false,
+  },
+  {
+    id: '3',
+    content:
+      'Notification 3, Notification 3, Notification 3, Notification 3, Notification 3, Notification 3',
+    title: 'Notification 3',
+    readed: false,
+  },
+  {
+    id: '4',
+    content:
+      'Notification 4, Notification 4, Notification 4, Notification 4, Notification 4, Notification 4',
+    title: 'Notification 4',
+    readed: false,
+  },
+  {
+    id: '5',
+    content:
+      'Notification 5, Notification 5, Notification 5, Notification 5, Notification 5, Notification 5',
+    title: 'Notification 5',
+    readed: false,
+  },
+  {
+    id: '6',
+    content:
+      'Notification 6, Notification 6, Notification 6, Notification 6, Notification 6, Notification 6',
+    title: 'Notification 6',
+    readed: false,
+  },
+  {
+    id: '7',
+    content:
+      'Notification 7, Notification 7, Notification 7, Notification 7, Notification 7, Notification 7',
+    title: 'Notification 7',
+    readed: false,
+  },
+  {
+    id: '8',
+    content:
+      'Notification 8, Notification 8, Notification 8, Notification 8, Notification 8, Notification 8',
+    title: 'Notification 8',
+    readed: true,
+  },
+];
+
 export {
   CATEGORY,
   LIST_ADMINITRATIVE_UNIT,
@@ -799,4 +858,5 @@ export {
   TOP_BOOKS,
   TOP_BOOKS_FILTER,
   USER,
+  LIST_NOTIFICATION,
 };
