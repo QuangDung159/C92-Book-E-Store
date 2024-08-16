@@ -12,7 +12,7 @@ const SectionTitle: React.FC<SectionTitleProps> = ({ title }) => {
 
 const styles = StyleSheet.create({
   title: {
-    ...FONT_STYLES.BOLD_20,
+    ...FONT_STYLES.SEMIBOLD_20,
   },
 });
 

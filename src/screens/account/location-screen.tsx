@@ -1,7 +1,12 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { BottomButtonSection, Layouts, ScreenHeader } from '@components';
+import {
+  BottomButtonSection,
+  Layouts,
+  ScreenHeader,
+  SectionTitle,
+} from '@components';
 import { DataModels } from '@models';
 import { COLORS } from '@themes';
 
@@ -20,6 +25,7 @@ const LocationScreen = ({ navigation, route }: any) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.wrapper}
       >
+        <SectionTitle title="Payment Method" />
         <Layouts.VSpace value={12} />
       </ScrollView>
       <BottomButtonSection onPress={() => {}} buttonTitle="Submit" />
