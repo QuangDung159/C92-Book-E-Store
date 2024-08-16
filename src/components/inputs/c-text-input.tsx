@@ -26,7 +26,7 @@ interface CTextInputProps {
   onFocus?: () => void;
   autoFocus?: boolean;
   label?: string;
-  messageError?: string;
+  errorMessage?: string;
   labelStyle?: StyleProp<TextStyle>;
   multiline?: boolean;
 }
@@ -43,7 +43,7 @@ const CTextInput: FC<CTextInputProps> = ({
   onFocus,
   autoFocus,
   label,
-  messageError,
+  errorMessage,
   labelStyle,
   multiline,
 }) => {
@@ -52,11 +52,8 @@ const CTextInput: FC<CTextInputProps> = ({
       {label && (
         <Text
           style={[
-            {
-              ...FONT_STYLES.BOLD_16,
-              marginBottom: 4,
-            },
-            messageError && {
+            styles.label,
+            errorMessage && {
               color: COLORS.error50,
             },
             labelStyle,
@@ -78,14 +75,8 @@ const CTextInput: FC<CTextInputProps> = ({
           style,
         ]}
         mode="outlined"
-        activeOutlineColor={messageError ? COLORS.error50 : COLORS.primaryBlack}
-        outlineStyle={[
-          styles.outlineStyle,
-          messageError && {
-            borderColor: COLORS.error50,
-          },
-          outlineStyle,
-        ]}
+        activeOutlineColor={errorMessage ? COLORS.error50 : COLORS.primaryBlack}
+        outlineStyle={[styles.outlineStyle, outlineStyle]}
         disabled={disabled}
         onChangeText={onChangeText}
         onEndEditing={onEndEditing}
@@ -93,23 +84,18 @@ const CTextInput: FC<CTextInputProps> = ({
         value={value}
         onFocus={onFocus}
         autoFocus={autoFocus}
-        contentStyle={{
-          ...FONT_STYLES.REGULAR_14,
-        }}
+        contentStyle={[styles.contentStyle, errorMessage && styles.errorStyle]}
       />
-      {messageError && (
+      {errorMessage && (
         <Text
           style={[
-            {
-              ...FONT_STYLES.SEMIBOLD_14,
-              marginTop: 4,
-            },
-            messageError && {
+            styles.errorTextStyle,
+            errorMessage && {
               color: COLORS.error50,
             },
           ]}
         >
-          {messageError}
+          {errorMessage}
         </Text>
       )}
     </>
@@ -122,6 +108,23 @@ const styles = StyleSheet.create({
   },
   outlineStyle: {
     borderRadius: 8,
+  },
+  errorStyle: {
+    borderColor: COLORS.error50,
+    borderWidth: 1,
+  },
+  label: {
+    ...FONT_STYLES.BOLD_16,
+    marginBottom: 4,
+  },
+  contentStyle: {
+    ...FONT_STYLES.REGULAR_14,
+    backgroundColor: COLORS.gray200,
+    borderRadius: 8,
+  },
+  errorTextStyle: {
+    ...FONT_STYLES.SEMIBOLD_12,
+    marginTop: 4,
   },
 });
 

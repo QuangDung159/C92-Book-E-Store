@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native';
 import { Switch } from 'react-native-paper';
-import { FONT_STYLES } from '@themes';
+import { COLORS, FONT_STYLES } from '@themes';
 
 interface CSwitchProps {
   value: boolean;
@@ -23,6 +23,9 @@ const CSwitch: FC<CSwitchProps> = ({
         style={styles.switchButton}
         value={value}
         onValueChange={onValueChange}
+        trackColor={{
+          true: COLORS.primaryBlack,
+        }}
       />
     </View>
   );

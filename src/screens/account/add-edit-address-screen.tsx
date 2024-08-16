@@ -61,21 +61,14 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
           onChangeText={(value) => {
             addEditVM.setName(value);
           }}
-          outlineStyle={{
-            borderWidth: 0,
-          }}
-          style={styles.input}
         />
+        <Layouts.VSpace value={12} />
         <Inputs.CTextInput
           value={addEditVM.phoneNumber}
           placeholder="Enter phone number"
           onChangeText={(value) => {
             addEditVM.setPhoneNumber(value);
           }}
-          outlineStyle={{
-            borderWidth: 0,
-          }}
-          style={styles.input}
         />
         <Layouts.VSpace value={12} />
         <Divider />
@@ -103,10 +96,6 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
           onChangeText={(value) => {
             addEditVM.setName(value);
           }}
-          outlineStyle={{
-            borderWidth: 0,
-          }}
-          style={styles.input}
         />
         <Layouts.VSpace value={12} />
         <Divider />
