@@ -64,10 +64,18 @@ export const useNavigate = (navigation: any) => {
 
   const openLocationScreen = (
     shippingAddress?: DataModels.IShippingAddress,
+    onSubmitAdministrative?: (
+      city: string,
+      district: string,
+      ward: string,
+    ) => void,
   ) => {
     navigation.navigate(SCREEN_NAME.ACCOUNT_NAVIGATOR, {
       screen: SCREEN_NAME.LOCATION_SCREEN,
-      params: { shippingAddress },
+      params: {
+        shippingAddress,
+        onSubmitAdministrative: onSubmitAdministrative,
+      },
     });
   };
 

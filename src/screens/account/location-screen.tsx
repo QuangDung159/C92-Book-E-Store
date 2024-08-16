@@ -25,6 +25,8 @@ const LocationScreen = ({ navigation, route }: any) => {
   const shippingAddress: DataModels.IShippingAddress =
     route.params?.shippingAddress;
 
+  const onSubmitAdministrative = route.params?.onSubmitAdministrative;
+
   const addEditVM = useRef(
     new LocationViewModel(referenceOptionsStore, shippingAddress),
   ).current;
@@ -205,7 +207,17 @@ const LocationScreen = ({ navigation, route }: any) => {
         {renderListAdministrativeBySelected()}
         <Layouts.VSpace value={12} />
       </ScrollView>
-      <BottomButtonSection onPress={() => {}} buttonTitle="Submit" />
+      <BottomButtonSection
+        onPress={() => {
+          navigation.goBack();
+          onSubmitAdministrative?.(
+            addEditVM.city,
+            addEditVM.district,
+            addEditVM.ward,
+          );
+        }}
+        buttonTitle="Submit"
+      />
     </View>
   );
 };

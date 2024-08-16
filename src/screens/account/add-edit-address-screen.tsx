@@ -32,6 +32,16 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
     new AddEditAddressViewModel(shippingAddress),
   ).current;
 
+  const onSubmitAdministrative = (
+    city: string,
+    district: string,
+    ward: string,
+  ) => {
+    addEditVM.setCity(city);
+    addEditVM.setDistrict(district);
+    addEditVM.setWard(ward);
+  };
+
   return (
     <View style={styles.container}>
       <ScreenHeader
@@ -64,6 +74,7 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
         />
         <Layouts.VSpace value={12} />
         <Inputs.CTextInput
+          keyboardType="phone-pad"
           value={addEditVM.phoneNumber}
           placeholder="Enter phone number"
           onChangeText={(value) => {
@@ -75,11 +86,11 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
         <Layouts.VSpace value={16} />
         <TouchableOpacity
           onPress={() => {
-            openLocationScreen(shippingAddress);
+            openLocationScreen(shippingAddress, onSubmitAdministrative);
           }}
         >
           <View style={styles.addressContainer}>
-            {shippingAddress ? (
+            {addEditVM.city ? (
               <View>
                 <Text style={styles.addressInfo}>{addEditVM.city}</Text>
                 <Text style={styles.addressInfo}>{addEditVM.district}</Text>
@@ -104,10 +115,10 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
         <Divider />
         <Layouts.VSpace value={12} />
         <Inputs.CTextInput
-          value={addEditVM.name}
-          placeholder="Enter contact name"
+          value={addEditVM.address}
+          placeholder="Enter address (number, street)"
           onChangeText={(value) => {
-            addEditVM.setName(value);
+            addEditVM.setAddress(value);
           }}
         />
         <Layouts.VSpace value={12} />
