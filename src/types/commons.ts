@@ -1,3 +1,3 @@
-type AdministrativeUnit = 'city' | 'district' | 'ward';
+type AdministrativeUnitEnum = 'city' | 'district' | 'ward';
 
-export { AdministrativeUnit };
+export { AdministrativeUnitEnum };

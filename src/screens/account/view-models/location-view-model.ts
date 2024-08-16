@@ -2,14 +2,14 @@ import { action, computed, makeObservable, observable } from 'mobx';
 import { ADMINISTRATIVE } from '@constants';
 import { DataModels } from '@models';
 import { ReferenceOptionsStore } from '@store';
-import { AdministrativeUnit } from '@types';
+import { AdministrativeUnitEnum } from '@types';
 
 class LocationViewModel {
   city: string = '';
   district: string = '';
   ward: string = '';
   referenceOptionsStore: ReferenceOptionsStore = null;
-  administrativeSelected: AdministrativeUnit = 'city';
+  administrativeSelected: AdministrativeUnitEnum = 'city';
 
   constructor(
     referenceOptionsStore: ReferenceOptionsStore,
@@ -41,7 +41,7 @@ class LocationViewModel {
     }
   }
 
-  setAdministrativeSelected(value: AdministrativeUnit) {
+  setAdministrativeSelected(value: AdministrativeUnitEnum) {
     this.administrativeSelected = value;
   }
 
@@ -61,7 +61,7 @@ class LocationViewModel {
     return list;
   }
 
-  getlabelSelected(administrative: AdministrativeUnit) {
+  getlabelSelected(administrative: AdministrativeUnitEnum) {
     switch (administrative) {
       case 'city':
         return this.city;

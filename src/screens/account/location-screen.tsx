@@ -18,7 +18,7 @@ import { ADMINISTRATIVE, LIST_ADMINITRATIVE_UNIT } from '@constants';
 import { DataModels } from '@models';
 import { referenceOptionsStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
-import { AdministrativeUnit } from '@types';
+import { AdministrativeUnitEnum } from '@types';
 import { LocationViewModel } from './view-models';
 
 const LocationScreen = ({ navigation, route }: any) => {
@@ -43,7 +43,7 @@ const LocationScreen = ({ navigation, route }: any) => {
     return (
       <RadioButton.Group
         onValueChange={(value) =>
-          addEditVM.setAdministrativeSelected(value as AdministrativeUnit)
+          addEditVM.setAdministrativeSelected(value as AdministrativeUnitEnum)
         }
         value={addEditVM.administrativeSelected}
       >
@@ -86,7 +86,7 @@ const LocationScreen = ({ navigation, route }: any) => {
                 marginLeft: 8,
               }}
             >
-              {addEditVM.getlabelSelected(value as AdministrativeUnit)}
+              {addEditVM.getlabelSelected(value as AdministrativeUnitEnum)}
             </Text>
           </View>
         </React.Fragment>
@@ -97,8 +97,18 @@ const LocationScreen = ({ navigation, route }: any) => {
   const renderListAdministrativeBySelected = () => {
     if (addEditVM.administrativeDataSource?.length === 0) {
       return (
-        <View>
-          <Text>Empty</Text>
+        <View
+          style={{
+            alignItems: 'center',
+          }}
+        >
+          <Text
+            style={{
+              ...FONT_STYLES.SEMIBOLD_12,
+            }}
+          >
+            Empty
+          </Text>
         </View>
       );
     }

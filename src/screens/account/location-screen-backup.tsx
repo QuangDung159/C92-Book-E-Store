@@ -18,14 +18,14 @@ import { ADMINISTRATIVE, LIST_ADMINITRATIVE_UNIT } from '@constants';
 import { DataModels } from '@models';
 import { referenceOptionsStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
-import { AdministrativeUnit } from '@types';
+import { AdministrativeUnitEnum } from '@types';
 
 const LocationScreen = ({ navigation, route }: any) => {
   const shippingAddress: DataModels.IShippingAddress =
     route.params?.shippingAddress;
 
   const [administrativeUnitSelected, setAdministrativeUnitSelected] =
-    useState<AdministrativeUnit>('city');
+    useState<AdministrativeUnitEnum>('city');
 
   const [city, setCity] = useState(ADMINISTRATIVE.city);
   const [district, setDistrict] = useState(ADMINISTRATIVE.district);
@@ -74,7 +74,7 @@ const LocationScreen = ({ navigation, route }: any) => {
   };
 
   const renderAdministrativeUnitItem = () => {
-    const getLabel = (administrative: AdministrativeUnit) => {
+    const getLabel = (administrative: AdministrativeUnitEnum) => {
       let label = '';
       switch (administrative) {
         case 'city':
@@ -94,7 +94,7 @@ const LocationScreen = ({ navigation, route }: any) => {
     return (
       <RadioButton.Group
         onValueChange={(value) =>
-          setAdministrativeUnitSelected(value as AdministrativeUnit)
+          setAdministrativeUnitSelected(value as AdministrativeUnitEnum)
         }
         value={administrativeUnitSelected}
       >
@@ -127,7 +127,7 @@ const LocationScreen = ({ navigation, route }: any) => {
                   marginLeft: 8,
                 }}
               >
-                {getLabel(item.value as AdministrativeUnit)}
+                {getLabel(item.value as AdministrativeUnitEnum)}
               </Text>
               <Layouts.VSpace value={12} />
             </View>
