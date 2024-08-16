@@ -13,10 +13,9 @@ import {
 } from '@components';
 import { LIST_PAYMENT_METHOD, PAYMENT_TYPE } from '@constants';
 import { useNavigate } from '@hooks';
-import { DataModels } from '@models';
 import { cartStore, sharedStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
-import { delay, ListHelpers, StringHelpers } from '@utils';
+import { delay, StringHelpers } from '@utils';
 import { CartInfoRow, ListCreditCard, ShippingAddress } from './components';
 import { ListCartItem } from './components/list-cart-item';
 
@@ -32,20 +31,6 @@ const CheckoutScreen = ({ navigation }: any) => {
     () => userStore.userProfile?.listCreditCard || [],
     [],
   );
-
-  useEffect(() => {
-    const shippingAddress = ListHelpers.getItemByField(
-      userStore.userProfile?.listShippingAddress || [],
-      true,
-      'primary',
-    );
-
-    if (shippingAddress) {
-      cartStore.setShippingAddressSelected(
-        (shippingAddress.data as DataModels.IShippingAddress).id,
-      );
-    }
-  }, []);
 
   useEffect(() => {
     setIsShowListCreditCart(

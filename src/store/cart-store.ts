@@ -20,7 +20,6 @@ class CartStore {
   listVoucher: DataModels.IVoucher[] = [];
   listPaymentMethod: DataModels.IPaymentMethod[] = [];
   listVoucherIdSelected: string[] = [];
-  shippingAddressSelected: string = '';
   referenceOptionsStore: ReferenceOptionsStore | null = null;
   userStore: UserStore | null = null;
   paymentSelected: DataModels.IPaymentMethod | null = null;
@@ -35,7 +34,6 @@ class CartStore {
       listVoucher: observable,
       listPaymentMethod: observable,
       listVoucherIdSelected: observable,
-      shippingAddressSelected: observable,
       userStore: observable,
       referenceOptionsStore: observable,
       paymentSelected: observable,
@@ -43,7 +41,6 @@ class CartStore {
       setCreditCardSelected: action,
       setPaymentSelected: action,
       setListVoucherIdSelected: action,
-      setShippingAddressSelected: action,
       setListCartItem: action,
       setListVoucher: action,
       setListPaymentMethod: action,
@@ -52,7 +49,6 @@ class CartStore {
       subTotal: computed,
       shipping: computed,
       cartCount: computed,
-      shippingSelectedData: computed,
       shippingAddressData: computed,
     });
 
@@ -95,23 +91,8 @@ class CartStore {
     this.listVoucherIdSelected = values;
   }
 
-  setShippingAddressSelected(value: string) {
-    this.shippingAddressSelected = value;
-  }
-
-  get shippingSelectedData() {
-    const listShippingAddress =
-      this.userStore?.userProfile?.listShippingAddress || [];
-
-    const shippingData = listShippingAddress.find(
-      (item) => item.id === this.shippingAddressSelected,
-    );
-
-    return shippingData;
-  }
-
   get shipping() {
-    return this.shippingSelectedData?.shippingFee || 0;
+    return this.shippingAddressData?.shippingFee || 0;
   }
 
   get discount() {
@@ -142,7 +123,7 @@ class CartStore {
   get total() {
     return (
       this.subTotal +
-      (this.shippingSelectedData?.shippingFee || 0) -
+      (this.shippingAddressData?.shippingFee || 0) -
       this.discount
     );
   }
@@ -210,7 +191,7 @@ class CartStore {
   get shippingAddressData() {
     const shippingAddress = (
       this.userStore.userProfile?.listShippingAddress || []
-    ).find((item) => item.id === this.shippingAddressSelected);
+    ).find((item) => item.primary);
 
     return shippingAddress;
   }

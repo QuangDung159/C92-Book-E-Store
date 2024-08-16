@@ -1,6 +1,6 @@
 import { action, makeObservable, observable, runInAction } from 'mobx';
 import { DataModels } from '@models';
-import { ListHelpers } from '@utils';
+import { delay, ListHelpers } from '@utils';
 
 class UserStore {
   userProfile: DataModels.IUser | null = null;
@@ -20,26 +20,29 @@ class UserStore {
     shippingAddressUpdated: DataModels.IShippingAddress,
     isAddNew?: boolean,
   ) => {
-    // await delay(1000);
-
-    if (isAddNew) {
-      runInAction(() => {
-        this.userProfile = {
-          ...this.userProfile,
-          listShippingAddress: this.userProfile.listShippingAddress.concat(
-            shippingAddressUpdated,
-          ),
-        };
-      });
-      return;
-    }
-
-    const list = ListHelpers.updateItemById(
-      this.userProfile.listShippingAddress,
-      shippingAddressUpdated,
-    );
+    await delay(1000);
 
     runInAction(() => {
+      let list: DataModels.IShippingAddress[] = [
+        ...this.userProfile.listShippingAddress,
+      ];
+
+      if (isAddNew) {
+        list.unshift(shippingAddressUpdated);
+      } else {
+        list = ListHelpers.updateItemById(
+          this.userProfile.listShippingAddress,
+          shippingAddressUpdated,
+        );
+      }
+
+      if (shippingAddressUpdated.primary) {
+        list.forEach((item) => {
+          if (item.id !== shippingAddressUpdated.id) {
+            item.primary = false;
+          }
+        });
+      }
       this.userProfile = { ...this.userProfile, listShippingAddress: list };
     });
   };

@@ -35,8 +35,7 @@ const AddressItem: React.FC<AddressItemProps> = ({
             {addressItem.name}
           </Text>
         </View>
-        <Layouts.HSpace value={12} />
-        <Text style={styles.textStyle}>{addressItem.phoneNumber}</Text>
+        <Text style={styles.name}>{addressItem.phoneNumber}</Text>
       </View>
       <Layouts.VSpace value={4} />
       <Text style={styles.textStyle}>{addressItem.address}</Text>
@@ -60,23 +59,23 @@ const AddressItem: React.FC<AddressItemProps> = ({
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   nameWrapper: {
-    width: 180,
-    borderRightWidth: 1,
-    borderRightColor: COLORS.gray70,
+    width: 220,
   },
   name: {
     ...FONT_STYLES.BOLD_14,
     marginRight: 8,
   },
   defaultTag: {
-    borderRadius: 8,
+    borderRadius: 4,
     borderWidth: 1,
     borderColor: COLORS.error50,
-    padding: 8,
-    width: 80,
+    padding: 4,
+    width: 70,
     alignItems: 'center',
+    marginBottom: 12,
   },
   textStyle: {
     ...FONT_STYLES.REGULAR_14,
