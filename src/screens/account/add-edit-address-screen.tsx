@@ -18,13 +18,20 @@ import {
 } from '@components';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
+import { sharedStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 
+import { delay } from '@utils';
 import { AddEditAddressViewModel } from './view-models';
 
 const AddEditAddressScreen = ({ navigation, route }: any) => {
   const shippingAddress: DataModels.IShippingAddress =
     route.params?.shippingAddress;
+
+  const onSubmitShippingAddress = route.params?.onSubmitShippingAddress as (
+    shippingAddress: DataModels.IShippingAddress,
+    isAddNew?: boolean,
+  ) => void;
 
   const { openLocationScreen } = useNavigate(navigation);
 
@@ -136,7 +143,19 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
         />
         <Layouts.VSpace value={24} />
       </ScrollView>
-      <BottomButtonSection onPress={() => {}} buttonTitle="Submit" />
+      <BottomButtonSection
+        onPress={() => {
+          onSubmitShippingAddress(addEditVM.toJsonObject, !shippingAddress);
+
+          sharedStore.setShowLoading(true);
+
+          delay(1000).then(() => {
+            navigation.goBack();
+            sharedStore.setShowLoading(false);
+          });
+        }}
+        buttonTitle="Submit"
+      />
     </View>
   );
 };

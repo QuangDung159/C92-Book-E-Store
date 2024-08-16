@@ -18,3 +18,12 @@ export const getItemByField = (
 
   return null;
 };
+
+export const updateItemById = (listItem: Array<any>, itemUpdated: any) => {
+  const index = listItem.findIndex((item) => item.id === itemUpdated.id);
+  if (index === -1) {
+    return listItem;
+  }
+
+  return listItem.splice(index, 1, itemUpdated);
+};

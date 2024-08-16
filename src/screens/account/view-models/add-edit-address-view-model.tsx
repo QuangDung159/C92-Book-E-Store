@@ -1,4 +1,4 @@
-import { action, makeObservable, observable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 import { DataModels } from '@models';
 
 class AddEditAddressViewModel {
@@ -9,6 +9,8 @@ class AddEditAddressViewModel {
   district: string = '';
   ward: string = '';
   primary: boolean = false;
+  id: string = '';
+  shippingAddress: DataModels.IShippingAddress | null = null;
 
   constructor(shippingAddress?: DataModels.IShippingAddress) {
     makeObservable(this, {
@@ -27,10 +29,12 @@ class AddEditAddressViewModel {
       setPrimary: action,
       setName: action,
       fromJsonObject: action,
+      toJsonObject: computed,
     });
 
     if (shippingAddress) {
       this.fromJsonObject(shippingAddress);
+      this.shippingAddress = shippingAddress;
     }
   }
 
@@ -42,6 +46,7 @@ class AddEditAddressViewModel {
     district,
     ward,
     primary,
+    id,
   }: DataModels.IShippingAddress) {
     Object.assign(this, {
       name,
@@ -51,7 +56,22 @@ class AddEditAddressViewModel {
       district,
       ward,
       primary,
+      id,
     });
+  }
+
+  get toJsonObject(): DataModels.IShippingAddress {
+    return {
+      address: this.address,
+      city: this.city,
+      district: this.district,
+      id: this.id,
+      name: this.name,
+      phoneNumber: this.phoneNumber,
+      primary: this.primary,
+      shippingFee: this.shippingAddress.shippingFee,
+      ward: this.ward,
+    };
   }
 
   setName(value: string) {

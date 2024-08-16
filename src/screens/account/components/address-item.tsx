@@ -10,16 +10,23 @@ import { StringHelpers } from '@utils';
 
 interface AddressItemProps {
   addressItem: DataModels.IShippingAddress;
+  onSubmitShippingAddress?: (
+    shippingAddress: DataModels.IShippingAddress,
+    isAddNew?: boolean,
+  ) => void;
 }
 
-const AddressItem: React.FC<AddressItemProps> = ({ addressItem }) => {
+const AddressItem: React.FC<AddressItemProps> = ({
+  addressItem,
+  onSubmitShippingAddress,
+}) => {
   const navigation = useNavigation();
   const { openAddEditAddressScreen } = useNavigate(navigation);
 
   return (
     <TouchableOpacity
       onPress={() => {
-        openAddEditAddressScreen(addressItem);
+        openAddEditAddressScreen(addressItem, onSubmitShippingAddress);
       }}
     >
       <View style={styles.container}>

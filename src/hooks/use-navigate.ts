@@ -55,10 +55,17 @@ export const useNavigate = (navigation: any) => {
 
   const openAddEditAddressScreen = (
     shippingAddress?: DataModels.IShippingAddress,
+    onSubmitShippingAddress?: (
+      shippingAddress: DataModels.IShippingAddress,
+      isAddNew?: boolean,
+    ) => void,
   ) => {
     navigation.navigate(SCREEN_NAME.ACCOUNT_NAVIGATOR, {
       screen: SCREEN_NAME.ADD_EDIT_ADDRESS_SCREEN,
-      params: { shippingAddress },
+      params: {
+        shippingAddress,
+        onSubmitShippingAddress,
+      },
     });
   };
 
