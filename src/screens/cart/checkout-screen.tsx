@@ -88,7 +88,7 @@ const CheckoutScreen = ({ navigation }: any) => {
                 <RadioButton.Android value={item.value} />
                 <Text
                   style={{
-                    ...FONT_STYLES.SEMIBOLD_16,
+                    ...FONT_STYLES.REGULAR_16,
                   }}
                 >
                   {item.label}

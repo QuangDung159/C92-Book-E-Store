@@ -31,15 +31,17 @@ const SearchBar: React.FC<SearchBarProps> = ({
   return (
     <View style={styles.container}>
       {showBackIcon && (
-        <TouchableOpacity
-          onPress={() => {
-            goBack();
-          }}
-        >
-          <Entypo name="chevron-left" size={24} />
-        </TouchableOpacity>
+        <>
+          <TouchableOpacity
+            onPress={() => {
+              goBack();
+            }}
+          >
+            <Entypo name="chevron-left" size={24} />
+          </TouchableOpacity>
+          <Layouts.HSpace value={8} />
+        </>
       )}
-      <Layouts.HSpace value={8} />
       {showSearch ? (
         <Inputs.CTextInput
           placeholder="Happy reading!"

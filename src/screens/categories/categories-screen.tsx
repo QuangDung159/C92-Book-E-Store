@@ -9,10 +9,11 @@ import {
   View,
 } from 'react-native';
 import { Layouts, SearchBar } from '@components';
-import { CATEGORY } from '@constants';
+import { CATEGORY, TOP_BOOKS } from '@constants';
 import { useNavigate } from '@hooks';
 import { categoryStore, searchStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
+import { HorizontalListCard } from 'screens/home/components';
 import { CategoryList } from './components';
 
 const CategoriesScreen = ({ navigation }: any) => {
@@ -40,6 +41,7 @@ const CategoriesScreen = ({ navigation }: any) => {
               borderRadius: 8,
               padding: 8,
               height: 40,
+              marginBottom: 12,
             }}
           >
             <View
@@ -82,7 +84,15 @@ const CategoriesScreen = ({ navigation }: any) => {
             }
           }}
         />
-        <Layouts.VSpace value={12} />
+        <Layouts.VSpace value={24} />
+        <HorizontalListCard listItem={TOP_BOOKS} title="Maybe you will like" />
+        <Layouts.VSpace value={24} />
+        <HorizontalListCard
+          listItem={TOP_BOOKS}
+          title="New Arrivals"
+          showSeeMore
+        />
+        <Layouts.VSpace value={24} />
       </ScrollView>
     </View>
   );
