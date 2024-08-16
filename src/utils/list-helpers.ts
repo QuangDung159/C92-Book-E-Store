@@ -25,5 +25,7 @@ export const updateItemById = (listItem: Array<any>, itemUpdated: any) => {
     return listItem;
   }
 
-  return listItem.splice(index, 1, itemUpdated);
+  listItem.splice(index, 1, itemUpdated);
+
+  return listItem;
 };

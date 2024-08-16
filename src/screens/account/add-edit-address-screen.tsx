@@ -145,7 +145,7 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
       </ScrollView>
       <BottomButtonSection
         onPress={() => {
-          onSubmitShippingAddress(addEditVM.toJsonObject, !shippingAddress);
+          onSubmitShippingAddress?.(addEditVM.toJsonObject, !shippingAddress);
 
           sharedStore.setShowLoading(true);
 

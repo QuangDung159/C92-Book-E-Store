@@ -15,6 +15,7 @@ const AddressScreen = ({ navigation }: any) => {
     shippingAddress: DataModels.IShippingAddress,
     isAddNew?: boolean,
   ) => {
+    console.log('isAddNew :>> ', isAddNew);
     userStore.updateListShippingAddress(shippingAddress, isAddNew);
   };
 

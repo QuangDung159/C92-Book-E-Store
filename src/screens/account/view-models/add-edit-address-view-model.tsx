@@ -69,7 +69,7 @@ class AddEditAddressViewModel {
       name: this.name,
       phoneNumber: this.phoneNumber,
       primary: this.primary,
-      shippingFee: this.shippingAddress.shippingFee,
+      shippingFee: this.shippingAddress?.shippingFee || 0,
       ward: this.ward,
     };
   }

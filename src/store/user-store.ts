@@ -1,6 +1,6 @@
 import { action, makeObservable, observable, runInAction } from 'mobx';
 import { DataModels } from '@models';
-import { delay, ListHelpers } from '@utils';
+import { ListHelpers } from '@utils';
 
 class UserStore {
   userProfile: DataModels.IUser | null = null;
@@ -20,7 +20,7 @@ class UserStore {
     shippingAddressUpdated: DataModels.IShippingAddress,
     isAddNew?: boolean,
   ) => {
-    await delay(1000);
+    // await delay(1000);
 
     if (isAddNew) {
       runInAction(() => {
@@ -33,6 +33,8 @@ class UserStore {
       });
       return;
     }
+
+    console.log('shippingAddressUpdated :>> ', shippingAddressUpdated);
 
     const list = ListHelpers.updateItemById(
       this.userProfile.listShippingAddress,
