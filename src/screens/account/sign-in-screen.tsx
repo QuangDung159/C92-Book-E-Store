@@ -1,17 +1,32 @@
 import { observer } from 'mobx-react-lite';
 import React, { useRef } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { Buttons, Inputs, Layouts, ScreenHeader } from '@components';
 import { COLORS, FONT_STYLES } from '@themes';
 import { AuthenViewModel } from './view-models';
 
 const SignInScreen = ({ navigation }: any) => {
   const signInVM = useRef(new AuthenViewModel()).current;
+  const { width, height } = Dimensions.get('window');
 
   return (
     <View style={styles.container}>
       <ScreenHeader title="Sign In" navigation={navigation} />
-      <View style={styles.wrapper}>
+      <View
+        style={[
+          styles.wrapper,
+          {
+            width: width - 48,
+            top: height * 0.3,
+          },
+        ]}
+      >
         <Text style={styles.welcomeText}>
           Please fill your details to login.
         </Text>
@@ -54,9 +69,8 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 24,
-    marginTop: -100,
+    position: 'absolute',
+    left: 24,
   },
   welcomeText: {
     ...FONT_STYLES.SEMIBOLD_14,
