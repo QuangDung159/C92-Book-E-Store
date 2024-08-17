@@ -3,10 +3,10 @@ import React, { useRef } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Buttons, Inputs, Layouts, ScreenHeader } from '@components';
 import { COLORS, FONT_STYLES } from '@themes';
-import { SignInViewModel } from './view-models';
+import { AuthenViewModel } from './view-models';
 
 const SignUpScreen = ({ navigation }: any) => {
-  const signInVM = useRef(new SignInViewModel()).current;
+  const signInVM = useRef(new AuthenViewModel()).current;
 
   return (
     <View style={styles.container}>

@@ -3,27 +3,16 @@ import React, { useRef } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Buttons, Inputs, Layouts, ScreenHeader } from '@components';
 import { COLORS, FONT_STYLES } from '@themes';
-import { SignInViewModel } from './view-models';
+import { AuthenViewModel } from './view-models';
 
 const SignInScreen = ({ navigation }: any) => {
-  const signInVM = useRef(new SignInViewModel()).current;
+  const signInVM = useRef(new AuthenViewModel()).current;
 
   return (
     <View style={styles.container}>
       <ScreenHeader title="Sign In" navigation={navigation} />
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          paddingHorizontal: 24,
-          marginTop: -24,
-        }}
-      >
-        <Text
-          style={{
-            ...FONT_STYLES.SEMIBOLD_14,
-          }}
-        >
+      <View style={styles.wrapper}>
+        <Text style={styles.welcomeText}>
           Please fill your details to login.
         </Text>
         <Layouts.VSpace value={24} />
@@ -51,14 +40,7 @@ const SignInScreen = ({ navigation }: any) => {
         />
         <Layouts.VSpace value={12} />
         <TouchableOpacity>
-          <Text
-            style={{
-              ...FONT_STYLES.REGULAR_14,
-              textAlign: 'center',
-            }}
-          >
-            Forgot password
-          </Text>
+          <Text style={styles.forgotPassword}>Forgot password</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -69,6 +51,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.primaryWhite,
+  },
+  wrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+    marginTop: -100,
+  },
+  welcomeText: {
+    ...FONT_STYLES.SEMIBOLD_14,
+  },
+  forgotPassword: {
+    ...FONT_STYLES.REGULAR_14,
+    textAlign: 'center',
   },
 });
 
