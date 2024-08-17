@@ -29,11 +29,6 @@ const SearchBar: React.FC<SearchBarProps> = ({
   const { goBack } = useNavigation();
   const { openSearchScreen, openAccountScreen } = useNavigate(navigation);
 
-  console.log(
-    'userStore.userProfile?.username :>> ',
-    userStore.userProfile?.username,
-  );
-
   return (
     <View style={styles.container}>
       {showBackIcon && (
