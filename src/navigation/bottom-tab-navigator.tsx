@@ -3,7 +3,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Icons } from '@components';
 import {
   AccountScreen,
   CategoriesScreen,
@@ -77,15 +76,15 @@ function BottomTabNavigator() {
               (color) => (
                 <View>
                   {notificationStore.unReadNotification.length > 0 && (
-                    <View
-                      style={{
-                        position: 'absolute',
-                        left: 8,
-                        bottom: 9,
-                        zIndex: 99,
-                      }}
-                    >
-                      <Icons.DotSingleIcon color={color} />
+                    <View style={styles.dot}>
+                      <View
+                        style={[
+                          styles.dotStyle,
+                          {
+                            backgroundColor: color,
+                          },
+                        ]}
+                      ></View>
                     </View>
                   )}
                   <MaterialIcons name="notifications" size={24} color={color} />
@@ -140,11 +139,22 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontWeight: '200',
     color: COLORS.primaryBlack,
-    marginTop: -8,
+    marginTop: -4,
   },
   tabBarStyle: {
     height: 95,
     marginBottom: -30,
+  },
+  dot: {
+    position: 'absolute',
+    zIndex: 99,
+    right: 0,
+  },
+  dotStyle: {
+    width: 6,
+    height: 6,
+
+    borderRadius: 10,
   },
 });
 

@@ -3,12 +3,13 @@ import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { EmptyListComponent, Icons, ScreenHeader } from '@components';
-import { LIST_NOTIFICATION } from '@constants';
+import { notificationStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 
 const NotificationsScreen = ({ navigation }: any) => {
   const { width } = Dimensions.get('window');
-  const itemHeight = 75;
+  const hiddenItemHeight = 75;
+  const hiddenItemWidth = 75;
 
   return (
     <View style={styles.container}>
@@ -23,49 +24,23 @@ const NotificationsScreen = ({ navigation }: any) => {
       <SwipeListView
         keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
-        data={LIST_NOTIFICATION}
+        data={notificationStore.listNotification}
         renderItem={({ item }) => (
           <View
-            style={{
-              height: itemHeight,
-              backgroundColor: COLORS.primaryWhite,
-              paddingHorizontal: 24,
-              borderBottomColor: COLORS.gray200,
-              borderBottomWidth: 1,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              flex: 1,
-            }}
+            style={[
+              styles.itemContainer,
+              {
+                height: hiddenItemHeight,
+              },
+            ]}
           >
-            <View
-              style={{
-                flex: 9,
-              }}
-            >
-              <Text
-                style={{
-                  ...FONT_STYLES.SEMIBOLD_14,
-                  marginBottom: 4,
-                }}
-              >
-                {item.title}
-              </Text>
-              <Text
-                style={{
-                  ...FONT_STYLES.REGULAR_14,
-                }}
-                numberOfLines={2}
-              >
+            <View style={styles.contentWrapper}>
+              <Text style={styles.title}>{item.title}</Text>
+              <Text style={styles.content} numberOfLines={2}>
                 {item.content}
               </Text>
             </View>
-            <View
-              style={{
-                flex: 1,
-                alignItems: 'flex-end',
-              }}
-            >
+            <View style={styles.dot}>
               <Icons.DotSingleIcon
                 color={item.readed ? COLORS.primaryWhite : COLORS.primaryBlack}
                 size={30}
@@ -77,27 +52,20 @@ const NotificationsScreen = ({ navigation }: any) => {
         renderHiddenItem={({ item }) => {
           return (
             <View
-              style={{
-                backgroundColor: COLORS.error50,
-                height: itemHeight,
-                width: width - 5,
-                alignSelf: 'flex-end',
-                justifyContent: 'flex-end',
-                flexDirection: 'row',
-              }}
+              style={[
+                styles.hiddenWrapper,
+                {
+                  height: hiddenItemHeight,
+                  width: width - 5,
+                },
+              ]}
             >
               <View
                 style={{
-                  width: width - 5 - 75,
+                  width: width - 5 - hiddenItemWidth,
                 }}
-              ></View>
-              <View
-                style={{
-                  width: 75,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
+              />
+              <View style={styles.trashIcon}>
                 <Icons.TrashIcon
                   color={COLORS.primaryWhite}
                   size={24}
@@ -109,8 +77,8 @@ const NotificationsScreen = ({ navigation }: any) => {
             </View>
           );
         }}
-        leftOpenValue={75}
-        rightOpenValue={-75}
+        leftOpenValue={hiddenItemWidth}
+        rightOpenValue={-hiddenItemWidth}
         ListEmptyComponent={() => {
           return <EmptyListComponent />;
         }}
@@ -123,6 +91,41 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.primaryWhite,
+  },
+  itemContainer: {
+    backgroundColor: COLORS.primaryWhite,
+    paddingHorizontal: 24,
+    borderBottomColor: COLORS.gray200,
+    borderBottomWidth: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flex: 1,
+  },
+  contentWrapper: {
+    flex: 9,
+  },
+  title: {
+    ...FONT_STYLES.SEMIBOLD_14,
+    marginBottom: 4,
+  },
+  content: {
+    ...FONT_STYLES.REGULAR_14,
+  },
+  dot: {
+    flex: 1,
+    alignItems: 'flex-end',
+  },
+  hiddenWrapper: {
+    backgroundColor: COLORS.error50,
+    alignSelf: 'flex-end',
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+  },
+  trashIcon: {
+    width: 75,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
