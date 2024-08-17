@@ -1,15 +1,12 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Buttons, Layouts, ScreenHeader } from '@components';
-import { USER } from '@constants';
-import { useNavigate } from '@hooks';
-import { appModel, sharedStore } from '@store';
-import { COLORS } from '@themes';
-import { delay, ToastHelpers } from '@utils';
+import React, { useRef } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Buttons, Icons, Inputs, Layouts, ScreenHeader } from '@components';
+import { COLORS, FONT_STYLES } from '@themes';
+import { SignInViewModel } from './view-models';
 
 const AccountScreen = ({ navigation }: any) => {
-  const { openHomeScreen, openAddressScreen } = useNavigate(navigation);
+  const signInVM = useRef(new SignInViewModel()).current;
 
   return (
     <View style={styles.container}>
@@ -22,40 +19,55 @@ const AccountScreen = ({ navigation }: any) => {
         style={{
           flex: 1,
           justifyContent: 'center',
-          alignItems: 'center',
+          paddingHorizontal: 24,
         }}
       >
-        <Buttons.CButton
-          label="Login"
-          onPress={() => {
-            sharedStore.setShowLoading(true);
-            delay(1000).then(() => {
-              ToastHelpers.showToast({
-                title: 'Login success',
-              });
-              sharedStore.setShowLoading(false);
-              appModel.login(USER);
-              openHomeScreen();
-            });
+        <Text
+          style={{
+            ...FONT_STYLES.BOLD_18,
+            textAlign: 'center',
           }}
+        >
+          Welcome to E-Store
+        </Text>
+        <Layouts.VSpace value={24} />
+        <Buttons.CButton
+          label="Sign In"
+          onPress={() => {}}
+          buttonType="primary"
         />
         <Layouts.VSpace value={12} />
-        <Buttons.CButton label="Address" onPress={openAddressScreen} />
-        <Layouts.VSpace value={12} />
         <Buttons.CButton
-          label="Logout"
-          onPress={() => {
-            sharedStore.setShowLoading(true);
-            delay(1000).then(() => {
-              ToastHelpers.showToast({
-                title: 'Logout success',
-              });
-              sharedStore.setShowLoading(false);
-              appModel.logout();
-              openHomeScreen();
-            });
-          }}
+          label="Sign Up"
+          onPress={() => {}}
+          buttonType="secondary"
         />
+        <Layouts.VSpace value={24} />
+        <View
+          style={{
+            alignSelf: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Text
+            style={{
+              ...FONT_STYLES.SEMIBOLD_14,
+            }}
+          >
+            -------- or continue with --------
+          </Text>
+          <Layouts.VSpace value={12} />
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+          >
+            <Icons.GoogleIcon />
+            <Layouts.HSpace value={12} />
+            <Icons.FacebookIcon />
+          </View>
+        </View>
       </View>
     </View>
   );
