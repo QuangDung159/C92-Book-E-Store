@@ -25,16 +25,14 @@ class NotificationStore {
   }
 
   get unReadNotification() {
-    const list = this.listNotification.filter((item) => !item.readed);
-    return list;
+    return this.listNotification.filter((item) => !item.readed);
   }
 
   loadNotification = async () => {
-    runInAction(async () => {
-      const listNotification =
-        await NotificationServices.loadListNotification();
-
-      this.listNotification = listNotification;
+    runInAction(() => {
+      NotificationServices.loadListNotification().then((value) => {
+        this.setListNotification(value);
+      });
     });
   };
 }
