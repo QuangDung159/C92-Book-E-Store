@@ -6,7 +6,7 @@ import {
   LIST_PUBLISHER,
   LIST_WARD,
 } from '@constants';
-import { DataModels } from '@models';
+import { AuthenticationStore } from './authentication-store';
 import { CartStore } from './cart-store';
 import { CategoryStore } from './category-store';
 import { NotificationStore } from './notification-store';
@@ -23,6 +23,7 @@ class AppModel {
   userStore: UserStore;
   sharedStore: SharedStore;
   notificationStore: NotificationStore;
+  authenticationStore: AuthenticationStore;
 
   constructor() {
     this.userStore = new UserStore();
@@ -32,15 +33,11 @@ class AppModel {
     this.searchStore = new SearchStore();
     this.sharedStore = new SharedStore();
     this.notificationStore = new NotificationStore();
+    this.authenticationStore = new AuthenticationStore(this.userStore);
   }
 
   async appInit() {
     // this.userStore.setUserProfile(USER);
-  }
-
-  async login(user: DataModels.IUser) {
-    this.userStore.setUserProfile(user);
-    this.notificationStore.loadNotification();
   }
 
   async logout() {

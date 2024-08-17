@@ -1,10 +1,10 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { ScreenHeader } from '@components';
 import { userStore } from '@store';
 import { COLORS } from '@themes';
-import { AuthenView } from './components';
+import { AccountView, AuthenView } from './components';
 
 const AccountScreen = ({ navigation }: any) => {
   return (
@@ -14,7 +14,7 @@ const AccountScreen = ({ navigation }: any) => {
         navigation={navigation}
         showBackIcon={false}
       />
-      {userStore.userProfile ? <Text>Signed</Text> : <AuthenView />}
+      {userStore.userProfile ? <AccountView /> : <AuthenView />}
     </View>
   );
 };

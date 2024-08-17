@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { Buttons, Inputs, Layouts, ScreenHeader } from '@components';
 import { useNavigate } from '@hooks';
-import { appModel, sharedStore } from '@store';
+import { appModel, authenticationStore, sharedStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { SignInViewModel } from './view-models';
 
@@ -56,7 +56,7 @@ const SignInScreen = ({ navigation }: any) => {
           buttonType="primary"
           onPress={async () => {
             sharedStore.setShowLoading(true);
-            await signInVM.login();
+            await authenticationStore.login(signInVM.toJsonObject);
             sharedStore.setShowLoading(false);
             openHomeScreen();
           }}

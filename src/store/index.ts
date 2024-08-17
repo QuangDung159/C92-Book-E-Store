@@ -1,4 +1,5 @@
 import { appModel } from './app-model';
+import { AuthenticationStore } from './authentication-store';
 import { CartStore } from './cart-store';
 import { CategoryStore } from './category-store';
 import { NotificationStore } from './notification-store';
@@ -15,10 +16,12 @@ const {
   userStore,
   sharedStore,
   notificationStore,
+  authenticationStore,
 } = appModel;
 
 export {
   appModel,
+  authenticationStore,
   cartStore,
   categoryStore,
   notificationStore,
@@ -29,6 +32,7 @@ export {
 };
 
 export {
+  AuthenticationStore,
   CartStore,
   CategoryStore,
   NotificationStore,
