@@ -7,9 +7,11 @@ import {
   Text,
   TextInputEndEditingEventData,
   TextStyle,
+  View,
   ViewStyle,
 } from 'react-native';
 import { TextInput } from 'react-native-paper';
+import { Icons } from '@components';
 import { COLORS, FONT_STYLES } from '@themes';
 
 interface CTextInputProps {
@@ -29,6 +31,8 @@ interface CTextInputProps {
   errorMessage?: string;
   labelStyle?: StyleProp<TextStyle>;
   multiline?: boolean;
+  shouldShowErrorTitle?: boolean;
+  secureTextEntry?: boolean;
 }
 
 const CTextInput: FC<CTextInputProps> = ({
@@ -46,7 +50,11 @@ const CTextInput: FC<CTextInputProps> = ({
   errorMessage,
   labelStyle,
   multiline,
+  shouldShowErrorTitle,
+  secureTextEntry,
 }) => {
+  const showValidationError = shouldShowErrorTitle && errorMessage;
+
   return (
     <>
       {label && (
@@ -62,31 +70,53 @@ const CTextInput: FC<CTextInputProps> = ({
           {label}
         </Text>
       )}
-      <TextInput
-        clearButtonMode="always"
-        multiline={multiline}
-        numberOfLines={multiline ? 4 : 1}
-        placeholder={placeholder}
-        style={[
-          styles.searchInput,
-          multiline && {
-            height: 120,
-          },
-          style,
-        ]}
-        mode="outlined"
-        activeOutlineColor={errorMessage ? COLORS.error50 : COLORS.primaryBlack}
-        outlineStyle={[styles.outlineStyle, outlineStyle]}
-        disabled={disabled}
-        onChangeText={onChangeText}
-        onEndEditing={onEndEditing}
-        keyboardType={keyboardType}
-        value={value}
-        onFocus={onFocus}
-        autoFocus={autoFocus}
-        contentStyle={[styles.contentStyle, errorMessage && styles.errorStyle]}
-      />
-      {errorMessage && (
+      <View>
+        <TextInput
+          clearButtonMode="always"
+          multiline={multiline}
+          numberOfLines={multiline ? 4 : 1}
+          placeholder={placeholder}
+          style={[
+            styles.searchInput,
+            multiline && {
+              height: 120,
+            },
+            style,
+          ]}
+          mode="outlined"
+          activeOutlineColor={
+            showValidationError ? COLORS.error50 : COLORS.primaryBlack
+          }
+          outlineStyle={[styles.outlineStyle, outlineStyle]}
+          disabled={disabled}
+          onChangeText={onChangeText}
+          onEndEditing={onEndEditing}
+          keyboardType={keyboardType}
+          secureTextEntry={secureTextEntry}
+          value={value}
+          onFocus={onFocus}
+          autoFocus={autoFocus}
+          contentStyle={[
+            styles.contentStyle,
+            showValidationError && styles.errorStyle,
+          ]}
+        />
+        {secureTextEntry && (
+          <View
+            style={{
+              position: 'absolute',
+              right: 4,
+              width: 20,
+              height: 20,
+              backgroundColor: COLORS.gray200,
+              top: 12,
+            }}
+          >
+            <Icons.EyeIcon size={16} />
+          </View>
+        )}
+      </View>
+      {showValidationError && (
         <Text
           style={[
             styles.errorTextStyle,

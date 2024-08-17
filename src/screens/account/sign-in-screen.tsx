@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useRef } from 'react';
 import {
   Dimensions,
+  Keyboard,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -18,6 +19,20 @@ const SignInScreen = ({ navigation }: any) => {
   const { openHomeScreen } = useNavigate(navigation);
   const { width, height } = Dimensions.get('window');
 
+  const onSave = async () => {
+    Keyboard.dismiss();
+    //
+    if (signInVM.hasAnyValidationError) {
+      signInVM.showValidationErrors(true);
+      return;
+    }
+
+    sharedStore.setShowLoading(true);
+    await authenticationStore.login(signInVM.toJsonObject);
+    sharedStore.setShowLoading(false);
+    openHomeScreen();
+  };
+
   return (
     <View style={styles.container}>
       <ScreenHeader title="Sign In" navigation={navigation} />
@@ -33,32 +48,33 @@ const SignInScreen = ({ navigation }: any) => {
         <Text style={styles.welcomeText}>
           Please fill your details to login.
         </Text>
-        <Layouts.VSpace value={24} />
+        <Layouts.VSpace value={12} />
         <Inputs.CTextInput
           value={signInVM.email}
           placeholder="Enter email"
           onChangeText={(value) => {
             signInVM.setEmail(value);
           }}
+          errorMessage={signInVM.validationErrors.get('email')}
+          shouldShowErrorTitle={signInVM.shouldShowValidationErrors}
         />
         <Layouts.VSpace value={12} />
         <Inputs.CTextInput
-          keyboardType="visible-password"
           value={signInVM.password}
           placeholder="Enter password"
           onChangeText={(value) => {
             signInVM.setPassword(value);
           }}
+          errorMessage={signInVM.validationErrors.get('password')}
+          shouldShowErrorTitle={signInVM.shouldShowValidationErrors}
+          secureTextEntry
         />
         <Layouts.VSpace value={24} />
         <Buttons.CButton
           label="Sign In"
           buttonType="primary"
           onPress={async () => {
-            sharedStore.setShowLoading(true);
-            await authenticationStore.login(signInVM.toJsonObject);
-            sharedStore.setShowLoading(false);
-            openHomeScreen();
+            onSave();
           }}
         />
         <Layouts.VSpace value={12} />
