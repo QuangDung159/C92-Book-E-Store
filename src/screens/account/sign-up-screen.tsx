@@ -38,6 +38,14 @@ const SignUpScreen = ({ navigation }: any) => {
         <Layouts.VSpace value={12} />
         <Inputs.CTextInput
           value={signInVM.email}
+          placeholder="Phone number"
+          onChangeText={(value) => {
+            signInVM.setEmail(value);
+          }}
+        />
+        <Layouts.VSpace value={12} />
+        <Inputs.CTextInput
+          value={signInVM.email}
           placeholder="Email"
           onChangeText={(value) => {
             signInVM.setEmail(value);

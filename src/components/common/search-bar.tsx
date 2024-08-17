@@ -4,7 +4,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Icons, Inputs, Layouts } from '@components';
 import { useNavigate } from '@hooks';
-import { searchStore } from '@store';
+import { searchStore, userStore } from '@store';
 import { FONT_STYLES } from '@themes';
 import { CartIconWithBadge } from './cart-icon-with-badge';
 
@@ -55,7 +55,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
           }}
         >
           <TouchableOpacity onPress={() => openAccountScreen()}>
-            <Text style={styles.goodText}>Good afternoon, Joe!</Text>
+            <Text
+              style={styles.goodText}
+            >{`Good afternoon, ${userStore.userProfile?.username || 'Buddy'}!`}</Text>
           </TouchableOpacity>
           <Text style={styles.position}>Ho Chi Minh City</Text>
         </View>
