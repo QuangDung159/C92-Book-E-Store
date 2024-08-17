@@ -18,7 +18,6 @@ const Navigation = () => {
     <>
       <Spinner
         visible={sharedStore.showLoading}
-        textContent={'Loading...'}
         textStyle={{
           color: COLORS.primaryWhite,
         }}

@@ -1,13 +1,12 @@
 import { observer } from 'mobx-react-lite';
-import React, { useRef } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Buttons, Icons, Inputs, Layouts, ScreenHeader } from '@components';
+import { Buttons, Icons, Layouts, ScreenHeader } from '@components';
+import { useNavigate } from '@hooks';
 import { COLORS, FONT_STYLES } from '@themes';
-import { SignInViewModel } from './view-models';
 
 const AccountScreen = ({ navigation }: any) => {
-  const signInVM = useRef(new SignInViewModel()).current;
-
+  const { openSignInScreen, openSignUpScreen } = useNavigate(navigation);
   return (
     <View style={styles.container}>
       <ScreenHeader
@@ -33,13 +32,17 @@ const AccountScreen = ({ navigation }: any) => {
         <Layouts.VSpace value={24} />
         <Buttons.CButton
           label="Sign In"
-          onPress={() => {}}
+          onPress={() => {
+            openSignInScreen();
+          }}
           buttonType="primary"
         />
         <Layouts.VSpace value={12} />
         <Buttons.CButton
           label="Sign Up"
-          onPress={() => {}}
+          onPress={() => {
+            openSignUpScreen();
+          }}
           buttonType="secondary"
         />
         <Layouts.VSpace value={24} />

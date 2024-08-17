@@ -26,7 +26,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   showSearch,
 }) => {
   const { goBack } = useNavigation();
-  const { openSearchScreen } = useNavigate(navigation);
+  const { openSearchScreen, openAccountScreen } = useNavigate(navigation);
 
   return (
     <View style={styles.container}>
@@ -54,7 +54,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
             flex: 1,
           }}
         >
-          <Text style={styles.goodText}>Good afternoon, Joe!</Text>
+          <TouchableOpacity onPress={() => openAccountScreen()}>
+            <Text style={styles.goodText}>Good afternoon, Joe!</Text>
+          </TouchableOpacity>
           <Text style={styles.position}>Ho Chi Minh City</Text>
         </View>
       )}

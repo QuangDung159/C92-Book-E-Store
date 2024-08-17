@@ -86,6 +86,24 @@ export const useNavigate = (navigation: any) => {
     });
   };
 
+  const openSignInScreen = () => {
+    navigation.navigate(SCREEN_NAME.ACCOUNT_NAVIGATOR, {
+      screen: SCREEN_NAME.SIGN_IN_SCREEN,
+    });
+  };
+
+  const openSignUpScreen = () => {
+    navigation.navigate(SCREEN_NAME.ACCOUNT_NAVIGATOR, {
+      screen: SCREEN_NAME.SIGN_UP_SCREEN,
+    });
+  };
+
+  const openAccountScreen = () => {
+    navigation.navigate(SCREEN_NAME.BOTTOM_TAB_NAVIGATOR, {
+      screen: SCREEN_NAME.ACCOUNT_SCREEN,
+    });
+  };
+
   return {
     openSearchScreen,
     openFilterScreen,
@@ -97,5 +115,8 @@ export const useNavigate = (navigation: any) => {
     openAddressScreen,
     openAddEditAddressScreen,
     openLocationScreen,
+    openSignInScreen,
+    openSignUpScreen,
+    openAccountScreen,
   };
 };

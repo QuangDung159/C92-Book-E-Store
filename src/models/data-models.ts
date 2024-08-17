@@ -131,6 +131,7 @@ export interface IUser {
   username: string;
   listShippingAddress: IShippingAddress[];
   listCreditCard: ICreditCard[];
+  email: string;
 }
 
 export interface ILocation {
