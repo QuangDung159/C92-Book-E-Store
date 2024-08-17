@@ -1,6 +1,6 @@
 import { action, makeObservable, observable } from 'mobx';
 
-class AuthenViewModel {
+class SignInViewModel {
   email: string = '';
   password: string = '';
 
@@ -24,4 +24,4 @@ class AuthenViewModel {
   login = async () => {};
 }
 
-export { AuthenViewModel };
+export { SignInViewModel };

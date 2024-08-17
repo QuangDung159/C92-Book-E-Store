@@ -9,10 +9,10 @@ import {
 } from 'react-native';
 import { Buttons, Inputs, Layouts, ScreenHeader } from '@components';
 import { COLORS, FONT_STYLES } from '@themes';
-import { AuthenViewModel } from './view-models';
+import { SignInViewModel } from './view-models';
 
 const SignInScreen = ({ navigation }: any) => {
-  const signInVM = useRef(new AuthenViewModel()).current;
+  const signInVM = useRef(new SignInViewModel()).current;
   const { width, height } = Dimensions.get('window');
 
   return (

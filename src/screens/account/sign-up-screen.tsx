@@ -1,18 +1,19 @@
 import { observer } from 'mobx-react-lite';
 import React, { useRef } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Buttons, Inputs, Layouts, ScreenHeader } from '@components';
 import { COLORS, FONT_STYLES } from '@themes';
-import { AuthenViewModel } from './view-models';
+import { SignInViewModel } from './view-models';
 
 const SignUpScreen = ({ navigation }: any) => {
-  const signInVM = useRef(new AuthenViewModel()).current;
+  const signInVM = useRef(new SignInViewModel()).current;
 
   return (
     <View style={styles.container}>
       <ScreenHeader title="Sign Up" navigation={navigation} />
-      <View
-        style={{
+      <KeyboardAwareScrollView
+        contentContainerStyle={{
           flex: 1,
           justifyContent: 'center',
           paddingHorizontal: 24,
@@ -24,14 +25,40 @@ const SignUpScreen = ({ navigation }: any) => {
             ...FONT_STYLES.SEMIBOLD_14,
           }}
         >
-          Please fill your details to login.
+          Please fill your details to signup.
         </Text>
         <Layouts.VSpace value={24} />
         <Inputs.CTextInput
           value={signInVM.email}
-          placeholder="Enter email"
+          placeholder="Username"
           onChangeText={(value) => {
             signInVM.setEmail(value);
+          }}
+        />
+        <Layouts.VSpace value={12} />
+        <Inputs.CTextInput
+          value={signInVM.email}
+          placeholder="Email"
+          onChangeText={(value) => {
+            signInVM.setEmail(value);
+          }}
+        />
+        <Layouts.VSpace value={12} />
+        <Inputs.CTextInput
+          keyboardType="visible-password"
+          value={signInVM.password}
+          placeholder="Password"
+          onChangeText={(value) => {
+            signInVM.setPassword(value);
+          }}
+        />
+        <Layouts.VSpace value={12} />
+        <Inputs.CTextInput
+          keyboardType="visible-password"
+          value={signInVM.password}
+          placeholder="Confirm password"
+          onChangeText={(value) => {
+            signInVM.setPassword(value);
           }}
         />
         <Layouts.VSpace value={12} />
@@ -45,22 +72,12 @@ const SignUpScreen = ({ navigation }: any) => {
         />
         <Layouts.VSpace value={24} />
         <Buttons.CButton
-          label="Sign In"
+          label="Sign Up"
           buttonType="primary"
           onPress={() => {}}
         />
-        <Layouts.VSpace value={12} />
-        <TouchableOpacity>
-          <Text
-            style={{
-              ...FONT_STYLES.REGULAR_14,
-              textAlign: 'center',
-            }}
-          >
-            Forgot password
-          </Text>
-        </TouchableOpacity>
-      </View>
+        <Layouts.VSpace value={24} />
+      </KeyboardAwareScrollView>
     </View>
   );
 };
