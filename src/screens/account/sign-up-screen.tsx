@@ -3,11 +3,12 @@ import React, { useRef } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Buttons, Inputs, Layouts, ScreenHeader } from '@components';
+import { appModel } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { SignInViewModel } from './view-models';
 
 const SignUpScreen = ({ navigation }: any) => {
-  const signInVM = useRef(new SignInViewModel()).current;
+  const signInVM = useRef(new SignInViewModel(appModel.userStore)).current;
 
   return (
     <View style={styles.container}>

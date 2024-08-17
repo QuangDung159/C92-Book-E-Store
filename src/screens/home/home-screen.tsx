@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { ImageAssets } from '@assets';
@@ -62,4 +63,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export { HomeScreen };
+const observable = observer(HomeScreen);
+export { observable as HomeScreen };

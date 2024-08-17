@@ -18,6 +18,7 @@ class SignInViewModel {
       username: observable,
       phoneNumber: observable,
       confirmPassword: observable,
+      userStore: observable,
       setConfirmPassword: action,
       setPhoneNumber: action,
       setUsername: action,

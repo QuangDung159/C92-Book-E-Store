@@ -8,11 +8,14 @@ import {
   View,
 } from 'react-native';
 import { Buttons, Inputs, Layouts, ScreenHeader } from '@components';
+import { useNavigate } from '@hooks';
+import { appModel, sharedStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { SignInViewModel } from './view-models';
 
 const SignInScreen = ({ navigation }: any) => {
-  const signInVM = useRef(new SignInViewModel()).current;
+  const signInVM = useRef(new SignInViewModel(appModel.userStore)).current;
+  const { openHomeScreen } = useNavigate(navigation);
   const { width, height } = Dimensions.get('window');
 
   return (
@@ -51,7 +54,12 @@ const SignInScreen = ({ navigation }: any) => {
         <Buttons.CButton
           label="Sign In"
           buttonType="primary"
-          onPress={() => {}}
+          onPress={async () => {
+            sharedStore.setShowLoading(true);
+            await signInVM.login();
+            sharedStore.setShowLoading(false);
+            openHomeScreen();
+          }}
         />
         <Layouts.VSpace value={12} />
         <TouchableOpacity>

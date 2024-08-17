@@ -1,5 +1,6 @@
 import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from 'expo-router';
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Icons, Inputs, Layouts } from '@components';
@@ -27,6 +28,11 @@ const SearchBar: React.FC<SearchBarProps> = ({
 }) => {
   const { goBack } = useNavigation();
   const { openSearchScreen, openAccountScreen } = useNavigate(navigation);
+
+  console.log(
+    'userStore.userProfile?.username :>> ',
+    userStore.userProfile?.username,
+  );
 
   return (
     <View style={styles.container}>
@@ -100,4 +106,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export { SearchBar };
+const observable = observer(SearchBar);
+export { observable as SearchBar };
