@@ -1,13 +1,16 @@
 import { Entypo, MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import { Icons } from '@components';
 import {
   AccountScreen,
   CategoriesScreen,
   HomeScreen,
   NotificationsScreen,
 } from '@screens';
+import { notificationStore } from '@store';
 import { SCREEN_NAME } from '../constants';
 import { COLORS } from '../themes';
 
@@ -72,7 +75,21 @@ function BottomTabNavigator() {
           tabBarIcon: (focus) => {
             return renderTabBarIcon(
               (color) => (
-                <MaterialIcons name="notifications" size={24} color={color} />
+                <View>
+                  {notificationStore.unReadNotification.length > 0 && (
+                    <View
+                      style={{
+                        position: 'absolute',
+                        left: 8,
+                        bottom: 9,
+                        zIndex: 99,
+                      }}
+                    >
+                      <Icons.DotSingleIcon color={color} />
+                    </View>
+                  )}
+                  <MaterialIcons name="notifications" size={24} color={color} />
+                </View>
               ),
               focus.focused,
             );
@@ -123,11 +140,13 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontWeight: '200',
     color: COLORS.primaryBlack,
+    marginTop: -8,
   },
   tabBarStyle: {
-    height: 100,
+    height: 95,
     marginBottom: -30,
   },
 });
 
-export { BottomTabNavigator };
+const observable = observer(BottomTabNavigator);
+export { observable as BottomTabNavigator };

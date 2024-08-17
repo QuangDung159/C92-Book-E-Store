@@ -7,8 +7,10 @@ import {
   LIST_WARD,
 } from '@constants';
 import { DataModels } from '@models';
+import { NotificationServices } from '@services';
 import { CartStore } from './cart-store';
 import { CategoryStore } from './category-store';
+import { NotificationStore } from './notification-store';
 import { ReferenceOptionsStore } from './reference-options-store';
 import { SearchStore } from './search-store';
 import { SharedStore } from './shared-store';
@@ -21,6 +23,7 @@ class AppModel {
   referenceOptionsStore: ReferenceOptionsStore;
   userStore: UserStore;
   sharedStore: SharedStore;
+  notificationStore: NotificationStore;
 
   constructor() {
     this.userStore = new UserStore();
@@ -29,6 +32,7 @@ class AppModel {
     this.categoryStore = new CategoryStore();
     this.searchStore = new SearchStore();
     this.sharedStore = new SharedStore();
+    this.notificationStore = new NotificationStore();
   }
 
   async appInit() {
@@ -37,6 +41,9 @@ class AppModel {
 
   async login(user: DataModels.IUser) {
     this.userStore.setUserProfile(user);
+
+    const listNotification = await NotificationServices.loadListNotification();
+    this.notificationStore.setListNotification(listNotification);
   }
 
   async loadMasterData() {
