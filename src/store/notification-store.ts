@@ -1,5 +1,12 @@
-import { action, computed, makeObservable, observable } from 'mobx';
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+  runInAction,
+} from 'mobx';
 import { DataModels } from '@models';
+import { NotificationServices } from '@services';
 
 class NotificationStore {
   categorySelected: DataModels.ICategory | null = null;
@@ -18,8 +25,18 @@ class NotificationStore {
   }
 
   get unReadNotification() {
-    return this.listNotification.filter((item) => !item.readed);
+    const list = this.listNotification.filter((item) => !item.readed);
+    return list;
   }
+
+  loadNotification = async () => {
+    runInAction(async () => {
+      const listNotification =
+        await NotificationServices.loadListNotification();
+
+      this.listNotification = listNotification;
+    });
+  };
 }
 
 export { NotificationStore };

@@ -41,6 +41,21 @@ const AccountScreen = ({ navigation }: any) => {
         />
         <Layouts.VSpace value={12} />
         <Buttons.CButton label="Address" onPress={openAddressScreen} />
+        <Layouts.VSpace value={12} />
+        <Buttons.CButton
+          label="Logout"
+          onPress={() => {
+            sharedStore.setShowLoading(true);
+            delay(1000).then(() => {
+              ToastHelpers.showToast({
+                title: 'Logout success',
+              });
+              sharedStore.setShowLoading(false);
+              appModel.logout();
+              openHomeScreen();
+            });
+          }}
+        />
       </View>
     </View>
   );

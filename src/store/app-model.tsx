@@ -7,7 +7,6 @@ import {
   LIST_WARD,
 } from '@constants';
 import { DataModels } from '@models';
-import { NotificationServices } from '@services';
 import { CartStore } from './cart-store';
 import { CategoryStore } from './category-store';
 import { NotificationStore } from './notification-store';
@@ -41,9 +40,13 @@ class AppModel {
 
   async login(user: DataModels.IUser) {
     this.userStore.setUserProfile(user);
+    this.notificationStore.loadNotification();
+  }
 
-    const listNotification = await NotificationServices.loadListNotification();
-    this.notificationStore.setListNotification(listNotification);
+  async logout() {
+    this.userStore.setUserProfile(null);
+
+    this.notificationStore.setListNotification([]);
   }
 
   async loadMasterData() {
