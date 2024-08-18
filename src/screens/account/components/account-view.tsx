@@ -22,27 +22,9 @@ const AccountView: React.FC = () => {
 
   const renderInfoRow = (label: string, value: string) => {
     return (
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          marginBottom: 12,
-        }}
-      >
-        <Text
-          style={{
-            ...FONT_STYLES.REGULAR_16,
-          }}
-        >
-          {label}
-        </Text>
-        <Text
-          style={{
-            ...FONT_STYLES.SEMIBOLD_16,
-          }}
-        >
-          {value}
-        </Text>
+      <View style={styles.infoRow}>
+        <Text style={styles.label}>{label}</Text>
+        <Text style={styles.value}>{value}</Text>
       </View>
     );
   };
@@ -54,22 +36,8 @@ const AccountView: React.FC = () => {
   ) => {
     return (
       <>
-        <TouchableOpacity
-          onPress={() => onPress()}
-          style={{
-            paddingVertical: 16,
-          }}
-        >
-          <Text
-            style={[
-              {
-                ...FONT_STYLES.SEMIBOLD_16,
-              },
-              labelStyle,
-            ]}
-          >
-            {label}
-          </Text>
+        <TouchableOpacity onPress={() => onPress()} style={styles.menuItem}>
+          <Text style={[styles.menuLabel, labelStyle]}>{label}</Text>
         </TouchableOpacity>
         <Divider />
       </>
@@ -80,22 +48,11 @@ const AccountView: React.FC = () => {
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Layouts.VSpace value={24} />
-        <View
-          style={{
-            alignItems: 'center',
-          }}
-        >
+        <View style={styles.avatarIcon}>
           <Icons.AccountCircle size={100} />
         </View>
         <Layouts.VSpace value={24} />
-        <View
-          style={{
-            paddingTop: 12,
-            paddingHorizontal: 12,
-            backgroundColor: COLORS.gray200,
-            borderRadius: 8,
-          }}
-        >
+        <View style={styles.profileInfoSection}>
           {renderInfoRow('Email', userStore.userProfile.email)}
           {renderInfoRow('Username', userStore.userProfile.username)}
           {renderInfoRow('Phone number', userStore.userProfile.phoneNumber)}
@@ -112,7 +69,7 @@ const AccountView: React.FC = () => {
         {renderMenuItem('Favourites', () => {})}
         {renderMenuItem('Viewed', () => {})}
         {renderMenuItem('Orders', () => {})}
-        {renderMenuItem('Address Book', () => {
+        {renderMenuItem('Shipping Address', () => {
           openAddressScreen();
         })}
         {renderMenuItem('Payment Methods', () => {})}
@@ -124,9 +81,7 @@ const AccountView: React.FC = () => {
             await authenticationStore.signOut();
             sharedStore.setShowLoading(false);
           },
-          {
-            color: COLORS.error50,
-          },
+          styles.signOut,
         )}
         <Layouts.VSpace value={24} />
       </ScrollView>
@@ -138,6 +93,35 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 24,
+  },
+  infoRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 12,
+  },
+  label: {
+    ...FONT_STYLES.REGULAR_16,
+  },
+  value: {
+    ...FONT_STYLES.SEMIBOLD_16,
+  },
+  menuItem: {
+    paddingVertical: 16,
+  },
+  menuLabel: {
+    ...FONT_STYLES.SEMIBOLD_16,
+  },
+  avatarIcon: {
+    alignItems: 'center',
+  },
+  profileInfoSection: {
+    paddingTop: 12,
+    paddingHorizontal: 12,
+    backgroundColor: COLORS.gray200,
+    borderRadius: 8,
+  },
+  signOut: {
+    color: COLORS.error50,
   },
 });
 

@@ -104,6 +104,12 @@ export const useNavigate = (navigation: any) => {
     });
   };
 
+  const openEditAccountScreen = () => {
+    navigation.navigate(SCREEN_NAME.ACCOUNT_NAVIGATOR, {
+      screen: SCREEN_NAME.EDIT_ACCOUNT_SCREEN,
+    });
+  };
+
   return {
     openSearchScreen,
     openFilterScreen,
@@ -118,5 +124,6 @@ export const useNavigate = (navigation: any) => {
     openSignInScreen,
     openSignUpScreen,
     openAccountScreen,
+    openEditAccountScreen,
   };
 };

@@ -3,6 +3,7 @@ import React from 'react';
 import {
   AddEditAddressScreen,
   AddressScreen,
+  EditAccountScreen,
   LocationScreen,
   SignInScreen,
   SignUpScreen,
@@ -38,6 +39,10 @@ function AccountNavigator() {
       <Stack.Screen
         name={SCREEN_NAME.SIGN_UP_SCREEN}
         component={SignUpScreen}
+      />
+      <Stack.Screen
+        name={SCREEN_NAME.EDIT_ACCOUNT_SCREEN}
+        component={EditAccountScreen}
       />
     </Stack.Navigator>
   );
