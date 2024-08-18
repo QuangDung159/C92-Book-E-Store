@@ -68,6 +68,7 @@ const SignInScreen = ({ navigation }: any) => {
           errorMessage={signInVM.validationErrors.get('password')}
           shouldShowErrorTitle={signInVM.shouldShowValidationErrors}
           secureTextEntry
+          clearButtonMode="never"
         />
         <Layouts.VSpace value={24} />
         <Buttons.CButton

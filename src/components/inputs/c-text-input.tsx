@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import {
   KeyboardTypeOptions,
   NativeSyntheticEvent,
@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   TextInputEndEditingEventData,
+  TextInputIOSProps,
   TextStyle,
   View,
   ViewStyle,
@@ -34,6 +35,7 @@ interface CTextInputProps {
   shouldShowErrorTitle?: boolean;
   secureTextEntry?: boolean;
   optional?: boolean;
+  clearButtonMode?: TextInputIOSProps['clearButtonMode'];
 }
 
 const CTextInput: FC<CTextInputProps> = ({
@@ -54,8 +56,11 @@ const CTextInput: FC<CTextInputProps> = ({
   shouldShowErrorTitle,
   secureTextEntry,
   optional,
+  clearButtonMode = 'while-editing',
 }) => {
   const showValidationError = shouldShowErrorTitle && errorMessage;
+  const [hidePassword, setHidePassword] = useState(secureTextEntry);
+  const [showEyeIcon, setShowEyeIcon] = useState(false);
 
   return (
     <>
@@ -85,7 +90,7 @@ const CTextInput: FC<CTextInputProps> = ({
       <View>
         <TextInput
           textContentType="oneTimeCode"
-          clearButtonMode="while-editing"
+          clearButtonMode={clearButtonMode}
           multiline={multiline}
           numberOfLines={multiline ? 4 : 1}
           placeholder={placeholder}
@@ -102,10 +107,13 @@ const CTextInput: FC<CTextInputProps> = ({
           }
           outlineStyle={[styles.outlineStyle, outlineStyle]}
           disabled={disabled}
-          onChangeText={onChangeText}
+          onChangeText={(value) => {
+            onChangeText(value);
+            setShowEyeIcon(Boolean(value));
+          }}
           onEndEditing={onEndEditing}
           keyboardType={keyboardType}
-          secureTextEntry={secureTextEntry}
+          secureTextEntry={hidePassword}
           value={value}
           onFocus={onFocus}
           autoFocus={autoFocus}
@@ -115,7 +123,7 @@ const CTextInput: FC<CTextInputProps> = ({
             showValidationError && styles.errorStyle,
           ]}
         />
-        {secureTextEntry && (
+        {secureTextEntry && showEyeIcon && (
           <View
             style={{
               position: 'absolute',
@@ -126,7 +134,21 @@ const CTextInput: FC<CTextInputProps> = ({
               top: 12,
             }}
           >
-            <Icons.EyeIcon size={16} />
+            {hidePassword ? (
+              <Icons.EyeIcon
+                size={16}
+                onPress={() => {
+                  setHidePassword(!hidePassword);
+                }}
+              />
+            ) : (
+              <Icons.EyeOffIcon
+                size={16}
+                onPress={() => {
+                  setHidePassword(!hidePassword);
+                }}
+              />
+            )}
           </View>
         )}
       </View>
