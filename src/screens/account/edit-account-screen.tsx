@@ -1,25 +1,19 @@
 import { observer } from 'mobx-react-lite';
 import React, { useRef, useState } from 'react';
-import {
-  Keyboard,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Keyboard, StyleSheet, View } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { Divider } from 'react-native-paper';
 import {
   BottomButtonSection,
   Buttons,
-  Icons,
   Inputs,
   Layouts,
   ScreenHeader,
 } from '@components';
 import { useNavigate } from '@hooks';
 import { appModel, userStore } from '@store';
-import { COLORS, FONT_STYLES } from '@themes';
+import { COLORS } from '@themes';
 import { EditAccountViewModel } from './view-models';
 
 const EditAccountScreen = ({ navigation }: any) => {
@@ -49,16 +43,20 @@ const EditAccountScreen = ({ navigation }: any) => {
         visible={showConfirm}
       />
       <ScreenHeader title="Edit Information" navigation={navigation} />
-      <KeyboardAwareScrollView
-        contentContainerStyle={{
-          flex: 1,
-          paddingHorizontal: 24,
-        }}
-      >
+      <KeyboardAwareScrollView contentContainerStyle={styles.contentWrapper}>
         <Layouts.VSpace value={24} />
-        <Inputs.CTextInput value={userStore.userProfile?.email} disabled />
+        <Inputs.CTextInput
+          value={userStore.userProfile?.email}
+          disabled
+          label="Email"
+          optional
+        />
         <Layouts.VSpace value={12} />
-        <Inputs.CTextInput value={userStore.userProfile?.username} disabled />
+        <Inputs.CTextInput
+          value={userStore.userProfile?.username}
+          disabled
+          label="Username"
+        />
         <Layouts.VSpace value={12} />
         <Inputs.CTextInput
           keyboardType="phone-pad"
@@ -69,32 +67,17 @@ const EditAccountScreen = ({ navigation }: any) => {
           }}
           errorMessage={editVM.validationErrors.get('phoneNumber')}
           shouldShowErrorTitle={editVM.shouldShowValidationErrors}
+          label="Phone number"
         />
         <Layouts.VSpace value={12} />
-        <TouchableOpacity
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-          activeOpacity={0.6}
+        <Divider />
+        <Layouts.VSpace value={12} />
+        <Buttons.CButton
+          label="Change password"
           onPress={() => {
             setShowChangePassword(!showChangePassword);
           }}
-        >
-          <Text
-            style={{
-              ...FONT_STYLES.SEMIBOLD_14,
-            }}
-          >
-            Change password
-          </Text>
-          <Icons.ChevronRightIcon
-            onPress={() => {
-              setShowChangePassword(!showChangePassword);
-            }}
-          />
-        </TouchableOpacity>
+        />
         <Layouts.VSpace value={12} />
         <Collapsible collapsed={!showChangePassword}>
           <Inputs.CTextInput
@@ -106,6 +89,7 @@ const EditAccountScreen = ({ navigation }: any) => {
             }}
             errorMessage={editVM.validationErrors.get('currentPassword')}
             shouldShowErrorTitle={editVM.shouldShowValidationErrors}
+            label="Current password"
           />
           <Layouts.VSpace value={12} />
           <Inputs.CTextInput
@@ -117,6 +101,7 @@ const EditAccountScreen = ({ navigation }: any) => {
             }}
             errorMessage={editVM.validationErrors.get('password')}
             shouldShowErrorTitle={editVM.shouldShowValidationErrors}
+            label="New password"
           />
           <Layouts.VSpace value={12} />
           <Inputs.CTextInput
@@ -128,6 +113,7 @@ const EditAccountScreen = ({ navigation }: any) => {
             }}
             errorMessage={editVM.validationErrors.get('confirmPassword')}
             shouldShowErrorTitle={editVM.shouldShowValidationErrors}
+            label="Confirm password"
           />
           <Layouts.VSpace value={12} />
         </Collapsible>
@@ -160,6 +146,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.primaryWhite,
+  },
+  contentWrapper: {
+    flex: 1,
+    paddingHorizontal: 24,
   },
 });
 

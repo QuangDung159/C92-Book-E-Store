@@ -33,6 +33,7 @@ interface CTextInputProps {
   multiline?: boolean;
   shouldShowErrorTitle?: boolean;
   secureTextEntry?: boolean;
+  optional?: boolean;
 }
 
 const CTextInput: FC<CTextInputProps> = ({
@@ -52,23 +53,34 @@ const CTextInput: FC<CTextInputProps> = ({
   multiline,
   shouldShowErrorTitle,
   secureTextEntry,
+  optional,
 }) => {
   const showValidationError = shouldShowErrorTitle && errorMessage;
 
   return (
     <>
       {label && (
-        <Text
-          style={[
-            styles.label,
-            errorMessage && {
-              color: COLORS.error50,
-            },
-            labelStyle,
-          ]}
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}
         >
-          {label}
-        </Text>
+          <Text
+            style={[
+              styles.label,
+              showValidationError && {
+                color: COLORS.error50,
+              },
+              labelStyle,
+            ]}
+          >
+            {label}
+          </Text>
+          {optional && (
+            <Text style={[styles.label, styles.optional]}>Optional</Text>
+          )}
+        </View>
       )}
       <View>
         <TextInput
@@ -145,8 +157,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   label: {
-    ...FONT_STYLES.BOLD_16,
+    ...FONT_STYLES.BOLD_14,
     marginBottom: 4,
+  },
+  optional: {
+    ...FONT_STYLES.SEMIBOLD_12,
+    color: COLORS.gray70,
   },
   contentStyle: {
     ...FONT_STYLES.REGULAR_14,
