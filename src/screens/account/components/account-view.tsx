@@ -18,7 +18,7 @@ import { COLORS, FONT_STYLES } from '@themes';
 
 const AccountView: React.FC = () => {
   const navigation = useNavigation();
-  const { openHomeScreen, openAddressScreen } = useNavigate(navigation);
+  const { openAddressScreen, openEditAccountScreen } = useNavigate(navigation);
 
   const renderInfoRow = (label: string, value: string) => {
     return (
@@ -61,7 +61,7 @@ const AccountView: React.FC = () => {
         <Buttons.CButton
           label="Edit"
           onPress={() => {
-            openHomeScreen();
+            openEditAccountScreen();
           }}
           buttonType="secondary"
         />

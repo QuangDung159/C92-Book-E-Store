@@ -29,6 +29,7 @@ const BookImage: React.FC<BookImageProps> = ({ book, navigation, data }) => {
           onPress={() => {
             navigation.goBack();
           }}
+          size={20}
         />
       </View>
       <BookCardCarousel

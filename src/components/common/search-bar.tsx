@@ -1,4 +1,3 @@
-import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from 'expo-router';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -33,13 +32,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
     <View style={styles.container}>
       {showBackIcon && (
         <>
-          <TouchableOpacity
-            onPress={() => {
-              goBack();
-            }}
-          >
-            <Entypo name="chevron-left" size={24} />
-          </TouchableOpacity>
+          <Icons.ChevronLeftIcon onPress={() => goBack()} size={20} />
           <Layouts.HSpace value={8} />
         </>
       )}

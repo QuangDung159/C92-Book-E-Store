@@ -9,11 +9,7 @@ import { AccountView, AuthenView } from './components';
 const EditAccountScreen = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
-      <ScreenHeader
-        title="Account"
-        navigation={navigation}
-        showBackIcon={false}
-      />
+      <ScreenHeader title="Account" navigation={navigation} />
       {userStore.userProfile ? <AccountView /> : <AuthenView />}
     </View>
   );

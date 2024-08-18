@@ -29,7 +29,7 @@ const ScreenHeader: React.FC<ScreenHeaderProps> = ({
   const renderLeftComponent = () => {
     if (!leftComponent) {
       if (showBackIcon) {
-        return <Icons.ChevronLeftIcon onPress={goBack} />;
+        return <Icons.ChevronLeftIcon onPress={goBack} size={20} />;
       }
       return null;
     } else {
