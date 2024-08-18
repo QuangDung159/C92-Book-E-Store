@@ -76,12 +76,12 @@ const ForgotPasswordScreen = ({ navigation }: any) => {
         <Buttons.CButton
           label="Send temporary password"
           buttonType="primary"
-          onPress={async () => {
+          onPress={() => {
             onSubmitSendCode();
           }}
         />
         <Layouts.VSpace value={12} />
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => onSubmitSendCode()}>
           <Text style={styles.resend}>
             Not received verification code, resend
           </Text>
