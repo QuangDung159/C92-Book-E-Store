@@ -47,7 +47,6 @@ const CButton: FC<CButtonProps> = ({
         styles.button,
         {
           backgroundColor: getColor().backgroundColor,
-          borderWidth: buttonType === 'primary' ? 0 : 1,
         },
         disabled && {
           opacity: 0.3,

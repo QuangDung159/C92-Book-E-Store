@@ -11,6 +11,7 @@ import Collapsible from 'react-native-collapsible';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
   BottomButtonSection,
+  Buttons,
   Icons,
   Inputs,
   Layouts,
@@ -37,9 +38,16 @@ const EditAccountScreen = ({ navigation }: any) => {
   };
 
   const [showChangePassword, setShowChangePassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   return (
     <View style={styles.container}>
+      <Layouts.ConfirmPopup
+        title="Are you sure to delete account"
+        content={`This action can not be revert, please make sure you want ro delete this account.\nDelete process will be handled in 3 days, and you can not log in.`}
+        onDismiss={() => setShowConfirm(false)}
+        visible={showConfirm}
+      />
       <ScreenHeader title="Edit Information" navigation={navigation} />
       <KeyboardAwareScrollView
         contentContainerStyle={{
@@ -121,8 +129,22 @@ const EditAccountScreen = ({ navigation }: any) => {
             errorMessage={editVM.validationErrors.get('confirmPassword')}
             shouldShowErrorTitle={editVM.shouldShowValidationErrors}
           />
+          <Layouts.VSpace value={12} />
         </Collapsible>
-        <Layouts.VSpace value={24} />
+        <Layouts.MaxSpace />
+        <Buttons.CButton
+          label="Delete account"
+          onPress={() => {
+            setShowConfirm(true);
+          }}
+          style={{
+            borderColor: COLORS.error50,
+          }}
+          labelStyle={{
+            color: COLORS.error50,
+          }}
+        />
+        <Layouts.VSpace value={12} />
       </KeyboardAwareScrollView>
       <BottomButtonSection
         onPress={() => {
