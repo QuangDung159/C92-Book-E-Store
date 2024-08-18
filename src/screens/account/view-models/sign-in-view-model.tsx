@@ -6,25 +6,23 @@ import {
   runInAction,
 } from 'mobx';
 import { USER } from '@constants';
-import { DataModels } from '@models';
 import { UserStore } from '@store';
 import { delay } from '@utils';
 
 class SignInViewModel {
-  email: string = '';
+  username: string = '';
   password: string = '';
   userStore: UserStore | null = null;
   shouldShowValidationErrors: boolean = false;
 
   constructor(userStore: UserStore) {
     makeObservable(this, {
-      email: observable,
+      username: observable,
       password: observable,
       userStore: observable,
       shouldShowValidationErrors: observable,
-      setEmail: action,
+      setUsername: action,
       setPassword: action,
-      toJsonObject: computed,
       validationErrors: computed,
       hasAnyValidationError: computed,
     });
@@ -32,8 +30,8 @@ class SignInViewModel {
     this.userStore = userStore;
   }
 
-  setEmail(value: string) {
-    this.email = value;
+  setUsername(value: string) {
+    this.username = value;
   }
 
   setPassword(value: string) {
@@ -45,20 +43,12 @@ class SignInViewModel {
     this.userStore.setUserProfile(USER);
   };
 
-  get toJsonObject(): DataModels.IUser {
-    return {
-      email: this.email,
-      listCreditCard: USER.listCreditCard,
-      listShippingAddress: USER.listShippingAddress,
-      username: USER.username,
-    };
-  }
-
+  // validation
   get validationErrors() {
     const errorMap: Map<string, string> = new Map();
 
-    if (!this.email) {
-      errorMap.set('email', 'Please enter email');
+    if (!this.username) {
+      errorMap.set('username', 'Please enter username');
     }
 
     if (!this.password) {

@@ -15,7 +15,16 @@ class AuthenticationStore {
     this.userStore = userStore;
   }
 
-  signIn = async (user: DataModels.IUser) => {
+  signIn = async (username: string, password: string) => {
+    await delay(1000);
+    this.userStore.setUserProfile({
+      ...USER,
+      username,
+      password,
+    });
+  };
+
+  signUp = async (user: DataModels.IUser) => {
     await delay(1000);
     this.userStore.setUserProfile({
       ...USER,

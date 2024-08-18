@@ -19,7 +19,7 @@ const SignInScreen = ({ navigation }: any) => {
   const { openHomeScreen } = useNavigate(navigation);
   const { width, height } = Dimensions.get('window');
 
-  const onSave = async () => {
+  const onSubmit = async () => {
     Keyboard.dismiss();
     //
     if (signInVM.hasAnyValidationError) {
@@ -28,7 +28,7 @@ const SignInScreen = ({ navigation }: any) => {
     }
 
     sharedStore.setShowLoading(true);
-    await authenticationStore.signIn(signInVM.toJsonObject);
+    await authenticationStore.signIn(signInVM.username, signInVM.password);
     sharedStore.setShowLoading(false);
     openHomeScreen();
   };
@@ -50,12 +50,12 @@ const SignInScreen = ({ navigation }: any) => {
         </Text>
         <Layouts.VSpace value={12} />
         <Inputs.CTextInput
-          value={signInVM.email}
-          placeholder="Enter email"
+          value={signInVM.username}
+          placeholder="Enter username"
           onChangeText={(value) => {
-            signInVM.setEmail(value);
+            signInVM.setUsername(value);
           }}
-          errorMessage={signInVM.validationErrors.get('email')}
+          errorMessage={signInVM.validationErrors.get('username')}
           shouldShowErrorTitle={signInVM.shouldShowValidationErrors}
         />
         <Layouts.VSpace value={12} />
@@ -74,7 +74,7 @@ const SignInScreen = ({ navigation }: any) => {
           label="Sign In"
           buttonType="primary"
           onPress={async () => {
-            onSave();
+            onSubmit();
           }}
         />
         <Layouts.VSpace value={12} />

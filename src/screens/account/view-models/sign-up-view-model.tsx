@@ -1,7 +1,13 @@
-import { action, makeObservable, observable, runInAction } from 'mobx';
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+  runInAction,
+} from 'mobx';
 import { USER } from '@constants';
+import { DataModels } from '@models';
 import { UserStore } from '@store';
-import { delay } from '@utils';
 
 class SignUpViewModel {
   email: string = '';
@@ -10,6 +16,7 @@ class SignUpViewModel {
   phoneNumber: string = '';
   confirmPassword: string = '';
   userStore: UserStore | null = null;
+  shouldShowValidationErrors: boolean = false;
 
   constructor(userStore: UserStore) {
     makeObservable(this, {
@@ -19,11 +26,15 @@ class SignUpViewModel {
       phoneNumber: observable,
       confirmPassword: observable,
       userStore: observable,
+      shouldShowValidationErrors: observable,
       setConfirmPassword: action,
       setPhoneNumber: action,
       setUsername: action,
       setEmail: action,
       setPassword: action,
+      validationErrors: computed,
+      hasAnyValidationError: computed,
+      toJsonObject: computed,
     });
 
     this.userStore = userStore;
@@ -49,12 +60,55 @@ class SignUpViewModel {
     this.username = value;
   }
 
-  signUp() {
+  get toJsonObject(): DataModels.IUser {
+    return {
+      ...USER,
+      username: this.username,
+      password: this.password,
+      phoneNumber: this.password,
+      email: this.email,
+    };
+  }
+
+  // validation
+  get validationErrors() {
+    const errorMap: Map<string, string> = new Map();
+
+    if (!this.username) {
+      errorMap.set('username', 'Please enter username');
+    }
+
+    if (!this.password) {
+      errorMap.set('password', 'Please enter password');
+    }
+
+    if (!this.phoneNumber) {
+      errorMap.set('phoneNumber', 'Please enter phone number');
+    }
+
+    if (!this.email) {
+      errorMap.set('email', 'Please enter email');
+    }
+
+    if (!this.confirmPassword) {
+      errorMap.set('confirmPassword', 'Please enter confirm password');
+    }
+
+    if (this.confirmPassword !== this.password) {
+      errorMap.set('confirmPassword', 'Confirm password not match');
+    }
+
+    return errorMap;
+  }
+
+  showValidationErrors(value: boolean) {
     runInAction(() => {
-      delay(1000).then(() => {
-        this.userStore.setUserProfile(USER);
-      });
+      this.shouldShowValidationErrors = value;
     });
+  }
+
+  get hasAnyValidationError() {
+    return this.validationErrors.size > 0;
   }
 }
 
