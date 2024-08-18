@@ -118,24 +118,16 @@ class AddEditAddressViewModel {
   get validationErrors() {
     const errorMap: Map<string, string> = new Map();
 
+    if (!this.name) {
+      errorMap.set('name', 'Please contact name');
+    }
+
     if (!this.address) {
       errorMap.set('address', 'Please enter address');
     }
 
     if (!this.phoneNumber) {
       errorMap.set('phoneNumber', 'Please enter phone number');
-    }
-
-    if (!this.city) {
-      errorMap.set('city', 'Please seelct city');
-    }
-
-    if (!this.district) {
-      errorMap.set('district', 'Please select district');
-    }
-
-    if (!this.ward) {
-      errorMap.set('ward', 'Please select ward');
     }
 
     return errorMap;

@@ -30,6 +30,7 @@ class LocationViewModel {
       wardDataSource: computed,
       selectedAdministrativeValue: computed,
       administrativeDataSource: computed,
+      isCanSubmit: computed,
     });
 
     if (shippingAddress) {
@@ -150,6 +151,14 @@ class LocationViewModel {
         break;
     }
   };
+
+  get isCanSubmit() {
+    return (
+      this.city !== ADMINISTRATIVE.city &&
+      this.district !== ADMINISTRATIVE.district &&
+      this.ward !== ADMINISTRATIVE.ward
+    );
+  }
 }
 
 export { LocationViewModel };

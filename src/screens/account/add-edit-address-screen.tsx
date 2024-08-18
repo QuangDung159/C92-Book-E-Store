@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React, { useRef } from 'react';
 import {
+  Keyboard,
   ScrollView,
   StyleSheet,
   Text,
@@ -38,6 +39,26 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
   const addEditVM = useRef(
     new AddEditAddressViewModel(shippingAddress),
   ).current;
+
+  const onSubmit = async () => {
+    Keyboard.dismiss();
+    //
+    if (addEditVM.hasAnyValidationError) {
+      addEditVM.showValidationErrors(true);
+      return;
+    }
+
+    sharedStore.setShowLoading(true);
+    onSubmitShippingAddress?.(addEditVM.toJsonObject, !shippingAddress);
+
+    sharedStore.setShowLoading(true);
+
+    delay(1000).then(() => {
+      navigation.goBack();
+      sharedStore.setShowLoading(false);
+    });
+    sharedStore.setShowLoading(false);
+  };
 
   const onSubmitAdministrative = (
     city: string,
@@ -88,6 +109,8 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
           onChangeText={(value) => {
             addEditVM.setName(value);
           }}
+          errorMessage={addEditVM.validationErrors.get('name')}
+          shouldShowErrorTitle={addEditVM.shouldShowValidationErrors}
         />
         <Layouts.VSpace value={12} />
         <Inputs.CTextInput
@@ -97,6 +120,8 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
           onChangeText={(value) => {
             addEditVM.setPhoneNumber(value);
           }}
+          errorMessage={addEditVM.validationErrors.get('phoneNumber')}
+          shouldShowErrorTitle={addEditVM.shouldShowValidationErrors}
         />
         <Layouts.VSpace value={24} />
         <Divider />
@@ -137,6 +162,8 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
           onChangeText={(value) => {
             addEditVM.setAddress(value);
           }}
+          errorMessage={addEditVM.validationErrors.get('address')}
+          shouldShowErrorTitle={addEditVM.shouldShowValidationErrors}
         />
         <Layouts.VSpace value={24} />
         <Divider />
@@ -160,14 +187,7 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
       </ScrollView>
       <BottomButtonSection
         onPress={() => {
-          onSubmitShippingAddress?.(addEditVM.toJsonObject, !shippingAddress);
-
-          sharedStore.setShowLoading(true);
-
-          delay(1000).then(() => {
-            navigation.goBack();
-            sharedStore.setShowLoading(false);
-          });
+          onSubmit();
         }}
         buttonTitle="Submit"
       />
@@ -199,6 +219,11 @@ const styles = StyleSheet.create({
   },
   defaultText: {
     fontWeight: '600',
+  },
+  errorTextStyle: {
+    ...FONT_STYLES.SEMIBOLD_12,
+    marginTop: 4,
+    color: COLORS.error50,
   },
 });
 

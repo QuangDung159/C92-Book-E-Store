@@ -217,6 +217,7 @@ const LocationScreen = ({ navigation, route }: any) => {
           );
         }}
         buttonTitle="Submit"
+        disabled={!addEditVM.isCanSubmit}
       />
     </View>
   );

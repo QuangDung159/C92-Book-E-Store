@@ -81,11 +81,6 @@ class EditAccountViewModel {
       errorMap.set('confirmPassword', 'Confirm password not match');
     }
 
-    console.log(
-      'this.userStore.userProfile?.password :>> ',
-      this.userStore.userProfile?.password,
-    );
-
     if (this.currentPassword !== this.userStore.userProfile?.password) {
       errorMap.set('currentPassword', 'Current password wrong');
     }
