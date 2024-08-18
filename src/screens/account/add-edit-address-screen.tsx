@@ -47,6 +47,15 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
     addEditVM.setCity(city);
     addEditVM.setDistrict(district);
     addEditVM.setWard(ward);
+
+    if (shippingAddress) {
+      onSubmitShippingAddress({
+        ...shippingAddress,
+        city: addEditVM.city,
+        district: addEditVM.district,
+        ward: addEditVM.city,
+      });
+    }
   };
 
   return (
