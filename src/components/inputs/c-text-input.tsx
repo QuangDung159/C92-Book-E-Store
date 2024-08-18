@@ -73,7 +73,7 @@ const CTextInput: FC<CTextInputProps> = ({
       <View>
         <TextInput
           textContentType="oneTimeCode"
-          clearButtonMode="always"
+          clearButtonMode="while-editing"
           multiline={multiline}
           numberOfLines={multiline ? 4 : 1}
           placeholder={placeholder}
