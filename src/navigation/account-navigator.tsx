@@ -4,6 +4,7 @@ import {
   AddEditAddressScreen,
   AddressScreen,
   EditAccountScreen,
+  ForgotPasswordScreen,
   LocationScreen,
   SignInScreen,
   SignUpScreen,
@@ -43,6 +44,10 @@ function AccountNavigator() {
       <Stack.Screen
         name={SCREEN_NAME.EDIT_ACCOUNT_SCREEN}
         component={EditAccountScreen}
+      />
+      <Stack.Screen
+        name={SCREEN_NAME.FORGOT_PASSWORD_SCREEN}
+        component={ForgotPasswordScreen}
       />
     </Stack.Navigator>
   );

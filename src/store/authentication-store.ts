@@ -1,6 +1,8 @@
 import { makeObservable, observable } from 'mobx';
 import { USER } from '@constants';
 import { DataModels } from '@models';
+import { AuthenticationServices } from '@services';
+import { ServiceResultHandler } from '@types';
 import { delay } from '@utils';
 import { UserStore } from './user-store';
 
@@ -36,6 +38,36 @@ class AuthenticationStore {
   signOut = async () => {
     await delay(1000);
     this.userStore.setUserProfile(null);
+  };
+
+  sendVerificationCode = async (handler: ServiceResultHandler) => {
+    const result = await AuthenticationServices.sendVerificationCode(
+      handler.params?.email,
+    );
+
+    console.log('result :>> ', result);
+
+    if (result.success) {
+      handler.onSuccess?.();
+    } else {
+      handler.onFail?.();
+    }
+
+    return result;
+  };
+
+  submitVerficationCode = async (handler: ServiceResultHandler) => {
+    const result = await AuthenticationServices.submitVerficationCode(
+      handler.params?.code,
+    );
+
+    if (result.success) {
+      handler.onSuccess?.();
+    } else {
+      handler.onFail?.();
+    }
+
+    return result;
   };
 }
 

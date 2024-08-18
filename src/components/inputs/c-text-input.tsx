@@ -109,6 +109,7 @@ const CTextInput: FC<CTextInputProps> = ({
           value={value}
           onFocus={onFocus}
           autoFocus={autoFocus}
+          autoCapitalize="none"
           contentStyle={[
             styles.contentStyle,
             showValidationError && styles.errorStyle,

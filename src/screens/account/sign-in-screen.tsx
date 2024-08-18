@@ -16,7 +16,7 @@ import { SignInViewModel } from './view-models';
 
 const SignInScreen = ({ navigation }: any) => {
   const signInVM = useRef(new SignInViewModel(appModel.userStore)).current;
-  const { openHomeScreen } = useNavigate(navigation);
+  const { openHomeScreen, openForgotPasswordScreen } = useNavigate(navigation);
   const { width, height } = Dimensions.get('window');
 
   const onSubmit = async () => {
@@ -78,7 +78,11 @@ const SignInScreen = ({ navigation }: any) => {
           }}
         />
         <Layouts.VSpace value={12} />
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            openForgotPasswordScreen();
+          }}
+        >
           <Text style={styles.forgotPassword}>Forgot password</Text>
         </TouchableOpacity>
       </View>

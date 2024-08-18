@@ -1,3 +1,5 @@
+import { ERROR_CODES } from '@constants';
+
 export interface IReviewInput {
   rating: number;
   createdAt: string; // MM/dd/yyyy hh:mm:ss tt
@@ -146,4 +148,15 @@ export interface INotification {
   title: string;
   content: string;
   readed: boolean;
+}
+
+export interface ServiceResult<T> {
+  success: boolean;
+  errorCode: ERROR_CODES;
+  errorMessage: string;
+  isSystemError: boolean;
+  data?: T;
+  customData?: any;
+  errors: any[];
+  error?: any;
 }

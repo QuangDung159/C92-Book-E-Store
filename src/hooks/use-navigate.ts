@@ -110,6 +110,12 @@ export const useNavigate = (navigation: any) => {
     });
   };
 
+  const openForgotPasswordScreen = () => {
+    navigation.navigate(SCREEN_NAME.ACCOUNT_NAVIGATOR, {
+      screen: SCREEN_NAME.FORGOT_PASSWORD_SCREEN,
+    });
+  };
+
   return {
     openSearchScreen,
     openFilterScreen,
@@ -125,5 +131,6 @@ export const useNavigate = (navigation: any) => {
     openSignUpScreen,
     openAccountScreen,
     openEditAccountScreen,
+    openForgotPasswordScreen,
   };
 };
