@@ -34,6 +34,7 @@ class AuthenticationStore {
   };
 
   signOut = async () => {
+    await delay(1000);
     this.userStore.setUserProfile(null);
   };
 }

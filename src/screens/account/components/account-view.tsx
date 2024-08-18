@@ -13,12 +13,12 @@ import {
 import { Divider } from 'react-native-paper';
 import { Buttons, Icons, Layouts } from '@components';
 import { useNavigate } from '@hooks';
-import { userStore } from '@store';
+import { authenticationStore, sharedStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 
 const AccountView: React.FC = () => {
   const navigation = useNavigation();
-  const { openHomeScreen } = useNavigate(navigation);
+  const { openHomeScreen, openAddressScreen } = useNavigate(navigation);
 
   const renderInfoRow = (label: string, value: string) => {
     return (
@@ -78,7 +78,7 @@ const AccountView: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <Layouts.VSpace value={24} />
         <View
           style={{
@@ -109,13 +109,25 @@ const AccountView: React.FC = () => {
           buttonType="secondary"
         />
         <Layouts.VSpace value={24} />
+        {renderMenuItem('Favourites', () => {})}
+        {renderMenuItem('Viewed', () => {})}
         {renderMenuItem('Orders', () => {})}
-        {renderMenuItem('Address Book', () => {})}
+        {renderMenuItem('Address Book', () => {
+          openAddressScreen();
+        })}
         {renderMenuItem('Payment Methods', () => {})}
         {renderMenuItem('Settings', () => {})}
-        {renderMenuItem('Sign Out', () => {}, {
-          color: COLORS.error50,
-        })}
+        {renderMenuItem(
+          'Sign Out',
+          async () => {
+            sharedStore.setShowLoading(true);
+            await authenticationStore.signOut();
+            sharedStore.setShowLoading(false);
+          },
+          {
+            color: COLORS.error50,
+          },
+        )}
         <Layouts.VSpace value={24} />
       </ScrollView>
     </View>
