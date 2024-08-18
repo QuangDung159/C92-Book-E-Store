@@ -47,6 +47,7 @@ const BookImage: React.FC<BookImageProps> = ({ book, navigation, data }) => {
 const styles = StyleSheet.create({
   imageWrapper: {
     alignItems: 'center',
+    marginTop: 6,
   },
   heartIconWrapper: {
     position: 'absolute',

@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingBottom: 12,
-    marginTop: -6,
   },
   iconWrapper: {
     flexDirection: 'row',
