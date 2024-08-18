@@ -31,12 +31,12 @@ const ForgotPasswordScreen = ({ navigation }: any) => {
     await authenticationStore.sendVerificationCode({
       onSuccess: () => {
         ToastHelpers.showToast({
-          title: 'Please check your email to get temporary password',
+          content: 'Please check your email to get temporary password',
         });
       },
       onFail: () => {
         ToastHelpers.showToast({
-          title: 'Your email not exist, please check again',
+          content: 'Your email not exist, please check again',
           type: 'error',
         });
       },
@@ -74,7 +74,7 @@ const ForgotPasswordScreen = ({ navigation }: any) => {
         />
         <Layouts.VSpace value={12} />
         <Buttons.CButton
-          label="Get verification code"
+          label="Send temporary password"
           buttonType="primary"
           onPress={async () => {
             onSubmitSendCode();

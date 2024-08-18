@@ -10,7 +10,6 @@ const signUp = async () => {
 
 const sendVerificationCode = async (email: string) => {
   await delay(1000);
-  console.log('email :>> ', email);
   if (email === 'user@mail.com') {
     return {
       success: true,
@@ -23,9 +22,10 @@ const sendVerificationCode = async (email: string) => {
 
 const submitVerficationCode = async (code: string) => {
   await delay(1000);
-  console.log('code :>> ', code);
+
   return {
     success: true,
+    data: code,
   } as DataModels.ServiceResult<any>;
 };
 

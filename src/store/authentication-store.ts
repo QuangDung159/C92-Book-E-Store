@@ -45,8 +45,6 @@ class AuthenticationStore {
       handler.params?.email,
     );
 
-    console.log('result :>> ', result);
-
     if (result.success) {
       handler.onSuccess?.();
     } else {

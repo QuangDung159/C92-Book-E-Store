@@ -2,7 +2,7 @@ import Toast from 'react-native-toast-message';
 import { COLORS, FONT_STYLES } from '@themes';
 
 type toastProps = {
-  title: string;
+  title?: string;
   content?: string;
   type?: 'error' | 'success' | 'info';
   onPress?: () => void;
