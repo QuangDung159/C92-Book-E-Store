@@ -7,7 +7,6 @@ import { ReferenceOptionsStore } from './reference-options-store';
 import { SearchStore } from './search-store';
 import { SharedStore } from './shared-store';
 import { UserStore } from './user-store';
-import { ValidationFormStore } from './validation-form-store';
 
 const {
   cartStore,
@@ -18,7 +17,6 @@ const {
   sharedStore,
   notificationStore,
   authenticationStore,
-  validationFormStore,
 } = appModel;
 
 export {
@@ -31,7 +29,6 @@ export {
   searchStore,
   sharedStore,
   userStore,
-  validationFormStore,
 };
 
 export {
@@ -43,5 +40,4 @@ export {
   SearchStore,
   SharedStore,
   UserStore,
-  ValidationFormStore,
 };

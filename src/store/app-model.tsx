@@ -14,7 +14,6 @@ import { ReferenceOptionsStore } from './reference-options-store';
 import { SearchStore } from './search-store';
 import { SharedStore } from './shared-store';
 import { UserStore } from './user-store';
-import { ValidationFormStore } from './validation-form-store';
 
 class AppModel {
   cartStore: CartStore;
@@ -25,7 +24,6 @@ class AppModel {
   sharedStore: SharedStore;
   notificationStore: NotificationStore;
   authenticationStore: AuthenticationStore;
-  validationFormStore: ValidationFormStore;
 
   constructor() {
     this.userStore = new UserStore();
@@ -36,7 +34,6 @@ class AppModel {
     this.sharedStore = new SharedStore();
     this.notificationStore = new NotificationStore();
     this.authenticationStore = new AuthenticationStore(this.userStore);
-    this.validationFormStore = new ValidationFormStore();
   }
 
   async appInit() {
