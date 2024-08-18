@@ -132,6 +132,8 @@ export interface IUser {
   listShippingAddress: IShippingAddress[];
   listCreditCard: ICreditCard[];
   email: string;
+  phoneNumber: string;
+  password: string;
 }
 
 export interface ILocation {

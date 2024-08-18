@@ -3,7 +3,7 @@ import { USER } from '@constants';
 import { UserStore } from '@store';
 import { delay } from '@utils';
 
-class SignInViewModel {
+class SignUpViewModel {
   email: string = '';
   password: string = '';
   username: string = '';
@@ -58,4 +58,4 @@ class SignInViewModel {
   }
 }
 
-export { SignInViewModel };
+export { SignUpViewModel };

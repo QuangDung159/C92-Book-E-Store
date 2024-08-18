@@ -4,7 +4,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Buttons, Layouts } from '@components';
 import { useNavigate } from '@hooks';
-import { userStore } from '@store';
+import { authenticationStore, userStore } from '@store';
 import { FONT_STYLES } from '@themes';
 
 const AccountView: React.FC = () => {
@@ -21,6 +21,7 @@ const AccountView: React.FC = () => {
         <Buttons.CButton
           label="Sign out"
           onPress={() => {
+            authenticationStore.signOut();
             openHomeScreen();
           }}
           buttonType="secondary"

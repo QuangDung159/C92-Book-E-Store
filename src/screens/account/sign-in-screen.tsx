@@ -28,7 +28,7 @@ const SignInScreen = ({ navigation }: any) => {
     }
 
     sharedStore.setShowLoading(true);
-    await authenticationStore.login(signInVM.toJsonObject);
+    await authenticationStore.signIn(signInVM.toJsonObject);
     sharedStore.setShowLoading(false);
     openHomeScreen();
   };

@@ -601,6 +601,8 @@ const USER: DataModels.IUser = {
   listShippingAddress: [LIST_SHIPPING_ADDRESS[0], LIST_SHIPPING_ADDRESS[1]],
   listCreditCard: [LIST_CREDIT_CARD[0], LIST_CREDIT_CARD[1]],
   email: 'user@mail.com',
+  password: '123123',
+  phoneNumber: '09990099',
 };
 
 const LIST_CITY: DataModels.ILocation[] = [

@@ -3,12 +3,15 @@ import React, { useRef } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Buttons, Inputs, Layouts, ScreenHeader } from '@components';
-import { appModel } from '@store';
+import { USER } from '@constants';
+import { useNavigate } from '@hooks';
+import { appModel, authenticationStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
-import { SignInViewModel } from './view-models';
+import { SignUpViewModel } from './view-models';
 
 const SignUpScreen = ({ navigation }: any) => {
-  const signInVM = useRef(new SignInViewModel(appModel.userStore)).current;
+  const signUpVM = useRef(new SignUpViewModel(appModel.userStore)).current;
+  const { openHomeScreen } = useNavigate(navigation);
 
   return (
     <View style={styles.container}>
@@ -30,60 +33,62 @@ const SignUpScreen = ({ navigation }: any) => {
         </Text>
         <Layouts.VSpace value={24} />
         <Inputs.CTextInput
-          value={signInVM.email}
-          placeholder="Username"
-          onChangeText={(value) => {
-            signInVM.setEmail(value);
-          }}
-        />
-        <Layouts.VSpace value={12} />
-        <Inputs.CTextInput
-          value={signInVM.email}
-          placeholder="Phone number"
-          onChangeText={(value) => {
-            signInVM.setEmail(value);
-          }}
-        />
-        <Layouts.VSpace value={12} />
-        <Inputs.CTextInput
-          value={signInVM.email}
+          value={signUpVM.email}
           placeholder="Email"
           onChangeText={(value) => {
-            signInVM.setEmail(value);
+            signUpVM.setEmail(value);
           }}
         />
         <Layouts.VSpace value={12} />
         <Inputs.CTextInput
-          keyboardType="visible-password"
-          value={signInVM.password}
+          value={signUpVM.username}
+          placeholder="Username"
+          onChangeText={(value) => {
+            signUpVM.setUsername(value);
+          }}
+        />
+        <Layouts.VSpace value={12} />
+        <Inputs.CTextInput
+          keyboardType="phone-pad"
+          value={signUpVM.phoneNumber}
+          placeholder="Phone number"
+          onChangeText={(value) => {
+            signUpVM.setPhoneNumber(value);
+          }}
+        />
+        <Layouts.VSpace value={12} />
+        <Inputs.CTextInput
+          secureTextEntry
+          value={signUpVM.password}
           placeholder="Password"
           onChangeText={(value) => {
-            signInVM.setPassword(value);
+            signUpVM.setPassword(value);
           }}
         />
         <Layouts.VSpace value={12} />
         <Inputs.CTextInput
-          keyboardType="visible-password"
-          value={signInVM.password}
+          secureTextEntry
+          value={signUpVM.confirmPassword}
           placeholder="Confirm password"
           onChangeText={(value) => {
-            signInVM.setPassword(value);
-          }}
-        />
-        <Layouts.VSpace value={12} />
-        <Inputs.CTextInput
-          keyboardType="visible-password"
-          value={signInVM.password}
-          placeholder="Enter password"
-          onChangeText={(value) => {
-            signInVM.setPassword(value);
+            signUpVM.setConfirmPassword(value);
           }}
         />
         <Layouts.VSpace value={24} />
         <Buttons.CButton
           label="Sign Up"
           buttonType="primary"
-          onPress={() => {}}
+          onPress={async () => {
+            await authenticationStore.signIn({
+              ...USER,
+              email: signUpVM.email,
+              username: signUpVM.username,
+              password: signUpVM.password,
+              phoneNumber: signUpVM.phoneNumber,
+            });
+
+            openHomeScreen();
+          }}
         />
         <Layouts.VSpace value={24} />
       </KeyboardAwareScrollView>

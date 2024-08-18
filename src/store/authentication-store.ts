@@ -15,7 +15,7 @@ class AuthenticationStore {
     this.userStore = userStore;
   }
 
-  login = async (user: DataModels.IUser) => {
+  signIn = async (user: DataModels.IUser) => {
     await delay(1000);
     this.userStore.setUserProfile({
       ...USER,
