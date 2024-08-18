@@ -7,6 +7,7 @@ import { sharedStore } from '@store';
 import { COLORS } from '@themes';
 import { AccountNavigator } from './account-navigator';
 import { BookDetailNavigator } from './book-detail-navigator';
+import { BookingListingNavigator } from './book-listing-navigator';
 import { BottomTabNavigator } from './bottom-tab-navigator';
 import { CartNavigator } from './cart-navigator';
 import { SearchNavigator } from './search-navigator';
@@ -47,6 +48,10 @@ const Navigation = () => {
         <Stack.Screen
           name={SCREEN_NAME.ACCOUNT_NAVIGATOR}
           component={AccountNavigator}
+        />
+        <Stack.Screen
+          name={SCREEN_NAME.BOOK_LISTING_NAVIGATOR}
+          component={BookingListingNavigator}
         />
       </Stack.Navigator>
     </>

@@ -116,6 +116,15 @@ export const useNavigate = (navigation: any) => {
     });
   };
 
+  const openBookListingScreen = (listBook: DataModels.IBook[]) => {
+    navigation.navigate(SCREEN_NAME.BOOK_LISTING_NAVIGATOR, {
+      screen: SCREEN_NAME.BOOK_LISTING_SCREEN,
+      params: {
+        listBook,
+      },
+    });
+  };
+
   return {
     openSearchScreen,
     openFilterScreen,
@@ -132,5 +141,6 @@ export const useNavigate = (navigation: any) => {
     openAccountScreen,
     openEditAccountScreen,
     openForgotPasswordScreen,
+    openBookListingScreen,
   };
 };

@@ -13,12 +13,23 @@ import {
 import { Divider } from 'react-native-paper';
 import { Buttons, Icons, Layouts } from '@components';
 import { useNavigate } from '@hooks';
+import { BookServices } from '@services';
 import { authenticationStore, sharedStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 
 const AccountView: React.FC = () => {
   const navigation = useNavigation();
-  const { openAddressScreen, openEditAccountScreen } = useNavigate(navigation);
+  const { openAddressScreen, openEditAccountScreen, openBookListingScreen } =
+    useNavigate(navigation);
+
+  const loadListFavourite = async () => {
+    sharedStore.setShowLoading(true);
+    const result = await BookServices.loadListFavourite();
+    if (result.success) {
+      openBookListingScreen(result.data?.list || []);
+    }
+    sharedStore.setShowLoading(false);
+  };
 
   const renderInfoRow = (label: string, value: string) => {
     return (
@@ -66,7 +77,9 @@ const AccountView: React.FC = () => {
           buttonType="secondary"
         />
         <Layouts.VSpace value={24} />
-        {renderMenuItem('Favourites', () => {})}
+        {renderMenuItem('Favourites', () => {
+          loadListFavourite();
+        })}
         {renderMenuItem('Viewed', () => {})}
         {renderMenuItem('Orders', () => {})}
         {renderMenuItem('Shipping Address', () => {
