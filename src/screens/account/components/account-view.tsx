@@ -26,7 +26,16 @@ const AccountView: React.FC = () => {
     sharedStore.setShowLoading(true);
     const result = await BookServices.loadListFavourite();
     if (result.success) {
-      openBookListingScreen(result.data?.list || []);
+      openBookListingScreen(result.data?.list || [], 'Favourite');
+    }
+    sharedStore.setShowLoading(false);
+  };
+
+  const loadListViewed = async () => {
+    sharedStore.setShowLoading(true);
+    const result = await BookServices.loadListFavourite();
+    if (result.success) {
+      openBookListingScreen(result.data?.list || [], 'Viewed');
     }
     sharedStore.setShowLoading(false);
   };
@@ -80,7 +89,9 @@ const AccountView: React.FC = () => {
         {renderMenuItem('Favourites', () => {
           loadListFavourite();
         })}
-        {renderMenuItem('Viewed', () => {})}
+        {renderMenuItem('Viewed', () => {
+          loadListViewed();
+        })}
         {renderMenuItem('Orders', () => {})}
         {renderMenuItem('Shipping Address', () => {
           openAddressScreen();

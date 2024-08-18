@@ -7,8 +7,11 @@ import { DataModels } from '@models';
 import { searchStore } from '@store';
 import { COLORS } from '@themes';
 
-const BookListingScreen = ({ navigation }: any) => {
+const BookListingScreen = ({ navigation, route }: any) => {
   const scrollRef = useRef<ScrollView>();
+
+  const listBook = route.params?.listBook || [];
+  const title = route.params?.title;
 
   const onUpdateCount = (count: number, bookItem: DataModels.IBook) => {
     searchStore.updateBookItem({
@@ -25,7 +28,7 @@ const BookListingScreen = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
-      <ScreenHeader title="Favourites" navigation={navigation} />
+      <ScreenHeader title={title} navigation={navigation} />
       <View style={styles.wrapper}>
         <ScrollView
           ref={scrollRef}
@@ -34,16 +37,16 @@ const BookListingScreen = ({ navigation }: any) => {
         >
           <Layouts.VSpace value={24} />
           <ListBookCardVertical
-            listItem={searchStore.listBook}
+            listItem={listBook}
             onUpdateCount={onUpdateCount}
           />
           <Layouts.VSpace value={50} />
         </ScrollView>
-        <View style={styles.scrollTop}>
-          <TouchableOpacity onPress={scrollToTop}>
-            <Entypo name="chevron-up" size={24} />
-          </TouchableOpacity>
-        </View>
+      </View>
+      <View style={styles.scrollTop}>
+        <TouchableOpacity onPress={scrollToTop}>
+          <Entypo name="chevron-up" size={24} />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -65,7 +68,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
-    bottom: 56,
+    bottom: 8,
     right: 24,
     opacity: 0.8,
   },
