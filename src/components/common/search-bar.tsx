@@ -44,11 +44,17 @@ const SearchBar: React.FC<SearchBarProps> = ({
         </>
       )}
       {showSearch ? (
-        <Inputs.CTextInput
-          placeholder="Happy reading!"
-          style={styles.input}
-          autoFocus={autoFocus}
-        />
+        <View
+          style={{
+            flex: 1,
+          }}
+        >
+          <Inputs.CTextInput
+            placeholder="Happy reading!"
+            style={styles.input}
+            autoFocus={autoFocus}
+          />
+        </View>
       ) : (
         <View
           style={{
@@ -84,13 +90,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingBottom: 12,
+    marginTop: -6,
   },
   iconWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   input: {
-    flex: 1,
     height: 34.5,
   },
   goodText: {
