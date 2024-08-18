@@ -1,4 +1,10 @@
-import { action, computed, makeObservable, observable } from 'mobx';
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+  runInAction,
+} from 'mobx';
 import { DataModels } from '@models';
 
 class AddEditAddressViewModel {
@@ -11,6 +17,7 @@ class AddEditAddressViewModel {
   primary: boolean = false;
   id: string = '';
   shippingAddress: DataModels.IShippingAddress | null = null;
+  shouldShowValidationErrors: boolean = false;
 
   constructor(shippingAddress?: DataModels.IShippingAddress) {
     makeObservable(this, {
@@ -30,6 +37,11 @@ class AddEditAddressViewModel {
       setName: action,
       fromJsonObject: action,
       toJsonObject: computed,
+
+      // validation
+      validationErrors: computed,
+      hasAnyValidationError: computed,
+      shouldShowValidationErrors: observable,
     });
 
     if (shippingAddress) {
@@ -100,6 +112,43 @@ class AddEditAddressViewModel {
 
   setPrimary(value: boolean) {
     this.primary = value;
+  }
+
+  // validation
+  get validationErrors() {
+    const errorMap: Map<string, string> = new Map();
+
+    if (!this.address) {
+      errorMap.set('address', 'Please enter address');
+    }
+
+    if (!this.phoneNumber) {
+      errorMap.set('phoneNumber', 'Please enter phone number');
+    }
+
+    if (!this.city) {
+      errorMap.set('city', 'Please seelct city');
+    }
+
+    if (!this.district) {
+      errorMap.set('district', 'Please select district');
+    }
+
+    if (!this.ward) {
+      errorMap.set('ward', 'Please select ward');
+    }
+
+    return errorMap;
+  }
+
+  showValidationErrors(value: boolean) {
+    runInAction(() => {
+      this.shouldShowValidationErrors = value;
+    });
+  }
+
+  get hasAnyValidationError() {
+    return this.validationErrors.size > 0;
   }
 }
 
