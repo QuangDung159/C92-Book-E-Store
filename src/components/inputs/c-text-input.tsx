@@ -140,6 +140,7 @@ const CTextInput: FC<CTextInputProps> = ({
                 onPress={() => {
                   setHidePassword(!hidePassword);
                 }}
+                color={COLORS.gray60}
               />
             ) : (
               <Icons.EyeOffIcon
@@ -147,6 +148,7 @@ const CTextInput: FC<CTextInputProps> = ({
                 onPress={() => {
                   setHidePassword(!hidePassword);
                 }}
+                color={COLORS.gray60}
               />
             )}
           </View>
