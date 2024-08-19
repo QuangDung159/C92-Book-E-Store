@@ -69,15 +69,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   left: {
-    flex: 1,
+    flex: 20,
   },
   titleWrapper: {
-    flex: 8,
+    flex: 100,
     alignItems: 'center',
   },
   right: {
-    flex: 1,
+    flex: 20,
     alignItems: 'flex-end',
+    backgroundColor: 'pink',
   },
   wrapper: {
     borderBottomWidth: 1,

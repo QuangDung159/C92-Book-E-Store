@@ -75,6 +75,7 @@ const BookCardItemVertical: React.FC<BookCardItemVerticalProps> = ({
             <BookCardInfo book={bookCardItem} />
           </View>
         </View>
+        <Layouts.VSpace value={8} />
         <View style={styles.priceWrapper}>
           <BookCardPrice
             price={bookCardItem.price}
@@ -96,7 +97,7 @@ const BookCardItemVertical: React.FC<BookCardItemVerticalProps> = ({
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.gray200,
-    height: 178,
+    height: 185,
     borderRadius: 8,
   },
   info: {
