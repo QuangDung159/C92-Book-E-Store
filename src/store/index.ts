@@ -1,15 +1,43 @@
-import { configureStore } from '@reduxjs/toolkit';
-import createSagaMiddleware from 'redux-saga';
-import rootSaga from '../sagas';
-import rootReducer from './reducer';
+import { appModel } from './app-model';
+import { AuthenticationStore } from './authentication-store';
+import { CartStore } from './cart-store';
+import { CategoryStore } from './category-store';
+import { NotificationStore } from './notification-store';
+import { ReferenceOptionsStore } from './reference-options-store';
+import { SearchStore } from './search-store';
+import { SharedStore } from './shared-store';
+import { UserStore } from './user-store';
 
-const sagaMiddleware = createSagaMiddleware();
+const {
+  cartStore,
+  categoryStore,
+  searchStore,
+  referenceOptionsStore,
+  userStore,
+  sharedStore,
+  notificationStore,
+  authenticationStore,
+} = appModel;
 
-const store = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
-});
+export {
+  appModel,
+  authenticationStore,
+  cartStore,
+  categoryStore,
+  notificationStore,
+  referenceOptionsStore,
+  searchStore,
+  sharedStore,
+  userStore,
+};
 
-sagaMiddleware.run(rootSaga);
-
-export default store;
+export {
+  AuthenticationStore,
+  CartStore,
+  CategoryStore,
+  NotificationStore,
+  ReferenceOptionsStore,
+  SearchStore,
+  SharedStore,
+  UserStore,
+};

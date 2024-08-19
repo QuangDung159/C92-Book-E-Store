@@ -1,11 +1,20 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true,
+    "baseUrl": "./src",
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@screens": ["screens"],
+      "@assets": ["assets"],
+      "@themes": ["themes"],
+      "@store": ["store"],
+      "@sagas": ["sagas"],
+      "@components": ["components"],
+      "@models": ["models"],
+      "@constants": ["constants"],
+      "@hooks": ["hooks"],
+      "@utils": ["utils"],
+      "@types": ["types"],
+      "@services": ["services"],
     },
     "target": "esnext",
     "module": "commonjs",
@@ -14,10 +23,5 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-  ],
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
 }

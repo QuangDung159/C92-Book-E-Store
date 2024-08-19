@@ -1,37 +1,61 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
+import { observer } from 'mobx-react-lite';
 import React from 'react';
-import HomeScreen from '../screens/HomeScreen';
-import ProfileScreen from '../screens/ProfileScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import Spinner from 'react-native-loading-spinner-overlay';
+import { SCREEN_NAME } from '@constants';
+import { sharedStore } from '@store';
+import { COLORS } from '@themes';
+import { AccountNavigator } from './account-navigator';
+import { BookDetailNavigator } from './book-detail-navigator';
+import { BookingListingNavigator } from './book-listing-navigator';
+import { BottomTabNavigator } from './bottom-tab-navigator';
+import { CartNavigator } from './cart-navigator';
+import { SearchNavigator } from './search-navigator';
 
 const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
-const Drawer = createDrawerNavigator();
 
-function BottomTabNavigator() {
+const Navigation = () => {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
-    </Tab.Navigator>
+    <>
+      <Spinner
+        visible={sharedStore.showLoading}
+        textStyle={{
+          color: COLORS.primaryWhite,
+        }}
+      />
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+          gestureEnabled: false,
+        }}
+      >
+        <Stack.Screen
+          name={SCREEN_NAME.BOTTOM_TAB_NAVIGATOR}
+          component={BottomTabNavigator}
+        />
+        <Stack.Screen
+          name={SCREEN_NAME.SEARCH_NAVIGATOR}
+          component={SearchNavigator}
+        />
+        <Stack.Screen
+          name={SCREEN_NAME.BOOK_DETAIL_NAVIGATOR}
+          component={BookDetailNavigator}
+        />
+        <Stack.Screen
+          name={SCREEN_NAME.CART_NAVIGATOR}
+          component={CartNavigator}
+        />
+        <Stack.Screen
+          name={SCREEN_NAME.ACCOUNT_NAVIGATOR}
+          component={AccountNavigator}
+        />
+        <Stack.Screen
+          name={SCREEN_NAME.BOOK_LISTING_NAVIGATOR}
+          component={BookingListingNavigator}
+        />
+      </Stack.Navigator>
+    </>
   );
-}
-
-function DrawerNavigator() {
-  return (
-    <Drawer.Navigator>
-      <Drawer.Screen name="Tabs" component={BottomTabNavigator} />
-      <Drawer.Screen name="Profile" component={ProfileScreen} />
-    </Drawer.Navigator>
-  );
-}
-
-export default function Navigation() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="Main" component={DrawerNavigator} />
-    </Stack.Navigator>
-  );
-}
+};
+const observable = observer(Navigation);
+export { observable as Navigation };
