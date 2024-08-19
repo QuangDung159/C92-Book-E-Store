@@ -2,7 +2,7 @@ import { Entypo, MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import {
   AccountScreen,
   CategoriesScreen,
@@ -140,11 +140,20 @@ const styles = StyleSheet.create({
     fontWeight: '200',
     color: COLORS.primaryBlack,
     marginTop: -4,
+    marginBottom: Platform.select({
+      android: 4,
+      ios: 0,
+    }),
   },
-  tabBarStyle: {
-    height: 95,
-    marginBottom: -30,
-  },
+  tabBarStyle: Platform.select({
+    ios: {
+      height: 95,
+      marginBottom: -30,
+    },
+    android: {
+      height: 70,
+    },
+  }),
   dot: {
     position: 'absolute',
     zIndex: 99,

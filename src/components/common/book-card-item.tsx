@@ -2,9 +2,11 @@ import { useNavigation } from 'expo-router';
 import React from 'react';
 import {
   Dimensions,
+  Platform,
   StyleProp,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
   ViewStyle,
 } from 'react-native';
@@ -14,7 +16,6 @@ import {
   BookCardCarousel,
   BookCardPrice,
   BookTitle,
-  Buttons,
   Icons,
   Layouts,
 } from '@components';
@@ -40,7 +41,7 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
   const { openCartScreen } = useNavigate(navigation);
 
   const carouselWidth = (width - 48 - 12) / 2;
-  const carouselHeight = carouselWidth * 1.2;
+  const carouselHeight = carouselWidth * 1.3;
 
   const data = [
     ImageAssets.bookImage1,
@@ -101,7 +102,7 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
             containerStyle={styles.priceContainer}
           />
           <Layouts.VSpace value={6} />
-          <Buttons.CButton
+          <TouchableOpacity
             onPress={() => {
               cartStore.addToCart({
                 book: bookCardItem,
@@ -114,12 +115,24 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
                 onPress: () => openCartScreen(),
               });
             }}
-            buttonType="primary"
-            label="Add to cart"
             style={{
               borderRadius: 50,
+              backgroundColor: COLORS.primaryBlack,
+              justifyContent: 'center',
+              alignItems: 'center',
+              padding: 8,
+              height: 40,
             }}
-          />
+          >
+            <Text
+              style={{
+                ...FONT_STYLES.BOLD_14,
+                color: COLORS.primaryWhite,
+              }}
+            >
+              Add to cart
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </React.Fragment>
@@ -134,10 +147,19 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.gray200,
   },
   image: {
-    width: 100,
-    height: 100,
+    width: Platform.select({
+      ios: 100,
+      android: 95,
+    }),
+    height: Platform.select({
+      ios: 100,
+      android: 95,
+    }),
     flex: 1,
-    marginTop: -24,
+    marginTop: Platform.select({
+      ios: -30,
+      android: -24,
+    }),
   },
   info: {
     marginTop: -24,

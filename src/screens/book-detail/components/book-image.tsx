@@ -13,7 +13,7 @@ const BookImage: React.FC<BookImageProps> = ({ book, navigation, data }) => {
   const { width } = Dimensions.get('window');
 
   const carouselWidth = width - 48;
-  const carouselHeight = carouselWidth * 0.6;
+  const carouselHeight = carouselWidth * 0.65;
 
   return (
     <View style={styles.imageWrapper}>
