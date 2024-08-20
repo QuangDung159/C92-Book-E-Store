@@ -1,6 +1,6 @@
 {
-  "name": "nhasachphuongnam",
-  "main": "expo-router/entry",
+  "name": "c92_book_e_store",
+  "main": "index.js",
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
