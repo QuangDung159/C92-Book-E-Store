@@ -1,3 +1,4 @@
+import * as Linking from 'expo-linking';
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import Toast from 'react-native-toast-message';
@@ -9,6 +10,9 @@ export default function App() {
     appModel.appInit();
     appModel.loadMasterData();
   }, []);
+
+  const url = Linking.useURL();
+  console.log('url :>> ', url);
 
   return (
     <>
