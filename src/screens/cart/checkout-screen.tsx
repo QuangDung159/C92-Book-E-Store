@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useMemo, useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import { Divider, RadioButton } from 'react-native-paper';
 import {
@@ -20,8 +20,7 @@ import { CartInfoRow, ListCreditCard, ShippingAddress } from './components';
 import { ListCartItem } from './components/list-cart-item';
 
 const CheckoutScreen = ({ navigation }: any) => {
-  const { openPaymentSuccessScreen, openAddressScreen } =
-    useNavigate(navigation);
+  const { openAddressScreen } = useNavigate(navigation);
   const [isShowListCreditCart, setIsShowListCreditCart] = useState(false);
 
   const toggleListCreditCart = () =>
@@ -147,7 +146,11 @@ const CheckoutScreen = ({ navigation }: any) => {
           sharedStore.setShowLoading(true);
           delay(1000).then(() => {
             sharedStore.setShowLoading(false);
-            openPaymentSuccessScreen();
+            if (
+              Linking.canOpenURL('exp://192.168.68.122:8081/--/payment-success')
+            ) {
+              Linking.openURL('exp://192.168.68.122:8081/--/payment-success');
+            }
           });
         }}
         priceDisplay={cartStore.total}
