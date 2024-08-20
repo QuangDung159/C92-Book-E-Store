@@ -6,4 +6,18 @@ type ServiceResultHandler = {
   params?: any;
 };
 
-export { AdministrativeUnitEnum, ServiceResultHandler };
+type PaymentData = {
+  amount: number;
+  extraData?: string;
+  ipnUrl: string;
+  orderId: string;
+  orderInfo: string;
+  redirectUrl: string;
+  requestId: string;
+  partnerName?: string;
+  storeId?: string;
+  lang?: string;
+  autoCapture?: boolean;
+};
+
+export { AdministrativeUnitEnum, PaymentData, ServiceResultHandler };
