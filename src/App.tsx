@@ -26,8 +26,6 @@ const App = () => {
     appModel.loadMasterData();
   }, []);
 
-  console.log('url :>> ', url);
-
   if (url) {
     const { path, queryParams } = Linking.parse(url);
     console.log('queryParams :>> ', queryParams);
@@ -40,8 +38,12 @@ const App = () => {
     }
   }
 
+  const linking = {
+    prefixes: ['c92bookestorev1://'],
+  };
+
   return (
-    <NavigationContainer ref={navigationRef}>
+    <NavigationContainer ref={navigationRef} linking={linking}>
       <View
         style={{
           zIndex: 199,

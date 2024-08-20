@@ -84,7 +84,6 @@ const styles = StyleSheet.create({
   },
   label: {
     ...FONT_STYLES.BOLD_14,
-    marginTop: 4,
   },
   container: {
     flexDirection: 'row',
