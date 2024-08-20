@@ -1,13 +1,10 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Linking, StyleSheet, Text, View } from 'react-native';
 import { Buttons, Icons, Layouts } from '@components';
-import { useNavigate } from '@hooks';
 import { COLORS, FONT_STYLES } from '@themes';
 
-const PaymentSuccessScreen = ({ navigation }) => {
-  const { openHomeScreen } = useNavigate(navigation);
-
+const PaymentSuccessScreen = () => {
   return (
     <View style={styles.container}>
       <Icons.CheckSquareIcon size={150} />
@@ -19,7 +16,7 @@ const PaymentSuccessScreen = ({ navigation }) => {
       <Buttons.CButton
         label="Back to Home"
         onPress={() => {
-          openHomeScreen();
+          Linking.openURL('exp://192.168.68.122:8081/--/home');
         }}
       />
     </View>

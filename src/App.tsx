@@ -17,7 +17,9 @@ const App = () => {
   const url = Linking.useURL();
   const navigationRef = useRef<NavigationContainerRef<BaseParamList>>(null);
 
-  const { openPaymentSuccessScreen } = useNavigate(navigationRef.current);
+  const { openPaymentSuccessScreen, openHomeScreen } = useNavigate(
+    navigationRef.current,
+  );
 
   useEffect(() => {
     appModel.appInit();
@@ -32,6 +34,9 @@ const App = () => {
 
     if (path === 'payment-success') {
       openPaymentSuccessScreen();
+    }
+    if (path === 'home') {
+      openHomeScreen();
     }
   }
 
