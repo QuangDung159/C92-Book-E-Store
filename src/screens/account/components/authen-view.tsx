@@ -5,7 +5,6 @@ import { Buttons, Icons, Layouts } from '@components';
 import { useNavigate } from '@hooks';
 import { FONT_STYLES } from '@themes';
 import { PaymentData } from '@types';
-import { StringHelpers } from '@utils';
 import { MomoServices } from 'services/momo-services';
 
 const AuthenView: React.FC = () => {
