@@ -1,5 +1,5 @@
+import { useNavigation } from '@react-navigation/native';
 import { Image } from 'expo-image';
-import { useNavigation } from 'expo-router';
 import React from 'react';
 import {
   Dimensions,
