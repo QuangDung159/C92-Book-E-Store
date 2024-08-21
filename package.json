@@ -12,7 +12,8 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\"",
-    "build:android": "eas build -p android --profile preview --local"
+    "build:android:local": "eas build -p android --profile preview --local",
+    "build:android:develpment": "eas build -p android --profile development:android:apk"
   },
   "jest": {
     "preset": "jest-expo"

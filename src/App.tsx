@@ -7,7 +7,6 @@ import { useEffect, useRef } from 'react';
 import React, { View } from 'react-native';
 
 import Toast from 'react-native-toast-message';
-import { Layouts } from '@components';
 import { useNavigate } from '@hooks';
 import { appModel } from '@store';
 import { Navigation } from 'navigation';
@@ -51,7 +50,6 @@ const App = () => {
       >
         <Toast visibilityTime={2000} topOffset={0} />
       </View>
-      <Layouts.VSpace value={24} />
       <Navigation />
     </NavigationContainer>
   );

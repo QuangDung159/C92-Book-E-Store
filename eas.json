@@ -10,6 +10,13 @@
         "buildType": "apk"
       }
     },
+    "development:android:aab": {
+      "developmentClient": true,
+      "distribution": "store",
+      "android": {
+        "buildType": "app-bundle"
+      }
+    },
     "development": {
       "developmentClient": true,
       "distribution": "internal"

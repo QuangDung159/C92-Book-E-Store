@@ -78,7 +78,6 @@ const styles = StyleSheet.create({
   right: {
     flex: 20,
     alignItems: 'flex-end',
-    backgroundColor: 'pink',
   },
   wrapper: {
     borderBottomWidth: 1,
