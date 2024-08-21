@@ -1,15 +1,29 @@
 import axios from 'axios';
+import Constants from 'expo-constants';
 import { MOMO_REQUEST_TYPE } from '@constants';
 import { PaymentData } from '@types';
-import { StringHelpers } from '@utils';
+import { StringHelpers, ToastHelpers } from '@utils';
 
 const createMomoPayment = async (params: PaymentData) => {
+  const EXPO_PUBLIC_MOMO_PARTNER_CODE =
+    Constants?.expoConfig.extra?.EXPO_PUBLIC_MOMO_PARTNER_CODE;
+
+  if (!EXPO_PUBLIC_MOMO_PARTNER_CODE) {
+    throw (e: any) => {
+      console.log('e :>> ', e);
+      ToastHelpers.showToast({
+        title: 'EXPO_PUBLIC_MOMO_PARTNER_CODE',
+        type: 'error',
+      });
+    };
+  }
+
   const signature = StringHelpers.generateMoMoSignature(params);
 
   const data = JSON.stringify({
     ...params,
     signature,
-    partnerCode: process.env.EXPO_PUBLIC_MOMO_PARTNER_CODE,
+    partnerCode: EXPO_PUBLIC_MOMO_PARTNER_CODE,
     requestType: MOMO_REQUEST_TYPE,
   });
 

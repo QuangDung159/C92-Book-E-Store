@@ -1,6 +1,6 @@
 /* eslint-disable import/no-unresolved */
-import { EXPO_PUBLIC_MOMO_ACCESS_KEY } from '@env';
 import { useNavigation } from '@react-navigation/native';
+import Constants from 'expo-constants';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Buttons, Icons, Layouts } from '@components';
@@ -10,12 +10,16 @@ import { FONT_STYLES } from '@themes';
 const AuthenView: React.FC = () => {
   const navigation = useNavigation();
   const { openSignInScreen, openSignUpScreen } = useNavigate(navigation);
+  const EXPO_PUBLIC_MOMO_PARTNER_CODE =
+    Constants?.expoConfig.extra?.EXPO_PUBLIC_MOMO_PARTNER_CODE;
 
   return (
     <View style={styles.container}>
       <View>
         <Text style={styles.welcomeText}>Welcome to E-Store</Text>
-        <Text style={styles.welcomeText}>{EXPO_PUBLIC_MOMO_ACCESS_KEY}</Text>
+        <Text style={styles.welcomeText}>
+          EXPO_PUBLIC_MOMO_PARTNER_CODE {EXPO_PUBLIC_MOMO_PARTNER_CODE}
+        </Text>
         <Layouts.VSpace value={24} />
         <Buttons.CButton
           label="Sign In"

@@ -40,7 +40,10 @@
       },
       "eas": {
         "projectId": "aaff14e3-7daa-4336-9788-1145c8bd95fe"
-      }
+      },
+      "EXPO_PUBLIC_MOMO_SECRET_KEY":"",
+      "EXPO_PUBLIC_MOMO_PARTNER_CODE":"",
+      "EXPO_PUBLIC_MOMO_ACCESS_KEY":""
     }
   }
 }
