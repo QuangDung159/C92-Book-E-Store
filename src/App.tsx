@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import {
   NavigationContainer,
   NavigationContainerRef,
 } from '@react-navigation/native';
+import AppLoading from 'expo-app-loading';
+import * as Font from 'expo-font';
 import * as Linking from 'expo-linking';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { connectToDevTools } from 'react-devtools-core';
 import React, { View } from 'react-native';
 
@@ -31,9 +34,26 @@ const App = () => {
     navigationRef.current,
   );
 
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  const loadFonts = async () => {
+    await Font.loadAsync({
+      'Montserrat-Regular': require('./assets/fonts/Montserrat-Regular.ttf'),
+      'Montserrat-Bold': require('./assets/fonts/Montserrat-Bold.ttf'),
+      'Montserrat-SemiBold': require('./assets/fonts/Montserrat-SemiBold.ttf'),
+      'Montserrat-Thin': require('./assets/fonts/Montserrat-Thin.ttf'),
+      'Montserrat-Black': require('./assets/fonts/Montserrat-Black.ttf'),
+      'Montserrat-Light': require('./assets/fonts/Montserrat-Light.ttf'),
+      'Montserrat-Medium': require('./assets/fonts/Montserrat-Medium.ttf'),
+      // Thêm các biến thể khác nếu cần
+    });
+    setFontsLoaded(true);
+  };
+
   useEffect(() => {
     appModel.appInit();
     appModel.loadMasterData();
+    loadFonts();
   }, []);
 
   if (url) {
@@ -55,6 +75,10 @@ const App = () => {
   const linking = {
     prefixes: [prefix],
   };
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
 
   return (
     <NavigationContainer ref={navigationRef} linking={linking}>

@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Layouts, ListBookCardHorizontal } from '@components';
 import { TOP_BOOKS_FILTER } from '@constants';
 import { DataModels } from '@models';
+import { FONT_STYLES } from '@themes';
 import { TopBooksFilter } from './top-books-filter';
 
 interface HorizontalListCardProps {
@@ -54,9 +55,8 @@ const HorizontalListCard: React.FC<HorizontalListCardProps> = ({
 
 const styles = StyleSheet.create({
   categoryTitle: {
-    fontSize: 20,
+    ...FONT_STYLES.SEMIBOLD_20,
     lineHeight: 32,
-    fontWeight: 'semibold',
   },
   seeMore: {
     fontSize: 14,

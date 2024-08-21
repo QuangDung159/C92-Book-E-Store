@@ -8,22 +8,22 @@ const FONT_16: TextStyle = {
 
 const BOLD_16: TextStyle = {
   ...FONT_16,
-  fontWeight: 'bold',
+  fontFamily: 'Montserrat-Bold',
 };
 
 const REGULAR_16: TextStyle = {
   ...FONT_16,
-  fontWeight: 'regular',
+  fontFamily: 'Montserrat-Regular',
 };
 
 const SEMIBOLD_16: TextStyle = {
   ...FONT_16,
-  fontWeight: '600',
+  fontFamily: 'Montserrat-SemiBold',
 };
 
 const THIN_16: TextStyle = {
   ...FONT_16,
-  fontWeight: '200',
+  fontFamily: 'Montserrat-Thin',
 };
 
 const FONT_14: TextStyle = {
@@ -34,22 +34,22 @@ const FONT_14: TextStyle = {
 
 const BOLD_14: TextStyle = {
   ...FONT_14,
-  fontWeight: 'bold',
+  fontFamily: 'Montserrat-Bold',
 };
 
 const REGULAR_14: TextStyle = {
   ...FONT_14,
-  fontWeight: 'regular',
+  fontFamily: 'Montserrat-Regular',
 };
 
 const SEMIBOLD_14: TextStyle = {
   ...FONT_14,
-  fontWeight: '600',
+  fontFamily: 'Montserrat-SemiBold',
 };
 
 const THIN_14: TextStyle = {
   ...FONT_14,
-  fontWeight: '200',
+  fontFamily: 'Montserrat-Thin',
 };
 
 const FONT_10: TextStyle = {
@@ -60,22 +60,22 @@ const FONT_10: TextStyle = {
 
 const BOLD_10: TextStyle = {
   ...FONT_10,
-  fontWeight: 'bold',
+  fontFamily: 'Montserrat-Bold',
 };
 
 const REGULAR_10: TextStyle = {
   ...FONT_10,
-  fontWeight: 'regular',
+  fontFamily: 'Montserrat-Regular',
 };
 
 const SEMIBOLD_10: TextStyle = {
   ...FONT_10,
-  fontWeight: '600',
+  fontFamily: 'Montserrat-SemiBold',
 };
 
 const THIN_10: TextStyle = {
   ...FONT_10,
-  fontWeight: '200',
+  fontFamily: 'Montserrat-Thin',
 };
 
 const FONT_22: TextStyle = {
@@ -86,22 +86,22 @@ const FONT_22: TextStyle = {
 
 const BOLD_22: TextStyle = {
   ...FONT_22,
-  fontWeight: 'bold',
+  fontFamily: 'Montserrat-Bold',
 };
 
 const REGULAR_22: TextStyle = {
   ...FONT_22,
-  fontWeight: 'regular',
+  fontFamily: 'Montserrat-Regular',
 };
 
 const SEMIBOLD_22: TextStyle = {
   ...FONT_22,
-  fontWeight: '600',
+  fontFamily: 'Montserrat-SemiBold',
 };
 
 const THIN_22: TextStyle = {
   ...FONT_22,
-  fontWeight: '200',
+  fontFamily: 'Montserrat-Thin',
 };
 
 const FONT_18: TextStyle = {
@@ -112,22 +112,22 @@ const FONT_18: TextStyle = {
 
 const BOLD_18: TextStyle = {
   ...FONT_18,
-  fontWeight: 'bold',
+  fontFamily: 'Montserrat-Bold',
 };
 
 const REGULAR_18: TextStyle = {
   ...FONT_18,
-  fontWeight: 'regular',
+  fontFamily: 'Montserrat-Regular',
 };
 
 const SEMIBOLD_18: TextStyle = {
   ...FONT_18,
-  fontWeight: '600',
+  fontFamily: 'Montserrat-SemiBold',
 };
 
 const THIN_18: TextStyle = {
   ...FONT_18,
-  fontWeight: '200',
+  fontFamily: 'Montserrat-Thin',
 };
 
 const FONT_20: TextStyle = {
@@ -138,22 +138,22 @@ const FONT_20: TextStyle = {
 
 const BOLD_20: TextStyle = {
   ...FONT_20,
-  fontWeight: 'bold',
+  fontFamily: 'Montserrat-Bold',
 };
 
 const REGULAR_20: TextStyle = {
   ...FONT_20,
-  fontWeight: 'regular',
+  fontFamily: 'Montserrat-Regular',
 };
 
 const SEMIBOLD_20: TextStyle = {
   ...FONT_20,
-  fontWeight: '600',
+  fontFamily: 'Montserrat-SemiBold',
 };
 
 const THIN_20: TextStyle = {
   ...FONT_20,
-  fontWeight: '200',
+  fontFamily: 'Montserrat-Thin',
 };
 
 const FONT_12: TextStyle = {
@@ -163,22 +163,22 @@ const FONT_12: TextStyle = {
 
 const BOLD_12: TextStyle = {
   ...FONT_12,
-  fontWeight: 'bold',
+  fontFamily: 'Montserrat-Bold',
 };
 
 const REGULAR_12: TextStyle = {
   ...FONT_12,
-  fontWeight: 'regular',
+  fontFamily: 'Montserrat-Regular',
 };
 
 const SEMIBOLD_12: TextStyle = {
   ...FONT_12,
-  fontWeight: '600',
+  fontFamily: 'Montserrat-SemiBold',
 };
 
 const THIN_12: TextStyle = {
   ...FONT_12,
-  fontWeight: '200',
+  fontFamily: 'Montserrat-Thin',
 };
 
 export {

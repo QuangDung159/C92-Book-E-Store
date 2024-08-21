@@ -7,7 +7,7 @@ import Carousel, {
   Pagination,
 } from 'react-native-reanimated-carousel';
 import { Layouts } from '@components';
-import { COLORS } from '@themes';
+import { COLORS, FONT_STYLES } from '@themes';
 
 interface BestDealCarouselProps {
   data: ImageSource[];
@@ -66,9 +66,8 @@ const BestDealCarousel: React.FC<BestDealCarouselProps> = ({ data }) => {
 
 const styles = StyleSheet.create({
   categoryTitle: {
-    fontSize: 20,
+    ...FONT_STYLES.SEMIBOLD_20,
     lineHeight: 32,
-    fontWeight: 'semibold',
   },
   container: { flex: 1 },
   imageWrapper: {

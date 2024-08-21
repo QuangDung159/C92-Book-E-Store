@@ -22,6 +22,12 @@ const AuthenView: React.FC = () => {
           buttonType="primary"
         />
         <Layouts.VSpace value={12} />
+        <Text style={{ fontFamily: 'Montserrat-Bold', fontSize: 20 }}>
+          This is Montserrat Bold
+        </Text>
+        <Text style={{ ...FONT_STYLES.REGULAR_16 }}>
+          This is Montserrat Bold
+        </Text>
         <Buttons.CButton
           label="Sign Up"
           onPress={() => {
