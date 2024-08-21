@@ -3,9 +3,9 @@ import {
   NavigationContainer,
   NavigationContainerRef,
 } from '@react-navigation/native';
-import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import * as Linking from 'expo-linking';
+import { SplashScreen } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { connectToDevTools } from 'react-devtools-core';
 import React, { View } from 'react-native';
@@ -77,7 +77,9 @@ const App = () => {
   };
 
   if (!fontsLoaded) {
-    return <AppLoading />;
+    SplashScreen.preventAutoHideAsync();
+  } else {
+    SplashScreen.hideAsync();
   }
 
   return (
