@@ -12,11 +12,11 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\"",
-    "build:android:local:apk": "eas build -p android --profile preview:android:apk --local",
-    "build:android:local:aab": "eas build -p android --profile preview:android:aab --local",
-    "build:android:apk": "eas build -p android --profile preview:android:apk",
-    "build:android:develpment": "eas build -p android --profile development",
-    "build:ios:develpment": "eas build -p ios --profile development"
+    "build:android:local:apk": "dotenv -- eas build -p android --profile preview:android:apk --local",
+    "build:android:local:aab": "dotenv -- eas build -p android --profile preview:android:aab --local",
+    "build:android:apk": "dotenv -- eas build -p android --profile preview:android:apk",
+    "build:android:develpment": "dotenv -- eas build -p android --profile development",
+    "build:ios:develpment": "dotenv -- eas build -p ios --profile development"
   },
   "jest": {
     "preset": "jest-expo"

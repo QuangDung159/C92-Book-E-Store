@@ -14,8 +14,7 @@
       "@hooks": ["hooks"],
       "@utils": ["utils"],
       "@types": ["types"],
-      "@services": ["services"],
-      "@env": ["@env"]
+      "@services": ["services"]
     },
     "target": "esnext",
     "module": "commonjs",
