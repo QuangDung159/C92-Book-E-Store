@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useMemo, useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import { Divider, RadioButton } from 'react-native-paper';
 import {
@@ -13,15 +13,16 @@ import {
 } from '@components';
 import { LIST_PAYMENT_METHOD, PAYMENT_TYPE } from '@constants';
 import { useNavigate } from '@hooks';
+import { MomoServices } from '@services';
 import { cartStore, sharedStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
+import { PaymentData } from '@types';
 import { delay, StringHelpers } from '@utils';
 import { CartInfoRow, ListCreditCard, ShippingAddress } from './components';
 import { ListCartItem } from './components/list-cart-item';
 
 const CheckoutScreen = ({ navigation }: any) => {
-  const { openPaymentSuccessScreen, openAddressScreen } =
-    useNavigate(navigation);
+  const { openAddressScreen } = useNavigate(navigation);
   const [isShowListCreditCart, setIsShowListCreditCart] = useState(false);
 
   const toggleListCreditCart = () =>
@@ -37,6 +38,30 @@ const CheckoutScreen = ({ navigation }: any) => {
       cartStore.paymentSelected.paymentType === PAYMENT_TYPE.creditCard,
     );
   }, [cartStore.paymentSelected.paymentType]);
+
+  const onPaymentWithMoMo = async (
+    orderId: string,
+    requestId: string,
+    amount: number,
+  ) => {
+    const params: PaymentData = {
+      amount,
+      ipnUrl: 'https://webhook.site/94e534cb-a54a-4313-8e91-c42f7aa2e145',
+      orderId,
+      orderInfo: 'Thanh toán qua ví MoMo',
+      redirectUrl: `c92bookestorev1:///payment-success?orderId=${orderId}&message=Payment success with MoMo Wallet!`,
+      requestId,
+      extraData: '',
+    };
+
+    const result = await MomoServices.createMomoPayment(params);
+
+    if (result?.statusCode === 200) {
+      if (await Linking.canOpenURL(result.data.payUrl)) {
+        Linking.openURL(result.data.payUrl);
+      }
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -143,12 +168,33 @@ const CheckoutScreen = ({ navigation }: any) => {
         <Layouts.VSpace value={24} />
       </ScrollView>
       <BottomCheckoutSection
-        onPress={() => {
+        onPress={async () => {
           sharedStore.setShowLoading(true);
-          delay(1000).then(() => {
+          await delay(1000);
+
+          // const idGenerated = StringHelpers.generateMoMoId();
+          // console.log('idGenerated :>> ', idGenerated);
+
+          const idGenerated = {
+            orderId: '736de24c-26ea-4e0a-842f-b8b88d53f1f8',
+            requestId: 'baae59dc-bf26-4f12-8345-0498b2efd863',
+          };
+
+          if (cartStore.paymentSelected.paymentType === PAYMENT_TYPE.momo) {
+            await onPaymentWithMoMo(
+              idGenerated.orderId,
+              idGenerated.requestId,
+              10000,
+            );
             sharedStore.setShowLoading(false);
-            openPaymentSuccessScreen();
-          });
+            return;
+          }
+
+          sharedStore.setShowLoading(false);
+
+          Linking.openURL(
+            `c92bookestorev1:///payment-success?orderId=${idGenerated.orderId}&message=Payment success!`,
+          );
         }}
         priceDisplay={cartStore.total}
         disabled={cartStore.cartCount === 0}

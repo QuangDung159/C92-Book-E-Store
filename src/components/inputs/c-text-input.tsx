@@ -108,7 +108,7 @@ const CTextInput: FC<CTextInputProps> = ({
           outlineStyle={[styles.outlineStyle, outlineStyle]}
           disabled={disabled}
           onChangeText={(value) => {
-            onChangeText(value);
+            onChangeText?.(value);
             setShowEyeIcon(Boolean(value));
           }}
           onEndEditing={onEndEditing}

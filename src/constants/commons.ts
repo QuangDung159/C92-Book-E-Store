@@ -43,6 +43,8 @@ const enum ERROR_CODES {
   MAINTENANCE_ERROR = 503,
 }
 
+const MOMO_REQUEST_TYPE = 'captureWallet';
+
 export {
   ADMINISTRATIVE,
   CREDIT_CARD_TYPE,
@@ -52,4 +54,5 @@ export {
   PAYMENT_TYPE,
   PRICE_STEP,
   SEARCH_VIEW_STYLE,
+  MOMO_REQUEST_TYPE,
 };

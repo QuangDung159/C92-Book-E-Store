@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
   },
   left: {
     flex: 20,
+    height: 24,
   },
   titleWrapper: {
     flex: 100,
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
   right: {
     flex: 20,
     alignItems: 'flex-end',
-    backgroundColor: 'pink',
+    height: 24,
   },
   wrapper: {
     borderBottomWidth: 1,
