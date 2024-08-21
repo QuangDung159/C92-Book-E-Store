@@ -5,8 +5,10 @@ import { Buttons, Icons, Layouts } from '@components';
 import { useNavigate } from '@hooks';
 import { COLORS, FONT_STYLES } from '@themes';
 
-const PaymentSuccessScreen = ({ navigation }) => {
+const PaymentSuccessScreen = ({ navigation, route }) => {
   const { openHomeScreen } = useNavigate(navigation);
+
+  const orderId = route.params?.orderId;
 
   return (
     <View style={styles.container}>
@@ -14,7 +16,9 @@ const PaymentSuccessScreen = ({ navigation }) => {
       <Layouts.VSpace value={12} />
       <Text style={styles.success}>Payment success!</Text>
       <Layouts.VSpace value={8} />
-      <Text style={styles.desc}>Your order has been validated.</Text>
+      <Text
+        style={styles.desc}
+      >{`Your order #${orderId} has been confirmed.`}</Text>
       <Layouts.VSpace value={12} />
       <Buttons.CButton
         label="Back to Home"

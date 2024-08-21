@@ -41,9 +41,10 @@ export const useNavigate = (navigation: any) => {
     });
   };
 
-  const openPaymentSuccessScreen = () => {
+  const openPaymentSuccessScreen = (params?: any) => {
     navigation.navigate(SCREEN_NAME.CART_NAVIGATOR, {
       screen: SCREEN_NAME.PAYMENT_SUCCESS_SCREEN,
+      params,
     });
   };
 

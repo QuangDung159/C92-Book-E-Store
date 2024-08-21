@@ -12,7 +12,7 @@ import {
 } from '@screens';
 import { notificationStore } from '@store';
 import { SCREEN_NAME } from '../constants';
-import { COLORS } from '../themes';
+import { COLORS, FONT_STYLES } from '../themes';
 
 const Tab = createBottomTabNavigator();
 
@@ -144,13 +144,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   tabBarLabelStyle: {
-    fontSize: 14,
-    lineHeight: 20,
-    fontWeight: '200',
+    ...FONT_STYLES.SEMIBOLD_14,
     color: COLORS.primaryBlack,
     marginTop: -4,
     marginBottom: Platform.select({
-      android: 4,
+      android: 8,
       ios: 0,
     }),
   },

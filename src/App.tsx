@@ -12,6 +12,9 @@ import { appModel } from '@store';
 import { Navigation } from 'navigation';
 import { BaseParamList } from './routes';
 
+// deeplink
+// npx uri-scheme open "c92bookestorev1:///payment-success?orderId=123123123" --ios
+
 const App = () => {
   const url = Linking.useURL();
   const navigationRef = useRef<NavigationContainerRef<BaseParamList>>(null);
@@ -27,10 +30,11 @@ const App = () => {
 
   if (url) {
     const { path, queryParams } = Linking.parse(url);
-    console.log('queryParams :>> ', queryParams);
 
     if (path === 'payment-success') {
-      openPaymentSuccessScreen();
+      openPaymentSuccessScreen({
+        orderId: queryParams?.orderId,
+      });
     }
     if (path === 'home') {
       openHomeScreen();
