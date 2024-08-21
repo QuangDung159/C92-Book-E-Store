@@ -26,6 +26,7 @@ const createMomoPayment = async (params: PaymentData) => {
   return axios
     .request(config)
     .then((response) => {
+      console.log('MoMo response :>> ', JSON.stringify(response));
       return {
         statusCode: response.status,
         data: response.data,

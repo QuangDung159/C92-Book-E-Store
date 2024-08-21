@@ -49,12 +49,6 @@ const AuthenView: React.FC = () => {
           </View>
         </View>
         <Buttons.CButton
-          label="21"
-          onPress={() => {
-            Linking.openURL('myapp://expo-development-client');
-          }}
-        />
-        <Buttons.CButton
           label="Momo"
           onPress={async () => {
             // const idGenerated = StringHelpers.generateMoMoId();
@@ -73,14 +67,12 @@ const AuthenView: React.FC = () => {
                 'https://webhook.site/94e534cb-a54a-4313-8e91-c42f7aa2e145',
               orderId,
               orderInfo: 'Thanh toán qua ví MoMo',
-              redirectUrl:
-                'https://webhook.site/94e534cb-a54a-4313-8e91-c42f7aa2e145',
+              redirectUrl: `c92bookestorev1:///payment-success?orderId=${orderId}`,
               requestId,
               extraData: '',
             };
 
             const result = await MomoServices.createMomoPayment(params);
-            console.log('result :>> ', result);
 
             if (result?.statusCode === 200) {
               if (await Linking.canOpenURL(result.data.payUrl)) {
