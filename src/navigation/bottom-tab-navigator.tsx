@@ -46,7 +46,8 @@ function BottomTabNavigator() {
               );
             },
             tabBarLabelStyle: styles.tabBarLabelStyle,
-            tabBarLabel: 'Trang chủ',
+            // tabBarLabel: 'Trang chủ',
+            tabBarLabel: 'Home',
             tabBarStyle: styles.tabBarStyle,
           }}
           name={SCREEN_NAME.HOME_SCREEN}
@@ -67,7 +68,8 @@ function BottomTabNavigator() {
               );
             },
             tabBarLabelStyle: styles.tabBarLabelStyle,
-            tabBarLabel: 'Danh mục',
+            tabBarLabel: 'Category',
+            // tabBarLabel: 'Danh mục',
             tabBarStyle: styles.tabBarStyle,
           }}
           name={SCREEN_NAME.CATEGORIES}
@@ -102,7 +104,8 @@ function BottomTabNavigator() {
               );
             },
             tabBarLabelStyle: styles.tabBarLabelStyle,
-            tabBarLabel: 'Thông báo',
+            tabBarLabel: 'Notifications',
+            // tabBarLabel: 'Thông báo',
             tabBarStyle: styles.tabBarStyle,
           }}
           name={SCREEN_NAME.NOTIFICATIONS}
@@ -123,7 +126,8 @@ function BottomTabNavigator() {
               );
             },
             tabBarLabelStyle: styles.tabBarLabelStyle,
-            tabBarLabel: 'Tài khoản',
+            tabBarLabel: 'Profile',
+            // tabBarLabel: 'Tài khoản',
             tabBarStyle: styles.tabBarStyle,
           }}
           name={SCREEN_NAME.ACCOUNT_SCREEN}

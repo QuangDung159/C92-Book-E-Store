@@ -4,6 +4,7 @@ import {
 } from '@react-navigation/native';
 import * as Linking from 'expo-linking';
 import { useEffect, useRef } from 'react';
+import { connectToDevTools } from 'react-devtools-core';
 import React, { View } from 'react-native';
 
 import Toast from 'react-native-toast-message';
@@ -14,6 +15,13 @@ import { BaseParamList } from './routes';
 
 // deeplink
 // npx uri-scheme open "c92bookestorev1:///payment-success?orderId=123123123" --ios
+
+if (__DEV__) {
+  connectToDevTools({
+    host: 'localhost',
+    port: 8081,
+  });
+}
 
 const App = () => {
   const url = Linking.useURL();
