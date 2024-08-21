@@ -14,7 +14,6 @@ import Toast from 'react-native-toast-message';
 import { useNavigate } from '@hooks';
 import { appModel } from '@store';
 import { Navigation } from 'navigation';
-import { BaseParamList } from './routes';
 
 // deeplink
 // npx uri-scheme open "c92bookestorev1:///payment-success?orderId=123123123" --ios
@@ -28,7 +27,7 @@ if (__DEV__) {
 
 const App = () => {
   const url = Linking.useURL();
-  const navigationRef = useRef<NavigationContainerRef<BaseParamList>>(null);
+  const navigationRef = useRef<NavigationContainerRef<any>>(null);
 
   const { openPaymentSuccessScreen, openHomeScreen } = useNavigate(
     navigationRef.current,
