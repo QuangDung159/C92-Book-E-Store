@@ -9,12 +9,13 @@ const PaymentSuccessScreen = ({ navigation, route }) => {
   const { openHomeScreen } = useNavigate(navigation);
 
   const orderId = route.params?.orderId;
+  const message = route.params?.message;
 
   return (
     <View style={styles.container}>
       <Icons.CheckSquareIcon size={150} />
       <Layouts.VSpace value={12} />
-      <Text style={styles.success}>Payment success!</Text>
+      <Text style={styles.success}>{`${message}`}</Text>
       <Layouts.VSpace value={8} />
       <Text
         style={styles.desc}
@@ -46,6 +47,7 @@ const styles = StyleSheet.create({
   },
   desc: {
     ...FONT_STYLES.REGULAR_16,
+    textAlign: 'center',
   },
 });
 

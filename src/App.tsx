@@ -34,6 +34,7 @@ const App = () => {
     if (path === 'payment-success') {
       openPaymentSuccessScreen({
         orderId: queryParams?.orderId,
+        message: queryParams?.message,
       });
     }
     if (path === 'home') {
