@@ -19,14 +19,10 @@ const PaymentSuccessScreen = ({ navigation }) => {
       <Buttons.CButton
         label="Back to Home"
         onPress={() => {
-          if (Linking.canOpenURL('exp://192.168.68.122:8081/--/home')) {
-            Linking.openURL('exp://192.168.68.122:8081/--/home');
+          if (Linking.canOpenURL('c92bookestorev1:///home')) {
+            Linking.openURL('c92bookestorev1:///home');
           } else {
-            if (Linking.canOpenURL('c92bookestorev1://home')) {
-              Linking.openURL('c92bookestorev1://home');
-            } else {
-              openHomeScreen();
-            }
+            openHomeScreen();
           }
         }}
       />

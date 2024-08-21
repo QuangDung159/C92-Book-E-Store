@@ -37,8 +37,10 @@ const App = () => {
     }
   }
 
+  const prefix = Linking.createURL('/');
+
   const linking = {
-    prefixes: ['c92bookestorev1://'],
+    prefixes: [prefix],
   };
 
   return (

@@ -146,10 +146,8 @@ const CheckoutScreen = ({ navigation }: any) => {
           sharedStore.setShowLoading(true);
           delay(1000).then(() => {
             sharedStore.setShowLoading(false);
-            if (
-              Linking.canOpenURL('exp://192.168.68.122:8081/--/payment-success')
-            ) {
-              Linking.openURL('exp://192.168.68.122:8081/--/payment-success');
+            if (Linking.canOpenURL('c92bookestorev1:///payment-success')) {
+              Linking.openURL('c92bookestorev1:///payment-success');
             }
           });
         }}
