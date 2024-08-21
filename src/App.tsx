@@ -47,12 +47,14 @@ const App = () => {
       // Thêm các biến thể khác nếu cần
     });
     setFontsLoaded(true);
+    SplashScreen.hideAsync();
   };
 
   useEffect(() => {
+    SplashScreen.preventAutoHideAsync();
+    loadFonts();
     appModel.appInit();
     appModel.loadMasterData();
-    loadFonts();
   }, []);
 
   if (url) {
@@ -75,11 +77,7 @@ const App = () => {
     prefixes: [prefix],
   };
 
-  if (!fontsLoaded) {
-    SplashScreen.preventAutoHideAsync();
-  } else {
-    SplashScreen.hideAsync();
-  }
+  if (!fontsLoaded) return null;
 
   return (
     <NavigationContainer ref={navigationRef} linking={linking}>

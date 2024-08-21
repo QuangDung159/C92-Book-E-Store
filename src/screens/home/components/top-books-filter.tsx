@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   label: {
-    ...FONT_STYLES.BOLD_14,
+    ...FONT_STYLES.SEMIBOLD_12,
     padding: 8,
   },
 });

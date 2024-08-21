@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+import { EXPO_PUBLIC_MOMO_ACCESS_KEY } from '@env';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
@@ -13,6 +15,7 @@ const AuthenView: React.FC = () => {
     <View style={styles.container}>
       <View>
         <Text style={styles.welcomeText}>Welcome to E-Store</Text>
+        <Text style={styles.welcomeText}>{EXPO_PUBLIC_MOMO_ACCESS_KEY}</Text>
         <Layouts.VSpace value={24} />
         <Buttons.CButton
           label="Sign In"

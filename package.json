@@ -14,6 +14,7 @@
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\"",
     "build:android:local:apk": "eas build -p android --profile preview:android:apk --local",
     "build:android:local:aab": "eas build -p android --profile preview:android:aab --local",
+    "build:android:apk": "eas build -p android --profile preview:android:apk",
     "build:android:develpment": "eas build -p android --profile development",
     "build:ios:develpment": "eas build -p ios --profile development"
   },
@@ -49,6 +50,7 @@
     "react-dom": "18.2.0",
     "react-native": "0.74.3",
     "react-native-collapsible": "^1.6.1",
+    "react-native-dotenv": "^3.4.11",
     "react-native-gesture-handler": "~2.16.1",
     "react-native-get-random-values": "^1.11.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
