@@ -86,7 +86,7 @@ const App = () => {
           zIndex: 199,
         }}
       >
-        <Toast visibilityTime={2000} topOffset={0} />
+        <Toast visibilityTime={2000} topOffset={45} />
       </View>
       <Navigation />
     </NavigationContainer>

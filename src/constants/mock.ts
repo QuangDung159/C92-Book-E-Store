@@ -288,7 +288,7 @@ const LIST_PAYMENT_METHOD = [
 
 const TOP_BOOKS: Array<DataModels.IBook> = [
   {
-    name: 'The The The The The The The The The The The The The The The The The The The The The The The The',
+    name: 'The Picture of Dorian Gray 12 The Picture of Dorian Gray 12 The Picture of Dorian Gray 12',
     author: LIST_AUTHOR[0],
     price: 25000999,
     priceNotSale: 0,
