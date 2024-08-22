@@ -1,9 +1,11 @@
+/* eslint-disable import/no-unresolved */
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Buttons, Icons, Layouts } from '@components';
 import { useNavigate } from '@hooks';
 import { FONT_STYLES } from '@themes';
+import { AppVersionText } from './app-version-text';
 
 const AuthenView: React.FC = () => {
   const navigation = useNavigation();
@@ -47,6 +49,9 @@ const AuthenView: React.FC = () => {
           </View>
         </View>
       </View>
+      <View style={styles.versionWrapper}>
+        <AppVersionText />
+      </View>
     </View>
   );
 };
@@ -67,6 +72,12 @@ const styles = StyleSheet.create({
   },
   continue: {
     ...FONT_STYLES.SEMIBOLD_14,
+  },
+  versionWrapper: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
 });
 

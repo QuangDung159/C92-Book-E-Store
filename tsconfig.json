@@ -14,8 +14,7 @@
       "@hooks": ["hooks"],
       "@utils": ["utils"],
       "@types": ["types"],
-      "@services": ["services"],
-      "@routes": ["routes"],
+      "@services": ["services"]
     },
     "target": "esnext",
     "module": "commonjs",

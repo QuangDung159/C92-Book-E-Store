@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { Layouts } from '@components';
 import { DataModels } from '@models';
-import { COLORS } from '@themes';
+import { COLORS, FONT_STYLES } from '@themes';
 
 interface TopBooksFilterProps {
   listFilter: Array<DataModels.ITopBooksFilter>;
@@ -67,9 +67,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   label: {
+    ...FONT_STYLES.SEMIBOLD_12,
     padding: 8,
-    fontSize: 14,
-    fontWeight: 'bold',
   },
 });
 

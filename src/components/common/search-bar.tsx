@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     ...FONT_STYLES.SEMIBOLD_16,
   },
   position: {
-    ...FONT_STYLES.THIN_14,
+    ...FONT_STYLES.REGULAR_14,
   },
 });
 

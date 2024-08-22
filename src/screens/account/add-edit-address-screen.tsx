@@ -143,7 +143,7 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
                 style={[
                   styles.addressInfo,
                   {
-                    fontWeight: '600',
+                    ...FONT_STYLES.SEMIBOLD_14,
                   },
                 ]}
               >
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   defaultText: {
-    fontWeight: '600',
+    ...FONT_STYLES.SEMIBOLD_14,
   },
   errorTextStyle: {
     ...FONT_STYLES.SEMIBOLD_12,

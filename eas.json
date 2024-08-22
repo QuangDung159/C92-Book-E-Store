@@ -3,13 +3,7 @@
     "version": ">= 10.2.3"
   },
   "build": {
-    "preview:android:aab": {
-      "distribution": "store",
-      "android": {
-        "buildType": "app-bundle"
-      }
-    },
-    "preview:android:apk": {
+    "preview:android": {
       "distribution": "internal",
       "android": {
         "buildType": "apk"
@@ -25,7 +19,13 @@
         "simulator": true
       }
     },
-    "production": {}
+    "production": {
+      "distribution": "store",
+      "autoIncrement": true,
+      "android": {
+        "buildType": "app-bundle"
+      }
+    }
   },
   "submit": {
     "production": {}

@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   tabBarLabelStyle: {
-    ...FONT_STYLES.SEMIBOLD_14,
+    ...FONT_STYLES.SEMIBOLD_12,
     color: COLORS.primaryBlack,
     marginTop: -4,
     marginBottom: Platform.select({
