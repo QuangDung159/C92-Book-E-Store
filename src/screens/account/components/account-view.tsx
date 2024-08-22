@@ -16,6 +16,7 @@ import { useNavigate } from '@hooks';
 import { BookServices } from '@services';
 import { authenticationStore, sharedStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
+import { AppVersionText } from './app-version-text';
 
 const AccountView: React.FC = () => {
   const navigation = useNavigation();
@@ -85,7 +86,7 @@ const AccountView: React.FC = () => {
           }}
           buttonType="secondary"
         />
-        <Layouts.VSpace value={24} />
+        <Layouts.VSpace value={12} />
         {renderMenuItem('Favourites', () => {
           loadListFavourite();
         })}
@@ -107,7 +108,7 @@ const AccountView: React.FC = () => {
           },
           styles.signOut,
         )}
-        <Layouts.VSpace value={24} />
+        <AppVersionText />
       </ScrollView>
     </View>
   );
