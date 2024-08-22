@@ -8,18 +8,16 @@ const destinationFile = '.env';
 // Đọc nội dung từ file nguồn
 fs.readFile(sourceFile, 'utf8', (err, data) => {
   if (err) {
-    console.error(`Không thể đọc file ${sourceFile}:`, err);
+    console.error(`Cannot read file ${sourceFile}:`, err);
     return;
   }
 
   // Ghi nội dung vào file đích
   fs.writeFile(destinationFile, data, (err) => {
     if (err) {
-      console.error(`Không thể ghi file ${destinationFile}:`, err);
+      console.error(`Cannot write file ${destinationFile}:`, err);
       return;
     }
-    console.log(
-      `Đã sao chép nội dung từ ${sourceFile} sang ${destinationFile}`,
-    );
+    console.log(`Completed copy from ${sourceFile} to ${destinationFile}`);
   });
 });
