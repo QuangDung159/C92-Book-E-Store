@@ -26,7 +26,8 @@
     "build:android:remote:develpment:stg": "npm run set:env:stg && dotenv -- eas build -p android --profile development",
     "build:android:remote:develpment:prod": "npm run set:env:prod && dotenv -- eas build -p android --profile development",
     "build:ios:develpment": "dotenv -- eas build -p ios --profile development",
-    "build:nodev": "npx expo start --no-dev"
+    "build:nodev": "npx expo start --no-dev",
+    "eas:update:qa": "eas update --branch preview.android.qa --message"
   },
   "jest": {
     "preset": "jest-expo"

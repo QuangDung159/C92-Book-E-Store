@@ -2,6 +2,7 @@
 import Constants from 'expo-constants';
 import React from 'react';
 import { Platform, StyleSheet, Text } from 'react-native';
+import { CODE_PUSH_NUMBER } from '@constants';
 import { FONT_STYLES } from '@themes';
 
 const AppVersionText: React.FC<any> = () => {
@@ -16,7 +17,8 @@ const AppVersionText: React.FC<any> = () => {
 
   return (
     <Text style={styles.textStyle}>
-      Version {process.env.EXPO_PUBLIC_ENV} - {version} ({buildNumberDisplay})
+      {process.env.EXPO_PUBLIC_ENV} - {version} ({buildNumberDisplay}) -{' '}
+      {CODE_PUSH_NUMBER}
     </Text>
   );
 };
