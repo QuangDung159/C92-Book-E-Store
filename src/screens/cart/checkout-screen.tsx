@@ -172,13 +172,7 @@ const CheckoutScreen = ({ navigation }: any) => {
           sharedStore.setShowLoading(true);
           await delay(1000);
 
-          // const idGenerated = StringHelpers.generateMoMoId();
-          // console.log('idGenerated :>> ', idGenerated);
-
-          const idGenerated = {
-            orderId: '736de24c-26ea-4e0a-842f-b8b88d53f1f8',
-            requestId: 'baae59dc-bf26-4f12-8345-0498b2efd863',
-          };
+          const idGenerated = StringHelpers.generateMoMoId();
 
           if (cartStore.paymentSelected.paymentType === PAYMENT_TYPE.momo) {
             await onPaymentWithMoMo(
