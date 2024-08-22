@@ -32,7 +32,7 @@ const AccountScreen = ({ navigation }: any) => {
           textAlign: 'center',
         }}
       >
-        Version {version} ({buildNumberDisplay})
+        Version {process.env.EXPO_PUBLIC_ENV} - {version} ({buildNumberDisplay})
       </Text>
     </View>
   );
