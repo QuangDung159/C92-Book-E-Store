@@ -3,26 +3,26 @@
     "version": ">= 10.2.3"
   },
   "build": {
-    "preview:android:qa": {
+    "preview.android.qa": {
       "distribution": "internal",
       "android": {
         "buildType": "apk"
       },
-      "channel": "preview:android:qa"
+      "channel": "preview.android.qa"
     },
-    "preview:android:stg": {
+    "preview.android.stg": {
       "distribution": "internal",
       "android": {
         "buildType": "apk"
       },
-      "channel": "preview:android:stg"
+      "channel": "preview.android.stg"
     },
-    "preview:android:prod": {
+    "preview.android.prod": {
       "distribution": "internal",
       "android": {
         "buildType": "apk"
       },
-      "channel": "preview:android:prod"
+      "channel": "preview.android.prod"
     },
     "development": {
       "distribution": "internal",

@@ -149,16 +149,16 @@ const styles = StyleSheet.create({
   image: {
     width: Platform.select({
       ios: 100,
-      android: 95,
+      android. 95,
     }),
     height: Platform.select({
       ios: 100,
-      android: 95,
+      android. 95,
     }),
     flex: 1,
     marginTop: Platform.select({
       ios: -30,
-      android: -24,
+      android. -24,
     }),
   },
   info: {

@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     color: COLORS.primaryBlack,
     marginTop: -4,
     marginBottom: Platform.select({
-      android: 8,
+      android. 8,
       ios: 0,
     }),
   },
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
       height: 95,
       marginBottom: -30,
     },
-    android: {
+    android. {
       height: 70,
     },
   }),
