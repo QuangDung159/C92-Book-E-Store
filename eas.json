@@ -21,12 +21,9 @@
     },
     "production": {
       "distribution": "store",
-      "ios": {
-        "buildNumber": "1"
-      },
+      "autoIncrement": true,
       "android": {
-        "buildType": "app-bundle",
-        "versionCode": 2
+        "buildType": "app-bundle"
       }
     }
   },
