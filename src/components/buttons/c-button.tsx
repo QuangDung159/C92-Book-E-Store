@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     ...FONT_STYLES.BOLD_14,
     marginTop: Platform.select({
       ios: 5,
-      android. 0,
+      android: 0,
     }),
   },
   container: {

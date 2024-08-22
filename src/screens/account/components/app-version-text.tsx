@@ -11,7 +11,7 @@ const AppVersionText: React.FC<any> = () => {
 
   const buildNumberDisplay = Platform.select({
     ios: buildNumber,
-    android. versionCode.toString(),
+    android: versionCode.toString(),
   });
 
   return (
