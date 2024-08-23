@@ -9,6 +9,9 @@ import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnable
 import com.facebook.react.defaults.DefaultReactActivityDelegate
 
 import expo.modules.ReactActivityDelegateWrapper
+import vn.zalopay.sdk.ZaloPaySDK
+import vn.zalopay.sdk.Environment;
+import android.content.Intent;
 
 class MainActivity : ReactActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,7 +20,13 @@ class MainActivity : ReactActivity() {
     // This is required for expo-splash-screen.
     setTheme(R.style.AppTheme);
     super.onCreate(null)
+      ZaloPaySDK.init(2554, Environment.SANDBOX)
   }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        ZaloPaySDK.getInstance().onResult(intent)
+    }
 
   /**
    * Returns the name of the main component registered from JavaScript. This is used to schedule
