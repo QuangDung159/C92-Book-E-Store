@@ -5,8 +5,8 @@
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
@@ -26,7 +26,8 @@
     "build:nodev": "npx expo start --no-dev",
     "eas:update:qa": "eas update --branch preview.qa --message",
     "eas:update:stg": "eas update --branch preview.stg --message",
-    "eas:update:prod": "eas update --branch production --message"
+    "eas:update:prod": "eas update --branch production --message",
+    "prebuild": "expo prebuild"
   },
   "jest": {
     "preset": "jest-expo"
