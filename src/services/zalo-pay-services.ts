@@ -1,59 +1,26 @@
-import CryptoJS from 'crypto-js';
 import { NativeModules } from 'react-native';
-import { DatetimeHelpers } from '@utils';
+import { ZaloPayOrder } from '@types';
+import { StringHelpers } from '@utils';
 import 'react-native-get-random-values';
 
 const createOrder = async (
-  money: number,
-  onSuccess?: (returnCode?: number) => void,
+  orderInfo: ZaloPayOrder,
+  onSuccess?: (returnCode?: any) => void,
   onFail?: (error?: any) => void,
 ) => {
-  const apptransid =
-    DatetimeHelpers.getCurrentDateYYMMDD() + '_' + new Date().getTime();
+  const mac = StringHelpers.genZaloPayMac(orderInfo);
 
-  const appid = process.env.EXPO_ZALO_PAY_APP_ID;
-  const amount = money;
-  const appuser = 'ZaloPayDemo';
-  const apptime = new Date().getTime();
-  const embeddata = '{}';
-  const item = '[]';
-  const description = 'Merchant description for order #' + apptransid;
-  const hmacInput =
-    appid +
-    '|' +
-    apptransid +
-    '|' +
-    appuser +
-    '|' +
-    amount +
-    '|' +
-    apptime +
-    '|' +
-    embeddata +
-    '|' +
-    item;
-  console.log(
-    'process.env.EXPO_ZALO_PAY_KEY :>> ',
-    process.env.EXPO_ZALO_PAY_KEY,
-  );
-  const mac = CryptoJS.HmacSHA256(hmacInput, process.env.EXPO_ZALO_PAY_KEY);
-  console.log('====================================');
-  console.log('hmacInput: ' + hmacInput);
-  console.log('mac: ' + mac);
-  console.log('====================================');
   const order = {
-    app_id: appid,
-    app_user: appuser,
-    app_time: apptime,
-    amount: amount,
-    app_trans_id: apptransid,
-    embed_data: embeddata,
-    item: item,
-    description: description,
-    mac: mac,
+    app_id: orderInfo.appId,
+    app_user: orderInfo.appUser,
+    app_time: orderInfo.appTime,
+    amount: orderInfo.amount,
+    app_trans_id: orderInfo.appTransId,
+    embed_data: orderInfo.embedData,
+    item: orderInfo.item,
+    description: orderInfo.description,
+    mac,
   };
-
-  console.log('order :>> ', order);
 
   const formBody = [];
   for (const i in order) {
@@ -62,7 +29,7 @@ const createOrder = async (
     formBody.push(encodedKey + '=' + encodedValue);
   }
   const formBodyStr = formBody.join('&');
-  await fetch(process.env.EXPO_ZALO_PAY_URL, {
+  await fetch(process.env.EXPO_PUBLIC_ZALO_PAY_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
@@ -70,15 +37,14 @@ const createOrder = async (
     body: formBodyStr,
   })
     .then((response) => {
-      console.log('response :>> ', response);
       return response.json();
     })
     .then((resJson) => {
-      onSuccess(resJson.returnCode);
+      onSuccess?.(resJson);
     })
     .catch((error) => {
       console.log('error :>> ', error);
-      onFail(error);
+      onFail?.(error);
     });
 };
 

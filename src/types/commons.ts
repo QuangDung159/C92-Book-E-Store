@@ -20,4 +20,20 @@ type PaymentData = {
   autoCapture?: boolean;
 };
 
-export { AdministrativeUnitEnum, PaymentData, ServiceResultHandler };
+type ZaloPayOrder = {
+  appId: string;
+  appUser: string;
+  appTime: number;
+  amount: number;
+  appTransId: string;
+  embedData: string;
+  item: string;
+  description: string;
+};
+
+export {
+  AdministrativeUnitEnum,
+  PaymentData,
+  ServiceResultHandler,
+  ZaloPayOrder,
+};

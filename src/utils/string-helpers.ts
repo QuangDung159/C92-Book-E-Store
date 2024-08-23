@@ -1,7 +1,7 @@
 import CryptoJS from 'crypto-js';
 import { v4 as uuidv4 } from 'uuid';
 import { DataModels } from '@models';
-import { PaymentData } from '@types';
+import { PaymentData, ZaloPayOrder } from '@types';
 import 'react-native-get-random-values';
 
 export const searchByFirstLetter = (
@@ -66,6 +66,30 @@ export const generateMoMoSignature = (data: PaymentData) => {
   );
 
   return signature;
+};
+
+export const genZaloPayMac = (orderInfo: ZaloPayOrder) => {
+  const hmacInput =
+    orderInfo.appId +
+    '|' +
+    orderInfo.appTransId +
+    '|' +
+    orderInfo.appUser +
+    '|' +
+    orderInfo.amount +
+    '|' +
+    orderInfo.appTime +
+    '|' +
+    orderInfo.embedData +
+    '|' +
+    orderInfo.item;
+
+  const mac = CryptoJS.HmacSHA256(
+    hmacInput,
+    process.env.EXPO_PUBLIC_ZALO_PAY_KEY,
+  );
+
+  return mac;
 };
 
 export const generateMoMoId = () => {
