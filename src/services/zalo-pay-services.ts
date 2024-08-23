@@ -5,8 +5,8 @@ import 'react-native-get-random-values';
 
 const createOrder = async (
   money: number,
-  onSuccess: (returnCode?: number) => void,
-  onFail: (error?: any) => void,
+  onSuccess?: (returnCode?: number) => void,
+  onFail?: (error?: any) => void,
 ) => {
   const apptransid =
     DatetimeHelpers.getCurrentDateYYMMDD() + '_' + new Date().getTime();
@@ -32,6 +32,10 @@ const createOrder = async (
     embeddata +
     '|' +
     item;
+  console.log(
+    'process.env.EXPO_ZALO_PAY_KEY :>> ',
+    process.env.EXPO_ZALO_PAY_KEY,
+  );
   const mac = CryptoJS.HmacSHA256(hmacInput, process.env.EXPO_ZALO_PAY_KEY);
   console.log('====================================');
   console.log('hmacInput: ' + hmacInput);
@@ -65,12 +69,15 @@ const createOrder = async (
     },
     body: formBodyStr,
   })
-    .then((response) => response.json())
+    .then((response) => {
+      console.log('response :>> ', response);
+      return response.json();
+    })
     .then((resJson) => {
       onSuccess(resJson.returnCode);
     })
     .catch((error) => {
-      console.log('error ', error);
+      console.log('error :>> ', error);
       onFail(error);
     });
 };
