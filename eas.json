@@ -3,11 +3,29 @@
     "version": ">= 10.2.3"
   },
   "build": {
-    "preview:android": {
+    "preview.qa": {
       "distribution": "internal",
       "android": {
         "buildType": "apk"
-      }
+      },
+      "ios": {},
+      "channel": "preview.qa"
+    },
+    "preview.stg": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "ios": {},
+      "channel": "preview.stg"
+    },
+    "preview.prod": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "ios": {},
+      "channel": "preview.prod"
     },
     "development": {
       "distribution": "internal",
@@ -17,14 +35,17 @@
       },
       "ios": {
         "simulator": true
-      }
+      },
+      "channel": "development"
     },
     "production": {
       "distribution": "store",
       "autoIncrement": true,
       "android": {
         "buildType": "app-bundle"
-      }
+      },
+      "ios": {},
+      "channel": "production"
     }
   },
   "submit": {

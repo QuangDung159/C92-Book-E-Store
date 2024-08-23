@@ -23,7 +23,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.dragonc92team.BookEStoreV1",
-      "versionCode": 5
+      "versionCode": 6
     },
     "web": {
       "bundler": "metro",
@@ -43,6 +43,12 @@
       "eas": {
         "projectId": "aaff14e3-7daa-4336-9788-1145c8bd95fe"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/aaff14e3-7daa-4336-9788-1145c8bd95fe"
     }
   }
 }
