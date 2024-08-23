@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import {
   Alert,
   Button,
+  Linking,
   NativeEventEmitter,
   NativeModules,
   Text,
@@ -28,8 +29,12 @@ const TestZalo: React.FC<any> = () => {
     const subscription = payZaloBridgeEmitter.addListener(
       'EventPayZalo',
       (data) => {
+        console.log('data :>> ', data);
         if (data.returnCode == 1) {
           Alert.alert('Giao dịch thành công!');
+          Linking.openURL(
+            `c92bookestorev1:///payment-success?orderId=${data.returnCode}&message=Payment success!`,
+          );
         } else {
           Alert.alert('Giao dịch thất bại!');
         }
