@@ -92,6 +92,21 @@ export const genZaloPayMac = (orderInfo: ZaloPayOrder) => {
   return mac;
 };
 
+export const genZaloPayMacForFetchInfo = (
+  appId: number,
+  appTransId: string,
+) => {
+  const hmacInput =
+    appId + '|' + appTransId + '|' + process.env.EXPO_PUBLIC_ZALO_PAY_KEY;
+
+  const mac = CryptoJS.HmacSHA256(
+    hmacInput,
+    process.env.EXPO_PUBLIC_ZALO_PAY_KEY,
+  );
+
+  return mac;
+};
+
 export const generateMoMoId = () => {
   const requestId = uuidv4();
   const orderId = uuidv4();

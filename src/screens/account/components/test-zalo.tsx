@@ -1,69 +1,64 @@
 /* eslint-disable import/no-named-as-default */
-import React, { useEffect, useState } from 'react';
-import {
-  Alert,
-  Button,
-  Linking,
-  NativeEventEmitter,
-  NativeModules,
-  Text,
-  View,
-} from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { AppState, Button, Text, View } from 'react-native';
 import { Buttons } from '@components';
 import { ZaloPayServices } from '@services';
 import { ZaloPayOrder } from '@types';
 import { DatetimeHelpers } from '@utils';
 import 'react-native-get-random-values';
 
-const { PayZaloBridge } = NativeModules;
-const payZaloBridgeEmitter = new NativeEventEmitter(PayZaloBridge);
-
 const TestZalo: React.FC<any> = () => {
   const [token, setToken] = useState('');
   const [returncode, setReturnCode] = useState('');
+  const [appTransId, setAppTransId] = useState('');
+
+  const appState = useRef(AppState.currentState);
 
   useEffect(() => {
-    const subscription = payZaloBridgeEmitter.addListener(
-      'EventPayZalo',
-      (data) => {
-        if (data.returnCode == 1) {
-          Alert.alert('Payment success!');
-          Linking.openURL(
-            `c92bookestorev1:///payment-success?orderId=${data.returnCode}&message=Payment success!`,
-          );
-        } else {
-          Alert.alert('Payment fail!');
-        }
-      },
-    );
+    const subscription = AppState.addEventListener('change', (nextAppState) => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === 'active'
+      ) {
+        console.log('App has come to the foreground!');
 
-    // Clean up the subscription on component unmount
+        if (appTransId) {
+          ZaloPayServices.fetchOrderInfo(
+            +process.env.EXPO_PUBLIC_ZALO_PAY_APP_ID,
+            appTransId,
+          );
+        }
+      }
+
+      appState.current = nextAppState;
+    });
+
     return () => {
       subscription.remove();
     };
-  }, []);
+  }, [appTransId]);
 
   return (
     <View>
-      <Text>
-        EXPO_PUBLIC_ZALO_PAY_APP_ID: {process.env.EXPO_PUBLIC_ZALO_PAY_APP_ID}
-      </Text>
       <Buttons.CButton
         label="createOrder"
         onPress={async () => {
-          const appTransId =
+          const appTransIdGen =
             DatetimeHelpers.getCurrentDateYYMMDD() + '_' + new Date().getTime();
+          setAppTransId(appTransIdGen);
+
           const item = '[]';
-          const description = 'Merchant description for order #' + appTransId;
+          const description =
+            'Merchant description for order #' + appTransIdGen;
 
           const order: ZaloPayOrder = {
             appId: process.env.EXPO_PUBLIC_ZALO_PAY_APP_ID,
             appUser: process.env.EXPO_PUBLIC_ZALO_PAY_APP_USER,
             appTime: new Date().getTime(),
             amount: 10000,
-            appTransId,
+            appTransId: appTransIdGen,
             embedData:
-              '{"redirecturl": "c92bookestorev1:///payment-success?orderId=123123&message=Payment success!"}',
+              '{"promotioninfo":"","merchantinfo":"du lieu rieng cua ung dung","redirecturl": "c92bookestorev1:///payment-success?orderId=123123&message=Payment success!"}',
             item,
             description,
           };

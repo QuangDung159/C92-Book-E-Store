@@ -1,4 +1,4 @@
-import { NativeModules } from 'react-native';
+import { Linking, NativeModules } from 'react-native';
 import { ZaloPayOrder } from '@types';
 import { StringHelpers } from '@utils';
 import 'react-native-get-random-values';
@@ -48,9 +48,46 @@ const createOrder = async (
     });
 };
 
+const fetchOrderInfo = async (appId: number, appTransId: string) => {
+  const mac = StringHelpers.genZaloPayMacForFetchInfo(appId, appTransId);
+
+  const order = {
+    appid: appId,
+    apptransid: appTransId,
+    mac,
+  };
+
+  const formBody = [];
+  for (const i in order) {
+    const encodedKey = encodeURIComponent(i);
+    const encodedValue = encodeURIComponent(order[i]);
+    formBody.push(encodedKey + '=' + encodedValue);
+  }
+  const formBodyStr = formBody.join('&');
+  await fetch('https://sandbox.zalopay.com.vn/v001/tpe/getstatusbyapptransid', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    },
+    body: formBodyStr,
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((resJson) => {
+      console.log('resJson :>> ', resJson);
+      if (resJson?.returncode === 1) {
+        console.log('asdasd');
+      }
+    })
+    .catch((error) => {
+      console.log('error :>> ', error);
+    });
+};
+
 const payOrder = (token: string) => {
   const payZP = NativeModules.PayZaloBridge;
   payZP.payOrder(token);
 };
 
-export const ZaloPayServices = { createOrder, payOrder };
+export const ZaloPayServices = { createOrder, payOrder, fetchOrderInfo };
