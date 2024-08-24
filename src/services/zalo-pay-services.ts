@@ -1,4 +1,5 @@
-import { Linking, NativeModules } from 'react-native';
+import axios from 'axios';
+import { NativeModules } from 'react-native';
 import { ZaloPayOrder } from '@types';
 import { StringHelpers } from '@utils';
 import 'react-native-get-random-values';
@@ -64,25 +65,25 @@ const fetchOrderInfo = async (appId: number, appTransId: string) => {
     formBody.push(encodedKey + '=' + encodedValue);
   }
   const formBodyStr = formBody.join('&');
-  await fetch('https://sandbox.zalopay.com.vn/v001/tpe/getstatusbyapptransid', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-    },
-    body: formBodyStr,
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .then((resJson) => {
-      console.log('resJson :>> ', resJson);
-      if (resJson?.returncode === 1) {
-        console.log('asdasd');
-      }
-    })
-    .catch((error) => {
-      console.log('error :>> ', error);
-    });
+  try {
+    const response = await axios.post(
+      'https://sandbox.zalopay.com.vn/v001/tpe/getstatusbyapptransid',
+      formBodyStr,
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        },
+      },
+    );
+
+    // Xử lý phản hồi
+    console.log(response.data);
+    return response;
+  } catch (error) {
+    // Xử lý lỗi
+    console.error('Error:', error);
+    return null;
+  }
 };
 
 const payOrder = (token: string) => {

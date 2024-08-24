@@ -1,10 +1,10 @@
 /* eslint-disable import/no-named-as-default */
-import React, { useEffect, useRef, useState } from 'react';
-import { AppState, Button, Text, View } from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { AppState, Button, Linking, Text, View } from 'react-native';
 import { Buttons } from '@components';
 import { ZaloPayServices } from '@services';
 import { ZaloPayOrder } from '@types';
-import { DatetimeHelpers } from '@utils';
+import { DatetimeHelpers, delay } from '@utils';
 import 'react-native-get-random-values';
 
 const TestZalo: React.FC<any> = () => {
@@ -13,20 +13,36 @@ const TestZalo: React.FC<any> = () => {
   const [appTransId, setAppTransId] = useState('');
 
   const appState = useRef(AppState.currentState);
+  const [fetchDone, setFetchDone] = useState(false);
+
+  const onFetchPaymentInfo = useCallback(async (appTransId: string) => {
+    const response = await ZaloPayServices.fetchOrderInfo(
+      +process.env.EXPO_PUBLIC_ZALO_PAY_APP_ID,
+      appTransId,
+    );
+
+    if (response.status === 200 && response.data) {
+      if (response.data.returncode === 1) {
+        console.log('payment success');
+        setFetchDone(true);
+        delay(1000).then(() => {
+          Linking.openURL(
+            `c92bookestorev1:///payment-success?orderId=${response.data.zptransid}&message=Payment success with Zalo Pay!`,
+          );
+        });
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const subscription = AppState.addEventListener('change', (nextAppState) => {
       if (
         appState.current.match(/inactive|background/) &&
-        nextAppState === 'active'
+        nextAppState === 'active' &&
+        !fetchDone
       ) {
-        console.log('App has come to the foreground!');
-
         if (appTransId) {
-          ZaloPayServices.fetchOrderInfo(
-            +process.env.EXPO_PUBLIC_ZALO_PAY_APP_ID,
-            appTransId,
-          );
+          onFetchPaymentInfo(appTransId);
         }
       }
 
@@ -36,7 +52,7 @@ const TestZalo: React.FC<any> = () => {
     return () => {
       subscription.remove();
     };
-  }, [appTransId]);
+  }, [appTransId, fetchDone, onFetchPaymentInfo]);
 
   return (
     <View>
@@ -57,8 +73,7 @@ const TestZalo: React.FC<any> = () => {
             appTime: new Date().getTime(),
             amount: 10000,
             appTransId: appTransIdGen,
-            embedData:
-              '{"promotioninfo":"","merchantinfo":"du lieu rieng cua ung dung","redirecturl": "c92bookestorev1:///payment-success?orderId=123123&message=Payment success!"}',
+            embedData: '',
             item,
             description,
           };
@@ -76,6 +91,7 @@ const TestZalo: React.FC<any> = () => {
           title="payOrder"
           onPress={() => {
             ZaloPayServices.payOrder(token);
+            setFetchDone(false);
           }}
         />
       ) : null}
