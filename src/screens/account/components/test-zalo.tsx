@@ -73,7 +73,7 @@ const TestZalo: React.FC<any> = () => {
             appTime: new Date().getTime(),
             amount: 10000,
             appTransId: appTransIdGen,
-            embedData: '',
+            embedData: '{"promotioninfo":""}',
             item,
             description,
           };
