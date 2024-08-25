@@ -12,12 +12,17 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\"",
-    "set:env:prod": "node ./scripts/set-env-prod.js",
-    "set:env:qa": "node ./scripts/set-env-qa.js",
-    "set:env:stg": "node ./scripts/set-env-stg.js",
-    "build:android:qa:local": "npm run set:env:qa && dotenv -- eas build -p android --profile preview.qa --local",
-    "build:android:stg:local": "npm run set:env:stg && dotenv -- eas build -p android --profile preview.stg --local",
-    "build:android:prod:local": "npm run set:env:prod && dotenv -- eas build -p android --profile preview.prod --local",
+    "set:env:backup": "node ./scripts/set-env-backup.js",
+    "set:env:revert": "node ./scripts/set-env-revert.js",
+    "set:env:prod:build": "node ./scripts/set-env-prod.js",
+    "set:env:qa:build": "node ./scripts/set-env-qa.js",
+    "set:env:stg:build": "node ./scripts/set-env-stg.js",
+    "set:env:prod": "npm run set:env:prod:build && npm run set:env:backup",
+    "set:env:qa": "npm run set:env:qa:build && npm run set:env:backup",
+    "set:env:stg": "npm run set:env:stg:build && npm run set:env:backup",
+    "build:android:qa:local": "npm run set:env:qa:build && dotenv -- eas build -p android --profile preview.qa --local && npm run set:env:revert",
+    "build:android:stg:local": "npm run set:env:stg:build && dotenv -- eas build -p android --profile preview.stg --local",
+    "build:android:prod:local": "npm run set:env:prod:build && dotenv -- eas build -p android --profile preview.prod --local",
     "build:android:dev": "npm run set:env:qa && dotenv -- eas build -p android --profile development",
     "build:android:dev:local": "npm run set:env:qa && dotenv -- eas build -p android --profile development --local",
     "build:aab": "eas build -p android --profile production",
@@ -27,7 +32,8 @@
     "eas:update:qa": "eas update --branch preview.qa --message",
     "eas:update:stg": "eas update --branch preview.stg --message",
     "eas:update:prod": "eas update --branch production --message",
-    "prebuild": "expo prebuild"
+    "prebuild": "expo prebuild",
+    "build:android:qa:local:test": "npm run set:env:qa:build && npm run set:env:revert"
   },
   "jest": {
     "preset": "jest-expo"
