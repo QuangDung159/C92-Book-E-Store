@@ -1,4 +1,5 @@
 import { ERROR_CODES } from '@constants';
+import { PaymentStatus } from '@types';
 
 export interface IReviewInput {
   rating: number;
@@ -74,6 +75,7 @@ export interface ICart {
   discount: number;
   shippingAddress: string;
   paymentMethod: IPaymentMethod;
+  total?: number;
 }
 
 export interface ITopBooksFilter {
@@ -159,4 +161,9 @@ export interface ServiceResult<T> {
   customData?: any;
   errors: any[];
   error?: any;
+}
+
+export interface IOrder {
+  cart: ICart;
+  paymentStatus: PaymentStatus;
 }

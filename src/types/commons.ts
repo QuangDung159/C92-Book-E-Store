@@ -31,9 +31,12 @@ type ZaloPayOrder = {
   description: string;
 };
 
+type PaymentStatus = 'success' | 'fail' | 'waiting_for_pay';
+
 export {
   AdministrativeUnitEnum,
   PaymentData,
+  PaymentStatus,
   ServiceResultHandler,
   ZaloPayOrder,
 };

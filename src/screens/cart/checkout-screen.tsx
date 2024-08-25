@@ -176,8 +176,8 @@ const CheckoutScreen = ({ navigation }: any) => {
 
           if (cartStore.paymentSelected.paymentType === PAYMENT_TYPE.momo) {
             await onPaymentWithMoMo(
-              idGenerated.orderId,
-              idGenerated.requestId,
+              cartStore.cart.id,
+              StringHelpers.genLocalId(),
               10000,
             );
             sharedStore.setShowLoading(false);

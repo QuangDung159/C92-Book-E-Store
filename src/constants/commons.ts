@@ -47,6 +47,12 @@ const MOMO_REQUEST_TYPE = 'captureWallet';
 
 const CODE_PUSH_NUMBER = '1724383468';
 
+const PAYMENT_STATUS = {
+  success: 'success',
+  fail: 'fail',
+  waitingForPay: 'waiting_for_pay',
+};
+
 export {
   ADMINISTRATIVE,
   CODE_PUSH_NUMBER,
@@ -58,4 +64,5 @@ export {
   PAYMENT_TYPE,
   PRICE_STEP,
   SEARCH_VIEW_STYLE,
+  PAYMENT_STATUS,
 };

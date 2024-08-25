@@ -6,7 +6,7 @@ import { StringHelpers, ToastHelpers } from '@utils';
 const createMomoPayment = async (params: PaymentData) => {
   if (!process.env.EXPO_PUBLIC_MOMO_PARTNER_CODE) {
     throw (e: any) => {
-      console.log('e :>> ', e);
+      console.log('MoMo error :>> ', e);
       ToastHelpers.showToast({
         title: 'EXPO_PUBLIC_MOMO_PARTNER_CODE',
         type: 'error',

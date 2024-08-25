@@ -7,6 +7,8 @@ import {
 } from 'mobx';
 import { LIST_PAYMENT_METHOD, TOP_BOOKS } from '@constants';
 import { DataModels } from '@models';
+import { StringHelpers } from '@utils';
+import { OrderServices } from 'services/order-services';
 import { ReferenceOptionsStore } from './reference-options-store';
 import { UserStore } from './user-store';
 
@@ -24,6 +26,7 @@ class CartStore {
   userStore: UserStore | null = null;
   paymentSelected: DataModels.IPaymentMethod | null = null;
   creditCardSelected: DataModels.ICreditCard | null = null;
+  currentOrder: DataModels.IOrder | null = null;
 
   constructor(
     userStore: UserStore,
@@ -38,18 +41,21 @@ class CartStore {
       referenceOptionsStore: observable,
       paymentSelected: observable,
       creditCardSelected: observable,
+      currentOrder: observable,
       setCreditCardSelected: action,
       setPaymentSelected: action,
       setListVoucherIdSelected: action,
       setListCartItem: action,
       setListVoucher: action,
       setListPaymentMethod: action,
+      setCurrentOrder: action,
       discount: computed,
       total: computed,
       subTotal: computed,
       shipping: computed,
       cartCount: computed,
       shippingAddressData: computed,
+      cart: computed,
     });
 
     this.userStore = userStore;
@@ -59,6 +65,10 @@ class CartStore {
     this.paymentSelected = {
       paymentType: LIST_PAYMENT_METHOD[0].value,
     };
+  }
+
+  setCurrentOrder(value: DataModels.IOrder) {
+    this.currentOrder = value;
   }
 
   setCreditCardSelected(cardNumber: string) {
@@ -194,6 +204,26 @@ class CartStore {
     ).find((item) => item.primary);
 
     return shippingAddress;
+  }
+
+  get cart() {
+    const cart: DataModels.ICart = {
+      discount: this.discount,
+      id: StringHelpers.genLocalId(),
+      listCartItem: this.listCartItem,
+      paymentMethod: this.paymentSelected,
+      shipping: this.shipping,
+      shippingAddress: StringHelpers.getFullAddress(this.shippingAddressData),
+      subTotal: this.subTotal,
+      total: this.total,
+    };
+
+    return cart;
+  }
+
+  async createOrder() {
+    const order = await OrderServices.createOrder(this.cart);
+    console.log('order :>> ', order);
   }
 }
 
