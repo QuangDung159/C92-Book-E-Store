@@ -108,7 +108,7 @@ export const genZaloPayMacForFetchInfo = (
 };
 
 export const genLocalId = (type?: string) => {
-  return `local-${type && `${type}-`}${uuidv4}`;
+  return `local-${type && `${type}-`}${uuidv4()}`;
 };
 
 export const generateMoMoId = () => {

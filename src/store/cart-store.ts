@@ -7,8 +7,9 @@ import {
 } from 'mobx';
 import { LIST_PAYMENT_METHOD, TOP_BOOKS } from '@constants';
 import { DataModels } from '@models';
+import { MomoServices, OrderServices } from '@services';
+import { PaymentData, PaymentStatus } from '@types';
 import { StringHelpers } from '@utils';
-import { OrderServices } from 'services/order-services';
 import { ReferenceOptionsStore } from './reference-options-store';
 import { UserStore } from './user-store';
 
@@ -213,7 +214,8 @@ class CartStore {
       listCartItem: this.listCartItem,
       paymentMethod: this.paymentSelected,
       shipping: this.shipping,
-      shippingAddress: StringHelpers.getFullAddress(this.shippingAddressData),
+      // shippingAddress: StringHelpers.getFullAddress(this.shippingAddressData),
+      shippingAddress: 'aas duong',
       subTotal: this.subTotal,
       total: this.total,
     };
@@ -221,10 +223,45 @@ class CartStore {
     return cart;
   }
 
-  async createOrder() {
+  createOrder = async () => {
     const order = await OrderServices.createOrder(this.cart);
-    console.log('order :>> ', order);
-  }
+    this.setCurrentOrder(order);
+    return order;
+  };
+
+  updateOrderStatus = async (status: PaymentStatus) => {
+    const order = await OrderServices.updateOrder({
+      ...this.currentOrder,
+      paymentStatus: status,
+    });
+    this.setCurrentOrder(order);
+  };
+
+  onPaymentWithMoMo = async (
+    orderId: string,
+    requestId: string,
+    amount: number,
+    onSuccess?: (result: any) => void,
+    onFail?: (result: any) => void,
+  ) => {
+    const params: PaymentData = {
+      amount,
+      ipnUrl: 'https://webhook.site/94e534cb-a54a-4313-8e91-c42f7aa2e145',
+      orderId,
+      orderInfo: 'Thanh toán qua ví MoMo',
+      redirectUrl: `c92bookestorev1:///payment-success?orderId=${orderId}&message=Payment success with MoMo Wallet!`,
+      requestId,
+      extraData: '',
+    };
+
+    const result = await MomoServices.createMomoPayment(params);
+
+    if (result?.statusCode === 200) {
+      onSuccess?.(result);
+    } else {
+      onFail?.(result);
+    }
+  };
 }
 
 export { CartStore };

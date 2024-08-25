@@ -44,7 +44,7 @@ const createOrder = async (
       onSuccess?.(resJson);
     })
     .catch((error) => {
-      console.log('error :>> ', error);
+      console.log('Zalo Pay error :>> ', error);
       onFail?.(error);
     });
 };

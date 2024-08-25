@@ -13,11 +13,9 @@ import {
 } from '@components';
 import { LIST_PAYMENT_METHOD, PAYMENT_TYPE } from '@constants';
 import { useNavigate } from '@hooks';
-import { MomoServices } from '@services';
 import { cartStore, sharedStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
-import { PaymentData } from '@types';
-import { delay, StringHelpers } from '@utils';
+import { StringHelpers } from '@utils';
 import { CartInfoRow, ListCreditCard, ShippingAddress } from './components';
 import { ListCartItem } from './components/list-cart-item';
 
@@ -38,30 +36,6 @@ const CheckoutScreen = ({ navigation }: any) => {
       cartStore.paymentSelected.paymentType === PAYMENT_TYPE.creditCard,
     );
   }, [cartStore.paymentSelected.paymentType]);
-
-  const onPaymentWithMoMo = async (
-    orderId: string,
-    requestId: string,
-    amount: number,
-  ) => {
-    const params: PaymentData = {
-      amount,
-      ipnUrl: 'https://webhook.site/94e534cb-a54a-4313-8e91-c42f7aa2e145',
-      orderId,
-      orderInfo: 'Thanh toán qua ví MoMo',
-      redirectUrl: `c92bookestorev1:///payment-success?orderId=${orderId}&message=Payment success with MoMo Wallet!`,
-      requestId,
-      extraData: '',
-    };
-
-    const result = await MomoServices.createMomoPayment(params);
-
-    if (result?.statusCode === 200) {
-      if (await Linking.canOpenURL(result.data.payUrl)) {
-        Linking.openURL(result.data.payUrl);
-      }
-    }
-  };
 
   return (
     <View style={styles.container}>
@@ -170,16 +144,21 @@ const CheckoutScreen = ({ navigation }: any) => {
       <BottomCheckoutSection
         onPress={async () => {
           sharedStore.setShowLoading(true);
-          await delay(1000);
 
-          const idGenerated = StringHelpers.generateMoMoId();
+          await cartStore.createOrder();
 
           if (cartStore.paymentSelected.paymentType === PAYMENT_TYPE.momo) {
-            await onPaymentWithMoMo(
-              cartStore.cart.id,
+            await cartStore.onPaymentWithMoMo(
+              cartStore.currentOrder.id,
               StringHelpers.genLocalId(),
               10000,
+              async (result) => {
+                if (await Linking.canOpenURL(result.data.payUrl)) {
+                  Linking.openURL(result.data.payUrl);
+                }
+              },
             );
+
             sharedStore.setShowLoading(false);
             return;
           }
@@ -187,7 +166,7 @@ const CheckoutScreen = ({ navigation }: any) => {
           sharedStore.setShowLoading(false);
 
           Linking.openURL(
-            `c92bookestorev1:///payment-success?orderId=${idGenerated.orderId}&message=Payment success!`,
+            `c92bookestorev1:///payment-success?orderId=${cartStore.currentOrder.id}&message=Payment success!`,
           );
         }}
         priceDisplay={cartStore.total}

@@ -164,6 +164,7 @@ export interface ServiceResult<T> {
 }
 
 export interface IOrder {
+  id: string;
   cart: ICart;
   paymentStatus: PaymentStatus;
 }

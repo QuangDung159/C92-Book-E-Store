@@ -1,15 +1,21 @@
 import { PAYMENT_STATUS } from '@constants';
 import { DataModels } from '@models';
 import { PaymentStatus } from '@types';
-import { delay } from '@utils';
+import { delay, StringHelpers } from '@utils';
 
 const createOrder = async (cart: DataModels.ICart) => {
   await delay(2000);
   const order: DataModels.IOrder = {
     cart,
     paymentStatus: PAYMENT_STATUS.waitingForPay as PaymentStatus,
+    id: StringHelpers.genLocalId('order'),
   };
   return order;
 };
 
-export const OrderServices = { createOrder };
+const updateOrder = async (order: DataModels.IOrder) => {
+  await delay(2000);
+  return order;
+};
+
+export const OrderServices = { createOrder, updateOrder };
