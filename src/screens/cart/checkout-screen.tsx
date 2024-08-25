@@ -13,6 +13,7 @@ import {
 } from '@components';
 import { LIST_PAYMENT_METHOD, PAYMENT_TYPE } from '@constants';
 import { useNavigate } from '@hooks';
+import { ZaloPayServices } from '@services';
 import { cartStore, sharedStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { StringHelpers } from '@utils';
@@ -151,10 +152,27 @@ const CheckoutScreen = ({ navigation }: any) => {
             await cartStore.onPaymentWithMoMo(
               cartStore.currentOrder.id,
               StringHelpers.genLocalId(),
-              10000,
+              cartStore.total,
               async (result) => {
                 if (await Linking.canOpenURL(result.data.payUrl)) {
                   Linking.openURL(result.data.payUrl);
+                  cartStore.updateOrderStatus('success');
+                }
+              },
+            );
+
+            sharedStore.setShowLoading(false);
+            return;
+          }
+
+          if (cartStore.paymentSelected.paymentType === PAYMENT_TYPE.zalo_pay) {
+            await cartStore.onPaymentWithZaloPay(
+              cartStore.currentOrder,
+              (zpTransToken, subReturnCode, appTransId) => {
+                console.log('appTransId :>> ', appTransId);
+
+                if (+subReturnCode === 1 && zpTransToken) {
+                  ZaloPayServices.payOrder(zpTransToken);
                 }
               },
             );

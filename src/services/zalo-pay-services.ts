@@ -86,9 +86,9 @@ const fetchOrderInfo = async (appId: number, appTransId: string) => {
   }
 };
 
-const payOrder = (token: string) => {
+const payOrder = (zpTransToken: string) => {
   const payZP = NativeModules.PayZaloBridge;
-  payZP.payOrder(token);
+  payZP.payOrder(zpTransToken);
 };
 
 export const ZaloPayServices = { createOrder, payOrder, fetchOrderInfo };

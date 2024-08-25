@@ -7,9 +7,9 @@ import {
 } from 'mobx';
 import { LIST_PAYMENT_METHOD, TOP_BOOKS } from '@constants';
 import { DataModels } from '@models';
-import { MomoServices, OrderServices } from '@services';
-import { PaymentData, PaymentStatus } from '@types';
-import { StringHelpers } from '@utils';
+import { MomoServices, OrderServices, ZaloPayServices } from '@services';
+import { PaymentData, PaymentStatus, ZaloPayOrder } from '@types';
+import { DatetimeHelpers, StringHelpers } from '@utils';
 import { ReferenceOptionsStore } from './reference-options-store';
 import { UserStore } from './user-store';
 
@@ -261,6 +261,40 @@ class CartStore {
     } else {
       onFail?.(result);
     }
+  };
+
+  onPaymentWithZaloPay = async (
+    order: DataModels.IOrder,
+    onCreateZaloPayOrder: (
+      zpTransToken: string,
+      subReturnCode: string,
+      appTransIdGen: string,
+    ) => void,
+  ) => {
+    const appTransIdGen =
+      DatetimeHelpers.getCurrentDateYYMMDD() + '_' + new Date().getTime();
+
+    const item = '[]';
+    const description = 'Merchant description for order #' + order.id;
+
+    const zpOrder: ZaloPayOrder = {
+      appId: process.env.EXPO_PUBLIC_ZALO_PAY_APP_ID,
+      appUser: process.env.EXPO_PUBLIC_ZALO_PAY_APP_USER,
+      appTime: new Date().getTime(),
+      amount: order.cart.total,
+      appTransId: appTransIdGen,
+      embedData: '{"promotioninfo":""}',
+      item,
+      description,
+    };
+
+    ZaloPayServices.createOrder(zpOrder, (response) => {
+      onCreateZaloPayOrder(
+        response.zp_trans_token,
+        response.sub_return_code,
+        appTransIdGen,
+      );
+    });
   };
 }
 
