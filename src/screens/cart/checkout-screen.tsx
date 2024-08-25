@@ -30,7 +30,6 @@ import {
   PAYMENT_TYPE,
 } from '@constants';
 import { useNavigate } from '@hooks';
-import { ZaloPayServices } from '@services';
 import { cartStore, sharedStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { delay, StringHelpers } from '@utils';
@@ -59,19 +58,18 @@ const CheckoutScreen = ({ navigation }: any) => {
   }, [cartStore.paymentSelected.paymentType]);
 
   const onFetchPaymentInfo = useCallback(async (appTransId: string) => {
-    const response = await ZaloPayServices.fetchOrderInfo(
-      +process.env.EXPO_PUBLIC_ZALO_PAY_APP_ID,
-      appTransId,
-    );
+    const response = await cartStore.onFetchZaloPaymentInfo(appTransId);
 
     if (response.status === 200 && response.data) {
       if (response.data.returncode === 1) {
         setFetchZaloPayOrderDone(true);
         delay(1000).then(() => {
-          sharedStore.setShowLoading(false);
           Linking.openURL(
             `${DEEP_LINK_PAYMENT_SUCCESS_URL}orderId=${cartStore.currentOrder.id}&message=Payment success with Zalo Pay!`,
           );
+
+          sharedStore.setShowLoading(false);
+          cartStore.clearAllCurrentPaymentInfo();
         });
       }
     }
@@ -215,6 +213,7 @@ const CheckoutScreen = ({ navigation }: any) => {
             });
 
             sharedStore.setShowLoading(false);
+            cartStore.clearAllCurrentPaymentInfo();
             return;
           }
 
@@ -223,11 +222,12 @@ const CheckoutScreen = ({ navigation }: any) => {
             return;
           }
 
-          sharedStore.setShowLoading(false);
-
           Linking.openURL(
             `${DEEP_LINK_PAYMENT_SUCCESS_URL}orderId=${cartStore.currentOrder.id}&message=Payment success!`,
           );
+
+          sharedStore.setShowLoading(false);
+          cartStore.clearAllCurrentPaymentInfo();
         }}
         priceDisplay={cartStore.total}
         disabled={cartStore.cartCount === 0}

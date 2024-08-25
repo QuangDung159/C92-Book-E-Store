@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { ScreenHeader } from '@components';
 import { userStore } from '@store';
 import { COLORS } from '@themes';
-import { AccountView, AuthenView, TestZalo } from './components';
+import { AccountView, AuthenView } from './components';
 
 const AccountScreen = ({ navigation }: any) => {
   return (
@@ -15,7 +15,7 @@ const AccountScreen = ({ navigation }: any) => {
         showBackIcon={false}
       />
       {userStore.userProfile ? <AccountView /> : <AuthenView />}
-      <TestZalo />
+      {/* <TestZalo /> */}
     </View>
   );
 };

@@ -1,4 +1,3 @@
-/* eslint-disable import/no-named-as-default */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AppState, Button, Linking, Text, View } from 'react-native';
 import { Buttons } from '@components';

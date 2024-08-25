@@ -337,6 +337,15 @@ class CartStore {
     this.setCurrentOrder(null);
     this.setZaloAppTransId('');
   };
+
+  onFetchZaloPaymentInfo = async (appTransId: string) => {
+    const response = await ZaloPayServices.fetchOrderInfo(
+      +process.env.EXPO_PUBLIC_ZALO_PAY_APP_ID,
+      appTransId,
+    );
+
+    return response;
+  };
 }
 
 export { CartStore };
