@@ -5,8 +5,8 @@
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
@@ -18,15 +18,16 @@
     "build:android:qa:local": "npm run set:env:qa && dotenv -- eas build -p android --profile preview.qa --local",
     "build:android:stg:local": "npm run set:env:stg && dotenv -- eas build -p android --profile preview.stg --local",
     "build:android:prod:local": "npm run set:env:prod && dotenv -- eas build -p android --profile preview.prod --local",
-    "build:android:dev": "eas build -p android --profile development",
-    "build:android:dev:local": "eas build -p android --profile development --local",
+    "build:android:dev": "npm run set:env:qa && dotenv -- eas build -p android --profile development",
+    "build:android:dev:local": "npm run set:env:qa && dotenv -- eas build -p android --profile development --local",
     "build:aab": "eas build -p android --profile production",
     "build:aab:local": "npm run set:env:prod && dotenv -- eas build -p android --profile production --local",
     "build:ios:dev": "eas build -p ios --profile development",
     "build:nodev": "npx expo start --no-dev",
     "eas:update:qa": "eas update --branch preview.qa --message",
     "eas:update:stg": "eas update --branch preview.stg --message",
-    "eas:update:prod": "eas update --branch production --message"
+    "eas:update:prod": "eas update --branch production --message",
+    "prebuild": "expo prebuild"
   },
   "jest": {
     "preset": "jest-expo"

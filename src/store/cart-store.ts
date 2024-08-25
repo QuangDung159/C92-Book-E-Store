@@ -5,8 +5,15 @@ import {
   observable,
   runInAction,
 } from 'mobx';
-import { LIST_PAYMENT_METHOD, TOP_BOOKS } from '@constants';
+import {
+  DEEP_LINK_PAYMENT_SUCCESS_URL,
+  LIST_PAYMENT_METHOD,
+  TOP_BOOKS,
+} from '@constants';
 import { DataModels } from '@models';
+import { MomoServices, OrderServices, ZaloPayServices } from '@services';
+import { PaymentData, PaymentStatus, ZaloPayOrder } from '@types';
+import { DatetimeHelpers, StringHelpers } from '@utils';
 import { ReferenceOptionsStore } from './reference-options-store';
 import { UserStore } from './user-store';
 
@@ -24,6 +31,8 @@ class CartStore {
   userStore: UserStore | null = null;
   paymentSelected: DataModels.IPaymentMethod | null = null;
   creditCardSelected: DataModels.ICreditCard | null = null;
+  currentOrder: DataModels.IOrder | null = null;
+  zaloAppTransId: string = '';
 
   constructor(
     userStore: UserStore,
@@ -38,18 +47,23 @@ class CartStore {
       referenceOptionsStore: observable,
       paymentSelected: observable,
       creditCardSelected: observable,
+      currentOrder: observable,
+      zaloAppTransId: observable,
       setCreditCardSelected: action,
+      setZaloAppTransId: action,
       setPaymentSelected: action,
       setListVoucherIdSelected: action,
       setListCartItem: action,
       setListVoucher: action,
       setListPaymentMethod: action,
+      setCurrentOrder: action,
       discount: computed,
       total: computed,
       subTotal: computed,
       shipping: computed,
       cartCount: computed,
       shippingAddressData: computed,
+      cart: computed,
     });
 
     this.userStore = userStore;
@@ -59,6 +73,14 @@ class CartStore {
     this.paymentSelected = {
       paymentType: LIST_PAYMENT_METHOD[0].value,
     };
+  }
+
+  setCurrentOrder(value: DataModels.IOrder) {
+    this.currentOrder = value;
+  }
+
+  setZaloAppTransId(value: string) {
+    this.zaloAppTransId = value;
   }
 
   setCreditCardSelected(cardNumber: string) {
@@ -195,6 +217,135 @@ class CartStore {
 
     return shippingAddress;
   }
+
+  get cart() {
+    const cart: DataModels.ICart = {
+      discount: this.discount,
+      id: StringHelpers.genLocalId(),
+      listCartItem: this.listCartItem,
+      paymentMethod: this.paymentSelected,
+      shipping: this.shipping,
+      // shippingAddress: StringHelpers.getFullAddress(this.shippingAddressData),
+      shippingAddress: 'aas duong',
+      subTotal: this.subTotal,
+      total: this.total,
+    };
+
+    return cart;
+  }
+
+  createOrder = async () => {
+    const order = await OrderServices.createOrder(this.cart);
+    this.setCurrentOrder(order);
+    return order;
+  };
+
+  updateOrderStatus = async (status: PaymentStatus) => {
+    const order = await OrderServices.updateOrder({
+      ...this.currentOrder,
+      paymentStatus: status,
+    });
+    this.setCurrentOrder(order);
+  };
+
+  onPaymentWithMoMo = async (
+    orderId: string,
+    requestId: string,
+    amount: number,
+    onSuccess?: (result: any) => void,
+    onFail?: (result: any) => void,
+  ) => {
+    const params: PaymentData = {
+      amount,
+      ipnUrl: 'https://webhook.site/94e534cb-a54a-4313-8e91-c42f7aa2e145',
+      orderId,
+      orderInfo: 'Thanh toán qua ví MoMo',
+      redirectUrl: `${DEEP_LINK_PAYMENT_SUCCESS_URL}orderId=${orderId}&message=Payment success with MoMo Wallet!`,
+      requestId,
+      extraData: '',
+    };
+
+    const result = await MomoServices.createMomoPayment(params);
+
+    if (result?.statusCode === 200) {
+      onSuccess?.(result);
+    } else {
+      onFail?.(result);
+    }
+  };
+
+  handleMoMoPayment = async (onSuccess?: (result: any) => void) => {
+    await this.onPaymentWithMoMo(
+      this.currentOrder.id,
+      StringHelpers.genLocalId(),
+      this.total,
+      async (result) => {
+        this.updateOrderStatus('success');
+        onSuccess?.(result);
+      },
+    );
+  };
+
+  onPaymentWithZaloPay = async (
+    order: DataModels.IOrder,
+    onCreateZaloPayOrder: (
+      zpTransToken: string,
+      subReturnCode: string,
+      appTransIdGen: string,
+    ) => void,
+  ) => {
+    const appTransIdGen =
+      DatetimeHelpers.getCurrentDateYYMMDD() + '_' + new Date().getTime();
+
+    const item = '[]';
+    const description = 'Merchant description for order #' + order.id;
+
+    const zpOrder: ZaloPayOrder = {
+      appId: process.env.EXPO_PUBLIC_ZALO_PAY_APP_ID,
+      appUser: process.env.EXPO_PUBLIC_ZALO_PAY_APP_USER,
+      appTime: new Date().getTime(),
+      amount: order.cart.total,
+      appTransId: appTransIdGen,
+      embedData: '{"promotioninfo":""}',
+      item,
+      description,
+    };
+
+    ZaloPayServices.createOrder(zpOrder, (response) => {
+      onCreateZaloPayOrder(
+        response.zp_trans_token,
+        response.sub_return_code,
+        appTransIdGen,
+      );
+    });
+  };
+
+  handleZaloPayPayment = async () => {
+    await this.onPaymentWithZaloPay(
+      this.currentOrder,
+      (zpTransToken, subReturnCode, appTransId) => {
+        this.setZaloAppTransId(appTransId);
+
+        if (+subReturnCode === 1 && zpTransToken) {
+          ZaloPayServices.payOrder(zpTransToken);
+        }
+      },
+    );
+  };
+
+  clearAllCurrentPaymentInfo = () => {
+    this.setCurrentOrder(null);
+    this.setZaloAppTransId('');
+  };
+
+  onFetchZaloPaymentInfo = async (appTransId: string) => {
+    const response = await ZaloPayServices.fetchOrderInfo(
+      +process.env.EXPO_PUBLIC_ZALO_PAY_APP_ID,
+      appTransId,
+    );
+
+    return response;
+  };
 }
 
 export { CartStore };

@@ -290,7 +290,7 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
   {
     name: 'The Picture of Dorian Gray 12 The Picture of Dorian Gray 12 The Picture of Dorian Gray 12',
     author: LIST_AUTHOR[0],
-    price: 25000999,
+    price: 25999,
     priceNotSale: 0,
     isLiked: false,
     rating: 4.7,
@@ -341,7 +341,7 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
   {
     name: 'Nine Liars',
     author: LIST_AUTHOR[0],
-    price: 259900,
+    price: 25990000,
     priceNotSale: 1000000,
     isLiked: true,
     rating: 4,
@@ -399,7 +399,7 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
   {
     name: 'The Picture of Dorian Gray 12',
     author: LIST_AUTHOR[1],
-    price: 250000,
+    price: 25000,
     priceNotSale: 1000000,
     isLiked: true,
     rating: 4,

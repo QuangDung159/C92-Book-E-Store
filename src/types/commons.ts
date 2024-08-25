@@ -20,4 +20,23 @@ type PaymentData = {
   autoCapture?: boolean;
 };
 
-export { AdministrativeUnitEnum, PaymentData, ServiceResultHandler };
+type ZaloPayOrder = {
+  appId: string;
+  appUser: string;
+  appTime: number;
+  amount: number;
+  appTransId: string;
+  embedData: string;
+  item: string;
+  description: string;
+};
+
+type PaymentStatus = 'success' | 'fail' | 'waiting_for_pay';
+
+export {
+  AdministrativeUnitEnum,
+  PaymentData,
+  PaymentStatus,
+  ServiceResultHandler,
+  ZaloPayOrder,
+};

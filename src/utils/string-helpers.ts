@@ -1,7 +1,7 @@
 import CryptoJS from 'crypto-js';
 import { v4 as uuidv4 } from 'uuid';
 import { DataModels } from '@models';
-import { PaymentData } from '@types';
+import { PaymentData, ZaloPayOrder } from '@types';
 import 'react-native-get-random-values';
 
 export const searchByFirstLetter = (
@@ -68,12 +68,68 @@ export const generateMoMoSignature = (data: PaymentData) => {
   return signature;
 };
 
+export const genZaloPayMac = (orderInfo: ZaloPayOrder) => {
+  const hmacInput =
+    orderInfo.appId +
+    '|' +
+    orderInfo.appTransId +
+    '|' +
+    orderInfo.appUser +
+    '|' +
+    orderInfo.amount +
+    '|' +
+    orderInfo.appTime +
+    '|' +
+    orderInfo.embedData +
+    '|' +
+    orderInfo.item;
+
+  const mac = CryptoJS.HmacSHA256(
+    hmacInput,
+    process.env.EXPO_PUBLIC_ZALO_PAY_KEY,
+  );
+
+  return mac;
+};
+
+export const genZaloPayMacForFetchInfo = (
+  appId: number,
+  appTransId: string,
+) => {
+  const hmacInput =
+    appId + '|' + appTransId + '|' + process.env.EXPO_PUBLIC_ZALO_PAY_KEY;
+
+  const mac = CryptoJS.HmacSHA256(
+    hmacInput,
+    process.env.EXPO_PUBLIC_ZALO_PAY_KEY,
+  );
+
+  return mac;
+};
+
+export const genLocalId = (type?: string) => {
+  return `local-${type && `${type}-`}${uuidv4()}`;
+};
+
 export const generateMoMoId = () => {
   const requestId = uuidv4();
-  const orderId = uuidv4();
+  const orderId = genLocalId();
 
   return {
     requestId,
     orderId,
   };
+};
+
+export const generateUrl = (
+  baseUrl: string,
+  params: { [key: string]: string },
+): string => {
+  const queryParams = Object.keys(params)
+    .map(
+      (key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`,
+    )
+    .join('&');
+
+  return `${baseUrl}?${queryParams}`;
 };

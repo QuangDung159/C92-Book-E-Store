@@ -1,7 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useMemo, useState } from 'react';
-import { Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import {
+  AppState,
+  Linking,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import { Divider, RadioButton } from 'react-native-paper';
 import {
@@ -11,12 +24,14 @@ import {
   ScreenHeader,
   SectionTitle,
 } from '@components';
-import { LIST_PAYMENT_METHOD, PAYMENT_TYPE } from '@constants';
+import {
+  DEEP_LINK_PAYMENT_SUCCESS_URL,
+  LIST_PAYMENT_METHOD,
+  PAYMENT_TYPE,
+} from '@constants';
 import { useNavigate } from '@hooks';
-import { MomoServices } from '@services';
 import { cartStore, sharedStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
-import { PaymentData } from '@types';
 import { delay, StringHelpers } from '@utils';
 import { CartInfoRow, ListCreditCard, ShippingAddress } from './components';
 import { ListCartItem } from './components/list-cart-item';
@@ -24,6 +39,9 @@ import { ListCartItem } from './components/list-cart-item';
 const CheckoutScreen = ({ navigation }: any) => {
   const { openAddressScreen } = useNavigate(navigation);
   const [isShowListCreditCart, setIsShowListCreditCart] = useState(false);
+  const [fetchZaloPayOrderDone, setFetchZaloPayOrderDone] = useState(false);
+
+  const appState = useRef(AppState.currentState);
 
   const toggleListCreditCart = () =>
     setIsShowListCreditCart(!isShowListCreditCart);
@@ -39,29 +57,43 @@ const CheckoutScreen = ({ navigation }: any) => {
     );
   }, [cartStore.paymentSelected.paymentType]);
 
-  const onPaymentWithMoMo = async (
-    orderId: string,
-    requestId: string,
-    amount: number,
-  ) => {
-    const params: PaymentData = {
-      amount,
-      ipnUrl: 'https://webhook.site/94e534cb-a54a-4313-8e91-c42f7aa2e145',
-      orderId,
-      orderInfo: 'Thanh toán qua ví MoMo',
-      redirectUrl: `c92bookestorev1:///payment-success?orderId=${orderId}&message=Payment success with MoMo Wallet!`,
-      requestId,
-      extraData: '',
-    };
+  const onFetchPaymentInfo = useCallback(async (appTransId: string) => {
+    const response = await cartStore.onFetchZaloPaymentInfo(appTransId);
 
-    const result = await MomoServices.createMomoPayment(params);
+    if (response.status === 200 && response.data) {
+      if (response.data.returncode === 1) {
+        setFetchZaloPayOrderDone(true);
+        delay(1000).then(() => {
+          Linking.openURL(
+            `${DEEP_LINK_PAYMENT_SUCCESS_URL}orderId=${cartStore.currentOrder.id}&message=Payment success with Zalo Pay!`,
+          );
 
-    if (result?.statusCode === 200) {
-      if (await Linking.canOpenURL(result.data.payUrl)) {
-        Linking.openURL(result.data.payUrl);
+          sharedStore.setShowLoading(false);
+          cartStore.clearAllCurrentPaymentInfo();
+        });
       }
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', (nextAppState) => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === 'active' &&
+        !fetchZaloPayOrderDone
+      ) {
+        if (cartStore.zaloAppTransId) {
+          onFetchPaymentInfo(cartStore.zaloAppTransId);
+        }
+      }
+
+      appState.current = nextAppState;
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, [cartStore?.zaloAppTransId, fetchZaloPayOrderDone, onFetchPaymentInfo]);
 
   return (
     <View style={styles.container}>
@@ -170,25 +202,32 @@ const CheckoutScreen = ({ navigation }: any) => {
       <BottomCheckoutSection
         onPress={async () => {
           sharedStore.setShowLoading(true);
-          await delay(1000);
 
-          const idGenerated = StringHelpers.generateMoMoId();
+          await cartStore.createOrder();
 
           if (cartStore.paymentSelected.paymentType === PAYMENT_TYPE.momo) {
-            await onPaymentWithMoMo(
-              idGenerated.orderId,
-              idGenerated.requestId,
-              10000,
-            );
+            cartStore.handleMoMoPayment(async (result) => {
+              if (await Linking.canOpenURL(result.data.payUrl)) {
+                Linking.openURL(result.data.payUrl);
+              }
+            });
+
             sharedStore.setShowLoading(false);
+            cartStore.clearAllCurrentPaymentInfo();
             return;
           }
 
-          sharedStore.setShowLoading(false);
+          if (cartStore.paymentSelected.paymentType === PAYMENT_TYPE.zalo_pay) {
+            await cartStore.handleZaloPayPayment();
+            return;
+          }
 
           Linking.openURL(
-            `c92bookestorev1:///payment-success?orderId=${idGenerated.orderId}&message=Payment success!`,
+            `${DEEP_LINK_PAYMENT_SUCCESS_URL}orderId=${cartStore.currentOrder.id}&message=Payment success!`,
           );
+
+          sharedStore.setShowLoading(false);
+          cartStore.clearAllCurrentPaymentInfo();
         }}
         priceDisplay={cartStore.total}
         disabled={cartStore.cartCount === 0}

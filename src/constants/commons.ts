@@ -47,14 +47,26 @@ const MOMO_REQUEST_TYPE = 'captureWallet';
 
 const CODE_PUSH_NUMBER = '1724383468';
 
+const PAYMENT_STATUS = {
+  success: 'success',
+  fail: 'fail',
+  waitingForPay: 'waiting_for_pay',
+};
+
+const DEEP_LINK_URL = 'c92bookestorev1:///';
+const DEEP_LINK_PAYMENT_SUCCESS_URL = `${DEEP_LINK_URL}payment-success?`;
+
 export {
   ADMINISTRATIVE,
   CODE_PUSH_NUMBER,
   CREDIT_CARD_TYPE,
+  DEEP_LINK_PAYMENT_SUCCESS_URL,
+  DEEP_LINK_URL,
   DEFAULT_PRICE_RANGE,
   DEFAULT_SORT,
   ERROR_CODES,
   MOMO_REQUEST_TYPE,
+  PAYMENT_STATUS,
   PAYMENT_TYPE,
   PRICE_STEP,
   SEARCH_VIEW_STYLE,
