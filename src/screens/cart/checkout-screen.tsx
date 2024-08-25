@@ -1,7 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useMemo, useState } from 'react';
-import { Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import {
+  AppState,
+  Linking,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import { Divider, RadioButton } from 'react-native-paper';
 import {
@@ -16,13 +29,17 @@ import { useNavigate } from '@hooks';
 import { ZaloPayServices } from '@services';
 import { cartStore, sharedStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
-import { StringHelpers } from '@utils';
+import { delay, StringHelpers } from '@utils';
 import { CartInfoRow, ListCreditCard, ShippingAddress } from './components';
 import { ListCartItem } from './components/list-cart-item';
 
 const CheckoutScreen = ({ navigation }: any) => {
   const { openAddressScreen } = useNavigate(navigation);
   const [isShowListCreditCart, setIsShowListCreditCart] = useState(false);
+  const [fetchZaloPayOrderDone, setFetchZaloPayOrderDone] = useState(false);
+  const [zpAppTransId, setZpAppTransId] = useState('');
+
+  const appState = useRef(AppState.currentState);
 
   const toggleListCreditCart = () =>
     setIsShowListCreditCart(!isShowListCreditCart);
@@ -37,6 +54,45 @@ const CheckoutScreen = ({ navigation }: any) => {
       cartStore.paymentSelected.paymentType === PAYMENT_TYPE.creditCard,
     );
   }, [cartStore.paymentSelected.paymentType]);
+
+  const onFetchPaymentInfo = useCallback(async (appTransId: string) => {
+    const response = await ZaloPayServices.fetchOrderInfo(
+      +process.env.EXPO_PUBLIC_ZALO_PAY_APP_ID,
+      appTransId,
+    );
+
+    if (response.status === 200 && response.data) {
+      if (response.data.returncode === 1) {
+        console.log('payment success');
+        setFetchZaloPayOrderDone(true);
+        delay(1000).then(() => {
+          Linking.openURL(
+            `c92bookestorev1:///payment-success?orderId=${cartStore.currentOrder.id}&message=Payment success with Zalo Pay!`,
+          );
+        });
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', (nextAppState) => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === 'active' &&
+        !fetchZaloPayOrderDone
+      ) {
+        if (zpAppTransId) {
+          onFetchPaymentInfo(zpAppTransId);
+        }
+      }
+
+      appState.current = nextAppState;
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, [zpAppTransId, fetchZaloPayOrderDone, onFetchPaymentInfo]);
 
   return (
     <View style={styles.container}>
@@ -169,7 +225,7 @@ const CheckoutScreen = ({ navigation }: any) => {
             await cartStore.onPaymentWithZaloPay(
               cartStore.currentOrder,
               (zpTransToken, subReturnCode, appTransId) => {
-                console.log('appTransId :>> ', appTransId);
+                setZpAppTransId(appTransId);
 
                 if (+subReturnCode === 1 && zpTransToken) {
                   ZaloPayServices.payOrder(zpTransToken);
