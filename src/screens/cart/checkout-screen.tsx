@@ -37,7 +37,7 @@ const CheckoutScreen = ({ navigation }: any) => {
   const { openAddressScreen } = useNavigate(navigation);
   const [isShowListCreditCart, setIsShowListCreditCart] = useState(false);
   const [fetchZaloPayOrderDone, setFetchZaloPayOrderDone] = useState(false);
-  const [zpAppTransId, setZpAppTransId] = useState('');
+  // const [zpAppTransId, setZpAppTransId] = useState('');
 
   const appState = useRef(AppState.currentState);
 
@@ -66,6 +66,7 @@ const CheckoutScreen = ({ navigation }: any) => {
         console.log('payment success');
         setFetchZaloPayOrderDone(true);
         delay(1000).then(() => {
+          sharedStore.setShowLoading(false);
           Linking.openURL(
             `c92bookestorev1:///payment-success?orderId=${cartStore.currentOrder.id}&message=Payment success with Zalo Pay!`,
           );
@@ -81,8 +82,8 @@ const CheckoutScreen = ({ navigation }: any) => {
         nextAppState === 'active' &&
         !fetchZaloPayOrderDone
       ) {
-        if (zpAppTransId) {
-          onFetchPaymentInfo(zpAppTransId);
+        if (cartStore.zaloAppTransId) {
+          onFetchPaymentInfo(cartStore.zaloAppTransId);
         }
       }
 
@@ -92,7 +93,7 @@ const CheckoutScreen = ({ navigation }: any) => {
     return () => {
       subscription.remove();
     };
-  }, [zpAppTransId, fetchZaloPayOrderDone, onFetchPaymentInfo]);
+  }, [cartStore?.zaloAppTransId, fetchZaloPayOrderDone, onFetchPaymentInfo]);
 
   return (
     <View style={styles.container}>
@@ -205,35 +206,18 @@ const CheckoutScreen = ({ navigation }: any) => {
           await cartStore.createOrder();
 
           if (cartStore.paymentSelected.paymentType === PAYMENT_TYPE.momo) {
-            await cartStore.onPaymentWithMoMo(
-              cartStore.currentOrder.id,
-              StringHelpers.genLocalId(),
-              cartStore.total,
-              async (result) => {
-                if (await Linking.canOpenURL(result.data.payUrl)) {
-                  Linking.openURL(result.data.payUrl);
-                  cartStore.updateOrderStatus('success');
-                }
-              },
-            );
+            cartStore.handleMoMoPayment(async (result) => {
+              if (await Linking.canOpenURL(result.data.payUrl)) {
+                Linking.openURL(result.data.payUrl);
+              }
+            });
 
             sharedStore.setShowLoading(false);
             return;
           }
 
           if (cartStore.paymentSelected.paymentType === PAYMENT_TYPE.zalo_pay) {
-            await cartStore.onPaymentWithZaloPay(
-              cartStore.currentOrder,
-              (zpTransToken, subReturnCode, appTransId) => {
-                setZpAppTransId(appTransId);
-
-                if (+subReturnCode === 1 && zpTransToken) {
-                  ZaloPayServices.payOrder(zpTransToken);
-                }
-              },
-            );
-
-            sharedStore.setShowLoading(false);
+            await cartStore.handleZaloPayPayment();
             return;
           }
 

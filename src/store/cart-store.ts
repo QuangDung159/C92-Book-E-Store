@@ -28,6 +28,7 @@ class CartStore {
   paymentSelected: DataModels.IPaymentMethod | null = null;
   creditCardSelected: DataModels.ICreditCard | null = null;
   currentOrder: DataModels.IOrder | null = null;
+  zaloAppTransId: string = '';
 
   constructor(
     userStore: UserStore,
@@ -43,7 +44,9 @@ class CartStore {
       paymentSelected: observable,
       creditCardSelected: observable,
       currentOrder: observable,
+      zaloAppTransId: observable,
       setCreditCardSelected: action,
+      setZaloAppTransId: action,
       setPaymentSelected: action,
       setListVoucherIdSelected: action,
       setListCartItem: action,
@@ -70,6 +73,10 @@ class CartStore {
 
   setCurrentOrder(value: DataModels.IOrder) {
     this.currentOrder = value;
+  }
+
+  setZaloAppTransId(value: string) {
+    this.zaloAppTransId = value;
   }
 
   setCreditCardSelected(cardNumber: string) {
@@ -263,6 +270,18 @@ class CartStore {
     }
   };
 
+  handleMoMoPayment = async (onSuccess?: (result: any) => void) => {
+    await this.onPaymentWithMoMo(
+      this.currentOrder.id,
+      StringHelpers.genLocalId(),
+      this.total,
+      async (result) => {
+        this.updateOrderStatus('success');
+        onSuccess?.(result);
+      },
+    );
+  };
+
   onPaymentWithZaloPay = async (
     order: DataModels.IOrder,
     onCreateZaloPayOrder: (
@@ -295,6 +314,24 @@ class CartStore {
         appTransIdGen,
       );
     });
+  };
+
+  handleZaloPayPayment = async () => {
+    await this.onPaymentWithZaloPay(
+      this.currentOrder,
+      (zpTransToken, subReturnCode, appTransId) => {
+        this.setZaloAppTransId(appTransId);
+
+        if (+subReturnCode === 1 && zpTransToken) {
+          ZaloPayServices.payOrder(zpTransToken);
+        }
+      },
+    );
+  };
+
+  clearAllCurrentPaymentInfo = () => {
+    this.setCurrentOrder(null);
+    this.setZaloAppTransId('');
   };
 }
 
