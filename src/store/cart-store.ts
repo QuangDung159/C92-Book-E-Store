@@ -5,7 +5,11 @@ import {
   observable,
   runInAction,
 } from 'mobx';
-import { LIST_PAYMENT_METHOD, TOP_BOOKS } from '@constants';
+import {
+  DEEP_LINK_PAYMENT_SUCCESS_URL,
+  LIST_PAYMENT_METHOD,
+  TOP_BOOKS,
+} from '@constants';
 import { DataModels } from '@models';
 import { MomoServices, OrderServices, ZaloPayServices } from '@services';
 import { PaymentData, PaymentStatus, ZaloPayOrder } from '@types';
@@ -256,7 +260,7 @@ class CartStore {
       ipnUrl: 'https://webhook.site/94e534cb-a54a-4313-8e91-c42f7aa2e145',
       orderId,
       orderInfo: 'Thanh toán qua ví MoMo',
-      redirectUrl: `c92bookestorev1:///payment-success?orderId=${orderId}&message=Payment success with MoMo Wallet!`,
+      redirectUrl: `${DEEP_LINK_PAYMENT_SUCCESS_URL}orderId=${orderId}&message=Payment success with MoMo Wallet!`,
       requestId,
       extraData: '',
     };

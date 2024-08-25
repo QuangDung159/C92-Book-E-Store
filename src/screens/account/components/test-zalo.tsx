@@ -2,6 +2,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AppState, Button, Linking, Text, View } from 'react-native';
 import { Buttons } from '@components';
+import { DEEP_LINK_PAYMENT_SUCCESS_URL } from '@constants';
 import { ZaloPayServices } from '@services';
 import { ZaloPayOrder } from '@types';
 import { DatetimeHelpers, delay } from '@utils';
@@ -27,7 +28,7 @@ const TestZalo: React.FC<any> = () => {
         setFetchDone(true);
         delay(1000).then(() => {
           Linking.openURL(
-            `c92bookestorev1:///payment-success?orderId=${response.data.zptransid}&message=Payment success with Zalo Pay!`,
+            `${DEEP_LINK_PAYMENT_SUCCESS_URL}orderId=${response.data.zptransid}&message=Payment success with Zalo Pay!`,
           );
         });
       }

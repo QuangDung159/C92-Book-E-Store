@@ -24,7 +24,11 @@ import {
   ScreenHeader,
   SectionTitle,
 } from '@components';
-import { LIST_PAYMENT_METHOD, PAYMENT_TYPE } from '@constants';
+import {
+  DEEP_LINK_PAYMENT_SUCCESS_URL,
+  LIST_PAYMENT_METHOD,
+  PAYMENT_TYPE,
+} from '@constants';
 import { useNavigate } from '@hooks';
 import { ZaloPayServices } from '@services';
 import { cartStore, sharedStore, userStore } from '@store';
@@ -37,7 +41,6 @@ const CheckoutScreen = ({ navigation }: any) => {
   const { openAddressScreen } = useNavigate(navigation);
   const [isShowListCreditCart, setIsShowListCreditCart] = useState(false);
   const [fetchZaloPayOrderDone, setFetchZaloPayOrderDone] = useState(false);
-  // const [zpAppTransId, setZpAppTransId] = useState('');
 
   const appState = useRef(AppState.currentState);
 
@@ -63,12 +66,11 @@ const CheckoutScreen = ({ navigation }: any) => {
 
     if (response.status === 200 && response.data) {
       if (response.data.returncode === 1) {
-        console.log('payment success');
         setFetchZaloPayOrderDone(true);
         delay(1000).then(() => {
           sharedStore.setShowLoading(false);
           Linking.openURL(
-            `c92bookestorev1:///payment-success?orderId=${cartStore.currentOrder.id}&message=Payment success with Zalo Pay!`,
+            `${DEEP_LINK_PAYMENT_SUCCESS_URL}orderId=${cartStore.currentOrder.id}&message=Payment success with Zalo Pay!`,
           );
         });
       }
@@ -224,7 +226,7 @@ const CheckoutScreen = ({ navigation }: any) => {
           sharedStore.setShowLoading(false);
 
           Linking.openURL(
-            `c92bookestorev1:///payment-success?orderId=${cartStore.currentOrder.id}&message=Payment success!`,
+            `${DEEP_LINK_PAYMENT_SUCCESS_URL}orderId=${cartStore.currentOrder.id}&message=Payment success!`,
           );
         }}
         priceDisplay={cartStore.total}

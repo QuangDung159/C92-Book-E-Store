@@ -120,3 +120,16 @@ export const generateMoMoId = () => {
     orderId,
   };
 };
+
+export const generateUrl = (
+  baseUrl: string,
+  params: { [key: string]: string },
+): string => {
+  const queryParams = Object.keys(params)
+    .map(
+      (key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`,
+    )
+    .join('&');
+
+  return `${baseUrl}?${queryParams}`;
+};
