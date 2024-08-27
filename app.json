@@ -23,7 +23,8 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.dragonc92team.BookEStoreV1",
-      "versionCode": 8
+      "versionCode": 8,
+      "googleServicesFile": "android/app/google-services.json"
     },
     "web": {
       "bundler": "metro",
