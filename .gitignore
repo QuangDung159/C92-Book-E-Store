@@ -20,5 +20,4 @@ expo-env.d.ts
 # @end expo-cli
 
 .env
-.env.prod
 .env.backup
