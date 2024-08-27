@@ -1,4 +1,5 @@
 import { EXPO_PUSH_NOTIFICATION_URL, LIST_NOTIFICATION } from '@constants';
+import { notificationStore } from '@store';
 import { NotificationParam } from '@types';
 import { delay } from '@utils';
 import { HttpServices } from './http-services';
@@ -12,9 +13,9 @@ const loadListNotification = async () => {
 const sendPushNotification = async (
   pushNotificationParam: NotificationParam,
 ) => {
-  const { expoPushToken, sound, title, body, data } = pushNotificationParam;
+  const { sound, title, body, data } = pushNotificationParam;
   const message = {
-    to: expoPushToken,
+    to: notificationStore.expoPushToken,
     sound: sound || 'default',
     title: title || 'Original Title',
     body: body || 'And here is the body!',

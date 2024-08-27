@@ -28,14 +28,6 @@ if (__DEV__) {
   });
 }
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-});
-
 const App = () => {
   const notificationListener = useRef<Notifications.Subscription>();
   const responseListener = useRef<Notifications.Subscription>();
@@ -123,7 +115,6 @@ const App = () => {
       >
         <Toast visibilityTime={2000} topOffset={45} />
       </View>
-
       <Navigation />
     </NavigationContainer>
   );

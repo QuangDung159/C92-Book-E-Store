@@ -1,3 +1,4 @@
+import * as Notifications from 'expo-notifications';
 import {
   LIST_AUTHOR,
   LIST_CITY,
@@ -38,6 +39,16 @@ class AppModel {
 
   async appInit() {
     // this.userStore.setUserProfile(USER);
+
+    // set notification handler
+    Notifications.setNotificationHandler({
+      handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+      }),
+    });
+
     // get expo notification token
     this.notificationStore
       .registerForPushNotificationsAsync()

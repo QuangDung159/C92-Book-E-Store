@@ -36,7 +36,7 @@ type PaymentStatus = 'success' | 'fail' | 'waiting_for_pay';
 type NotificationParam = {
   sound?: string;
   title?: string;
-  expoPushToken: string;
+  expoPushToken?: string;
   body?: string;
   data?: any;
 };
