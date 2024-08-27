@@ -223,7 +223,7 @@ const FilterScreen = ({ route, navigation }: any) => {
         <Layouts.VSpace value={24} />
       </KeyboardAwareScrollView>
       <View style={styles.buttonWrapper}>
-        <Layouts.VSpace value={12} />
+        <Layouts.VSpace value={10} />
         <Buttons.CButton
           onPress={() => {
             navigation.goBack();
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primaryWhite,
   },
   reset: {
-    ...FONT_STYLES.REGULAR_16,
+    ...FONT_STYLES.SEMIBOLD_12,
   },
   label: {
     ...FONT_STYLES.SEMIBOLD_16,
