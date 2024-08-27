@@ -56,6 +56,8 @@ const PAYMENT_STATUS = {
 const DEEP_LINK_URL = 'c92bookestorev1:///';
 const DEEP_LINK_PAYMENT_SUCCESS_URL = `${DEEP_LINK_URL}payment-success?`;
 
+const EXPO_PUSH_NOTIFICATION_URL = 'https://exp.host/--/api/v2/push/send';
+
 export {
   ADMINISTRATIVE,
   CODE_PUSH_NUMBER,
@@ -65,6 +67,7 @@ export {
   DEFAULT_PRICE_RANGE,
   DEFAULT_SORT,
   ERROR_CODES,
+  EXPO_PUSH_NOTIFICATION_URL,
   MOMO_REQUEST_TYPE,
   PAYMENT_STATUS,
   PAYMENT_TYPE,

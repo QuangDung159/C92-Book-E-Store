@@ -20,7 +20,7 @@ const BottomButtonSection: React.FC<BottomButtonSectionProps> = ({
   const navigation = useNavigation();
   return (
     <View style={styles.buttonWrapper}>
-      <Layouts.VSpace value={12} />
+      <Layouts.VSpace value={10} />
       <View style={styles.totalWrapper}>
         {hasCancel && (
           <>

@@ -33,7 +33,7 @@ const ConfirmPopup: React.FC<ConfirmPopupProps> = ({
       <View>
         <Text style={styles.content}>{content}</Text>
       </View>
-      <Layouts.VSpace value={24} />
+      <Layouts.VSpace value={12} />
       <View style={styles.buttonWrapper}>
         {hasCancel && (
           <>
@@ -60,7 +60,6 @@ const ConfirmPopup: React.FC<ConfirmPopupProps> = ({
           />
         </View>
       </View>
-      <Layouts.VSpace value={24} />
     </Layouts.BottomPopup>
   );
 };

@@ -1,8 +1,9 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Linking, StyleSheet, Text, View } from 'react-native';
 import { Buttons, Icons, Layouts } from '@components';
 import { useNavigate } from '@hooks';
+import { NotificationServices } from '@services';
 import { COLORS, FONT_STYLES } from '@themes';
 
 const PaymentSuccessScreen = ({ navigation, route }) => {
@@ -10,6 +11,19 @@ const PaymentSuccessScreen = ({ navigation, route }) => {
 
   const orderId = route.params?.orderId;
   const message = route.params?.message;
+
+  useEffect(() => {
+    if (orderId) {
+      NotificationServices.sendPushNotification({
+        body: `Your order #${orderId} has been confirmed.`,
+        title: 'Order status',
+        data: {
+          orderId,
+          message,
+        },
+      });
+    }
+  }, [message, orderId]);
 
   return (
     <View style={styles.container}>
