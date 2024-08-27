@@ -1,6 +1,7 @@
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
+apply plugin: "com.google.gms.google-services"
 
 def projectRoot = rootDir.getAbsoluteFile().getParentFile().getAbsolutePath()
 
@@ -177,6 +178,8 @@ dependencies {
     implementation("com.facebook.react:react-android")
     //
     implementation (files("libs/zpdk-release.aar"))
+    //
+    implementation platform('com.google.firebase:firebase-bom:33.2.0')
 
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";
