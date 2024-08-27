@@ -105,10 +105,9 @@ function BottomTabNavigator() {
             },
             tabBarLabelStyle: styles.tabBarLabelStyle,
             tabBarLabel: 'Notifications',
-            // tabBarLabel: 'Thông báo',
             tabBarStyle: styles.tabBarStyle,
           }}
-          name={SCREEN_NAME.NOTIFICATIONS}
+          name={SCREEN_NAME.NOTIFICATIONS_SCREEN}
           component={NotificationsScreen}
         />
         <Tab.Screen

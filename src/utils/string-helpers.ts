@@ -133,3 +133,20 @@ export const generateUrl = (
 
   return `${baseUrl}?${queryParams}`;
 };
+
+export const parseUrl = (url: string) => {
+  const [path, queryString] = url.split('?');
+  const params = {};
+
+  if (queryString) {
+    queryString.split('&').forEach((param) => {
+      const [key, value] = param.split('=');
+      params[key] = value;
+    });
+  }
+
+  return {
+    screen: path.replace('/', ''),
+    params,
+  };
+};

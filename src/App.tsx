@@ -11,11 +11,14 @@ import { SplashScreen } from 'expo-router';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef, useState } from 'react';
 import { connectToDevTools } from 'react-devtools-core';
-import React, { View } from 'react-native';
+import React, { Button, View } from 'react-native';
 
 import Toast from 'react-native-toast-message';
+import { SCREEN_NAME } from '@constants';
 import { useNavigate } from '@hooks';
+import { NotificationServices } from '@services';
 import { appModel, notificationStore } from '@store';
+import { delay, StringHelpers } from '@utils';
 import { Navigation } from 'navigation';
 
 // deeplink
@@ -32,6 +35,13 @@ const App = () => {
   const notificationListener = useRef<Notifications.Subscription>();
   const responseListener = useRef<Notifications.Subscription>();
 
+  const url = Linking.useURL();
+  const navigationRef = useRef<NavigationContainerRef<any>>(null);
+
+  const { openPaymentSuccessScreen, openHomeScreen } = useNavigate(
+    navigationRef.current,
+  );
+
   useEffect(() => {
     SplashScreen.preventAutoHideAsync();
     loadFonts();
@@ -47,7 +57,14 @@ const App = () => {
 
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
+        console.log(JSON.stringify(response));
+        const dataFromUrl = StringHelpers.parseUrl(
+          response.notification.request.content.data.url,
+        );
+
+        if (dataFromUrl?.screen) {
+          handlePressNotification(dataFromUrl.screen);
+        }
       });
 
     return () => {
@@ -60,12 +77,18 @@ const App = () => {
     };
   }, []);
 
-  const url = Linking.useURL();
-  const navigationRef = useRef<NavigationContainerRef<any>>(null);
-
-  const { openPaymentSuccessScreen, openHomeScreen } = useNavigate(
-    navigationRef.current,
-  );
+  const handlePressNotification = async (screenName: string) => {
+    await delay(1000);
+    switch (screenName.toUpperCase()) {
+      case SCREEN_NAME.NOTIFICATIONS_SCREEN:
+        navigationRef.current.navigate(SCREEN_NAME.BOTTOM_TAB_NAVIGATOR, {
+          screen: SCREEN_NAME.NOTIFICATIONS_SCREEN,
+        });
+        break;
+      default:
+        break;
+    }
+  };
 
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
@@ -114,6 +137,22 @@ const App = () => {
         }}
       >
         <Toast visibilityTime={2000} topOffset={45} />
+      </View>
+      <View
+        style={{
+          marginTop: 50,
+        }}
+      >
+        <Button
+          title="Text"
+          onPress={() => {
+            NotificationServices.sendPushNotification({
+              data: {
+                url: '/notifications_screen?id=123123',
+              },
+            });
+          }}
+        ></Button>
       </View>
       <Navigation />
     </NavigationContainer>

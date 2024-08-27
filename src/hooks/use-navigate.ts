@@ -1,5 +1,6 @@
 import { SCREEN_NAME } from '@constants';
 import { DataModels } from '@models';
+import { delay } from '@utils';
 
 export const useNavigate = (navigation: any) => {
   const openSearchScreen = (params?: any) => {
@@ -130,6 +131,23 @@ export const useNavigate = (navigation: any) => {
     });
   };
 
+  const openNotificationsScreen = () => {
+    navigation.navigate(SCREEN_NAME.BOTTOM_TAB_NAVIGATOR, {
+      screen: SCREEN_NAME.NOTIFICATIONS_SCREEN,
+    });
+  };
+
+  const handleNotificationNavigate = async (screenName: string) => {
+    await delay(1000);
+    switch (screenName.toUpperCase()) {
+      case SCREEN_NAME.NOTIFICATIONS_SCREEN:
+        openNotificationsScreen();
+        break;
+      default:
+        break;
+    }
+  };
+
   return {
     openSearchScreen,
     openFilterScreen,
@@ -147,5 +165,7 @@ export const useNavigate = (navigation: any) => {
     openEditAccountScreen,
     openForgotPasswordScreen,
     openBookListingScreen,
+    openNotificationsScreen,
+    handleNotificationNavigate,
   };
 };
