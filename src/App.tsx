@@ -1,22 +1,21 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-require-imports */
 import {
   NavigationContainer,
   NavigationContainerRef,
 } from '@react-navigation/native';
-import Constants from 'expo-constants';
-import * as Device from 'expo-device';
 import * as Font from 'expo-font';
 import * as Linking from 'expo-linking';
 import * as Notifications from 'expo-notifications';
 import { SplashScreen } from 'expo-router';
+import { observer } from 'mobx-react-lite';
 import { useEffect, useRef, useState } from 'react';
 import { connectToDevTools } from 'react-devtools-core';
-import React, { Button, Platform, Text, View } from 'react-native';
+import React, { View } from 'react-native';
 
 import Toast from 'react-native-toast-message';
 import { useNavigate } from '@hooks';
-import { NotificationServices } from '@services';
-import { appModel } from '@store';
+import { appModel, notificationStore } from '@store';
 import { Navigation } from 'navigation';
 
 // deeplink
@@ -37,74 +36,21 @@ Notifications.setNotificationHandler({
   }),
 });
 
-function handleRegistrationError(errorMessage: string) {
-  alert(errorMessage);
-  throw new Error(errorMessage);
-}
-
-async function registerForPushNotificationsAsync() {
-  if (Platform.OS === 'android') {
-    Notifications.setNotificationChannelAsync('default', {
-      name: 'default',
-      importance: Notifications.AndroidImportance.MAX,
-      vibrationPattern: [0, 250, 250, 250],
-      lightColor: '#FF231F7C',
-    });
-  }
-
-  if (Device.isDevice) {
-    const { status: existingStatus } =
-      await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-    if (existingStatus !== 'granted') {
-      const { status } = await Notifications.requestPermissionsAsync();
-      finalStatus = status;
-    }
-    if (finalStatus !== 'granted') {
-      handleRegistrationError(
-        'Permission not granted to get push token for push notification!',
-      );
-      return;
-    }
-    const projectId =
-      Constants?.expoConfig?.extra?.eas?.projectId ??
-      Constants?.easConfig?.projectId;
-    if (!projectId) {
-      handleRegistrationError('Project ID not found');
-    }
-    try {
-      const pushTokenString = (
-        await Notifications.getExpoPushTokenAsync({
-          projectId,
-        })
-      ).data;
-      console.log(pushTokenString);
-      return pushTokenString;
-    } catch (e: unknown) {
-      handleRegistrationError(`${e}`);
-    }
-  } else {
-    handleRegistrationError('Must use physical device for push notifications');
-  }
-}
-
 const App = () => {
-  // push-notification
-  const [expoPushToken, setExpoPushToken] = useState('');
-  const [notification, setNotification] = useState<
-    Notifications.Notification | undefined
-  >(undefined);
   const notificationListener = useRef<Notifications.Subscription>();
   const responseListener = useRef<Notifications.Subscription>();
 
   useEffect(() => {
-    registerForPushNotificationsAsync()
-      .then((token) => setExpoPushToken(token ?? ''))
-      .catch((error: any) => setExpoPushToken(`${error}`));
+    SplashScreen.preventAutoHideAsync();
+    loadFonts();
+    appModel.appInit();
+    appModel.loadMasterData();
+  }, []);
 
+  useEffect(() => {
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
-        setNotification(notification);
+        notificationStore.setLatestNotification(notification);
       });
 
     responseListener.current =
@@ -121,7 +67,6 @@ const App = () => {
         Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
-  //
 
   const url = Linking.useURL();
   const navigationRef = useRef<NavigationContainerRef<any>>(null);
@@ -146,13 +91,6 @@ const App = () => {
     setFontsLoaded(true);
     SplashScreen.hideAsync();
   };
-
-  useEffect(() => {
-    SplashScreen.preventAutoHideAsync();
-    loadFonts();
-    appModel.appInit();
-    appModel.loadMasterData();
-  }, []);
 
   if (url) {
     const { path, queryParams } = Linking.parse(url);
@@ -185,40 +123,11 @@ const App = () => {
       >
         <Toast visibilityTime={2000} topOffset={45} />
       </View>
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'space-around',
-          paddingTop: 50,
-        }}
-      >
-        <Text>Your Expo push token: {expoPushToken}</Text>
-        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-          <Text>
-            Title: {notification && notification.request.content.title}{' '}
-          </Text>
-          <Text>Body: {notification && notification.request.content.body}</Text>
-          <Text>
-            Data:{' '}
-            {notification && JSON.stringify(notification.request.content.data)}
-          </Text>
-        </View>
-        <Button
-          title="Press to Send Notification"
-          onPress={async () => {
-            await NotificationServices.sendPushNotification({
-              expoPushToken,
-              data: {
-                someData: 'Your order has been deliveried asda',
-              },
-            });
-          }}
-        />
-      </View>
+
       <Navigation />
     </NavigationContainer>
   );
 };
 
-export { App };
+const observable = observer(App);
+export { observable as App };

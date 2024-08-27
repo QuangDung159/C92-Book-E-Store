@@ -38,6 +38,13 @@ class AppModel {
 
   async appInit() {
     // this.userStore.setUserProfile(USER);
+    // get expo notification token
+    this.notificationStore
+      .registerForPushNotificationsAsync()
+      .then((token) => this.notificationStore.setExpoPushToken(token ?? ''))
+      .catch((error: any) =>
+        this.notificationStore.setExpoPushToken(`${error}`),
+      );
   }
 
   async logout() {
