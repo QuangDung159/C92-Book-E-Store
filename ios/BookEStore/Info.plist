@@ -28,7 +28,7 @@
         <key>CFBundleURLSchemes</key>
         <array>
           <string>c92bookestorev1</string>
-          <string>com.dragonc92team.c92BookEStoreV1</string>
+          <string>com.dragonc92team.BookEStoreV1</string>
         </array>
       </dict>
       <dict>

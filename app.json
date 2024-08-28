@@ -14,7 +14,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.dragonc92team.c92BookEStoreV1",
+      "bundleIdentifier": "com.dragonc92team.BookEStoreV1",
       "buildNumber": "1"
     },
     "android": {
