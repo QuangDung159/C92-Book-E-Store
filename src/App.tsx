@@ -58,13 +58,14 @@ const App = () => {
 
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(JSON.stringify(response));
-        const dataFromUrl = StringHelpers.parseUrl(
-          response.notification.request.content.data.url,
-        );
+        if (response?.notification?.request?.content?.data?.url) {
+          const dataFromUrl = StringHelpers.parseUrl(
+            response.notification.request.content.data.url,
+          );
 
-        if (dataFromUrl?.screen) {
-          handlePressNotification(dataFromUrl.screen);
+          if (dataFromUrl?.screen) {
+            handlePressNotification(dataFromUrl.screen);
+          }
         }
       });
 
