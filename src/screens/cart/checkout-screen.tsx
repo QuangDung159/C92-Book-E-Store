@@ -8,6 +8,7 @@ import React, {
   useState,
 } from 'react';
 import {
+  Alert,
   AppState,
   Linking,
   ScrollView,
@@ -61,17 +62,24 @@ const CheckoutScreen = ({ navigation }: any) => {
     const response = await cartStore.onFetchZaloPaymentInfo(appTransId);
 
     if (response.status === 200 && response.data) {
-      if (response.data.returncode === 1) {
+      const returnCode = response.data.returncode;
+      if (returnCode === 1) {
         setFetchZaloPayOrderDone(true);
         delay(1000).then(() => {
           Linking.openURL(
             `${DEEP_LINK_PAYMENT_SUCCESS_URL}orderId=${cartStore.currentOrder.id}&message=Payment success with Zalo Pay!`,
           );
-
-          sharedStore.setShowLoading(false);
           cartStore.clearAllCurrentPaymentInfo();
+          sharedStore.setShowLoading(false);
         });
       }
+
+      if (returnCode === -49) {
+        Alert.alert(response.data.returnmessage);
+        sharedStore.setShowLoading(false);
+      }
+    } else {
+      sharedStore.setShowLoading(false);
     }
   }, []);
 
