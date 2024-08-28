@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-require-imports */
+import messaging from '@react-native-firebase/messaging';
 import {
   NavigationContainer,
   NavigationContainerRef,
@@ -46,6 +47,7 @@ const App = () => {
     loadFonts();
     appModel.appInit();
     appModel.loadMasterData();
+    getInstallationId();
   }, []);
 
   useEffect(() => {
@@ -75,6 +77,11 @@ const App = () => {
         Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
+
+  async function getInstallationId() {
+    const installationId = await messaging().getToken();
+    console.log('Firebase Installation ID:', installationId);
+  }
 
   const handlePressNotification = async (screenName: string) => {
     await delay(1000);

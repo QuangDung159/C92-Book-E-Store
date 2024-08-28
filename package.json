@@ -41,6 +41,8 @@
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
     "@miblanchard/react-native-slider": "^2.6.0",
+    "@react-native-firebase/app": "^20.4.0",
+    "@react-native-firebase/messaging": "^20.4.0",
     "@react-navigation/bottom-tabs": "^6.6.1",
     "@react-navigation/drawer": "^6.7.2",
     "@react-navigation/native": "^6.1.18",
@@ -52,9 +54,11 @@
     "expo": "~51.0.24",
     "expo-constants": "~16.0.2",
     "expo-dev-client": "~4.0.23",
+    "expo-device": "~6.0.2",
     "expo-font": "~12.0.9",
     "expo-image": "~1.12.13",
     "expo-linking": "~6.3.1",
+    "expo-notifications": "~0.28.16",
     "expo-router": "~3.5.20",
     "expo-splash-screen": "~0.27.5",
     "expo-status-bar": "~1.12.1",
@@ -86,9 +90,7 @@
     "react-native-web": "~0.19.10",
     "react-redux": "^9.1.2",
     "redux-saga": "^1.3.0",
-    "uuid": "^10.0.0",
-    "expo-notifications": "~0.28.16",
-    "expo-device": "~6.0.2"
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
