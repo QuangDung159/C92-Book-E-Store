@@ -45,7 +45,7 @@ const enum ERROR_CODES {
 
 const MOMO_REQUEST_TYPE = 'captureWallet';
 
-const CODE_PUSH_NUMBER = '1724383468';
+const CODE_PUSH_NUMBER = '1724813363';
 
 const PAYMENT_STATUS = {
   success: 'success',
@@ -58,6 +58,11 @@ const DEEP_LINK_PAYMENT_SUCCESS_URL = `${DEEP_LINK_URL}payment-success?`;
 
 const EXPO_PUSH_NOTIFICATION_URL = 'https://exp.host/--/api/v2/push/send';
 
+const IN_APP_MESSAGE_ACTION_ID = {
+  openStore: 'OPEN_STORE',
+  voucher: 'VOUCHER',
+};
+
 export {
   ADMINISTRATIVE,
   CODE_PUSH_NUMBER,
@@ -68,6 +73,7 @@ export {
   DEFAULT_SORT,
   ERROR_CODES,
   EXPO_PUSH_NOTIFICATION_URL,
+  IN_APP_MESSAGE_ACTION_ID,
   MOMO_REQUEST_TYPE,
   PAYMENT_STATUS,
   PAYMENT_TYPE,

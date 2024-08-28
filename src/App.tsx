@@ -4,6 +4,7 @@ import {
   NavigationContainer,
   NavigationContainerRef,
 } from '@react-navigation/native';
+import Constants from 'expo-constants';
 import * as Font from 'expo-font';
 import * as Linking from 'expo-linking';
 import * as Notifications from 'expo-notifications';
@@ -11,13 +12,17 @@ import { SplashScreen } from 'expo-router';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef, useState } from 'react';
 import { connectToDevTools } from 'react-devtools-core';
-import React, { Button, View } from 'react-native';
+import React, { View } from 'react-native';
+import {
+  InAppMessageClickEvent,
+  LogLevel,
+  OneSignal,
+} from 'react-native-onesignal';
 
 import Toast from 'react-native-toast-message';
-import { SCREEN_NAME } from '@constants';
+import { IN_APP_MESSAGE_ACTION_ID, SCREEN_NAME } from '@constants';
 import { useNavigate } from '@hooks';
-import { NotificationServices } from '@services';
-import { appModel, notificationStore } from '@store';
+import { appModel, notificationStore, sharedStore } from '@store';
 import { delay, StringHelpers } from '@utils';
 import { Navigation } from 'navigation';
 
@@ -38,15 +43,21 @@ const App = () => {
   const url = Linking.useURL();
   const navigationRef = useRef<NavigationContainerRef<any>>(null);
 
-  const { openPaymentSuccessScreen, openHomeScreen } = useNavigate(
-    navigationRef.current,
-  );
+  const { openPaymentSuccessScreen, openHomeScreen, openPlayStore } =
+    useNavigate(navigationRef.current);
 
   useEffect(() => {
     SplashScreen.preventAutoHideAsync();
     loadFonts();
     appModel.appInit();
     appModel.loadMasterData();
+
+    //
+    OneSignal.initialize(process.env.EXPO_PUBLIC_ONE_SIGNAL_APP_ID);
+    OneSignal.Debug.setLogLevel(LogLevel.Verbose);
+    OneSignal.initialize(Constants.expoConfig.extra.oneSignalAppId);
+    // Also need enable notifications to complete OneSignal setup
+    OneSignal.Notifications.requestPermission(true);
   }, []);
 
   useEffect(() => {
@@ -57,13 +68,14 @@ const App = () => {
 
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(JSON.stringify(response));
-        const dataFromUrl = StringHelpers.parseUrl(
-          response.notification.request.content.data.url,
-        );
+        if (response?.notification?.request?.content?.data?.url) {
+          const dataFromUrl = StringHelpers.parseUrl(
+            response.notification.request.content.data.url,
+          );
 
-        if (dataFromUrl?.screen) {
-          handlePressNotification(dataFromUrl.screen);
+          if (dataFromUrl?.screen) {
+            handlePressNotification(dataFromUrl.screen);
+          }
         }
       });
 
@@ -76,6 +88,27 @@ const App = () => {
         Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
+
+  useEffect(() => {
+    OneSignal.InAppMessages.addEventListener('click', handleInAppMessageClick);
+
+    return () => {
+      OneSignal.InAppMessages.removeEventListener(
+        'click',
+        handleInAppMessageClick,
+      );
+    };
+  }, []);
+
+  const handleInAppMessageClick = (event: InAppMessageClickEvent) => {
+    if (event?.result?.actionId === IN_APP_MESSAGE_ACTION_ID.openStore) {
+      sharedStore.setShowLoading(true);
+      delay(1000).then(() => {
+        sharedStore.setShowLoading(false);
+        openPlayStore();
+      });
+    }
+  };
 
   const handlePressNotification = async (screenName: string) => {
     await delay(1000);
@@ -137,22 +170,6 @@ const App = () => {
         }}
       >
         <Toast visibilityTime={2000} topOffset={45} />
-      </View>
-      <View
-        style={{
-          marginTop: 50,
-        }}
-      >
-        <Button
-          title="Text"
-          onPress={() => {
-            NotificationServices.sendPushNotification({
-              data: {
-                url: '/notifications_screen?id=123123',
-              },
-            });
-          }}
-        ></Button>
       </View>
       <Navigation />
     </NavigationContainer>
