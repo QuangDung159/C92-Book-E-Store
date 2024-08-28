@@ -11,12 +11,11 @@ import { SplashScreen } from 'expo-router';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef, useState } from 'react';
 import { connectToDevTools } from 'react-devtools-core';
-import React, { Button, View } from 'react-native';
+import React, { View } from 'react-native';
 
 import Toast from 'react-native-toast-message';
 import { SCREEN_NAME } from '@constants';
 import { useNavigate } from '@hooks';
-import { NotificationServices } from '@services';
 import { appModel, notificationStore } from '@store';
 import { delay, StringHelpers } from '@utils';
 import { Navigation } from 'navigation';
@@ -137,22 +136,6 @@ const App = () => {
         }}
       >
         <Toast visibilityTime={2000} topOffset={45} />
-      </View>
-      <View
-        style={{
-          marginTop: 50,
-        }}
-      >
-        <Button
-          title="Text"
-          onPress={() => {
-            NotificationServices.sendPushNotification({
-              data: {
-                url: '/notifications_screen?id=123123',
-              },
-            });
-          }}
-        ></Button>
       </View>
       <Navigation />
     </NavigationContainer>
