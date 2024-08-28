@@ -1,3 +1,5 @@
+/* eslint-disable import/no-named-as-default */
+import * as Installations from '@react-native-firebase/installations';
 import * as Notifications from 'expo-notifications';
 import {
   LIST_AUTHOR,
@@ -56,6 +58,14 @@ class AppModel {
       .catch((error: any) =>
         this.notificationStore.setExpoPushToken(`${error}`),
       );
+
+    this.getInstallationId();
+  }
+
+  async getInstallationId() {
+    const installations = Installations.getInstallations();
+    const id = await Installations.getId(installations);
+    console.log('installationsId :>> ', id);
   }
 
   async logout() {

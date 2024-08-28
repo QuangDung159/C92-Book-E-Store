@@ -34,7 +34,13 @@
     "plugins": [
       "expo-router",
       "@react-native-firebase/app",
-      "@react-native-firebase/messaging"
+      "@react-native-firebase/messaging",
+      [
+        "onesignal-expo-plugin",
+        {
+          "mode": "development"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
@@ -45,7 +51,8 @@
       },
       "eas": {
         "projectId": "aaff14e3-7daa-4336-9788-1145c8bd95fe"
-      }
+      },
+      "oneSignalAppId": "dc2647d3-ec46-4ea2-ab0d-c6528b0ea567"
     },
     "runtimeVersion": "1.0.0",
     "updates": {

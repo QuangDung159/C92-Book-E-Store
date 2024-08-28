@@ -1,3 +1,4 @@
+import { Linking } from 'react-native';
 import { SCREEN_NAME } from '@constants';
 import { DataModels } from '@models';
 import { delay } from '@utils';
@@ -148,6 +149,20 @@ export const useNavigate = (navigation: any) => {
     }
   };
 
+  const openPlayStore = () => {
+    const url = `https://play.google.com/store/apps/details?id=com.dragonc92team.BookEStoreV1`;
+
+    Linking.canOpenURL(url)
+      .then((supported) => {
+        if (supported) {
+          Linking.openURL(url);
+        } else {
+          console.log("Don't know how to open URI: " + url);
+        }
+      })
+      .catch((err) => console.error('An error occurred', err));
+  };
+
   return {
     openSearchScreen,
     openFilterScreen,
@@ -167,5 +182,6 @@ export const useNavigate = (navigation: any) => {
     openBookListingScreen,
     openNotificationsScreen,
     handleNotificationNavigate,
+    openPlayStore,
   };
 };

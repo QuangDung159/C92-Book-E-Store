@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-require-imports */
-import * as Installations from '@react-native-firebase/installations';
 import {
   NavigationContainer,
   NavigationContainerRef,
 } from '@react-navigation/native';
+import Constants from 'expo-constants';
 import * as Font from 'expo-font';
 import * as Linking from 'expo-linking';
 import * as Notifications from 'expo-notifications';
@@ -13,11 +13,16 @@ import { observer } from 'mobx-react-lite';
 import { useEffect, useRef, useState } from 'react';
 import { connectToDevTools } from 'react-devtools-core';
 import React, { View } from 'react-native';
+import {
+  InAppMessageClickEvent,
+  LogLevel,
+  OneSignal,
+} from 'react-native-onesignal';
 
 import Toast from 'react-native-toast-message';
-import { SCREEN_NAME } from '@constants';
+import { IN_APP_MESSAGE_ACTION_ID, SCREEN_NAME } from '@constants';
 import { useNavigate } from '@hooks';
-import { appModel, notificationStore } from '@store';
+import { appModel, notificationStore, sharedStore } from '@store';
 import { delay, StringHelpers } from '@utils';
 import { Navigation } from 'navigation';
 
@@ -38,16 +43,21 @@ const App = () => {
   const url = Linking.useURL();
   const navigationRef = useRef<NavigationContainerRef<any>>(null);
 
-  const { openPaymentSuccessScreen, openHomeScreen } = useNavigate(
-    navigationRef.current,
-  );
+  const { openPaymentSuccessScreen, openHomeScreen, openPlayStore } =
+    useNavigate(navigationRef.current);
 
   useEffect(() => {
     SplashScreen.preventAutoHideAsync();
     loadFonts();
     appModel.appInit();
     appModel.loadMasterData();
-    getInstallationId();
+
+    //
+    OneSignal.initialize(process.env.EXPO_PUBLIC_ONE_SIGNAL_APP_ID);
+    OneSignal.Debug.setLogLevel(LogLevel.Verbose);
+    OneSignal.initialize(Constants.expoConfig.extra.oneSignalAppId);
+    // Also need enable notifications to complete OneSignal setup
+    OneSignal.Notifications.requestPermission(true);
   }, []);
 
   useEffect(() => {
@@ -79,11 +89,26 @@ const App = () => {
     };
   }, []);
 
-  async function getInstallationId() {
-    const installations = Installations.getInstallations();
-    const id = await Installations.getId(installations);
-    console.log('installationsId :>> ', id);
-  }
+  useEffect(() => {
+    OneSignal.InAppMessages.addEventListener('click', handleInAppMessageClick);
+
+    return () => {
+      OneSignal.InAppMessages.removeEventListener(
+        'click',
+        handleInAppMessageClick,
+      );
+    };
+  }, []);
+
+  const handleInAppMessageClick = (event: InAppMessageClickEvent) => {
+    if (event?.result?.actionId === IN_APP_MESSAGE_ACTION_ID.openStore) {
+      sharedStore.setShowLoading(true);
+      delay(1000).then(() => {
+        sharedStore.setShowLoading(false);
+        openPlayStore();
+      });
+    }
+  };
 
   const handlePressNotification = async (screenName: string) => {
     await delay(1000);
