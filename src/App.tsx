@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-require-imports */
-import messaging from '@react-native-firebase/messaging';
+import * as Installations from '@react-native-firebase/installations';
 import {
   NavigationContainer,
   NavigationContainerRef,
@@ -79,8 +79,9 @@ const App = () => {
   }, []);
 
   async function getInstallationId() {
-    const installationId = await messaging().getToken();
-    console.log('Firebase Installation ID:', installationId);
+    const installations = Installations.getInstallations();
+    const id = await Installations.getId(installations);
+    console.log('installationsId :>> ', id);
   }
 
   const handlePressNotification = async (screenName: string) => {
