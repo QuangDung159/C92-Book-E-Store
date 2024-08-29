@@ -9,15 +9,22 @@ import { UserStore } from './user-store';
 class AuthenticationStore {
   userStore: UserStore | null = null;
   googleSigned: boolean = false;
+  facebookSigned: boolean = false;
 
   constructor(userStore: UserStore) {
     makeObservable(this, {
       userStore: observable,
       googleSigned: observable,
+      facebookSigned: observable,
+      setFacebookSigned: action,
       setGoogleSigned: action,
     });
 
     this.userStore = userStore;
+  }
+
+  setFacebookSigned(value: boolean) {
+    this.facebookSigned = value;
   }
 
   setGoogleSigned(value: boolean) {
@@ -44,6 +51,14 @@ class AuthenticationStore {
 
   signOut = async () => {
     await delay(1000);
+    if (this.googleSigned) {
+      await this.googleSignOut();
+    }
+
+    if (this.facebookSigned) {
+      await this.facebookSignOut();
+    }
+
     this.userStore.setUserProfile(null);
     ToastHelpers.showToast({
       title: 'Account',
@@ -103,7 +118,10 @@ class AuthenticationStore {
   googleSignOut = async () => {
     await AuthenticationServices.googleSignOut();
     this.setGoogleSigned(false);
-    this.signOut();
+  };
+
+  facebookSignOut = async () => {
+    this.setFacebookSigned(false);
   };
 }
 
