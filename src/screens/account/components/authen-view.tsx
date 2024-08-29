@@ -1,7 +1,8 @@
 /* eslint-disable import/no-unresolved */
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
+import { LoginManager, AccessToken, Profile } from 'react-native-fbsdk-next';
 import { Buttons, Icons, Layouts } from '@components';
 import { useNavigate } from '@hooks';
 import { authenticationStore, sharedStore } from '@store';
@@ -11,6 +12,28 @@ import { AppVersionText } from './app-version-text';
 const AuthenView: React.FC = () => {
   const navigation = useNavigation();
   const { openSignInScreen, openSignUpScreen } = useNavigate(navigation);
+
+  const FacebookSignIn = () => {
+    const handleFacebookLogin = async () => {
+      try {
+        const result = await LoginManager.logInWithPermissions([
+          'public_profile',
+          'email',
+        ]);
+        if (!result.isCancelled) {
+          const data = await AccessToken.getCurrentAccessToken();
+          if (data) {
+            const userProfile = await Profile.getCurrentProfile();
+            console.log('Logged in with profile:', userProfile);
+          }
+        }
+      } catch (error) {
+        console.error('Facebook login failed', error);
+      }
+    };
+
+    return <Button title="Login with Facebook" onPress={handleFacebookLogin} />;
+  };
 
   return (
     <View style={styles.container}>
@@ -56,6 +79,7 @@ const AuthenView: React.FC = () => {
           </View>
         </View>
       </View>
+      {FacebookSignIn()}
       <View style={styles.versionWrapper}>
         <AppVersionText />
       </View>
