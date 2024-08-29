@@ -3,7 +3,7 @@ import { USER } from '@constants';
 import { DataModels } from '@models';
 import { AuthenticationServices } from '@services';
 import { ServiceResultHandler } from '@types';
-import { delay } from '@utils';
+import { delay, ToastHelpers } from '@utils';
 import { UserStore } from './user-store';
 
 class AuthenticationStore {
@@ -45,6 +45,10 @@ class AuthenticationStore {
   signOut = async () => {
     await delay(1000);
     this.userStore.setUserProfile(null);
+    ToastHelpers.showToast({
+      title: 'Account',
+      content: 'Sign out success',
+    });
   };
 
   sendVerificationCode = async (handler: ServiceResultHandler) => {
@@ -77,7 +81,7 @@ class AuthenticationStore {
 
   googleSignIn = async () => {
     const response = await AuthenticationServices.googleSignIn();
-    console.log('response :>> ', response);
+
     if (response?.user) {
       const user = response.user;
       this.userStore.setUserProfile({
@@ -85,7 +89,13 @@ class AuthenticationStore {
         email: user.email,
         username: user.name,
       });
+
       this.setGoogleSigned(true);
+
+      ToastHelpers.showToast({
+        title: 'Account',
+        content: 'Sign in success',
+      });
     }
   };
 
