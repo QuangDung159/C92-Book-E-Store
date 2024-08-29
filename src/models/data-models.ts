@@ -138,6 +138,7 @@ export interface IUser {
   email: string;
   phoneNumber: string;
   password: string;
+  avatarUrl?: string;
 }
 
 export interface ILocation {

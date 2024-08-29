@@ -4,6 +4,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Buttons, Icons, Layouts } from '@components';
 import { useNavigate } from '@hooks';
+import { authenticationStore, sharedStore } from '@store';
 import { FONT_STYLES } from '@themes';
 import { AppVersionText } from './app-version-text';
 
@@ -43,7 +44,13 @@ const AuthenView: React.FC = () => {
               alignItems: 'center',
             }}
           >
-            <Icons.GoogleIcon />
+            <Icons.GoogleIcon
+              onPress={async () => {
+                sharedStore.setShowLoading(true);
+                await authenticationStore.googleSignIn();
+                sharedStore.setShowLoading(false);
+              }}
+            />
             <Layouts.HSpace value={12} />
             <Icons.FacebookIcon />
           </View>

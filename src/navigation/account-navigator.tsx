@@ -2,6 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Layouts } from '@components';
 import {
   AddEditAddressScreen,
   AddressScreen,
@@ -20,6 +21,7 @@ const Stack = createStackNavigator();
 function AccountNavigator() {
   return (
     <SafeAreaView style={styles.container}>
+      <Layouts.TopToast />
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
