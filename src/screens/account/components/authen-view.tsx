@@ -45,14 +45,22 @@ const AuthenView: React.FC = () => {
             }}
           >
             <Icons.GoogleIcon
+              size={30}
               onPress={async () => {
                 sharedStore.setShowLoading(true);
                 await authenticationStore.googleSignIn();
                 sharedStore.setShowLoading(false);
               }}
             />
-            <Layouts.HSpace value={12} />
-            <Icons.FacebookIcon />
+            <Layouts.HSpace value={16} />
+            <Icons.FacebookIcon
+              size={30}
+              onPress={async () => {
+                sharedStore.setShowLoading(true);
+                await authenticationStore.facebookSignIn();
+                sharedStore.setShowLoading(false);
+              }}
+            />
           </View>
         </View>
       </View>

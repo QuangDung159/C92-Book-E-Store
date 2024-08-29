@@ -79,6 +79,7 @@
     "react-native": "0.74.3",
     "react-native-collapsible": "^1.6.1",
     "react-native-dotenv": "^3.4.11",
+    "react-native-fbsdk-next": "^13.0.0",
     "react-native-gesture-handler": "~2.16.1",
     "react-native-get-random-values": "^1.11.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
