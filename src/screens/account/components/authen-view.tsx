@@ -2,7 +2,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
-import { LoginManager, AccessToken, Profile } from 'react-native-fbsdk-next';
+import { AccessToken, LoginManager } from 'react-native-fbsdk-next';
 import { Buttons, Icons, Layouts } from '@components';
 import { useNavigate } from '@hooks';
 import { authenticationStore, sharedStore } from '@store';
@@ -16,16 +16,20 @@ const AuthenView: React.FC = () => {
   const FacebookSignIn = () => {
     const handleFacebookLogin = async () => {
       try {
-        const result = await LoginManager.logInWithPermissions([
+        const loginResult = await LoginManager.logInWithPermissions([
           'public_profile',
           'email',
         ]);
-        if (!result.isCancelled) {
-          const data = await AccessToken.getCurrentAccessToken();
-          if (data) {
-            const userProfile = await Profile.getCurrentProfile();
-            console.log('Logged in with profile:', userProfile);
-          }
+
+        if (!loginResult.isCancelled) {
+          AccessToken.getCurrentAccessToken().then(async (data) => {
+            const token = data?.accessToken;
+            const response = await fetch(
+              `https://graph.facebook.com/me?fields=id,first_name,last_name,email,picture&access_token=${token}`,
+            );
+            const result = await response.json();
+            console.log('result :>> ', result);
+          });
         }
       } catch (error) {
         console.error('Facebook login failed', error);
