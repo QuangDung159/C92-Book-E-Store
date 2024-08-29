@@ -42,30 +42,35 @@ const googleSignIn = async () => {
     const userInfo = await GoogleSignin.signIn();
     return userInfo;
   } catch (error) {
-    if (error) {
-      ToastHelpers.showToast({
-        title: 'Error',
-        content: error.code || error,
-        type: 'error',
-      });
-    }
+    let errorMessage = error;
 
     if (isErrorWithCode(error)) {
       switch (error.code) {
         case statusCodes.SIGN_IN_CANCELLED:
           // user cancelled the login flow
+          errorMessage = 'Cancelled the login';
           break;
         case statusCodes.IN_PROGRESS:
           // operation (eg. sign in) already in progress
+          errorMessage = 'Already in progress';
           break;
         case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
           // play services not available or outdated
+          errorMessage = 'Play services not available or outdated';
           break;
         default:
         // some other error happened
       }
     } else {
       // an error that's not related to google sign in occurred
+    }
+
+    if (error) {
+      ToastHelpers.showToast({
+        title: 'Error',
+        content: errorMessage,
+        type: 'error',
+      });
     }
 
     return null;

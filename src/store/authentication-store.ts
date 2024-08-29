@@ -88,6 +88,7 @@ class AuthenticationStore {
         ...USER,
         email: user.email,
         username: user.name,
+        avatarUrl: user.photo,
       });
 
       this.setGoogleSigned(true);
