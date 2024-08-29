@@ -67,6 +67,24 @@ class AuthenticationStore {
 
     return result;
   };
+
+  googleSignIn = async () => {
+    const response = await AuthenticationServices.googleSignIn();
+    console.log('response :>> ', response);
+    if (response?.user) {
+      const user = response.user;
+      this.userStore.setUserProfile({
+        ...USER,
+        email: user.email,
+        username: user.name,
+      });
+    }
+  };
+
+  googleSignOut = async () => {
+    await AuthenticationServices.googleSignOut();
+    this.signOut();
+  };
 }
 
 export { AuthenticationStore };
