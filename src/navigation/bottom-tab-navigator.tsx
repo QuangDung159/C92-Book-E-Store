@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Layouts } from '@components';
 import {
   AccountScreen,
   CategoriesScreen,
@@ -30,6 +31,7 @@ function BottomTabNavigator() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Layouts.TopToast />
       <Tab.Navigator
         screenOptions={{
           headerShown: false,

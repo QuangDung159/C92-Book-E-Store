@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
+import { Image } from 'expo-image';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import {
@@ -70,13 +71,21 @@ const AccountView: React.FC = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <Layouts.VSpace value={24} />
         <View style={styles.avatarIcon}>
-          <Icons.AccountCircle size={100} />
+          {userStore.userProfile?.avatarUrl ? (
+            <Image
+              style={styles.avatar}
+              source={userStore.userProfile.avatarUrl}
+              contentFit="contain"
+            />
+          ) : (
+            <Icons.AccountCircle size={100} />
+          )}
         </View>
         <Layouts.VSpace value={24} />
         <View style={styles.profileInfoSection}>
-          {renderInfoRow('Email', userStore.userProfile.email)}
-          {renderInfoRow('Username', userStore.userProfile.username)}
-          {renderInfoRow('Phone number', userStore.userProfile.phoneNumber)}
+          {renderInfoRow('Email:', userStore.userProfile.email)}
+          {renderInfoRow('Username:', userStore.userProfile.username)}
+          {renderInfoRow('Phone number:', userStore.userProfile.phoneNumber)}
         </View>
         <Layouts.VSpace value={12} />
         <Buttons.CButton
@@ -103,7 +112,11 @@ const AccountView: React.FC = () => {
           'Sign Out',
           async () => {
             sharedStore.setShowLoading(true);
-            await authenticationStore.signOut();
+            if (authenticationStore.googleSigned) {
+              await authenticationStore.googleSignOut();
+            } else {
+              await authenticationStore.signOut();
+            }
             sharedStore.setShowLoading(false);
           },
           styles.signOut,
@@ -120,7 +133,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   infoRow: {
-    flexDirection: 'row',
+    // flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 12,
   },
@@ -147,6 +160,11 @@ const styles = StyleSheet.create({
   },
   signOut: {
     color: COLORS.error50,
+  },
+  avatar: {
+    width: 85,
+    height: 85,
+    borderRadius: 50,
   },
 });
 

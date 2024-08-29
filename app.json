@@ -14,8 +14,9 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.dragonc92team.c92BookEStoreV1",
-      "buildNumber": "1"
+      "bundleIdentifier": "com.dragonc92team.BookEStoreV1",
+      "buildNumber": "1",
+      "googleServicesFile": "./ios/BookEStore/GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
@@ -39,6 +40,17 @@
         "onesignal-expo-plugin",
         {
           "mode": "development"
+        }
+      ],
+      [
+        "@react-native-google-signin/google-signin"
+      ],
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
         }
       ]
     ],
