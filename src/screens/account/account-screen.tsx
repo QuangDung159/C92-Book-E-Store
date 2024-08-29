@@ -4,17 +4,19 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, StyleSheet, View } from 'react-native';
 import { ScreenHeader } from '@components';
-import { userStore } from '@store';
+import { sharedStore, userStore } from '@store';
 import { COLORS } from '@themes';
+import { GoogleUser } from '@types';
 import { AccountView, AuthenView } from './components';
 
 const AccountScreen = ({ navigation }: any) => {
+  const [googleUser, setGoogleUser] = useState<GoogleUser>(null);
+
   GoogleSignin.configure({
-    webClientId:
-      '214636288527-ahbc44d1b2v2slmadr2su0v7tj88l0an.apps.googleusercontent.com',
+    webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID,
     scopes: ['https://www.googleapis.com/auth/drive.readonly'],
   });
 
@@ -23,7 +25,7 @@ const AccountScreen = ({ navigation }: any) => {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       // setState({ userInfo, error: undefined });
-      console.log('userInfo :>> ', userInfo);
+      setGoogleUser(userInfo);
     } catch (error) {
       console.log('error :>> ', error);
       if (isErrorWithCode(error)) {
@@ -46,6 +48,13 @@ const AccountScreen = ({ navigation }: any) => {
     }
   };
 
+  const signOut = async () => {
+    sharedStore.setShowLoading(true);
+    const result = await GoogleSignin.signOut();
+    console.log('result :>> ', result);
+    sharedStore.setShowLoading(false);
+  };
+
   return (
     <View style={styles.container}>
       <ScreenHeader
@@ -55,12 +64,21 @@ const AccountScreen = ({ navigation }: any) => {
       />
       {userStore.userProfile ? <AccountView /> : <AuthenView />}
       {/* <TestZalo /> */}
-      <Button
-        title="google"
-        onPress={() => {
-          _signIn();
-        }}
-      ></Button>
+      {googleUser?.user ? (
+        <Button
+          title="google sign out"
+          onPress={() => {
+            signOut();
+          }}
+        ></Button>
+      ) : (
+        <Button
+          title="google"
+          onPress={() => {
+            _signIn();
+          }}
+        ></Button>
+      )}
     </View>
   );
 };
