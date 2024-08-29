@@ -2,45 +2,15 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { AccessToken, LoginManager } from 'react-native-fbsdk-next';
 import { Buttons, Icons, Layouts } from '@components';
-import { USER } from '@constants';
 import { useNavigate } from '@hooks';
-import { authenticationStore, sharedStore, userStore } from '@store';
+import { authenticationStore, sharedStore } from '@store';
 import { FONT_STYLES } from '@themes';
 import { AppVersionText } from './app-version-text';
 
 const AuthenView: React.FC = () => {
   const navigation = useNavigation();
   const { openSignInScreen, openSignUpScreen } = useNavigate(navigation);
-
-  const handleFacebookLogin = async () => {
-    try {
-      const loginResult = await LoginManager.logInWithPermissions([
-        'public_profile',
-        'email',
-      ]);
-
-      if (!loginResult.isCancelled) {
-        AccessToken.getCurrentAccessToken().then(async (data) => {
-          const token = data?.accessToken;
-          const response = await fetch(
-            `https://graph.facebook.com/me?fields=id,first_name,last_name,email,picture&access_token=${token}`,
-          );
-          const result = await response.json();
-          console.log('result :>> ', result);
-          authenticationStore.setFacebookSigned(true);
-          userStore.setUserProfile({
-            ...USER,
-            email: result.email,
-            avatarUrl: result.picture?.data?.url,
-          });
-        });
-      }
-    } catch (error) {
-      console.error('Facebook login failed', error);
-    }
-  };
 
   return (
     <View style={styles.container}>
@@ -75,17 +45,19 @@ const AuthenView: React.FC = () => {
             }}
           >
             <Icons.GoogleIcon
+              size={30}
               onPress={async () => {
                 sharedStore.setShowLoading(true);
                 await authenticationStore.googleSignIn();
                 sharedStore.setShowLoading(false);
               }}
             />
-            <Layouts.HSpace value={12} />
+            <Layouts.HSpace value={16} />
             <Icons.FacebookIcon
+              size={30}
               onPress={async () => {
                 sharedStore.setShowLoading(true);
-                await handleFacebookLogin();
+                await authenticationStore.facebookSignIn();
                 sharedStore.setShowLoading(false);
               }}
             />

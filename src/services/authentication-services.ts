@@ -3,6 +3,8 @@ import {
   isErrorWithCode,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
+import axios, { AxiosResponse } from 'axios';
+import { AccessToken, LoginManager } from 'react-native-fbsdk-next';
 import { USER } from '@constants';
 import { DataModels } from '@models';
 import { delay, ToastHelpers } from '@utils';
@@ -82,10 +84,43 @@ const googleSignOut = async () => {
   await GoogleSignin.signOut();
 };
 
+const facebookSignIn: () => Promise<
+  AxiosResponse<any, any>
+> | null = async () => {
+  try {
+    const loginResult = await LoginManager.logInWithPermissions([
+      'public_profile',
+      'email',
+    ]);
+
+    if (!loginResult.isCancelled) {
+      return await AccessToken.getCurrentAccessToken().then(async (data) => {
+        const token = data?.accessToken;
+        const response = await axios.get('https://graph.facebook.com/me', {
+          params: {
+            fields: 'id,first_name,last_name,email,picture',
+            access_token: token,
+          },
+        });
+
+        return response;
+      });
+    }
+    return null;
+  } catch (error) {
+    console.error('Facebook login failed', error);
+    return null;
+  }
+};
+
+const facebookSignOut = async () => {};
+
 export const AuthenticationServices = {
   signUp,
   sendVerificationCode,
   submitVerficationCode,
   googleSignIn,
   googleSignOut,
+  facebookSignIn,
+  facebookSignOut,
 };

@@ -123,6 +123,20 @@ class AuthenticationStore {
   facebookSignOut = async () => {
     this.setFacebookSigned(false);
   };
+
+  facebookSignIn = async () => {
+    const response = await AuthenticationServices.facebookSignIn();
+
+    if (response?.status === 200) {
+      const data = response.data;
+      this.userStore.setUserProfile({
+        ...USER,
+        email: data.email,
+        username: data.first_name,
+        avatarUrl: data.picture?.data?.url,
+      });
+    }
+  };
 }
 
 export { AuthenticationStore };
