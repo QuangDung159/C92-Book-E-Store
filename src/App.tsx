@@ -12,14 +12,13 @@ import { SplashScreen } from 'expo-router';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef, useState } from 'react';
 import { connectToDevTools } from 'react-devtools-core';
-import React, { View } from 'react-native';
+import React from 'react-native';
 import {
   InAppMessageClickEvent,
   LogLevel,
   OneSignal,
 } from 'react-native-onesignal';
 
-import Toast from 'react-native-toast-message';
 import { IN_APP_MESSAGE_ACTION_ID, SCREEN_NAME } from '@constants';
 import { useNavigate } from '@hooks';
 import { appModel, notificationStore, sharedStore } from '@store';
@@ -164,13 +163,6 @@ const App = () => {
 
   return (
     <NavigationContainer ref={navigationRef} linking={linking}>
-      <View
-        style={{
-          zIndex: 199,
-        }}
-      >
-        <Toast visibilityTime={2000} topOffset={45} />
-      </View>
       <Navigation />
     </NavigationContainer>
   );
