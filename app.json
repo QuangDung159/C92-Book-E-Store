@@ -53,7 +53,13 @@
           }
         }
       ],
-      "react-native-fbsdk-next"
+      [
+        "react-native-fbsdk-next",
+        {
+          "appID": "2840342749458298",
+          "displayName": "E-Store"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
