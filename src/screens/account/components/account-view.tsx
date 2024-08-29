@@ -16,6 +16,7 @@ import { useNavigate } from '@hooks';
 import { BookServices } from '@services';
 import { authenticationStore, sharedStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
+import { ToastHelpers } from '@utils';
 import { AppVersionText } from './app-version-text';
 
 const AccountView: React.FC = () => {
@@ -103,8 +104,17 @@ const AccountView: React.FC = () => {
           'Sign Out',
           async () => {
             sharedStore.setShowLoading(true);
-            await authenticationStore.signOut();
+            if (authenticationStore.googleSigned) {
+              await authenticationStore.googleSignOut();
+            } else {
+              await authenticationStore.signOut();
+            }
             sharedStore.setShowLoading(false);
+
+            ToastHelpers.showToast({
+              title: 'Account',
+              content: 'Sign out success',
+            });
           },
           styles.signOut,
         )}

@@ -1,4 +1,4 @@
-import { makeObservable, observable } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 import { USER } from '@constants';
 import { DataModels } from '@models';
 import { AuthenticationServices } from '@services';
@@ -8,13 +8,20 @@ import { UserStore } from './user-store';
 
 class AuthenticationStore {
   userStore: UserStore | null = null;
+  googleSigned: boolean = false;
 
   constructor(userStore: UserStore) {
     makeObservable(this, {
       userStore: observable,
+      googleSigned: observable,
+      setGoogleSigned: action,
     });
 
     this.userStore = userStore;
+  }
+
+  setGoogleSigned(value: boolean) {
+    this.googleSigned = value;
   }
 
   signIn = async (username: string, password: string) => {
@@ -78,11 +85,13 @@ class AuthenticationStore {
         email: user.email,
         username: user.name,
       });
+      this.setGoogleSigned(true);
     }
   };
 
   googleSignOut = async () => {
     await AuthenticationServices.googleSignOut();
+    this.setGoogleSigned(false);
     this.signOut();
   };
 }
