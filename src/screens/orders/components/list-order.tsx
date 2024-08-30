@@ -21,6 +21,9 @@ const ListOrder: React.FC<ListOrderProps> = ({ listOrder }) => {
         renderItem={({ item }) => {
           return <OrderItem orderItem={item} />;
         }}
+        contentContainerStyle={{
+          paddingBottom: 24,
+        }}
         ListEmptyComponent={() => {
           return (
             <>
