@@ -1,33 +1,28 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { View } from 'react-native';
 import { DataModels } from '@models';
-import { COLORS, FONT_STYLES } from '@themes';
+import { CartItem } from 'screens/cart';
 
 interface OrderItemProps {
   orderItem: DataModels.IOrder;
 }
 
 const OrderItem: React.FC<OrderItemProps> = ({ orderItem }) => {
+  const bookCartItem = orderItem.cart.listCartItem[0];
   return (
-    <View style={styles.container}>
-      <View>
-        <Text style={styles.title}>{orderItem.id}</Text>
+    <React.Fragment key={orderItem.id}>
+      <View
+        style={{
+          alignSelf: 'center',
+          marginTop: 24,
+        }}
+      >
+        <CartItem bookCartItem={bookCartItem} type="short" />
       </View>
-    </View>
+    </React.Fragment>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.primaryWhite,
-  },
-  title: {
-    ...FONT_STYLES.SEMIBOLD_14,
-    marginBottom: 4,
-  },
-});
 
 const observable = observer(OrderItem);
 export { observable as OrderItem };

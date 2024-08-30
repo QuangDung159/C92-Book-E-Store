@@ -40,7 +40,7 @@ const BookTitle: React.FC<BookTitleProps> = ({
 
 const styles = StyleSheet.create({
   title: {
-    ...FONT_STYLES.SEMIBOLD_16,
+    ...FONT_STYLES.BOLD_14,
   },
 });
 
