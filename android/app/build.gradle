@@ -121,7 +121,7 @@ android {
         applicationId 'com.dragonc92team.BookEStoreV1'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 19
+        versionCode 21
         versionName "1.0.1"
     }
     signingConfigs {
@@ -140,7 +140,7 @@ android {
         }
         production {
             // keystore from eas server
-            storeFile file('staging-keystore.bak.jks')
+            storeFile file('production-keystore.bak.jks')
             storePassword 'db32b7ab45a3007cf09a09a04a956412'
             keyAlias 'da9c31afd6d6615093337ac13d810252'
             keyPassword 'c6efc0ed3b90ed0b78e0f24deb09b254'
