@@ -2,18 +2,17 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
-import { EmptyListComponent, Icons, ScreenHeader } from '@components';
+import { EmptyListComponent, Icons } from '@components';
 import { notificationStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 
-const CanceledOrdersScreen = ({ navigation }: any) => {
+const CanceledOrdersScreen = () => {
   const { width } = Dimensions.get('window');
   const hiddenItemHeight = 75;
   const hiddenItemWidth = 75;
 
   return (
     <View style={styles.container}>
-      <ScreenHeader title="Orders" navigation={navigation} showBackIcon />
       <SwipeListView
         keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
