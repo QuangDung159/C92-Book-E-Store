@@ -32,7 +32,7 @@ type ZaloPayOrder = {
 };
 
 type PaymentStatus = 'success' | 'fail' | 'waiting_for_pay';
-type OrderStatus = 'success' | 'cancel' | 'processing' | 'created';
+type OrderStatus = 'completed' | 'canceled' | 'processing' | 'created';
 
 type NotificationParam = {
   sound?: string;

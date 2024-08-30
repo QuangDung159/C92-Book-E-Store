@@ -854,6 +854,16 @@ const LIST_ORDER: DataModels.IOrder[] = [
           count: 2,
           id: TOP_BOOKS[0].id,
         },
+        {
+          book: TOP_BOOKS[1],
+          count: 2,
+          id: TOP_BOOKS[1].id,
+        },
+        {
+          book: TOP_BOOKS[2],
+          count: 2,
+          id: TOP_BOOKS[2].id,
+        },
       ],
       discount: 0,
       id: '12',

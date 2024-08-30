@@ -10,7 +10,7 @@ import {
   CompletedOrdersScreen,
   ProcessingOrdersScreen,
 } from '@screens';
-import { COLORS } from '@themes';
+import { COLORS, FONT_STYLES } from '@themes';
 import { SCREEN_NAME } from '../constants';
 
 const Tab = createMaterialTopTabNavigator();
@@ -22,7 +22,19 @@ function OrderNavigator() {
     <SafeAreaView style={styles.container}>
       <Layouts.TopToast />
       <ScreenHeader title="Orders" navigation={navigation} showBackIcon />
-      <Tab.Navigator initialRouteName={SCREEN_NAME.CANCELED_ORDERS_SCREEN}>
+      <Tab.Navigator
+        initialRouteName={SCREEN_NAME.PROCESSING_ORDERS_SCREEN}
+        screenOptions={{
+          tabBarLabelStyle: {
+            textTransform: 'none',
+            ...FONT_STYLES.SEMIBOLD_12,
+            marginTop: -10,
+          },
+          tabBarStyle: {
+            height: 40,
+          },
+        }}
+      >
         <Tab.Screen
           name={SCREEN_NAME.COMPLETED_ORDERS_SCREEN}
           component={CompletedOrdersScreen}
