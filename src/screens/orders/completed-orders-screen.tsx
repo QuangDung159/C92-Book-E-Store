@@ -6,7 +6,7 @@ import { EmptyListComponent, Icons, ScreenHeader } from '@components';
 import { notificationStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 
-const OrdersScreen = ({ navigation }: any) => {
+const CompletedOrdersScreen = ({ navigation }: any) => {
   const { width } = Dimensions.get('window');
   const hiddenItemHeight = 75;
   const hiddenItemWidth = 75;
@@ -122,5 +122,5 @@ const styles = StyleSheet.create({
   },
 });
 
-const observable = observer(OrdersScreen);
-export { observable as OrdersScreen };
+const observable = observer(CompletedOrdersScreen);
+export { observable as CompletedOrdersScreen };
