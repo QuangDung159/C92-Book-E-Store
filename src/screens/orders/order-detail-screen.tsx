@@ -13,14 +13,7 @@ const OrderDetailScreen = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
-      <ScreenHeader
-        title="Notifications"
-        navigation={navigation}
-        showBackIcon={false}
-        rightConponent={() => {
-          return <Icons.ReadAllIcon />;
-        }}
-      />
+      <ScreenHeader title="Order Detail" navigation={navigation} />
       <SwipeListView
         keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}

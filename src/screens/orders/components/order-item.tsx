@@ -28,17 +28,26 @@ const OrderItem: React.FC<OrderItemProps> = ({ orderItem }) => {
     setIsShowCartItem(!isShowCartItem);
   };
 
+  const countProduct = () => {
+    let count = 0;
+    listCartItem.forEach((item) => {
+      count += item.count;
+    });
+
+    return count;
+  };
+
   return (
     <React.Fragment key={orderItem.id}>
-      <View
-        style={{
-          alignSelf: 'center',
-          marginTop: 24,
-          backgroundColor: COLORS.gray200,
-          borderRadius: 8,
-        }}
-      >
-        <TouchableOpacity onPress={openOrderDetailScreen}>
+      <TouchableOpacity onPress={openOrderDetailScreen} activeOpacity={0.8}>
+        <View
+          style={{
+            alignSelf: 'center',
+            marginTop: 24,
+            backgroundColor: COLORS.gray200,
+            borderRadius: 8,
+          }}
+        >
           <CartItem
             bookCartItem={bookCartItem}
             type="short"
@@ -46,76 +55,77 @@ const OrderItem: React.FC<OrderItemProps> = ({ orderItem }) => {
               marginBottom: -12,
             }}
           />
-        </TouchableOpacity>
-        <Collapsible collapsed={!isShowCartItem}>
-          {listCartItem.map((item, index) => {
-            if (index !== 0) {
-              return (
-                <CartItem key={item.id} bookCartItem={item} type="short" />
-              );
-            }
-            return null;
-          })}
-        </Collapsible>
-        {listCartItem.length > 1 && (
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              alignSelf: 'center',
-            }}
-          >
-            <TouchableOpacity onPress={onPressSeeMore}>
-              <Text
-                style={{
-                  textAlign: 'center',
-                  ...FONT_STYLES.REGULAR_14,
-                }}
-              >
-                See more
-              </Text>
-            </TouchableOpacity>
-            {isShowCartItem ? (
-              <Icons.ChevronUpIcon
-                size={16}
-                color={COLORS.gray60}
-                onPress={onPressSeeMore}
-              />
-            ) : (
-              <Icons.ChevronDownIcon
-                size={16}
-                color={COLORS.gray60}
-                onPress={onPressSeeMore}
-              />
-            )}
-          </View>
-        )}
-        <View
-          style={{
-            padding: 8,
-          }}
-        >
-          <View
-            style={{
-              flexDirection: 'row',
-            }}
-          >
-            <Text
+
+          <Collapsible collapsed={!isShowCartItem}>
+            {listCartItem.map((item, index) => {
+              if (index !== 0) {
+                return (
+                  <CartItem key={item.id} bookCartItem={item} type="short" />
+                );
+              }
+              return null;
+            })}
+          </Collapsible>
+          {listCartItem.length > 1 && (
+            <View
               style={{
-                ...FONT_STYLES.REGULAR_14,
-              }}
-            >{`Total (${listCartItem.length} products):`}</Text>
-            <Layouts.MaxSpace />
-            <Text
-              style={{
-                ...FONT_STYLES.SEMIBOLD_14,
+                flexDirection: 'row',
+                alignItems: 'center',
+                alignSelf: 'center',
               }}
             >
-              {StringHelpers.formatCurrency(cart.total)}
-            </Text>
+              <TouchableOpacity onPress={onPressSeeMore}>
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    ...FONT_STYLES.REGULAR_14,
+                  }}
+                >
+                  See more
+                </Text>
+              </TouchableOpacity>
+              {isShowCartItem ? (
+                <Icons.ChevronUpIcon
+                  size={16}
+                  color={COLORS.gray60}
+                  onPress={onPressSeeMore}
+                />
+              ) : (
+                <Icons.ChevronDownIcon
+                  size={16}
+                  color={COLORS.gray60}
+                  onPress={onPressSeeMore}
+                />
+              )}
+            </View>
+          )}
+          <View
+            style={{
+              padding: 8,
+            }}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+              }}
+            >
+              <Text
+                style={{
+                  ...FONT_STYLES.REGULAR_14,
+                }}
+              >{`Total (${countProduct()} products):`}</Text>
+              <Layouts.MaxSpace />
+              <Text
+                style={{
+                  ...FONT_STYLES.SEMIBOLD_14,
+                }}
+              >
+                {StringHelpers.formatCurrency(cart.total)}
+              </Text>
+            </View>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     </React.Fragment>
   );
 };
