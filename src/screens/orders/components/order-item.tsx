@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import { Icons, Layouts } from '@components';
 import { useNavigate } from '@hooks';
@@ -40,49 +40,32 @@ const OrderItem: React.FC<OrderItemProps> = ({ orderItem }) => {
   return (
     <React.Fragment key={orderItem.id}>
       <TouchableOpacity onPress={openOrderDetailScreen} activeOpacity={0.8}>
-        <View
-          style={{
-            alignSelf: 'center',
-            marginTop: 24,
-            backgroundColor: COLORS.gray200,
-            borderRadius: 8,
-          }}
-        >
+        <View style={styles.container}>
           <CartItem
             bookCartItem={bookCartItem}
             type="short"
-            containerStyle={{
-              marginBottom: -12,
-            }}
+            containerStyle={styles.cartItem}
           />
 
           <Collapsible collapsed={!isShowCartItem}>
             {listCartItem.map((item, index) => {
               if (index !== 0) {
                 return (
-                  <CartItem key={item.id} bookCartItem={item} type="short" />
+                  <CartItem
+                    key={item.id}
+                    bookCartItem={item}
+                    type="short"
+                    containerStyle={styles.cartItem}
+                  />
                 );
               }
               return null;
             })}
           </Collapsible>
           {listCartItem.length > 1 && (
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                alignSelf: 'center',
-              }}
-            >
+            <View style={styles.seeMore}>
               <TouchableOpacity onPress={onPressSeeMore}>
-                <Text
-                  style={{
-                    textAlign: 'center',
-                    ...FONT_STYLES.REGULAR_14,
-                  }}
-                >
-                  See more
-                </Text>
+                <Text style={styles.seeMoreText}>See more</Text>
               </TouchableOpacity>
               {isShowCartItem ? (
                 <Icons.ChevronUpIcon
@@ -99,27 +82,13 @@ const OrderItem: React.FC<OrderItemProps> = ({ orderItem }) => {
               )}
             </View>
           )}
-          <View
-            style={{
-              padding: 8,
-            }}
-          >
-            <View
-              style={{
-                flexDirection: 'row',
-              }}
-            >
+          <View style={styles.totalSec}>
+            <View style={styles.totalRow}>
               <Text
-                style={{
-                  ...FONT_STYLES.REGULAR_14,
-                }}
+                style={styles.totalTitle}
               >{`Total (${countProduct()} products):`}</Text>
               <Layouts.MaxSpace />
-              <Text
-                style={{
-                  ...FONT_STYLES.SEMIBOLD_14,
-                }}
-              >
+              <Text style={styles.totalValue}>
                 {StringHelpers.formatCurrency(cart.total)}
               </Text>
             </View>
@@ -129,6 +98,39 @@ const OrderItem: React.FC<OrderItemProps> = ({ orderItem }) => {
     </React.Fragment>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    alignSelf: 'center',
+    marginTop: 24,
+    backgroundColor: COLORS.gray200,
+    borderRadius: 8,
+  },
+  cartItem: {
+    marginBottom: -12,
+  },
+  seeMore: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
+  seeMoreText: {
+    textAlign: 'center',
+    ...FONT_STYLES.REGULAR_14,
+  },
+  totalSec: {
+    padding: 8,
+  },
+  totalRow: {
+    flexDirection: 'row',
+  },
+  totalTitle: {
+    ...FONT_STYLES.REGULAR_14,
+  },
+  totalValue: {
+    ...FONT_STYLES.SEMIBOLD_14,
+  },
+});
 
 const observable = observer(OrderItem);
 export { observable as OrderItem };
