@@ -13,7 +13,7 @@ const PRICE_STEP = 1000;
 
 const DEFAULT_PRICE_RANGE: number[] = [0, 2000000];
 
-const CREDIT_CARD_TYPE = {
+const PAYMENT_CARD_TYPE = {
   masterCard: 'master-card',
   jcb: 'jcb',
   visa: 'visa',
@@ -66,7 +66,7 @@ const IN_APP_MESSAGE_ACTION_ID = {
 export {
   ADMINISTRATIVE,
   CODE_PUSH_NUMBER,
-  CREDIT_CARD_TYPE,
+  PAYMENT_CARD_TYPE,
   DEEP_LINK_PAYMENT_SUCCESS_URL,
   DEEP_LINK_URL,
   DEFAULT_PRICE_RANGE,

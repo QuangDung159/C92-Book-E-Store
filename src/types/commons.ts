@@ -32,6 +32,7 @@ type ZaloPayOrder = {
 };
 
 type PaymentStatus = 'success' | 'fail' | 'waiting_for_pay';
+type OrderStatus = 'success' | 'cancel' | 'processing' | 'created';
 
 type NotificationParam = {
   sound?: string;
@@ -62,12 +63,19 @@ type GoogleUser = {
   serverAuthCode: string | null;
 };
 
+type PaymentType = 'cod' | 'credit_card' | 'momo' | 'zalo_pay';
+
+type PaymentCardType = 'master-card' | 'jcb' | 'visa';
+
 export {
   AdministrativeUnitEnum,
+  PaymentCardType,
   GoogleUser,
   NotificationParam,
+  OrderStatus,
   PaymentData,
   PaymentStatus,
+  PaymentType,
   ServiceResultHandler,
   ZaloPayOrder,
 };

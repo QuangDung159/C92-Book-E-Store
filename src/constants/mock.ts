@@ -845,6 +845,33 @@ const LIST_NOTIFICATION: DataModels.INotification[] = [
   },
 ];
 
+const LIST_ORDER: DataModels.IOrder[] = [
+  {
+    cart: {
+      listCartItem: [
+        {
+          book: TOP_BOOKS[0],
+          count: 2,
+          id: TOP_BOOKS[0].id,
+        },
+      ],
+      discount: 0,
+      id: '12',
+      paymentMethod: {
+        paymentInfo: {},
+        paymentType: 'cod',
+      },
+      shipping: 12000,
+      shippingAddress: '123 123 123',
+      subTotal: 12000,
+      total: 23123123,
+    },
+    id: '123',
+    paymentStatus: 'success',
+    status: 'processing',
+  },
+];
+
 export {
   CATEGORY,
   LIST_ADMINITRATIVE_UNIT,
@@ -852,6 +879,8 @@ export {
   LIST_CITY,
   LIST_DISTRICT,
   LIST_FORM,
+  LIST_NOTIFICATION,
+  LIST_ORDER,
   LIST_PAYMENT_METHOD,
   LIST_PUBLISHER,
   LIST_SHIPPING_ADDRESS,
@@ -861,5 +890,4 @@ export {
   TOP_BOOKS,
   TOP_BOOKS_FILTER,
   USER,
-  LIST_NOTIFICATION,
 };

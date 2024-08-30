@@ -21,8 +21,12 @@ import { AppVersionText } from './app-version-text';
 
 const AccountView: React.FC = () => {
   const navigation = useNavigation();
-  const { openAddressScreen, openEditAccountScreen, openBookListingScreen } =
-    useNavigate(navigation);
+  const {
+    openAddressScreen,
+    openEditAccountScreen,
+    openBookListingScreen,
+    openOrdersScreen,
+  } = useNavigate(navigation);
 
   const loadListFavourite = async () => {
     sharedStore.setShowLoading(true);
@@ -102,7 +106,9 @@ const AccountView: React.FC = () => {
         {renderMenuItem('Viewed', () => {
           loadListViewed();
         })}
-        {renderMenuItem('Orders', () => {})}
+        {renderMenuItem('Orders', () => {
+          openOrdersScreen();
+        })}
         {renderMenuItem('Shipping Address', () => {
           openAddressScreen();
         })}

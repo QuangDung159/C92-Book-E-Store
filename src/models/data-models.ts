@@ -1,5 +1,10 @@
 import { ERROR_CODES } from '@constants';
-import { PaymentStatus } from '@types';
+import {
+  OrderStatus,
+  PaymentCardType,
+  PaymentStatus,
+  PaymentType,
+} from '@types';
 
 export interface IReviewInput {
   rating: number;
@@ -56,7 +61,7 @@ export interface IShippingAddress {
 }
 
 export interface IPaymentMethod {
-  paymentType: string;
+  paymentType: PaymentType;
   paymentInfo?: any | ICreditCard;
 }
 
@@ -128,7 +133,7 @@ export interface IReferenceOptions {
 export interface ICreditCard {
   cardNumber: string;
   cardHolder: string;
-  cartType: string;
+  cartType: PaymentCardType;
 }
 
 export interface IUser {
@@ -168,4 +173,5 @@ export interface IOrder {
   id: string;
   cart: ICart;
   paymentStatus: PaymentStatus;
+  status: OrderStatus;
 }

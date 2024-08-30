@@ -138,6 +138,18 @@ export const useNavigate = (navigation: any) => {
     });
   };
 
+  const openOrdersScreen = () => {
+    navigation.navigate(SCREEN_NAME.ORDER_NAVIGATOR, {
+      screen: SCREEN_NAME.ORDERS_SCREEN,
+    });
+  };
+
+  const openOrderDetailScreen = () => {
+    navigation.navigate(SCREEN_NAME.ORDER_NAVIGATOR, {
+      screen: SCREEN_NAME.ORDER_DETAIL_SCREEN,
+    });
+  };
+
   const handleNotificationNavigate = async (screenName: string) => {
     await delay(1000);
     switch (screenName.toUpperCase()) {
@@ -183,5 +195,7 @@ export const useNavigate = (navigation: any) => {
     openNotificationsScreen,
     handleNotificationNavigate,
     openPlayStore,
+    openOrdersScreen,
+    openOrderDetailScreen,
   };
 };
