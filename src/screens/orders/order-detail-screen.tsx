@@ -13,7 +13,7 @@ const OrderDetailScreen = ({ navigation }: any) => {
     <View style={styles.container}>
       <ScreenHeader title="Order Detail" navigation={navigation} />
       <ScrollView showsVerticalScrollIndicator={false}>
-        <ListOrder listOrder={LIST_ORDER} showFullList />
+        <ListOrder listOrder={LIST_ORDER} isShowFullListCart />
         <Divider />
         <View style={styles.wrapper}>
           <Layouts.VSpace value={12} />

@@ -9,9 +9,13 @@ import { OrderItem } from './order-item';
 
 interface ListOrderProps {
   listOrder: DataModels.IOrder[];
+  isShowFullListCart?: boolean;
 }
 
-const ListOrder: React.FC<ListOrderProps> = ({ listOrder }) => {
+const ListOrder: React.FC<ListOrderProps> = ({
+  listOrder,
+  isShowFullListCart,
+}) => {
   return (
     <View style={styles.container}>
       <FlashList
@@ -19,7 +23,12 @@ const ListOrder: React.FC<ListOrderProps> = ({ listOrder }) => {
         showsVerticalScrollIndicator={false}
         data={listOrder}
         renderItem={({ item }) => {
-          return <OrderItem orderItem={item} />;
+          return (
+            <OrderItem
+              orderItem={item}
+              isShowFullListCart={isShowFullListCart}
+            />
+          );
         }}
         contentContainerStyle={{
           paddingBottom: 24,

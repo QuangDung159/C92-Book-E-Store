@@ -12,9 +12,13 @@ import { CartItem } from 'screens/cart';
 
 interface OrderItemProps {
   orderItem: DataModels.IOrder;
+  isShowFullListCart?: boolean;
 }
 
-const OrderItem: React.FC<OrderItemProps> = ({ orderItem }) => {
+const OrderItem: React.FC<OrderItemProps> = ({
+  orderItem,
+  isShowFullListCart = false,
+}) => {
   const cart = orderItem.cart;
   const listCartItem = cart.listCartItem;
   const bookCartItem = listCartItem[0];
@@ -37,51 +41,72 @@ const OrderItem: React.FC<OrderItemProps> = ({ orderItem }) => {
     return count;
   };
 
+  const renderListCartItem = () => {
+    return (
+      <>
+        {listCartItem.map((item) => (
+          <CartItem
+            key={item.id}
+            bookCartItem={item}
+            type="short"
+            containerStyle={styles.cartItem}
+          />
+        ))}
+      </>
+    );
+  };
+
   return (
     <React.Fragment key={orderItem.id}>
       <TouchableOpacity onPress={openOrderDetailScreen} activeOpacity={0.8}>
         <View style={styles.container}>
-          <CartItem
-            bookCartItem={bookCartItem}
-            type="short"
-            containerStyle={styles.cartItem}
-          />
-
-          <Collapsible collapsed={!isShowCartItem}>
-            {listCartItem.map((item, index) => {
-              if (index !== 0) {
-                return (
-                  <CartItem
-                    key={item.id}
-                    bookCartItem={item}
-                    type="short"
-                    containerStyle={styles.cartItem}
-                  />
-                );
-              }
-              return null;
-            })}
-          </Collapsible>
-          {listCartItem.length > 1 && (
-            <View style={styles.seeMore}>
-              <TouchableOpacity onPress={onPressSeeMore}>
-                <Text style={styles.seeMoreText}>See more</Text>
-              </TouchableOpacity>
-              {isShowCartItem ? (
-                <Icons.ChevronUpIcon
-                  size={16}
-                  color={COLORS.gray60}
-                  onPress={onPressSeeMore}
-                />
-              ) : (
-                <Icons.ChevronDownIcon
-                  size={16}
-                  color={COLORS.gray60}
-                  onPress={onPressSeeMore}
-                />
+          {isShowFullListCart ? (
+            <>{renderListCartItem()}</>
+          ) : (
+            <>
+              <CartItem
+                bookCartItem={bookCartItem}
+                type="short"
+                containerStyle={styles.cartItem}
+              />
+              <Collapsible collapsed={!isShowCartItem}>
+                {listCartItem.map((item, index) => {
+                  if (index !== 0) {
+                    return (
+                      <CartItem
+                        key={item.id}
+                        bookCartItem={item}
+                        type="short"
+                        containerStyle={styles.cartItem}
+                      />
+                    );
+                  }
+                  return null;
+                })}
+              </Collapsible>
+              {listCartItem.length > 1 && (
+                <View style={styles.seeMore}>
+                  <TouchableOpacity onPress={onPressSeeMore}>
+                    <Text style={styles.seeMoreText}>See more</Text>
+                  </TouchableOpacity>
+                  {isShowCartItem ? (
+                    <Icons.ChevronUpIcon
+                      size={16}
+                      color={COLORS.gray60}
+                      onPress={onPressSeeMore}
+                    />
+                  ) : (
+                    <Icons.ChevronDownIcon
+                      size={16}
+                      color={COLORS.gray60}
+                      onPress={onPressSeeMore}
+                    />
+                  )}
+                </View>
               )}
-            </View>
+            </>
           )}
+
           <View style={styles.totalSec}>
             <View style={styles.totalRow}>
               <Text
