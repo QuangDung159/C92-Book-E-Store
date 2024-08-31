@@ -121,7 +121,7 @@ android {
         applicationId 'com.dragonc92team.BookEStoreV1'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 24
+        versionCode 28
         versionName "1.0.2"
     }
     signingConfigs {
@@ -133,10 +133,10 @@ android {
         }
         staging {
             // keystore from eas server
-            storeFile file('staging-keystore.bak.jks')
-            storePassword 'db32b7ab45a3007cf09a09a04a956412'
-            keyAlias 'da9c31afd6d6615093337ac13d810252'
-            keyPassword 'c6efc0ed3b90ed0b78e0f24deb09b254'
+            storeFile file('debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
         }
         production {
             // keystore from eas server
@@ -148,7 +148,7 @@ android {
     }
     buildTypes {
         debug {
-            signingConfig signingConfigs.production
+            signingConfig signingConfigs.debug
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
