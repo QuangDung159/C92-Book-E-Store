@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "214636288527-q3upbjk89d01spteomuvdrrhoki3sfem.apps.googleusercontent.com",
+          "client_id": "214636288527-rcgi6l5cfkibos64a0j0eehphsv0s6p8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dragonc92team.BookEStoreV1",
+            "certificate_hash": "0981035d15ba62fdd5805ed64a9fa5894e5fa005"
+          }
+        },
+        {
+          "client_id": "214636288527-3eg6mjliofo7326eot3qcpeg4u6scgu2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,7 +35,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "214636288527-q3upbjk89d01spteomuvdrrhoki3sfem.apps.googleusercontent.com",
+              "client_id": "214636288527-3eg6mjliofo7326eot3qcpeg4u6scgu2.apps.googleusercontent.com",
               "client_type": 3
             },
             {
