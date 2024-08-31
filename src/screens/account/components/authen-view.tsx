@@ -1,5 +1,6 @@
 /* eslint-disable import/no-unresolved */
 import { useNavigation } from '@react-navigation/native';
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Buttons, Icons, Layouts } from '@components';
@@ -96,4 +97,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export { AuthenView };
+const observable = observer(AuthenView);
+export { observable as AuthenView };

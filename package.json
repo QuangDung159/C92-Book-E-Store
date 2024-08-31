@@ -57,6 +57,7 @@
     "expo": "~51.0.24",
     "expo-auth-session": "^5.5.2",
     "expo-build-properties": "^0.12.5",
+    "expo-clipboard": "^6.0.3",
     "expo-constants": "~16.0.2",
     "expo-dev-client": "~4.0.23",
     "expo-device": "~6.0.2",
