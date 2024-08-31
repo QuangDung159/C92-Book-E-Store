@@ -10,6 +10,7 @@ const COLORS = {
   gray60: MD3Colors.neutral60,
   gray70: MD3Colors.neutral70,
   gray90: MD3Colors.neutral90,
+  gray50: MD3Colors.neutral50,
   error50: MD3Colors.error50,
 };
 

@@ -9,7 +9,7 @@ interface EmptyListComponentProps {
 }
 
 const EmptyListComponent: React.FC<EmptyListComponentProps> = ({
-  content,
+  content = 'Empty',
   button,
 }) => {
   const { height } = Dimensions.get('window');
@@ -22,7 +22,7 @@ const EmptyListComponent: React.FC<EmptyListComponentProps> = ({
         height: height * 0.7,
       }}
     >
-      <Icons.CloseBoxOutlineIcon size={100} />
+      <Icons.CloseBoxOutlineIcon color={COLORS.gray70} size={100} />
       {content && <Text style={styles.label}>{content}</Text>}
       {button?.()}
     </View>
@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
   },
   label: {
     ...FONT_STYLES.SEMIBOLD_14,
+    color: COLORS.gray70,
   },
 });
 

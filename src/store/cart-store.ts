@@ -12,7 +12,7 @@ import {
 } from '@constants';
 import { DataModels } from '@models';
 import { MomoServices, OrderServices, ZaloPayServices } from '@services';
-import { PaymentData, PaymentStatus, ZaloPayOrder } from '@types';
+import { PaymentData, PaymentStatus, PaymentType, ZaloPayOrder } from '@types';
 import { DatetimeHelpers, StringHelpers } from '@utils';
 import { ReferenceOptionsStore } from './reference-options-store';
 import { UserStore } from './user-store';
@@ -71,7 +71,7 @@ class CartStore {
     this.referenceOptionsStore = referenceOptionsStore;
 
     this.paymentSelected = {
-      paymentType: LIST_PAYMENT_METHOD[0].value,
+      paymentType: LIST_PAYMENT_METHOD[0].value as PaymentType,
     };
   }
 

@@ -33,6 +33,7 @@ import {
 import { useNavigate } from '@hooks';
 import { cartStore, sharedStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
+import { PaymentType } from '@types';
 import { delay, StringHelpers } from '@utils';
 import { CartInfoRow, ListCreditCard, ShippingAddress } from './components';
 import { ListCartItem } from './components/list-cart-item';
@@ -134,7 +135,7 @@ const CheckoutScreen = ({ navigation }: any) => {
         <RadioButton.Group
           onValueChange={(value) => {
             cartStore.setPaymentSelected({
-              paymentType: value,
+              paymentType: value as PaymentType,
               paymentInfo: {},
             });
           }}
@@ -182,7 +183,7 @@ const CheckoutScreen = ({ navigation }: any) => {
             listCreditCard={listCreditCard}
             onValueChange={(value) => {
               cartStore.setPaymentSelected({
-                paymentType: PAYMENT_TYPE.creditCard,
+                paymentType: PAYMENT_TYPE.creditCard as PaymentType,
                 paymentInfo: {},
               });
 

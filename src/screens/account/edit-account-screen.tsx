@@ -49,7 +49,6 @@ const EditAccountScreen = ({ navigation }: any) => {
           value={userStore.userProfile?.email}
           disabled
           label="Email"
-          optional
         />
         <Layouts.VSpace value={12} />
         <Inputs.CTextInput

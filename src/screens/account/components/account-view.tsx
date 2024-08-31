@@ -12,7 +12,7 @@ import {
   View,
 } from 'react-native';
 import { Divider } from 'react-native-paper';
-import { Buttons, Icons, Layouts } from '@components';
+import { Icons, Layouts } from '@components';
 import { useNavigate } from '@hooks';
 import { BookServices } from '@services';
 import { authenticationStore, sharedStore, userStore } from '@store';
@@ -21,8 +21,12 @@ import { AppVersionText } from './app-version-text';
 
 const AccountView: React.FC = () => {
   const navigation = useNavigation();
-  const { openAddressScreen, openEditAccountScreen, openBookListingScreen } =
-    useNavigate(navigation);
+  const {
+    openAddressScreen,
+    openEditAccountScreen,
+    openBookListingScreen,
+    openOrdersScreen,
+  } = useNavigate(navigation);
 
   const loadListFavourite = async () => {
     sharedStore.setShowLoading(true);
@@ -86,23 +90,19 @@ const AccountView: React.FC = () => {
           {renderInfoRow('Email:', userStore.userProfile.email)}
           {renderInfoRow('Username:', userStore.userProfile.username)}
           {renderInfoRow('Phone number:', userStore.userProfile.phoneNumber)}
+          <View style={styles.editButton}>
+            <Icons.EditIcon size={18} onPress={() => openEditAccountScreen()} />
+          </View>
         </View>
-        <Layouts.VSpace value={12} />
-        <Buttons.CButton
-          label="Edit"
-          onPress={() => {
-            openEditAccountScreen();
-          }}
-          buttonType="secondary"
-        />
-        <Layouts.VSpace value={12} />
         {renderMenuItem('Favourites', () => {
           loadListFavourite();
         })}
         {renderMenuItem('Viewed', () => {
           loadListViewed();
         })}
-        {renderMenuItem('Orders', () => {})}
+        {renderMenuItem('Orders', () => {
+          openOrdersScreen();
+        })}
         {renderMenuItem('Shipping Address', () => {
           openAddressScreen();
         })}
@@ -112,11 +112,7 @@ const AccountView: React.FC = () => {
           'Sign Out',
           async () => {
             sharedStore.setShowLoading(true);
-            if (authenticationStore.googleSigned) {
-              await authenticationStore.googleSignOut();
-            } else {
-              await authenticationStore.signOut();
-            }
+            await authenticationStore.signOut();
             sharedStore.setShowLoading(false);
           },
           styles.signOut,
@@ -165,6 +161,11 @@ const styles = StyleSheet.create({
     width: 85,
     height: 85,
     borderRadius: 50,
+  },
+  editButton: {
+    position: 'absolute',
+    right: 4,
+    top: 4,
   },
 });
 

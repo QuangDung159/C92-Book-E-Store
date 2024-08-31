@@ -10,6 +10,8 @@ import { BookDetailNavigator } from './book-detail-navigator';
 import { BookingListingNavigator } from './book-listing-navigator';
 import { BottomTabNavigator } from './bottom-tab-navigator';
 import { CartNavigator } from './cart-navigator';
+import { OrderNavigator } from './order-navigator';
+import { OrderTopTabbarNavigator } from './order-top-tabbar-navigator';
 import { SearchNavigator } from './search-navigator';
 
 const Stack = createStackNavigator();
@@ -52,6 +54,14 @@ const Navigation = () => {
         <Stack.Screen
           name={SCREEN_NAME.BOOK_LISTING_NAVIGATOR}
           component={BookingListingNavigator}
+        />
+        <Stack.Screen
+          name={SCREEN_NAME.ORDER_TOP_TABBAR_NAVIGATOR}
+          component={OrderTopTabbarNavigator}
+        />
+        <Stack.Screen
+          name={SCREEN_NAME.ORDER_NAVIGATOR}
+          component={OrderNavigator}
         />
       </Stack.Navigator>
     </>
