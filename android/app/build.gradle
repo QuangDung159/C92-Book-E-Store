@@ -121,7 +121,7 @@ android {
         applicationId 'com.dragonc92team.BookEStoreV1'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 14
+        versionCode 21
         versionName "1.0.1"
     }
     signingConfigs {
@@ -131,15 +131,36 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        staging {
+            // keystore from eas server
+            storeFile file('staging-keystore.bak.jks')
+            storePassword 'db32b7ab45a3007cf09a09a04a956412'
+            keyAlias 'da9c31afd6d6615093337ac13d810252'
+            keyPassword 'c6efc0ed3b90ed0b78e0f24deb09b254'
+        }
+        production {
+            // keystore from eas server
+            storeFile file('production-keystore.bak.jks')
+            storePassword 'db32b7ab45a3007cf09a09a04a956412'
+            keyAlias 'da9c31afd6d6615093337ac13d810252'
+            keyPassword 'c6efc0ed3b90ed0b78e0f24deb09b254'
+        }
     }
     buildTypes {
         debug {
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.production
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.production
+            shrinkResources (findProperty('android.enableShrinkResourcesInReleaseBuilds')?.toBoolean() ?: false)
+            minifyEnabled enableProguardInReleaseBuilds
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            crunchPngs (findProperty('android.enablePngCrunchInReleaseBuilds')?.toBoolean() ?: true)
+        }
+        staging {
+            signingConfig signingConfigs.staging
             shrinkResources (findProperty('android.enableShrinkResourcesInReleaseBuilds')?.toBoolean() ?: false)
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"

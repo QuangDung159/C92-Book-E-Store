@@ -22,7 +22,8 @@
     "preview.prod": {
       "distribution": "internal",
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "credentialsSource": "local"
       },
       "ios": {},
       "channel": "preview.prod"
@@ -42,7 +43,8 @@
       "distribution": "store",
       "autoIncrement": true,
       "android": {
-        "buildType": "app-bundle"
+        "buildType": "app-bundle",
+        "credentialsSource": "local"
       },
       "ios": {},
       "channel": "production"

@@ -65,7 +65,7 @@ class AppModel {
     //
     GoogleSignin.configure({
       webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID,
-      iosClientId: process.env.EXPO_PUBLIC_IOS_CLINET_ID,
+      iosClientId: process.env.EXPO_PUBLIC_IOS_CLIENT_ID,
       scopes: ['https://www.googleapis.com/auth/drive.readonly'],
     });
   }
