@@ -1,5 +1,4 @@
 /* eslint-disable import/no-named-as-default */
-import * as Installations from '@react-native-firebase/installations';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import * as Notifications from 'expo-notifications';
 import {
@@ -60,20 +59,12 @@ class AppModel {
         this.notificationStore.setExpoPushToken(`${error}`),
       );
 
-    this.getInstallationId();
-
     //
     GoogleSignin.configure({
       webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID,
       iosClientId: process.env.EXPO_PUBLIC_IOS_CLIENT_ID,
       scopes: ['https://www.googleapis.com/auth/drive.readonly'],
     });
-  }
-
-  async getInstallationId() {
-    const installations = Installations.getInstallations();
-    const id = await Installations.getId(installations);
-    console.log('installationsId :>> ', id);
   }
 
   async logout() {
