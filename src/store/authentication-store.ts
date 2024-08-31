@@ -50,7 +50,6 @@ class AuthenticationStore {
   };
 
   signOut = async () => {
-    await delay(1000);
     if (this.googleSigned) {
       await this.googleSignOut();
     }
@@ -60,6 +59,7 @@ class AuthenticationStore {
     }
 
     this.userStore.setUserProfile(null);
+
     ToastHelpers.showToast({
       title: 'Account',
       content: 'Sign out success',
@@ -121,6 +121,7 @@ class AuthenticationStore {
   };
 
   facebookSignOut = async () => {
+    await AuthenticationServices.facebookSignOut();
     this.setFacebookSigned(false);
   };
 

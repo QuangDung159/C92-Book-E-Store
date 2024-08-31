@@ -9,6 +9,7 @@ const createOrder = async (cart: DataModels.ICart) => {
     cart,
     paymentStatus: PAYMENT_STATUS.waitingForPay as PaymentStatus,
     id: StringHelpers.genLocalId('order'),
+    status: 'created',
   };
   return order;
 };

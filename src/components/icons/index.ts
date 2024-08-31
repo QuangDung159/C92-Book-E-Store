@@ -11,6 +11,7 @@ export * from './close-box-outline-icon';
 export * from './close-circle-icon';
 export * from './close-icon';
 export * from './dot-single-icon';
+export * from './edit-icon';
 export * from './eye-icon';
 export * from './eye-off-icon';
 export * from './facebook-icon';
