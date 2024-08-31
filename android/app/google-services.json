@@ -12,7 +12,12 @@
           "package_name": "com.dragonc92team.BookEStoreV1"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "214636288527-q3upbjk89d01spteomuvdrrhoki3sfem.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDYdK7lr9CnQEGxdMhP9ValZsW8FyHSxHk"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "214636288527-q3upbjk89d01spteomuvdrrhoki3sfem.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "214636288527-v2phf8h8q15nh1cgbe6pgrbae9f59fi8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.dragonc92team.BookEStoreV1"
+              }
+            }
+          ]
         }
       }
     }
