@@ -112,11 +112,7 @@ const AccountView: React.FC = () => {
           'Sign Out',
           async () => {
             sharedStore.setShowLoading(true);
-            if (authenticationStore.googleSigned) {
-              await authenticationStore.googleSignOut();
-            } else {
-              await authenticationStore.signOut();
-            }
+            await authenticationStore.signOut();
             sharedStore.setShowLoading(false);
           },
           styles.signOut,
