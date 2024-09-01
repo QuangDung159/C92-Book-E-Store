@@ -32,7 +32,7 @@ const SearchScreen = ({ route, navigation }: any) => {
 
   useEffect(() => {
     const searchFilter = route.params?.searchFilter;
-    BookServices.searchBook();
+    BookServices.queryBook();
     if (searchFilter) {
       searchStore.setSearchFilter({
         ...searchStore.searchFilter,

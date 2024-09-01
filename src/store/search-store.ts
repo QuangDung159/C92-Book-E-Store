@@ -7,8 +7,8 @@ import {
 } from 'mobx';
 import { DEFAULT_SORT, TOP_BOOKS } from '@constants';
 import { DataModels } from '@models';
+import { BookServices } from '@services';
 import { COLORS } from '@themes';
-import { delay } from '@utils';
 import { IBook } from 'models/data-models';
 
 const defaultFilter: DataModels.ISearchFilter = {
@@ -93,34 +93,41 @@ class SearchStore {
     return this.searchFilter.publisher || [];
   }
 
-  submitSearch() {
-    let listResult = TOP_BOOKS;
-    delay(1000).then(() => {
-      runInAction(() => {
-        if (this.searchFilter.author && this.searchFilter.author.length > 0) {
-          listResult = listResult.filter((item) =>
-            this.searchFilter.author.includes(item.author.id),
-          );
-        }
+  async submitSearch() {
+    const listResult = TOP_BOOKS;
+    // delay(1000).then(() => {
+    //   runInAction(() => {
+    //     if (this.searchFilter.author && this.searchFilter.author.length > 0) {
+    //       listResult = listResult.filter((item) =>
+    //         this.searchFilter.author.includes(item.author.id),
+    //       );
+    //     }
 
-        if (this.searchFilter.form && this.searchFilter.form.length > 0) {
-          listResult = listResult.filter((item) =>
-            this.searchFilter.form.includes(item.form.id),
-          );
-        }
+    //     if (this.searchFilter.form && this.searchFilter.form.length > 0) {
+    //       listResult = listResult.filter((item) =>
+    //         this.searchFilter.form.includes(item.form.id),
+    //       );
+    //     }
 
-        if (
-          this.searchFilter.publisher &&
-          this.searchFilter.publisher.length > 0
-        ) {
-          listResult = listResult.filter((item) =>
-            this.searchFilter.publisher.includes(item.publisher.id),
-          );
-        }
+    //     if (
+    //       this.searchFilter.publisher &&
+    //       this.searchFilter.publisher.length > 0
+    //     ) {
+    //       listResult = listResult.filter((item) =>
+    //         this.searchFilter.publisher.includes(item.publisher.id),
+    //       );
+    //     }
 
-        this.listBook = listResult;
-      });
-    });
+    //     this.listBook = listResult;
+    //   });
+    // });
+
+    const result = await BookServices.queryBook(
+      this.searchFilter,
+      this.sortOption,
+    );
+    console.log('result :>> ', result);
+    this.listBook = listResult;
   }
 
   updateBookItem = (bookItem: IBook) => {

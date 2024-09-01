@@ -23,6 +23,9 @@ const post = async (
       data: response.data,
     });
   } catch (error) {
+    console.log('Http.post error :>> ', error);
+    console.log('Http.post error url :>> ', url);
+    console.log('Http.post error params :>> ', JSON.stringify(data));
     return buildAxiosResponse({
       success: false,
       errorMessage: error,
@@ -41,6 +44,8 @@ const get = async (
       data: response.data,
     });
   } catch (error) {
+    console.log('Http.get error :>> ', error);
+    console.log('Http.get error url :>> ', url);
     return buildAxiosResponse({
       success: false,
       errorMessage: error,
