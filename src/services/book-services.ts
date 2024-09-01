@@ -42,8 +42,6 @@ const queryBook = async (
     },
   );
 
-  console.log('result :>> ', result);
-
   return result;
 };
 

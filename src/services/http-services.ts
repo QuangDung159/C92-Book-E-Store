@@ -20,7 +20,7 @@ const post = async (
     );
     return buildAxiosResponse({
       success: true,
-      data: response.data,
+      data: response.data.data,
     });
   } catch (error) {
     console.log('Http.post error :>> ', error);
