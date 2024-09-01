@@ -18,6 +18,7 @@ import {
 } from '@constants';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
+import { BookServices } from '@services';
 import { referenceOptionsStore, searchStore } from '@store';
 import { COLORS } from '@themes';
 import { StringHelpers } from '@utils';
@@ -31,6 +32,7 @@ const SearchScreen = ({ route, navigation }: any) => {
 
   useEffect(() => {
     const searchFilter = route.params?.searchFilter;
+    BookServices.searchBook();
     if (searchFilter) {
       searchStore.setSearchFilter({
         ...searchStore.searchFilter,

@@ -160,12 +160,12 @@ export interface INotification {
 
 export interface ServiceResult<T> {
   success: boolean;
-  errorCode: ERROR_CODES;
-  errorMessage: string;
-  isSystemError: boolean;
+  errorCode?: ERROR_CODES;
+  errorMessage?: string;
+  isSystemError?: boolean;
   data?: T;
   customData?: any;
-  errors: any[];
+  errors?: any[];
   error?: any;
 }
 

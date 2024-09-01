@@ -91,11 +91,9 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
               marginLeft: -2,
             }}
           />
-          <Layouts.VSpace value={6} />
           <Text
             style={styles.stock}
           >{`In stock: ${bookCardItem.stock} pcs`}</Text>
-          <Layouts.VSpace value={6} />
           <BookCardPrice
             price={bookCardItem.price}
             priceNotSale={bookCardItem.priceNotSale}

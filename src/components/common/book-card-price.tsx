@@ -40,7 +40,7 @@ const BookCardPrice: React.FC<BookCardPriceProps> = ({
 const styles = StyleSheet.create({
   container: { flexDirection: 'column' },
   price: {
-    ...FONT_STYLES.SEMIBOLD_18,
+    ...FONT_STYLES.BOLD_16,
   },
   priceNotSale: {
     ...FONT_STYLES.REGULAR_14,
