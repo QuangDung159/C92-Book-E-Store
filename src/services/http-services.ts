@@ -41,7 +41,7 @@ const get = async (
     const response = await (apiClient || apiClientDefault).get(url);
     return buildAxiosResponse({
       success: true,
-      data: response.data,
+      data: response.data.data,
     });
   } catch (error) {
     console.log('Http.get error :>> ', error);

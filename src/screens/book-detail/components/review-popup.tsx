@@ -35,7 +35,7 @@ const ReviewPopup: React.FC<ReviewPopupProps> = ({
           onChangeText={(value) => {
             reviewVM.setReview({
               ...reviewVM.review,
-              userName: value,
+              username: value,
             });
           }}
         />

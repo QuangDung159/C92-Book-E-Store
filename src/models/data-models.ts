@@ -10,14 +10,14 @@ export interface IReviewInput {
   rating: number;
   createdAt: string; // MM/dd/yyyy hh:mm:ss tt
   content: string;
-  userName: string;
+  username: string;
 }
 
 export interface IReview {
   rating: number;
   createdAt: string; // MM/dd/yyyy hh:mm:ss tt
   content: string;
-  userName: string;
+  username: string;
   avartar?: string;
   id: string;
 }
