@@ -5,7 +5,7 @@ import {
   observable,
   runInAction,
 } from 'mobx';
-import { DEFAULT_SORT, TOP_BOOKS } from '@constants';
+import { DEFAULT_SORT } from '@constants';
 import { DataModels } from '@models';
 import { BookServices } from '@services';
 import { COLORS } from '@themes';
@@ -26,7 +26,7 @@ class SearchStore {
 
   searchFilterPreviuos: DataModels.ISearchFilter = defaultFilter;
 
-  listBook: IBook[] = TOP_BOOKS;
+  listBook: IBook[] = [];
 
   constructor() {
     makeObservable(this, {

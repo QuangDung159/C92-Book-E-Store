@@ -81,7 +81,7 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
           <Layouts.VSpace value={4} />
           <View style={styles.inforSection}>
             <BookTitle navigation={navigation} book={bookCardItem} />
-            <Text style={styles.stock}>{bookCardItem.author.name}</Text>
+            <Text style={styles.author}>{bookCardItem.author.name}</Text>
           </View>
           <StarRatingDisplay
             rating={bookCardItem.rating}
@@ -168,6 +168,9 @@ const styles = StyleSheet.create({
     height: 60,
   },
   stock: {
+    ...FONT_STYLES.REGULAR_12,
+  },
+  author: {
     ...FONT_STYLES.SEMIBOLD_12,
   },
   left: {
