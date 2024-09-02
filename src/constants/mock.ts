@@ -233,22 +233,26 @@ const LIST_PUBLISHER: DataModels.IForm[] = [
   },
 ];
 
-const LIST_SORT_OPTION = [
+const LIST_SORT_OPTION: DataModels.ISortOption[] = [
   {
     value: 'name_asc',
     label: 'Name ASC',
+    field: 'name',
   },
   {
     value: 'name_desc',
     label: 'Name DESC',
+    field: 'name',
   },
   {
     value: 'price_asc',
     label: 'Price ASC',
+    field: 'price',
   },
   {
     value: 'price_desc',
     label: 'Price DESC',
+    field: 'price',
   },
 ];
 

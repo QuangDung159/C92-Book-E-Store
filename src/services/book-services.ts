@@ -31,10 +31,27 @@ const queryBook = async (
   filter?: DataModels.ISearchFilter,
   sort?: DataModels.ISortOption,
 ) => {
-  console.log('filter :>> ', filter);
-  console.log('sort :>> ', sort);
-  const result = await HttpServices.get(
+  const sortOption: any = {};
+  const sortValue =
+    sort?.value === 'name_asc' || sort?.value === 'price_asc' ? 1 : -1;
+
+  if (sort.field === 'name') {
+    sortOption.name = sortValue;
+  }
+
+  if (sort.field === 'price') {
+    sortOption.price = sortValue;
+  }
+
+  const body = {
+    ...filter,
+    page: 1,
+    sort: sortOption,
+  };
+
+  const result = await HttpServices.post(
     process.env.EXPO_PUBLIC_BASE_URL + '/book',
+    body,
   );
 
   return result;

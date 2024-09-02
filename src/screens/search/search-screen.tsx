@@ -19,7 +19,6 @@ import {
 } from '@constants';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
-import { BookServices } from '@services';
 import { referenceOptionsStore, searchStore } from '@store';
 import { COLORS } from '@themes';
 import { StringHelpers } from '@utils';
@@ -35,13 +34,14 @@ const SearchScreen = ({ route, navigation }: any) => {
 
   useEffect(() => {
     const searchFilter = route.params?.searchFilter;
-    BookServices.queryBook();
     if (searchFilter) {
       searchStore.setSearchFilter({
         ...searchStore.searchFilter,
         ...searchFilter,
       });
     }
+
+    searchStore.submitSearch();
   }, [route.params]);
 
   const onUpdateCount = (count: number, bookItem: DataModels.IBook) => {
@@ -105,8 +105,6 @@ const SearchScreen = ({ route, navigation }: any) => {
               searchStore.setSearchFilter({
                 author: listSelected,
               });
-
-              searchStore.submitSearch();
             }}
           />
           <ListChipByListFilter
@@ -152,6 +150,9 @@ const SearchScreen = ({ route, navigation }: any) => {
       <SortPopup
         initSortValue={searchStore.sortOption.value}
         visible={isShowSortPopup}
+        onDoneDismiss={() => {
+          searchStore.submitSearch();
+        }}
         onDismiss={(sortSelected) => {
           setIsShowSortPopup(false);
           const sortOptionSelected = LIST_SORT_OPTION.find(

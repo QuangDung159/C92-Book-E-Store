@@ -107,6 +107,7 @@ export interface ISearchFilter {
 export interface ISortOption {
   value: string;
   label: string;
+  field?: string;
 }
 
 export interface IAuthor {

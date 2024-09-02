@@ -6,9 +6,11 @@ import { COLORS } from '@themes';
 const BottomPopup = ({
   visible,
   children,
+  onDismiss,
 }: {
   visible: boolean;
   children: React.ReactNode;
+  onDismiss?: () => void;
 }) => {
   return (
     <Modal
@@ -20,6 +22,7 @@ const BottomPopup = ({
       animationOut={'fadeOutDown'}
       animationOutTiming={500}
       avoidKeyboard
+      onDismiss={() => onDismiss?.()}
     >
       <ScrollView contentContainerStyle={styles.overlay}>
         <View style={styles.popupContainer}>{children}</View>
