@@ -35,6 +35,7 @@ class SearchStore {
       searchFilter: observable,
       searchFilterPreviuos: observable,
       listBook: observable,
+      setListBook: action,
       setSortOption: action,
       setViewStyle: action,
       setSearchFilter: action,
@@ -47,6 +48,10 @@ class SearchStore {
       listFormSelected: computed,
       listPublisherSelected: computed,
     });
+  }
+
+  setListBook(values: DataModels.IBook[]) {
+    this.listBook = values;
   }
 
   setSearchFilterPreviuos(value: DataModels.ISearchFilter) {
@@ -94,7 +99,6 @@ class SearchStore {
   }
 
   async submitSearch() {
-    const listResult = TOP_BOOKS;
     // delay(1000).then(() => {
     //   runInAction(() => {
     //     if (this.searchFilter.author && this.searchFilter.author.length > 0) {
@@ -126,8 +130,10 @@ class SearchStore {
       this.searchFilter,
       this.sortOption,
     );
-    console.log('result :>> ', result);
-    this.listBook = listResult;
+
+    if (result && result.success) {
+      this.setListBook(result.data.list);
+    }
   }
 
   updateBookItem = (bookItem: IBook) => {

@@ -14,6 +14,7 @@ import {
   CATEGORY,
   DEFAULT_PRICE_RANGE,
   LIST_SORT_OPTION,
+  SCREEN_NAME,
   SEARCH_VIEW_STYLE,
 } from '@constants';
 import { useNavigate } from '@hooks';
@@ -29,6 +30,8 @@ const SearchScreen = ({ route, navigation }: any) => {
   const { openFilterScreen } = useNavigate(navigation);
 
   const [isShowSortPopup, setIsShowSortPopup] = useState(false);
+
+  const screenName = route?.name;
 
   useEffect(() => {
     const searchFilter = route.params?.searchFilter;
@@ -166,6 +169,10 @@ const SearchScreen = ({ route, navigation }: any) => {
         navigation={navigation}
         autoFocus={route?.params?.autoFocus}
         showSearch
+        isPreventGoToSearchScreen={screenName === SCREEN_NAME.SEARCH}
+        onPressSearch={() => {
+          searchStore.submitSearch();
+        }}
       />
       <ScrollView
         ref={scrollRef}

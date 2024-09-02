@@ -33,13 +33,8 @@ const queryBook = async (
 ) => {
   console.log('filter :>> ', filter);
   console.log('sort :>> ', sort);
-  const result = await HttpServices.post(
-    process.env.EXPO_PUBLIC_BASE_URL + '/product/getAll',
-    {
-      page: 1,
-      limit: 10,
-      category: 'Sale',
-    },
+  const result = await HttpServices.get(
+    process.env.EXPO_PUBLIC_BASE_URL + '/book',
   );
 
   return result;
