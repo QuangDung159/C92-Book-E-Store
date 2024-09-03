@@ -16,6 +16,7 @@ interface ListBookSearchProps {
   scrollRef?: React.MutableRefObject<any>;
   viewStyle?: string;
   onUpdateCount?: (countNumber: number, bookItem: DataModels.IBook) => void;
+  endOfListText?: string;
 }
 
 const ListBookSearch: React.FC<ListBookSearchProps> = ({
@@ -25,6 +26,7 @@ const ListBookSearch: React.FC<ListBookSearchProps> = ({
   scrollRef,
   viewStyle,
   onUpdateCount,
+  endOfListText,
 }) => {
   const renderItem = ({ item, index }) => {
     if (viewStyle === SEARCH_VIEW_STYLE.list) {
@@ -54,7 +56,7 @@ const ListBookSearch: React.FC<ListBookSearchProps> = ({
       ListEmptyComponent={() => {
         return <EmptyListComponent />;
       }}
-      ListFooterComponent={<EndOfListListComponent />}
+      ListFooterComponent={<EndOfListListComponent content={endOfListText} />}
       onEndReached={onEndReached}
       onEndReachedThreshold={0.5}
       numColumns={viewStyle === SEARCH_VIEW_STYLE.grid ? 2 : 1}

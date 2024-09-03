@@ -101,8 +101,11 @@ class SearchStore {
     return this.searchFilter.publisher || [];
   }
 
-  async submitSearch(page?: number) {
-    sharedStore.setShowLoading(true);
+  async submitSearch(showLoading?: boolean, page?: number) {
+    if (showLoading) {
+      sharedStore.setShowLoading(true);
+    }
+
     await delay(500);
 
     const result = await BookServices.queryBook(

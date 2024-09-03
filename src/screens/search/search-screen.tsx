@@ -45,12 +45,12 @@ const SearchScreen = ({ route, navigation }: any) => {
   }, [route.params]);
 
   useEffect(() => {
-    loadData(page);
+    loadData(page === 1, page);
   }, [page]);
 
-  const loadData = async (pageNumber: number) => {
+  const loadData = async (showLoading: boolean, pageNumber: number) => {
     setLoading(true);
-    await searchStore.submitSearch(pageNumber);
+    await searchStore.submitSearch(showLoading, pageNumber);
     setLoading(false);
   };
 
@@ -91,7 +91,7 @@ const SearchScreen = ({ route, navigation }: any) => {
                   category: null,
                 });
 
-                searchStore.submitSearch();
+                searchStore.submitSearch(true);
               }}
               value={searchStore.searchFilter.category}
               showRemove
@@ -105,7 +105,7 @@ const SearchScreen = ({ route, navigation }: any) => {
                 max: DEFAULT_PRICE_RANGE[1],
               });
 
-              searchStore.submitSearch();
+              searchStore.submitSearch(true);
             }}
             value={`${searchStore.searchFilter.min} - ${searchStore.searchFilter.max}`}
             showRemove
@@ -126,7 +126,7 @@ const SearchScreen = ({ route, navigation }: any) => {
                 author: listSelected,
               });
 
-              searchStore.submitSearch();
+              searchStore.submitSearch(true);
             }}
           />
           <ListChipByListFilter
@@ -141,7 +141,7 @@ const SearchScreen = ({ route, navigation }: any) => {
                 form: listSelected,
               });
 
-              searchStore.submitSearch();
+              searchStore.submitSearch(true);
             }}
           />
           <ListChipByListFilter
@@ -157,7 +157,7 @@ const SearchScreen = ({ route, navigation }: any) => {
                 publisher: listSelected,
               });
 
-              searchStore.submitSearch();
+              searchStore.submitSearch(true);
             }}
           />
         </ScrollView>
@@ -177,7 +177,7 @@ const SearchScreen = ({ route, navigation }: any) => {
         initSortValue={searchStore.sortOption.value}
         visible={isShowSortPopup}
         onDoneDismiss={() => {
-          searchStore.submitSearch();
+          searchStore.submitSearch(true);
         }}
         onDismiss={(sortSelected) => {
           setIsShowSortPopup(false);
@@ -198,7 +198,7 @@ const SearchScreen = ({ route, navigation }: any) => {
         showSearch
         isPreventGoToSearchScreen={screenName === SCREEN_NAME.SEARCH}
         onPressSearch={() => {
-          searchStore.submitSearch();
+          searchStore.submitSearch(true);
         }}
       />
       <SortSection
@@ -223,6 +223,7 @@ const SearchScreen = ({ route, navigation }: any) => {
           estimatedItemSize={height}
           viewStyle={searchStore.viewStyle}
           onUpdateCount={onUpdateCount}
+          endOfListText={loading ? 'Loading...' : 'End of list'}
         />
       </View>
       <View style={styles.scrollTop}>
