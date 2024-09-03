@@ -8,20 +8,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {
-  Chip,
-  Layouts,
-  ListBookCardComplex,
-  ListBookCardVertical,
-  ListBookCardVerticalRow,
-  SearchBar,
-} from '@components';
+import { Chip, Layouts, ListBookSearch, SearchBar } from '@components';
 import {
   CATEGORY,
   DEFAULT_PRICE_RANGE,
   LIST_SORT_OPTION,
   SCREEN_NAME,
-  SEARCH_VIEW_STYLE,
 } from '@constants';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
@@ -224,31 +216,14 @@ const SearchScreen = ({ route, navigation }: any) => {
           paddingBottom: 216,
         }}
       >
-        {searchStore.viewStyle === SEARCH_VIEW_STYLE.grid && (
-          <ListBookCardVerticalRow
-            scrollRef={scrollRef}
-            listItem={searchStore.listBook}
-            onEndReached={handleEndReached}
-            estimatedItemSize={height}
-          />
-        )}
-        {searchStore.viewStyle === SEARCH_VIEW_STYLE.list && (
-          <ListBookCardVertical
-            listItem={searchStore.listBook}
-            onUpdateCount={onUpdateCount}
-            scrollRef={scrollRef}
-            onEndReached={handleEndReached}
-            estimatedItemSize={height}
-          />
-        )}
-        {searchStore.viewStyle === SEARCH_VIEW_STYLE.complex && (
-          <ListBookCardComplex
-            listItem={searchStore.listBook}
-            scrollRef={scrollRef}
-            onEndReached={handleEndReached}
-            estimatedItemSize={height}
-          />
-        )}
+        <ListBookSearch
+          scrollRef={scrollRef}
+          listItem={searchStore.listBook}
+          onEndReached={handleEndReached}
+          estimatedItemSize={height}
+          viewStyle={searchStore.viewStyle}
+          onUpdateCount={onUpdateCount}
+        />
       </View>
       <View style={styles.scrollTop}>
         <TouchableOpacity onPress={scrollToTop}>
