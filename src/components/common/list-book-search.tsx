@@ -7,7 +7,6 @@ import { DataModels } from '@models';
 import { BookCardItem } from './book-card-item';
 import { BookCardItemComplex } from './book-card-item-complex';
 import { BookCardItemVertical } from './book-card-item-vertical';
-import { EmptyListComponent } from './empty-list-component';
 import { EndOfListListComponent } from './end-of-list-component';
 
 interface ListBookSearchProps {
@@ -58,9 +57,6 @@ const ListBookSearch: React.FC<ListBookSearchProps> = ({
       keyExtractor={(item) => item.id}
       estimatedItemSize={estimatedItemSize}
       renderItem={renderItem}
-      ListEmptyComponent={() => {
-        return <EmptyListComponent />;
-      }}
       ListFooterComponent={<EndOfListListComponent content={endOfListText} />}
       onEndReached={onEndReached}
       onEndReachedThreshold={0.5}

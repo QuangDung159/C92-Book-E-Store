@@ -9,7 +9,6 @@ import {
   View,
 } from 'react-native';
 import { Layouts, SearchBar } from '@components';
-import { TOP_BOOKS } from '@constants';
 import { useNavigate } from '@hooks';
 import { categoryStore, searchStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
@@ -85,10 +84,13 @@ const CategoriesScreen = ({ navigation }: any) => {
           }}
         />
         <Layouts.VSpace value={24} />
-        <HorizontalListCard listItem={TOP_BOOKS} title="Maybe you will like" />
+        <HorizontalListCard
+          listItem={searchStore.listTopBook}
+          title="Maybe you will like"
+        />
         <Layouts.VSpace value={24} />
         <HorizontalListCard
-          listItem={TOP_BOOKS}
+          listItem={searchStore.listUpcomming}
           title="New Arrivals"
           showSeeMore
         />

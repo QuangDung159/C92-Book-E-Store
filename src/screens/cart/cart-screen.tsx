@@ -3,9 +3,8 @@ import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Divider } from 'react-native-paper';
 import { BottomCheckoutSection, Layouts, ScreenHeader } from '@components';
-import { TOP_BOOKS } from '@constants';
 import { useNavigate } from '@hooks';
-import { cartStore } from '@store';
+import { cartStore, searchStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { HorizontalListCard } from 'screens/home/components';
 import { ListCartItem } from './components/list-cart-item';
@@ -28,10 +27,13 @@ const CartScreen = ({ navigation }: any) => {
         <ListCartItem listItem={cartStore.listCartItem} />
         <Divider />
         <Layouts.VSpace value={12} />
-        <HorizontalListCard listItem={TOP_BOOKS} title="Maybe you will like" />
+        <HorizontalListCard
+          listItem={searchStore.listTopBook}
+          title="Maybe you will like"
+        />
         <Layouts.VSpace value={24} />
         <HorizontalListCard
-          listItem={TOP_BOOKS}
+          listItem={searchStore.listUpcomming}
           title="Viewed"
           showSeeMore={true}
         />

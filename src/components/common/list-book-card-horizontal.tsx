@@ -21,7 +21,7 @@ const ListBookCardHorizontal: React.FC<ListBookCardHorizontalProps> = ({
       renderItem={({ item, index }) => (
         <BookCardItemHorizontal
           bookCardItem={item}
-          isLastItem={index === listItem.length}
+          isLastItem={index === listItem.length - 1}
         />
       )}
       ListEmptyComponent={() => {
