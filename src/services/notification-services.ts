@@ -22,9 +22,7 @@ const sendPushNotification = async (
     data,
   };
 
-  const bodyParam = JSON.stringify(message);
-
-  const result = await HttpServices.post(EXPO_PUSH_NOTIFICATION_URL, bodyParam);
+  const result = await HttpServices.post(EXPO_PUSH_NOTIFICATION_URL, message);
 
   return result;
 };

@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
   },
   label: {
     ...FONT_STYLES.REGULAR_16,
+    marginBottom: -2,
   },
 });
 

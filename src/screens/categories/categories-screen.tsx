@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import { Layouts, SearchBar } from '@components';
-import { CATEGORY, TOP_BOOKS } from '@constants';
+import { TOP_BOOKS } from '@constants';
 import { useNavigate } from '@hooks';
 import { categoryStore, searchStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
@@ -25,7 +25,7 @@ const CategoriesScreen = ({ navigation }: any) => {
       {categoryStore.categorySelected && (
         <TouchableOpacity
           onPress={() => {
-            const parent = CATEGORY.find(
+            const parent = categoryStore.listCategory.find(
               (item) => categoryStore.categorySelected.parent === item.id,
             );
 
@@ -68,7 +68,7 @@ const CategoriesScreen = ({ navigation }: any) => {
           list={
             categoryStore.selectedChild.length != 0
               ? categoryStore.selectedChild
-              : CATEGORY
+              : categoryStore.listCategory
           }
           onPress={(categorySelected) => {
             if (categorySelected.hasChild) {

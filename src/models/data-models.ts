@@ -10,14 +10,14 @@ export interface IReviewInput {
   rating: number;
   createdAt: string; // MM/dd/yyyy hh:mm:ss tt
   content: string;
-  userName: string;
+  username: string;
 }
 
 export interface IReview {
   rating: number;
   createdAt: string; // MM/dd/yyyy hh:mm:ss tt
   content: string;
-  userName: string;
+  username: string;
   avartar?: string;
   id: string;
 }
@@ -107,6 +107,7 @@ export interface ISearchFilter {
 export interface ISortOption {
   value: string;
   label: string;
+  field?: string;
 }
 
 export interface IAuthor {
@@ -160,12 +161,12 @@ export interface INotification {
 
 export interface ServiceResult<T> {
   success: boolean;
-  errorCode: ERROR_CODES;
-  errorMessage: string;
-  isSystemError: boolean;
+  errorCode?: ERROR_CODES;
+  errorMessage?: string;
+  isSystemError?: boolean;
   data?: T;
   customData?: any;
-  errors: any[];
+  errors?: any[];
   error?: any;
 }
 

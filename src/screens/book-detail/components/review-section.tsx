@@ -37,12 +37,12 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
         <View style={styles.listCommentContainer}>
           <View style={styles.commentHeader}>
             <View style={styles.commentUserNameWrapper}>
-              <Text style={styles.commentUserName}>{review.userName[0]}</Text>
+              <Text style={styles.commentUserName}>{review.username[0]}</Text>
             </View>
             <Layouts.HSpace value={12} />
             <View style={styles.commnetUserNameTextWrapper}>
               <Text style={styles.commentUserFullName} numberOfLines={2}>
-                {review.userName}
+                {review.username}
               </Text>
               <Text
                 style={{

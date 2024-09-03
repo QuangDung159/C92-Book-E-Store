@@ -233,22 +233,26 @@ const LIST_PUBLISHER: DataModels.IForm[] = [
   },
 ];
 
-const LIST_SORT_OPTION = [
+const LIST_SORT_OPTION: DataModels.ISortOption[] = [
   {
     value: 'name_asc',
     label: 'Name ASC',
+    field: 'name',
   },
   {
     value: 'name_desc',
     label: 'Name DESC',
+    field: 'name',
   },
   {
     value: 'price_asc',
     label: 'Price ASC',
+    field: 'price',
   },
   {
     value: 'price_desc',
     label: 'Price DESC',
+    field: 'price',
   },
 ];
 
@@ -312,28 +316,28 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
           '123 asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd',
         createdAt: '12/12/12 12:12:12 PM',
         rating: 4,
-        userName: 'asd asd asd asd asd asd asd asd asd asd asd',
+        username: 'asd asd asd asd asd asd asd asd asd asd asd',
         id: '1',
       },
       {
         content: '123 123 123',
         createdAt: '12/12/12 12:12:12 PM',
         rating: 4,
-        userName: 'asd 123',
+        username: 'asd 123',
         id: '2',
       },
       {
         content: '123 45 345',
         createdAt: '12/12/12 12:12:12 AM',
         rating: 2,
-        userName: 'asd 345',
+        username: 'asd 345',
         id: '3',
       },
       {
         content: '123',
         createdAt: '12/12/12 12:12:12 PM',
         rating: 4,
-        userName: 'asd',
+        username: 'asd',
         id: '4',
       },
     ],

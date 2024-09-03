@@ -120,7 +120,6 @@ const styles = StyleSheet.create({
   },
   priceWrapper: {
     marginHorizontal: 12,
-    marginTop: 4,
     flexDirection: 'row',
     alignItems: 'center',
   },

@@ -11,17 +11,19 @@ interface SortPopupProps {
   visible: boolean;
   onDismiss: (value: string) => void;
   initSortValue: string;
+  onDoneDismiss?: () => void;
 }
 
 const SortPopup: React.FC<SortPopupProps> = ({
   visible,
   onDismiss,
   initSortValue,
+  onDoneDismiss,
 }) => {
   const [sortSelected, setSortSelected] = useState(initSortValue);
 
   return (
-    <Layouts.BottomPopup visible={visible}>
+    <Layouts.BottomPopup visible={visible} onDismiss={onDoneDismiss}>
       <PopupHeader
         label="Sort"
         onDismiss={() => {

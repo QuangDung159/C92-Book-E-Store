@@ -1,62 +1,65 @@
-import { TOP_BOOKS, USER } from '@constants';
+import { TOP_BOOKS } from '@constants';
 import { DataModels } from '@models';
 import { delay } from '@utils';
-
-const signUp = async () => {
-  // await delay(1000);
-
-  return USER;
-};
-
-const sendVerificationCode = async (email: string) => {
-  await delay(1000);
-  if (email === 'user@mail.com') {
-    return {
-      success: true,
-    } as DataModels.ServiceResult<any>;
-  }
-  return {
-    success: false,
-  } as DataModels.ServiceResult<any>;
-};
-
-const submitVerficationCode = async (code: string) => {
-  await delay(1000);
-
-  return {
-    success: true,
-    data: code,
-  } as DataModels.ServiceResult<any>;
-};
+import { HttpServices } from './http-services';
 
 const loadListFavourite = async () => {
   await delay(1000);
   const result = TOP_BOOKS.filter((item) => item.isLiked);
 
-  return {
+  return HttpServices.buildAxiosResponse({
     success: true,
     data: {
       list: result,
     },
-  } as DataModels.ServiceResult<any>;
+  });
 };
 
 const loadListViewed = async () => {
   await delay(1000);
   const result = TOP_BOOKS.filter((item) => item.isLiked);
 
-  return {
+  return HttpServices.buildAxiosResponse({
     success: true,
     data: {
       list: result,
     },
-  } as DataModels.ServiceResult<any>;
+  });
+};
+
+const queryBook = async (
+  filter?: DataModels.ISearchFilter,
+  sort?: DataModels.ISortOption,
+  page?: number,
+) => {
+  const sortOption: any = {};
+  const sortValue =
+    sort?.value === 'name_asc' || sort?.value === 'price_asc' ? 1 : -1;
+
+  if (sort.field === 'name') {
+    sortOption.name = sortValue;
+  }
+
+  if (sort.field === 'price') {
+    sortOption.price = sortValue;
+  }
+
+  const body = {
+    ...filter,
+    page: page || 1,
+    sort: sortOption,
+  };
+
+  const result = await HttpServices.post(
+    process.env.EXPO_PUBLIC_BASE_URL + '/book',
+    body,
+  );
+
+  return result;
 };
 
 export const BookServices = {
-  signUp,
-  sendVerificationCode,
-  submitVerficationCode,
   loadListFavourite,
   loadListViewed,
+  queryBook,
 };

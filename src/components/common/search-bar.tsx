@@ -4,7 +4,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Icons, Inputs, Layouts } from '@components';
 import { useNavigate } from '@hooks';
-import { searchStore, userStore } from '@store';
+import { userStore } from '@store';
 import { FONT_STYLES } from '@themes';
 import { CartIconWithBadge } from './cart-icon-with-badge';
 
@@ -16,6 +16,8 @@ interface SearchBarProps {
   navigation: any;
   autoFocus?: boolean;
   showSearch?: boolean;
+  isPreventGoToSearchScreen?: boolean;
+  onPressSearch?: () => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({
@@ -24,6 +26,8 @@ const SearchBar: React.FC<SearchBarProps> = ({
   navigation,
   autoFocus,
   showSearch,
+  isPreventGoToSearchScreen,
+  onPressSearch,
 }) => {
   const { goBack } = useNavigation();
   const { openSearchScreen, openAccountScreen } = useNavigate(navigation);
@@ -66,10 +70,13 @@ const SearchBar: React.FC<SearchBarProps> = ({
       <View style={styles.iconWrapper}>
         <Icons.SearchIcon
           onPress={() => {
-            searchStore.resetSeachFilter();
-            openSearchScreen({
-              autoFocus: true,
-            });
+            if (!isPreventGoToSearchScreen) {
+              openSearchScreen({
+                autoFocus: true,
+              });
+            } else {
+              onPressSearch?.();
+            }
           }}
         />
         {showCartIcon && <CartIconWithBadge />}

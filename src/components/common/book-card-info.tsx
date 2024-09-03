@@ -12,7 +12,7 @@ interface BookCardInfoProps {
 const BookCardInfo: React.FC<BookCardInfoProps> = ({ book }) => {
   return (
     <React.Fragment key={book.id}>
-      <Text style={styles.stock}>{book.author.name}</Text>
+      <Text style={styles.author}>{book.author.name}</Text>
       <Layouts.VSpace value={4} />
       <Text style={styles.stock}>{book.category.name}</Text>
       <Layouts.VSpace value={4} />
@@ -32,6 +32,9 @@ const BookCardInfo: React.FC<BookCardInfoProps> = ({ book }) => {
 
 const styles = StyleSheet.create({
   stock: {
+    ...FONT_STYLES.REGULAR_12,
+  },
+  author: {
     ...FONT_STYLES.SEMIBOLD_12,
   },
 });
