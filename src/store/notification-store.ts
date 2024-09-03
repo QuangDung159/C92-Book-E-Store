@@ -11,6 +11,7 @@ import {
 import { Platform } from 'react-native';
 import { DataModels } from '@models';
 import { NotificationServices } from '@services';
+import { ToastHelpers } from '@utils';
 
 class NotificationStore {
   categorySelected: DataModels.ICategory | null = null;
@@ -55,7 +56,11 @@ class NotificationStore {
   };
 
   handleRegistrationError(errorMessage: string) {
-    alert(errorMessage);
+    ToastHelpers.showToast({
+      content: errorMessage,
+      type: 'error',
+      title: 'Error',
+    });
     throw new Error(errorMessage);
   }
 

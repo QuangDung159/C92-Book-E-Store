@@ -1,8 +1,8 @@
 import { FlashList } from '@shopify/flash-list';
 import React from 'react';
-import { Text, View } from 'react-native';
 import { DataModels } from '@models';
 import { BookCardItemHorizontal } from './book-card-item-horizontal';
+import { EmptyListComponent } from './empty-list-component';
 
 interface ListBookCardHorizontalProps {
   listItem: Array<DataModels.IBook>;
@@ -25,11 +25,7 @@ const ListBookCardHorizontal: React.FC<ListBookCardHorizontalProps> = ({
         />
       )}
       ListEmptyComponent={() => {
-        return (
-          <View>
-            <Text>No data</Text>
-          </View>
-        );
+        return <EmptyListComponent />;
       }}
     />
   );

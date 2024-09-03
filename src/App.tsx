@@ -50,7 +50,6 @@ const App = () => {
     loadFonts();
     appModel.appInit();
     appModel.loadMasterData();
-
     //
     OneSignal.initialize(process.env.EXPO_PUBLIC_ONE_SIGNAL_APP_ID);
     OneSignal.Debug.setLogLevel(LogLevel.Verbose);

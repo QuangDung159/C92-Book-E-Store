@@ -5,15 +5,18 @@ import {
   observable,
   runInAction,
 } from 'mobx';
-import { DEFAULT_SORT, TOP_BOOKS } from '@constants';
+
+import { DEFAULT_SORT } from '@constants';
 import { DataModels } from '@models';
+import { BookServices } from '@services';
+import { sharedStore } from '@store';
 import { COLORS } from '@themes';
 import { delay } from '@utils';
 import { IBook } from 'models/data-models';
 
 const defaultFilter: DataModels.ISearchFilter = {
   max: 659000,
-  min: 90000,
+  min: 10000,
   author: [],
   form: [],
   publisher: [],
@@ -26,7 +29,7 @@ class SearchStore {
 
   searchFilterPreviuos: DataModels.ISearchFilter = defaultFilter;
 
-  listBook: IBook[] = TOP_BOOKS;
+  listBook: IBook[] = [];
 
   constructor() {
     makeObservable(this, {
@@ -35,6 +38,7 @@ class SearchStore {
       searchFilter: observable,
       searchFilterPreviuos: observable,
       listBook: observable,
+      setListBook: action,
       setSortOption: action,
       setViewStyle: action,
       setSearchFilter: action,
@@ -47,6 +51,10 @@ class SearchStore {
       listFormSelected: computed,
       listPublisherSelected: computed,
     });
+  }
+
+  setListBook(values: DataModels.IBook[]) {
+    this.listBook = values;
   }
 
   setSearchFilterPreviuos(value: DataModels.ISearchFilter) {
@@ -93,34 +101,28 @@ class SearchStore {
     return this.searchFilter.publisher || [];
   }
 
-  submitSearch() {
-    let listResult = TOP_BOOKS;
-    delay(1000).then(() => {
-      runInAction(() => {
-        if (this.searchFilter.author && this.searchFilter.author.length > 0) {
-          listResult = listResult.filter((item) =>
-            this.searchFilter.author.includes(item.author.id),
-          );
-        }
+  async submitSearch(showLoading?: boolean, page?: number) {
+    if (showLoading) {
+      sharedStore.setShowLoading(true);
+    }
 
-        if (this.searchFilter.form && this.searchFilter.form.length > 0) {
-          listResult = listResult.filter((item) =>
-            this.searchFilter.form.includes(item.form.id),
-          );
-        }
+    await delay(500);
 
-        if (
-          this.searchFilter.publisher &&
-          this.searchFilter.publisher.length > 0
-        ) {
-          listResult = listResult.filter((item) =>
-            this.searchFilter.publisher.includes(item.publisher.id),
-          );
-        }
+    const result = await BookServices.queryBook(
+      this.searchFilter,
+      this.sortOption,
+      page,
+    );
 
-        this.listBook = listResult;
-      });
-    });
+    if (result && result.success) {
+      if (page !== 1) {
+        this.setListBook(this.listBook.concat(result.data.list));
+      } else {
+        this.setListBook(result.data.list);
+      }
+    }
+
+    sharedStore.setShowLoading(false);
   }
 
   updateBookItem = (bookItem: IBook) => {

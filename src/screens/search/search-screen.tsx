@@ -1,20 +1,19 @@
 import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useRef, useState } from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import {
-  Chip,
-  Layouts,
-  ListBookCardComplex,
-  ListBookCardVertical,
-  ListBookCardVerticalRow,
-  SearchBar,
-} from '@components';
+  Dimensions,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { Chip, Layouts, ListBookSearch, SearchBar } from '@components';
 import {
   CATEGORY,
   DEFAULT_PRICE_RANGE,
   LIST_SORT_OPTION,
-  SEARCH_VIEW_STYLE,
+  SCREEN_NAME,
 } from '@constants';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
@@ -24,10 +23,17 @@ import { StringHelpers } from '@utils';
 import { ListChipByListFilter, SortPopup, SortSection } from './components';
 
 const SearchScreen = ({ route, navigation }: any) => {
-  const scrollRef = useRef<ScrollView>();
+  const scrollRef = useRef(null);
   const { openFilterScreen } = useNavigate(navigation);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const { height } = Dimensions.get('window');
 
   const [isShowSortPopup, setIsShowSortPopup] = useState(false);
+
+  const screenName = route?.name;
 
   useEffect(() => {
     const searchFilter = route.params?.searchFilter;
@@ -38,6 +44,28 @@ const SearchScreen = ({ route, navigation }: any) => {
       });
     }
   }, [route.params]);
+
+  useEffect(() => {
+    loadData(page === 1, page);
+  }, [page]);
+
+  const loadData = async (showLoading: boolean, pageNumber: number) => {
+    setLoading(true);
+    await searchStore.submitSearch(showLoading, pageNumber);
+    setLoading(false);
+  };
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await searchStore.submitSearch(false, 1);
+    setRefreshing(false);
+  };
+
+  const handleEndReached = () => {
+    if (!loading) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
 
   const onUpdateCount = (count: number, bookItem: DataModels.IBook) => {
     searchStore.updateBookItem({
@@ -69,6 +97,8 @@ const SearchScreen = ({ route, navigation }: any) => {
                 searchStore.setSearchFilter({
                   category: null,
                 });
+
+                searchStore.submitSearch(true);
               }}
               value={searchStore.searchFilter.category}
               showRemove
@@ -81,6 +111,8 @@ const SearchScreen = ({ route, navigation }: any) => {
                 min: DEFAULT_PRICE_RANGE[0],
                 max: DEFAULT_PRICE_RANGE[1],
               });
+
+              searchStore.submitSearch(true);
             }}
             value={`${searchStore.searchFilter.min} - ${searchStore.searchFilter.max}`}
             showRemove
@@ -101,7 +133,7 @@ const SearchScreen = ({ route, navigation }: any) => {
                 author: listSelected,
               });
 
-              searchStore.submitSearch();
+              searchStore.submitSearch(true);
             }}
           />
           <ListChipByListFilter
@@ -115,6 +147,8 @@ const SearchScreen = ({ route, navigation }: any) => {
               searchStore.setSearchFilter({
                 form: listSelected,
               });
+
+              searchStore.submitSearch(true);
             }}
           />
           <ListChipByListFilter
@@ -129,6 +163,8 @@ const SearchScreen = ({ route, navigation }: any) => {
               searchStore.setSearchFilter({
                 publisher: listSelected,
               });
+
+              searchStore.submitSearch(true);
             }}
           />
         </ScrollView>
@@ -138,7 +174,7 @@ const SearchScreen = ({ route, navigation }: any) => {
 
   const scrollToTop = () => {
     if (scrollRef.current) {
-      scrollRef.current.scrollTo({ x: 0, y: 0, animated: true });
+      scrollRef.current.scrollToOffset({ offset: 0, animated: true });
     }
   };
 
@@ -147,6 +183,9 @@ const SearchScreen = ({ route, navigation }: any) => {
       <SortPopup
         initSortValue={searchStore.sortOption.value}
         visible={isShowSortPopup}
+        onDoneDismiss={() => {
+          searchStore.submitSearch(true);
+        }}
         onDismiss={(sortSelected) => {
           setIsShowSortPopup(false);
           const sortOptionSelected = LIST_SORT_OPTION.find(
@@ -164,34 +203,38 @@ const SearchScreen = ({ route, navigation }: any) => {
         navigation={navigation}
         autoFocus={route?.params?.autoFocus}
         showSearch
+        isPreventGoToSearchScreen={screenName === SCREEN_NAME.SEARCH}
+        onPressSearch={() => {
+          searchStore.submitSearch(true);
+        }}
       />
-      <ScrollView
-        ref={scrollRef}
-        scrollEnabled={true}
-        showsVerticalScrollIndicator={false}
+      <SortSection
+        onPress={() => {
+          setIsShowSortPopup(true);
+        }}
+        label={searchStore.sortOption.label}
+      />
+      <Layouts.VSpace value={12} />
+      {renderFilter()}
+      <Layouts.VSpace value={12} />
+      <View
+        style={{
+          height,
+          paddingBottom: 216,
+        }}
       >
-        <SortSection
-          onPress={() => {
-            setIsShowSortPopup(true);
-          }}
-          label={searchStore.sortOption.label}
+        <ListBookSearch
+          scrollRef={scrollRef}
+          listItem={searchStore.listBook}
+          onEndReached={handleEndReached}
+          estimatedItemSize={height}
+          viewStyle={searchStore.viewStyle}
+          onUpdateCount={onUpdateCount}
+          endOfListText={loading ? 'Loading...' : 'End of list'}
+          onRefresh={onRefresh}
+          refreshing={refreshing}
         />
-        <Layouts.VSpace value={12} />
-        {renderFilter()}
-        <Layouts.VSpace value={12} />
-        {searchStore.viewStyle === SEARCH_VIEW_STYLE.grid && (
-          <ListBookCardVerticalRow listItem={searchStore.listBook} />
-        )}
-        {searchStore.viewStyle === SEARCH_VIEW_STYLE.list && (
-          <ListBookCardVertical
-            listItem={searchStore.listBook}
-            onUpdateCount={onUpdateCount}
-          />
-        )}
-        {searchStore.viewStyle === SEARCH_VIEW_STYLE.complex && (
-          <ListBookCardComplex listItem={searchStore.listBook} />
-        )}
-      </ScrollView>
+      </View>
       <View style={styles.scrollTop}>
         <TouchableOpacity onPress={scrollToTop}>
           <Entypo name="chevron-up" size={24} />

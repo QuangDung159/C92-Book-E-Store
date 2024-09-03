@@ -1,39 +1,37 @@
 import { FlashList } from '@shopify/flash-list';
 import React from 'react';
-import { Text, View } from 'react-native';
-import { BookCardItemComplex } from '@components';
+import { BookCardItemComplex, EmptyListComponent } from '@components';
 import { DataModels } from '@models';
 
 interface ListBookCardComplexProps {
   listItem: Array<DataModels.IBook>;
+  onEndReached?: () => void;
+  estimatedItemSize?: number;
+  scrollRef?: React.MutableRefObject<any>;
 }
 
 const ListBookCardComplex: React.FC<ListBookCardComplexProps> = ({
   listItem,
+  onEndReached,
+  estimatedItemSize,
+  scrollRef,
 }) => {
   return (
-    <View
-      style={{
-        marginBottom: 55,
+    <FlashList
+      ref={scrollRef}
+      showsVerticalScrollIndicator={false}
+      data={listItem}
+      keyExtractor={(item) => item.id}
+      estimatedItemSize={estimatedItemSize}
+      renderItem={({ item }) => {
+        return <BookCardItemComplex bookCardItem={item} />;
       }}
-    >
-      <FlashList
-        showsVerticalScrollIndicator={false}
-        data={listItem}
-        keyExtractor={(item) => item.id}
-        estimatedItemSize={186}
-        renderItem={({ item }) => {
-          return <BookCardItemComplex bookCardItem={item} />;
-        }}
-        ListEmptyComponent={() => {
-          return (
-            <View>
-              <Text>No data</Text>
-            </View>
-          );
-        }}
-      />
-    </View>
+      ListEmptyComponent={() => {
+        return <EmptyListComponent />;
+      }}
+      onEndReached={onEndReached}
+      onEndReachedThreshold={0.5}
+    />
   );
 };
 
