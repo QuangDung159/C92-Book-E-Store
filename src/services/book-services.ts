@@ -30,6 +30,7 @@ const loadListViewed = async () => {
 const queryBook = async (
   filter?: DataModels.ISearchFilter,
   sort?: DataModels.ISortOption,
+  page?: number,
 ) => {
   const sortOption: any = {};
   const sortValue =
@@ -45,7 +46,7 @@ const queryBook = async (
 
   const body = {
     ...filter,
-    page: 1,
+    page: page || 1,
     sort: sortOption,
   };
 

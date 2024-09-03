@@ -1,7 +1,13 @@
 import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useRef, useState } from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  Dimensions,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {
   Chip,
   Layouts,
@@ -25,8 +31,12 @@ import { StringHelpers } from '@utils';
 import { ListChipByListFilter, SortPopup, SortSection } from './components';
 
 const SearchScreen = ({ route, navigation }: any) => {
-  const scrollRef = useRef<ScrollView>();
+  const scrollRef = useRef(null);
   const { openFilterScreen } = useNavigate(navigation);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+
+  const { height } = Dimensions.get('window');
 
   const [isShowSortPopup, setIsShowSortPopup] = useState(false);
 
@@ -40,9 +50,23 @@ const SearchScreen = ({ route, navigation }: any) => {
         ...searchFilter,
       });
     }
-
-    searchStore.submitSearch();
   }, [route.params]);
+
+  useEffect(() => {
+    loadData(page);
+  }, [page]);
+
+  const loadData = async (pageNumber: number) => {
+    setLoading(true);
+    await searchStore.submitSearch(pageNumber);
+    setLoading(false);
+  };
+
+  const handleEndReached = () => {
+    if (!loading) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
 
   const onUpdateCount = (count: number, bookItem: DataModels.IBook) => {
     searchStore.updateBookItem({
@@ -151,7 +175,7 @@ const SearchScreen = ({ route, navigation }: any) => {
 
   const scrollToTop = () => {
     if (scrollRef.current) {
-      scrollRef.current.scrollTo({ x: 0, y: 0, animated: true });
+      scrollRef.current.scrollToOffset({ offset: 0, animated: true });
     }
   };
 
@@ -194,24 +218,38 @@ const SearchScreen = ({ route, navigation }: any) => {
       <Layouts.VSpace value={12} />
       {renderFilter()}
       <Layouts.VSpace value={12} />
-      <ScrollView
-        ref={scrollRef}
-        scrollEnabled={true}
-        showsVerticalScrollIndicator={false}
+      <View
+        style={{
+          height,
+          paddingBottom: 216,
+        }}
       >
         {searchStore.viewStyle === SEARCH_VIEW_STYLE.grid && (
-          <ListBookCardVerticalRow listItem={searchStore.listBook} />
+          <ListBookCardVerticalRow
+            scrollRef={scrollRef}
+            listItem={searchStore.listBook}
+            onEndReached={handleEndReached}
+            estimatedItemSize={height}
+          />
         )}
         {searchStore.viewStyle === SEARCH_VIEW_STYLE.list && (
           <ListBookCardVertical
             listItem={searchStore.listBook}
             onUpdateCount={onUpdateCount}
+            scrollRef={scrollRef}
+            onEndReached={handleEndReached}
+            estimatedItemSize={height}
           />
         )}
         {searchStore.viewStyle === SEARCH_VIEW_STYLE.complex && (
-          <ListBookCardComplex listItem={searchStore.listBook} />
+          <ListBookCardComplex
+            listItem={searchStore.listBook}
+            scrollRef={scrollRef}
+            onEndReached={handleEndReached}
+            estimatedItemSize={height}
+          />
         )}
-      </ScrollView>
+      </View>
       <View style={styles.scrollTop}>
         <TouchableOpacity onPress={scrollToTop}>
           <Entypo name="chevron-up" size={24} />

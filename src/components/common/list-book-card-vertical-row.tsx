@@ -1,27 +1,34 @@
 import { FlashList } from '@shopify/flash-list';
 import React from 'react';
-import { View } from 'react-native';
-import { BookCardItem, EmptyListComponent } from '@components';
+import {
+  BookCardItem,
+  EmptyListComponent,
+  EndOfListListComponent,
+} from '@components';
 import { DataModels } from '@models';
 
 interface ListBookCardVerticalRowProps {
   listItem: Array<DataModels.IBook>;
+  onEndReached?: () => void;
+  estimatedItemSize?: number;
+  scrollRef?: React.MutableRefObject<any>;
 }
 
 const ListBookCardVerticalRow: React.FC<ListBookCardVerticalRowProps> = ({
   listItem,
+  onEndReached,
+  estimatedItemSize,
+  scrollRef,
 }) => {
   return (
-    <View
-      style={{
-        marginBottom: 55,
-      }}
-    >
+    <>
       <FlashList
+        scrollEnabled
+        ref={scrollRef}
         showsVerticalScrollIndicator={false}
         data={listItem}
         keyExtractor={(item) => item.id}
-        estimatedItemSize={186}
+        estimatedItemSize={estimatedItemSize}
         numColumns={2}
         renderItem={({ item, index }) => (
           <BookCardItem bookCardItem={item} index={index} />
@@ -29,8 +36,11 @@ const ListBookCardVerticalRow: React.FC<ListBookCardVerticalRowProps> = ({
         ListEmptyComponent={() => {
           return <EmptyListComponent />;
         }}
+        ListFooterComponent={<EndOfListListComponent />}
+        onEndReached={onEndReached}
+        onEndReachedThreshold={0.5}
       />
-    </View>
+    </>
   );
 };
 

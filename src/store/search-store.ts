@@ -101,17 +101,22 @@ class SearchStore {
     return this.searchFilter.publisher || [];
   }
 
-  async submitSearch() {
+  async submitSearch(page?: number) {
     sharedStore.setShowLoading(true);
     await delay(500);
 
     const result = await BookServices.queryBook(
       this.searchFilter,
       this.sortOption,
+      page,
     );
 
     if (result && result.success) {
-      this.setListBook(result.data.list);
+      if (page !== 1) {
+        this.setListBook(this.listBook.concat(result.data.list));
+      } else {
+        this.setListBook(result.data.list);
+      }
     }
 
     sharedStore.setShowLoading(false);
