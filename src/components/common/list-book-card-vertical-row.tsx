@@ -1,7 +1,7 @@
 import { FlashList } from '@shopify/flash-list';
 import React from 'react';
-import { Text, View } from 'react-native';
-import { BookCardItem } from '@components';
+import { View } from 'react-native';
+import { BookCardItem, EmptyListComponent } from '@components';
 import { DataModels } from '@models';
 
 interface ListBookCardVerticalRowProps {
@@ -27,11 +27,7 @@ const ListBookCardVerticalRow: React.FC<ListBookCardVerticalRowProps> = ({
           <BookCardItem bookCardItem={item} index={index} />
         )}
         ListEmptyComponent={() => {
-          return (
-            <View>
-              <Text>No data</Text>
-            </View>
-          );
+          return <EmptyListComponent />;
         }}
       />
     </View>

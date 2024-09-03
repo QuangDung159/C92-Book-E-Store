@@ -1,7 +1,7 @@
 import { FlashList } from '@shopify/flash-list';
 import React from 'react';
-import { Text, View } from 'react-native';
-import { BookCardItemComplex } from '@components';
+import { View } from 'react-native';
+import { BookCardItemComplex, EmptyListComponent } from '@components';
 import { DataModels } from '@models';
 
 interface ListBookCardComplexProps {
@@ -26,11 +26,7 @@ const ListBookCardComplex: React.FC<ListBookCardComplexProps> = ({
           return <BookCardItemComplex bookCardItem={item} />;
         }}
         ListEmptyComponent={() => {
-          return (
-            <View>
-              <Text>No data</Text>
-            </View>
-          );
+          return <EmptyListComponent />;
         }}
       />
     </View>
