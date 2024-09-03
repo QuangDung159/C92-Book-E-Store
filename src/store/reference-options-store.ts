@@ -1,5 +1,6 @@
 import { action, makeObservable, observable } from 'mobx';
 import { DataModels } from '@models';
+import { ReferenceOptionServices } from '@services';
 
 class ReferenceOptionsStore {
   authorDataSource: DataModels.IReferenceOptions[] = [];
@@ -62,33 +63,67 @@ class ReferenceOptionsStore {
     this.wardDataSource = listWard;
   }
 
-  setAuthorDataSource(values: DataModels.IAuthor[]) {
-    const listAuthor: DataModels.IReferenceOptions[] = values.map((item) => ({
-      label: item.name,
-      value: item.id,
-    }));
-
-    this.authorDataSource = listAuthor;
+  setAuthorDataSource(values: DataModels.IReferenceOptions[]) {
+    this.authorDataSource = values;
   }
 
-  setFormDataSource(values: DataModels.IForm[]) {
-    const listForm: DataModels.IReferenceOptions[] = values.map((item) => ({
-      label: item.name,
-      value: item.id,
-    }));
-
-    this.formDataSource = listForm;
+  setFormDataSource(values: DataModels.IReferenceOptions[]) {
+    this.formDataSource = values;
   }
 
-  setPublisherDataSource(values: DataModels.IPublisher[]) {
-    const listPublisher: DataModels.IReferenceOptions[] = values.map(
-      (item) => ({
-        label: item.name,
-        value: item.id,
-      }),
-    );
+  setPublisherDataSource(values: DataModels.IReferenceOptions[]) {
+    this.publisherDataSource = values;
+  }
 
-    this.publisherDataSource = listPublisher;
+  async fetchListAuthor() {
+    const result = await ReferenceOptionServices.fetchListAuthor();
+    if (result && result.success) {
+      const dataSource: DataModels.IReferenceOptions[] = (
+        result.data?.list || []
+      ).map(
+        (item: any) =>
+          ({
+            label: item.name,
+            value: item._id,
+          }) as DataModels.IReferenceOptions,
+      );
+
+      this.setAuthorDataSource(dataSource);
+    }
+  }
+
+  async fetchListPublisher() {
+    const result = await ReferenceOptionServices.fetchListPublisher();
+    if (result && result.success) {
+      const dataSource: DataModels.IReferenceOptions[] = (
+        result.data?.list || []
+      ).map(
+        (item: any) =>
+          ({
+            label: item.name,
+            value: item._id,
+          }) as DataModels.IReferenceOptions,
+      );
+
+      this.setPublisherDataSource(dataSource);
+    }
+  }
+
+  async fetchListForm() {
+    const result = await ReferenceOptionServices.fetchListForm();
+    if (result && result.success) {
+      const dataSource: DataModels.IReferenceOptions[] = (
+        result.data?.list || []
+      ).map(
+        (item: any) =>
+          ({
+            label: item.name,
+            value: item._id,
+          }) as DataModels.IReferenceOptions,
+      );
+
+      this.setFormDataSource(dataSource);
+    }
   }
 }
 
