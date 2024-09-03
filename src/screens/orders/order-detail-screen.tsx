@@ -3,7 +3,8 @@ import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Divider } from 'react-native-paper';
 import { Layouts, ScreenHeader } from '@components';
-import { LIST_ORDER, TOP_BOOKS } from '@constants';
+import { LIST_ORDER } from '@constants';
+import { searchStore } from '@store';
 import { COLORS } from '@themes';
 import { HorizontalListCard } from 'screens/home/components';
 import { ListOrder } from './components';
@@ -18,12 +19,12 @@ const OrderDetailScreen = ({ navigation }: any) => {
         <View style={styles.wrapper}>
           <Layouts.VSpace value={12} />
           <HorizontalListCard
-            listItem={TOP_BOOKS}
+            listItem={searchStore.listTopBook}
             title="Maybe you will like"
           />
           <Layouts.VSpace value={24} />
           <HorizontalListCard
-            listItem={TOP_BOOKS}
+            listItem={searchStore.listLatest}
             title="Viewed"
             showSeeMore={true}
           />
