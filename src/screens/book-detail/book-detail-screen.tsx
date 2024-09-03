@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -14,6 +14,7 @@ import { AddToCartButton, Buttons, Layouts } from '@components';
 import { CATEGORY } from '@constants';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
+import { BookServices } from '@services';
 import { referenceOptionsStore, searchStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { delay, StringHelpers } from '@utils';
@@ -39,6 +40,30 @@ const BookDetailScreen = ({ route, navigation }: any) => {
   const [searchFilter, setSearchFilter] = useState<DataModels.ISearchFilter>(
     {},
   );
+  const [bookInfo, setBookInfo] = useState<DataModels.IBook>();
+
+  const loadDetail = useCallback(async () => {
+    setBookInfo(book);
+
+    if (book?.id) {
+      const result = await BookServices.fetchBookDetail(book?.id);
+
+      if (result?.data?.book) {
+        const bookData = result.data.book;
+        const bookDetail: DataModels.IBook = {
+          ...bookData,
+          reviews: bookData.reviews.map(
+            (item: any) =>
+              ({
+                ...item,
+                username: item.user?.username,
+              }) as DataModels.IReview,
+          ),
+        };
+        setBookInfo(bookDetail);
+      }
+    }
+  }, [book]);
 
   useEffect(() => {
     setIsCollapseDescription(true);
@@ -50,7 +75,11 @@ const BookDetailScreen = ({ route, navigation }: any) => {
     delay(500).then(() => {
       setIsCollapseDescription(false);
     });
-  }, [book]);
+
+    if (book) {
+      loadDetail();
+    }
+  }, [book, loadDetail]);
 
   const data = [
     ImageAssets.bookImage1,
@@ -80,20 +109,20 @@ const BookDetailScreen = ({ route, navigation }: any) => {
           console.log('data :>> ', data);
         }}
       />
-      {book && (
+      {bookInfo && (
         <ScrollView
           showsVerticalScrollIndicator={false}
           ref={scrollRef}
           scrollEnabled={true}
         >
-          <BookImage book={book} data={data} navigation={navigation} />
+          <BookImage book={bookInfo} data={data} navigation={navigation} />
           <Layouts.VSpace value={12} />
           <Text
             style={{
               ...FONT_STYLES.BOLD_22,
             }}
           >
-            {book.name}
+            {bookInfo.name}
           </Text>
           <Layouts.VSpace value={12} />
           <View
@@ -103,7 +132,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
             }}
           >
             <StarRatingDisplay
-              rating={book.rating}
+              rating={bookInfo.rating}
               starSize={24}
               color={COLORS.error50}
               starStyle={{
@@ -123,7 +152,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
                   ...FONT_STYLES.SEMIBOLD_14,
                 }}
               >
-                {book.reviews?.length} review(s)
+                {bookInfo.reviews?.length} review(s)
               </Text>
             </TouchableOpacity>
           </View>
@@ -133,7 +162,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
               ...FONT_STYLES.REGULAR_14,
             }}
           >
-            {`Stock: ${book.stock} pcs`}
+            {`Stock: ${bookInfo.stock} pcs`}
           </Text>
           <Layouts.VSpace value={12} />
           <View
@@ -144,13 +173,13 @@ const BookDetailScreen = ({ route, navigation }: any) => {
             }}
           >
             <View>
-              {Boolean(book.priceNotSale) && (
+              {Boolean(bookInfo.priceNotSale) && (
                 <Text style={styles.priceNotSale}>
-                  {StringHelpers.formatCurrency(book.priceNotSale)}
+                  {StringHelpers.formatCurrency(bookInfo.priceNotSale)}
                 </Text>
               )}
               <Text style={styles.price}>
-                {StringHelpers.formatCurrency(book.price)}
+                {StringHelpers.formatCurrency(bookInfo.price)}
               </Text>
             </View>
             <AddToCartButton
@@ -160,7 +189,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
                 alignSelf: 'center',
               }}
               buttonType="icon"
-              bookCardItem={book}
+              bookCardItem={bookInfo}
             />
           </View>
           <Layouts.VSpace value={24} />
@@ -183,7 +212,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
                 lineHeight: 20,
               }}
             >
-              {book.description || 'N/a'}
+              {bookInfo.description || 'N/a'}
             </Text>
           </Collapsible>
           <Layouts.VSpace value={12} />
@@ -202,7 +231,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
           <Collapsible collapsed={isCollapseInformation}>
             <InfoRow
               title="Category"
-              value={book.category.name}
+              value={bookInfo.category.name}
               hasCheckBox
               onCheck={(value) => {
                 const item = CATEGORY.find((item) => item.name === value);
@@ -230,14 +259,14 @@ const BookDetailScreen = ({ route, navigation }: any) => {
             />
             <InfoRow
               title="Size"
-              value={`${book.width} x ${book.height} x ${book.thick} cm`}
+              value={`${bookInfo.width} x ${bookInfo.height} x ${bookInfo.thick} cm`}
             />
             <Layouts.VSpace value={12} />
-            <InfoRow title="Page count" value={book.pageCount.toString()} />
+            <InfoRow title="Page count" value={bookInfo.pageCount.toString()} />
             <Layouts.VSpace value={12} />
             <InfoRow
               title="Author"
-              value={book.author.name}
+              value={bookInfo.author.name}
               hasCheckBox
               onCheck={(value) => {
                 const item = StringHelpers.getItemFromDataSource(
@@ -253,7 +282,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
             />
             <InfoRow
               title="Publisher"
-              value={book.publisher.name}
+              value={bookInfo.publisher.name}
               hasCheckBox
               onCheck={(value) => {
                 const item = StringHelpers.getItemFromDataSource(
@@ -294,12 +323,12 @@ const BookDetailScreen = ({ route, navigation }: any) => {
                 setIsCollapseInformation(!isCollapse);
               }
             }}
-            title={`${(book.reviews || []).length} Review(s)`}
+            title={`${(bookInfo.reviews || []).length} Review(s)`}
           />
           <Layouts.VSpace value={12} />
           <Collapsible collapsed={isCollapseReview}>
             <ReviewSection
-              book={book}
+              book={bookInfo}
               onPressLeaveReview={() => {
                 setIsShowReviewPopup(true);
               }}

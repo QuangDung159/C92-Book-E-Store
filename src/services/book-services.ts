@@ -3,6 +3,8 @@ import { DataModels } from '@models';
 import { delay } from '@utils';
 import { HttpServices } from './http-services';
 
+const baseUrl = process.env.EXPO_PUBLIC_BASE_URL + '/book';
+
 const loadListFavourite = async () => {
   await delay(1000);
   const result = TOP_BOOKS.filter((item) => item.isLiked);
@@ -50,10 +52,7 @@ const queryBook = async (
     sort: sortOption,
   };
 
-  const result = await HttpServices.post(
-    process.env.EXPO_PUBLIC_BASE_URL + '/book',
-    body,
-  );
+  const result = await HttpServices.post(baseUrl, body);
 
   return result;
 };
@@ -62,9 +61,14 @@ const fetchListHomePage = async (title: string, filter?: string) => {
   const filterQuery = filter ? `&filter=${filter}` : '';
 
   const result = await HttpServices.get(
-    process.env.EXPO_PUBLIC_BASE_URL +
-      `/book/query?title=${title}${filterQuery}`,
+    baseUrl + `/query?title=${title}` + filterQuery,
   );
+
+  return result;
+};
+
+const fetchBookDetail = async (id: string) => {
+  const result = await HttpServices.get(baseUrl + '/get-one/' + id);
 
   return result;
 };
@@ -74,4 +78,5 @@ export const BookServices = {
   loadListViewed,
   queryBook,
   fetchListHomePage,
+  fetchBookDetail,
 };
