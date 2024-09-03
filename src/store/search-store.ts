@@ -6,7 +6,11 @@ import {
   runInAction,
 } from 'mobx';
 
-import { DEFAULT_SORT, LIST_HOME_PAGE_TITLE } from '@constants';
+import {
+  DEFAULT_SORT,
+  LIST_HOME_PAGE_TITLE,
+  TOP_BOOKS_FILTER,
+} from '@constants';
 import { DataModels } from '@models';
 import { BookServices } from '@services';
 import { sharedStore } from '@store';
@@ -31,6 +35,7 @@ class SearchStore {
   listTopBook: IBook[] = [];
   listUpcomming: IBook[] = [];
   listLatest: IBook[] = [];
+  topBookFilterSelected: string = TOP_BOOKS_FILTER[0].value;
 
   constructor() {
     makeObservable(this, {
@@ -42,6 +47,8 @@ class SearchStore {
       listTopBook: observable,
       listUpcomming: observable,
       listLatest: observable,
+      topBookFilterSelected: observable,
+      setTopBookFilterSelected: action,
       setListLatest: action,
       setListUpcomming: action,
       setListTopBook: action,
@@ -58,6 +65,21 @@ class SearchStore {
       listFormSelected: computed,
       listPublisherSelected: computed,
     });
+  }
+
+  setTopBookFilterSelected(value: string) {
+    this.topBookFilterSelected = value;
+
+    BookServices.fetchListHomePage(LIST_HOME_PAGE_TITLE.topBook, value).then(
+      (result) => {
+        runInAction(() => {
+          if (result && result.success) {
+            const list = result.data?.list || [];
+            this.listTopBook = list;
+          }
+        });
+      },
+    );
   }
 
   setListLatest(values: DataModels.IBook[]) {

@@ -58,9 +58,12 @@ const queryBook = async (
   return result;
 };
 
-const fetchListHomePage = async (title: string) => {
+const fetchListHomePage = async (title: string, filter?: string) => {
+  const filterQuery = filter ? `&filter=${filter}` : '';
+
   const result = await HttpServices.get(
-    process.env.EXPO_PUBLIC_BASE_URL + `/book/query?title=${title}`,
+    process.env.EXPO_PUBLIC_BASE_URL +
+      `/book/query?title=${title}${filterQuery}`,
   );
 
   return result;
