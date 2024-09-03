@@ -27,6 +27,7 @@ const SearchScreen = ({ route, navigation }: any) => {
   const { openFilterScreen } = useNavigate(navigation);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   const { height } = Dimensions.get('window');
 
@@ -52,6 +53,12 @@ const SearchScreen = ({ route, navigation }: any) => {
     setLoading(true);
     await searchStore.submitSearch(showLoading, pageNumber);
     setLoading(false);
+  };
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await searchStore.submitSearch(false, 1);
+    setRefreshing(false);
   };
 
   const handleEndReached = () => {
@@ -224,6 +231,8 @@ const SearchScreen = ({ route, navigation }: any) => {
           viewStyle={searchStore.viewStyle}
           onUpdateCount={onUpdateCount}
           endOfListText={loading ? 'Loading...' : 'End of list'}
+          onRefresh={onRefresh}
+          refreshing={refreshing}
         />
       </View>
       <View style={styles.scrollTop}>

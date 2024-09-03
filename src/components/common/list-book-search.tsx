@@ -1,6 +1,7 @@
 import { FlashList } from '@shopify/flash-list';
 import { toJS } from 'mobx';
 import React from 'react';
+import { RefreshControl } from 'react-native';
 import { SEARCH_VIEW_STYLE } from '@constants';
 import { DataModels } from '@models';
 import { BookCardItem } from './book-card-item';
@@ -17,6 +18,8 @@ interface ListBookSearchProps {
   viewStyle?: string;
   onUpdateCount?: (countNumber: number, bookItem: DataModels.IBook) => void;
   endOfListText?: string;
+  onRefresh?: () => void;
+  refreshing?: boolean;
 }
 
 const ListBookSearch: React.FC<ListBookSearchProps> = ({
@@ -27,6 +30,8 @@ const ListBookSearch: React.FC<ListBookSearchProps> = ({
   viewStyle,
   onUpdateCount,
   endOfListText,
+  onRefresh,
+  refreshing,
 }) => {
   const renderItem = ({ item, index }) => {
     if (viewStyle === SEARCH_VIEW_STYLE.list) {
@@ -60,6 +65,9 @@ const ListBookSearch: React.FC<ListBookSearchProps> = ({
       onEndReached={onEndReached}
       onEndReachedThreshold={0.5}
       numColumns={viewStyle === SEARCH_VIEW_STYLE.grid ? 2 : 1}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
     />
   );
 };
