@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import { DataModels } from '@models';
+import { ToastHelpers } from '@utils';
 
 // Khởi tạo một instance của axios với URL cơ bản
 const apiClientDefault = axios.create({
@@ -23,9 +24,18 @@ const post = async (
       data: response.data.data,
     });
   } catch (error) {
-    console.log('Http.post error :>> ', error);
+    console.log('Http.post error :>> ', error?.message || 'Uncatch error');
     console.log('Http.post error url :>> ', url);
     console.log('Http.post error params :>> ', JSON.stringify(data));
+
+    if (error?.message) {
+      ToastHelpers.showToast({
+        title: 'Error',
+        content: error?.message,
+        type: 'error',
+      });
+    }
+
     return buildAxiosResponse({
       success: false,
       errorMessage: error,

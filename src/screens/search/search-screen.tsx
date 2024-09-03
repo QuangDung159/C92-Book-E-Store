@@ -175,20 +175,20 @@ const SearchScreen = ({ route, navigation }: any) => {
           searchStore.submitSearch();
         }}
       />
+      <SortSection
+        onPress={() => {
+          setIsShowSortPopup(true);
+        }}
+        label={searchStore.sortOption.label}
+      />
+      <Layouts.VSpace value={12} />
+      {renderFilter()}
+      <Layouts.VSpace value={12} />
       <ScrollView
         ref={scrollRef}
         scrollEnabled={true}
         showsVerticalScrollIndicator={false}
       >
-        <SortSection
-          onPress={() => {
-            setIsShowSortPopup(true);
-          }}
-          label={searchStore.sortOption.label}
-        />
-        <Layouts.VSpace value={12} />
-        {renderFilter()}
-        <Layouts.VSpace value={12} />
         {searchStore.viewStyle === SEARCH_VIEW_STYLE.grid && (
           <ListBookCardVerticalRow listItem={searchStore.listBook} />
         )}
