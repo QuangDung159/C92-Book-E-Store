@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import {
   Dimensions,
@@ -9,7 +10,9 @@ import {
 import { ProgressBar } from 'react-native-paper';
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
 import { Buttons, Layouts } from '@components';
+import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
+import { userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 
 interface ReviewSectionProps {
@@ -26,6 +29,10 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
   const ratingBarWidth = width - 48 - 100 - 24 - 80 - 5;
 
   const [listReview, setListReview] = useState<DataModels.IReview[]>([]);
+
+  const navigation = useNavigation();
+
+  const { openSignInScreen } = useNavigate(navigation);
 
   useEffect(() => {
     setListReview(book?.reviews || []);
@@ -268,10 +275,14 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
         );
       })}
       <Buttons.CButton
-        label="Leave your review"
+        label={userStore.userProfile ? 'Leave your review' : 'Please sign in'}
         buttonType="primary"
         onPress={() => {
-          onPressLeaveReview();
+          if (userStore.userProfile) {
+            onPressLeaveReview();
+          } else {
+            openSignInScreen();
+          }
         }}
       />
     </>

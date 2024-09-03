@@ -1,7 +1,12 @@
 /* eslint-disable import/no-named-as-default */
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import * as Notifications from 'expo-notifications';
-import { LIST_CITY, LIST_DISTRICT, LIST_WARD } from '@constants';
+import {
+  LIST_CITY,
+  LIST_DISTRICT,
+  LIST_HOME_PAGE_TITLE,
+  LIST_WARD,
+} from '@constants';
 import { AuthenticationStore } from './authentication-store';
 import { CartStore } from './cart-store';
 import { CategoryStore } from './category-store';
@@ -76,6 +81,10 @@ class AppModel {
     this.referenceOptionsStore.fetchListAuthor();
     this.referenceOptionsStore.fetchListPublisher();
     this.referenceOptionsStore.fetchListForm();
+
+    this.searchStore.fetchListBookHomePage(LIST_HOME_PAGE_TITLE.latest);
+    this.searchStore.fetchListBookHomePage(LIST_HOME_PAGE_TITLE.topBook);
+    this.searchStore.fetchListBookHomePage(LIST_HOME_PAGE_TITLE.upcomming);
   }
 }
 

@@ -1,17 +1,13 @@
 import { observer } from 'mobx-react-lite';
-import React, { useState } from 'react';
+import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { ImageAssets } from '@assets';
 import { Layouts, SearchBar } from '@components';
-import { TOP_BOOKS, TOP_BOOKS_FILTER } from '@constants';
+import { searchStore } from '@store';
 import { COLORS } from '@themes';
 import { BestDealCarousel, HorizontalListCard } from './components';
 
 const HomeScreen = ({ navigation }: any) => {
-  const [topBooksSelectedFilter, setTopBooksSelectedFilter] = useState(
-    TOP_BOOKS_FILTER[0].value,
-  );
-
   return (
     <View style={styles.container}>
       <SearchBar showCartIcon navigation={navigation} />
@@ -28,26 +24,38 @@ const HomeScreen = ({ navigation }: any) => {
           ]}
         />
         <Layouts.VSpace value={24} />
-        <HorizontalListCard
-          listItem={TOP_BOOKS}
-          title="Top Books"
-          showSeeMore
-          showTopFilter
-          setTopBooksSelectedFilter={setTopBooksSelectedFilter}
-          topBooksSelectedFilter={topBooksSelectedFilter}
-        />
-        <Layouts.VSpace value={48} />
-        <HorizontalListCard
-          listItem={TOP_BOOKS}
-          title="Latest Books"
-          showSeeMore
-        />
-        <Layouts.VSpace value={48} />
-        <HorizontalListCard
-          listItem={TOP_BOOKS}
-          title="Upcoming Books"
-          showSeeMore
-        />
+        {searchStore.listTopBook.length > 0 && (
+          <>
+            <HorizontalListCard
+              listItem={searchStore.listTopBook}
+              title="Top Books"
+              showSeeMore
+              showTopFilter
+              setTopBooksSelectedFilter={(value) => {
+                searchStore.setTopBookFilterSelected(value);
+              }}
+              topBooksSelectedFilter={searchStore.topBookFilterSelected}
+            />
+            <Layouts.VSpace value={48} />
+          </>
+        )}
+        {searchStore.listTopBook.length > 0 && (
+          <>
+            <HorizontalListCard
+              listItem={searchStore.listTopBook}
+              title="Latest Books"
+              showSeeMore
+            />
+            <Layouts.VSpace value={48} />
+          </>
+        )}
+        {searchStore.listTopBook.length > 0 && (
+          <HorizontalListCard
+            listItem={searchStore.listTopBook}
+            title="Upcoming Books"
+            showSeeMore
+          />
+        )}
         <Layouts.VSpace value={24} />
       </ScrollView>
     </View>
