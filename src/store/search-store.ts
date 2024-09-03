@@ -118,7 +118,7 @@ class SearchStore {
       if (page !== 1) {
         this.setListBook(this.listBook.concat(result.data.list));
       } else {
-        this.setListBook(result.data.list);
+        this.setListBook(result.data?.list || []);
       }
     }
 
