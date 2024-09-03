@@ -74,6 +74,8 @@ const SearchScreen = ({ route, navigation }: any) => {
                 searchStore.setSearchFilter({
                   category: null,
                 });
+
+                searchStore.submitSearch();
               }}
               value={searchStore.searchFilter.category}
               showRemove
@@ -86,6 +88,8 @@ const SearchScreen = ({ route, navigation }: any) => {
                 min: DEFAULT_PRICE_RANGE[0],
                 max: DEFAULT_PRICE_RANGE[1],
               });
+
+              searchStore.submitSearch();
             }}
             value={`${searchStore.searchFilter.min} - ${searchStore.searchFilter.max}`}
             showRemove
@@ -105,6 +109,8 @@ const SearchScreen = ({ route, navigation }: any) => {
               searchStore.setSearchFilter({
                 author: listSelected,
               });
+
+              searchStore.submitSearch();
             }}
           />
           <ListChipByListFilter
@@ -118,6 +124,8 @@ const SearchScreen = ({ route, navigation }: any) => {
               searchStore.setSearchFilter({
                 form: listSelected,
               });
+
+              searchStore.submitSearch();
             }}
           />
           <ListChipByListFilter
@@ -132,6 +140,8 @@ const SearchScreen = ({ route, navigation }: any) => {
               searchStore.setSearchFilter({
                 publisher: listSelected,
               });
+
+              searchStore.submitSearch();
             }}
           />
         </ScrollView>
