@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { ImageAssets } from '@assets';
 import { Layouts, SearchBar } from '@components';
-import { TOP_BOOKS, TOP_BOOKS_FILTER } from '@constants';
+import { TOP_BOOKS_FILTER } from '@constants';
+import { searchStore } from '@store';
 import { COLORS } from '@themes';
 import { BestDealCarousel, HorizontalListCard } from './components';
 
@@ -29,7 +30,7 @@ const HomeScreen = ({ navigation }: any) => {
         />
         <Layouts.VSpace value={24} />
         <HorizontalListCard
-          listItem={TOP_BOOKS}
+          listItem={searchStore.listTopBook}
           title="Top Books"
           showSeeMore
           showTopFilter
@@ -38,13 +39,13 @@ const HomeScreen = ({ navigation }: any) => {
         />
         <Layouts.VSpace value={48} />
         <HorizontalListCard
-          listItem={TOP_BOOKS}
+          listItem={searchStore.listLatest}
           title="Latest Books"
           showSeeMore
         />
         <Layouts.VSpace value={48} />
         <HorizontalListCard
-          listItem={TOP_BOOKS}
+          listItem={searchStore.listUpcomming}
           title="Upcoming Books"
           showSeeMore
         />

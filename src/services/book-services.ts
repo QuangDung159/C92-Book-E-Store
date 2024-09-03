@@ -58,8 +58,17 @@ const queryBook = async (
   return result;
 };
 
+const fetchListHomePage = async (title: string) => {
+  const result = await HttpServices.get(
+    process.env.EXPO_PUBLIC_BASE_URL + `/book/query?title=${title}`,
+  );
+
+  return result;
+};
+
 export const BookServices = {
   loadListFavourite,
   loadListViewed,
   queryBook,
+  fetchListHomePage,
 };

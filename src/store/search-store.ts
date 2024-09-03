@@ -6,7 +6,7 @@ import {
   runInAction,
 } from 'mobx';
 
-import { DEFAULT_SORT } from '@constants';
+import { DEFAULT_SORT, LIST_HOME_PAGE_TITLE } from '@constants';
 import { DataModels } from '@models';
 import { BookServices } from '@services';
 import { sharedStore } from '@store';
@@ -26,10 +26,11 @@ class SearchStore {
   sortOption: DataModels.ISortOption | null = DEFAULT_SORT;
   viewStyle: string = 'grid';
   searchFilter: DataModels.ISearchFilter | null = defaultFilter;
-
   searchFilterPreviuos: DataModels.ISearchFilter = defaultFilter;
-
   listBook: IBook[] = [];
+  listTopBook: IBook[] = [];
+  listUpcomming: IBook[] = [];
+  listLatest: IBook[] = [];
 
   constructor() {
     makeObservable(this, {
@@ -38,6 +39,12 @@ class SearchStore {
       searchFilter: observable,
       searchFilterPreviuos: observable,
       listBook: observable,
+      listTopBook: observable,
+      listUpcomming: observable,
+      listLatest: observable,
+      setListLatest: action,
+      setListUpcomming: action,
+      setListTopBook: action,
       setListBook: action,
       setSortOption: action,
       setViewStyle: action,
@@ -51,6 +58,18 @@ class SearchStore {
       listFormSelected: computed,
       listPublisherSelected: computed,
     });
+  }
+
+  setListLatest(values: DataModels.IBook[]) {
+    this.listLatest = values;
+  }
+
+  setListUpcomming(values: DataModels.IBook[]) {
+    this.listUpcomming = values;
+  }
+
+  setListTopBook(values: DataModels.IBook[]) {
+    this.listTopBook = values;
   }
 
   setListBook(values: DataModels.IBook[]) {
@@ -115,10 +134,11 @@ class SearchStore {
     );
 
     if (result && result.success) {
+      const list = result.data?.list || [];
       if (page !== 1) {
-        this.setListBook(this.listBook.concat(result.data.list));
+        this.setListBook(this.listBook.concat(list));
       } else {
-        this.setListBook(result.data?.list || []);
+        this.setListBook(list || []);
       }
     }
 
@@ -139,6 +159,24 @@ class SearchStore {
       this.listBook = listBook;
     });
   };
+
+  async fetchListBookHomePage(title: string) {
+    const result = await BookServices.fetchListHomePage(title);
+    if (result && result.success) {
+      const list = result.data?.list || [];
+      if (title === LIST_HOME_PAGE_TITLE.latest) {
+        this.setListLatest(list);
+      }
+
+      if (title === LIST_HOME_PAGE_TITLE.upcomming) {
+        this.setListUpcomming(list);
+      }
+
+      if (title === LIST_HOME_PAGE_TITLE.topBook) {
+        this.setListTopBook(list);
+      }
+    }
+  }
 }
 
 export { SearchStore };
