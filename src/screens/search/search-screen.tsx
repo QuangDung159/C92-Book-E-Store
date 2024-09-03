@@ -8,7 +8,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Chip, Layouts, ListBookSearch, SearchBar } from '@components';
+import {
+  Chip,
+  EmptyListComponent,
+  Layouts,
+  ListBookSearch,
+  SearchBar,
+} from '@components';
 import {
   CATEGORY,
   DEFAULT_PRICE_RANGE,
@@ -223,17 +229,21 @@ const SearchScreen = ({ route, navigation }: any) => {
           paddingBottom: 216,
         }}
       >
-        <ListBookSearch
-          scrollRef={scrollRef}
-          listItem={searchStore.listBook}
-          onEndReached={handleEndReached}
-          estimatedItemSize={height}
-          viewStyle={searchStore.viewStyle}
-          onUpdateCount={onUpdateCount}
-          endOfListText={loading ? 'Loading...' : 'End of list'}
-          onRefresh={onRefresh}
-          refreshing={refreshing}
-        />
+        {searchStore.listBook.length > 0 ? (
+          <ListBookSearch
+            scrollRef={scrollRef}
+            listItem={searchStore.listBook}
+            onEndReached={handleEndReached}
+            estimatedItemSize={height}
+            viewStyle={searchStore.viewStyle}
+            onUpdateCount={onUpdateCount}
+            endOfListText={loading ? 'Loading...' : 'End of list'}
+            onRefresh={onRefresh}
+            refreshing={refreshing}
+          />
+        ) : (
+          <EmptyListComponent />
+        )}
       </View>
       <View style={styles.scrollTop}>
         <TouchableOpacity onPress={scrollToTop}>
