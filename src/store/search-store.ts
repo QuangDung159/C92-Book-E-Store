@@ -164,6 +164,7 @@ class SearchStore {
     const result = await BookServices.fetchListHomePage(title);
     if (result && result.success) {
       const list = result.data?.list || [];
+
       if (title === LIST_HOME_PAGE_TITLE.latest) {
         this.setListLatest(list);
       }

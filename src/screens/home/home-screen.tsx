@@ -29,26 +29,36 @@ const HomeScreen = ({ navigation }: any) => {
           ]}
         />
         <Layouts.VSpace value={24} />
-        <HorizontalListCard
-          listItem={searchStore.listTopBook}
-          title="Top Books"
-          showSeeMore
-          showTopFilter
-          setTopBooksSelectedFilter={setTopBooksSelectedFilter}
-          topBooksSelectedFilter={topBooksSelectedFilter}
-        />
-        <Layouts.VSpace value={48} />
-        <HorizontalListCard
-          listItem={searchStore.listLatest}
-          title="Latest Books"
-          showSeeMore
-        />
-        <Layouts.VSpace value={48} />
-        <HorizontalListCard
-          listItem={searchStore.listUpcomming}
-          title="Upcoming Books"
-          showSeeMore
-        />
+        {searchStore.listTopBook.length > 0 && (
+          <>
+            <HorizontalListCard
+              listItem={searchStore.listTopBook}
+              title="Top Books"
+              showSeeMore
+              showTopFilter
+              setTopBooksSelectedFilter={setTopBooksSelectedFilter}
+              topBooksSelectedFilter={topBooksSelectedFilter}
+            />
+            <Layouts.VSpace value={48} />
+          </>
+        )}
+        {searchStore.listTopBook.length > 0 && (
+          <>
+            <HorizontalListCard
+              listItem={searchStore.listTopBook}
+              title="Latest Books"
+              showSeeMore
+            />
+            <Layouts.VSpace value={48} />
+          </>
+        )}
+        {searchStore.listTopBook.length > 0 && (
+          <HorizontalListCard
+            listItem={searchStore.listTopBook}
+            title="Upcoming Books"
+            showSeeMore
+          />
+        )}
         <Layouts.VSpace value={24} />
       </ScrollView>
     </View>
