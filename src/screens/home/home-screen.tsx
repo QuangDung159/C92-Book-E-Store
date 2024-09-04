@@ -1,16 +1,31 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { Button, ScrollView, StyleSheet, View } from 'react-native';
 import { ImageAssets } from '@assets';
 import { Layouts, SearchBar } from '@components';
-import { searchStore } from '@store';
+import { cartStore, searchStore, userStore } from '@store';
 import { COLORS } from '@themes';
 import { BestDealCarousel, HorizontalListCard } from './components';
 
 const HomeScreen = ({ navigation }: any) => {
+  useEffect(() => {
+    if (userStore.authenticated) {
+      cartStore.fetchCart('66d821f534d631e25f9066e3');
+    }
+  }, []);
+
   return (
     <View style={styles.container}>
-      <SearchBar showCartIcon navigation={navigation} />
+      <SearchBar
+        showCartIcon={userStore.authenticated}
+        navigation={navigation}
+      />
+      <Button
+        title="asd"
+        onPress={() => {
+          cartStore.fetchCart('66d821f534d631e25f9066e3');
+        }}
+      />
       <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}>
         <Layouts.VSpace value={12}></Layouts.VSpace>
         <BestDealCarousel

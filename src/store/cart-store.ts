@@ -5,25 +5,21 @@ import {
   observable,
   runInAction,
 } from 'mobx';
-import {
-  DEEP_LINK_PAYMENT_SUCCESS_URL,
-  LIST_PAYMENT_METHOD,
-  TOP_BOOKS,
-} from '@constants';
+import { DEEP_LINK_PAYMENT_SUCCESS_URL, LIST_PAYMENT_METHOD } from '@constants';
 import { DataModels } from '@models';
-import { MomoServices, OrderServices, ZaloPayServices } from '@services';
+import {
+  CartServices,
+  MomoServices,
+  OrderServices,
+  ZaloPayServices,
+} from '@services';
 import { PaymentData, PaymentStatus, PaymentType, ZaloPayOrder } from '@types';
 import { DatetimeHelpers, StringHelpers } from '@utils';
 import { ReferenceOptionsStore } from './reference-options-store';
 import { UserStore } from './user-store';
 
 class CartStore {
-  listCartItem: DataModels.ICartItem[] = [
-    {
-      book: TOP_BOOKS[0],
-      count: 1,
-    },
-  ];
+  listCartItem: DataModels.ICartItem[] = [];
   listVoucher: DataModels.IVoucher[] = [];
   listPaymentMethod: DataModels.IPaymentMethod[] = [];
   listVoucherIdSelected: string[] = [];
@@ -33,6 +29,7 @@ class CartStore {
   creditCardSelected: DataModels.ICreditCard | null = null;
   currentOrder: DataModels.IOrder | null = null;
   zaloAppTransId: string = '';
+  currentCart: DataModels.ICart | null = null;
 
   constructor(
     userStore: UserStore,
@@ -49,6 +46,8 @@ class CartStore {
       creditCardSelected: observable,
       currentOrder: observable,
       zaloAppTransId: observable,
+      currentCart: observable,
+      setCurrentCart: action,
       setCreditCardSelected: action,
       setZaloAppTransId: action,
       setPaymentSelected: action,
@@ -64,6 +63,7 @@ class CartStore {
       cartCount: computed,
       shippingAddressData: computed,
       cart: computed,
+      toJsonObject: computed,
     });
 
     this.userStore = userStore;
@@ -75,6 +75,13 @@ class CartStore {
       id: LIST_PAYMENT_METHOD[0].id,
     };
   }
+
+  setCurrentCart(value: DataModels.ICart) {
+    this.currentCart = value;
+  }
+
+  // fromJsonObject(cart: DataModels.ICart) {
+  // }
 
   setCurrentOrder(value: DataModels.IOrder) {
     this.currentOrder = value;
@@ -208,7 +215,7 @@ class CartStore {
   };
 
   get cartCount() {
-    return this.listCartItem.length;
+    return this.currentCart?.listCartItem.length || 0;
   }
 
   get shippingAddressData() {
@@ -347,6 +354,41 @@ class CartStore {
 
     return response;
   };
+
+  get toJsonObject(): DataModels.ICartInput {
+    const cart = this.cart;
+    const data: DataModels.ICartInput = {
+      subTotal: cart.subTotal,
+      shipping: cart.shipping,
+      discount: cart.discount,
+      shippingAddress: cart.shippingAddress,
+      total: cart.total,
+      paymentType: cart.paymentMethod.paymentType,
+      user: '66d821f534d631e25f9066e3',
+      status: 'processing',
+    };
+
+    if (cart.paymentMethod.paymentType === 'credit_card') {
+      data.paymentInfo = cart.paymentMethod.paymentInfo?.id;
+    }
+
+    return data;
+  }
+
+  async createCart(cartInput: DataModels.ICartInput) {
+    const result = await CartServices.createCart(cartInput);
+
+    console.log('result :>> ', result);
+  }
+
+  async fetchCart(userId: string) {
+    const result = await CartServices.fetchCart(userId);
+
+    if (result && result.success && result.data) {
+      console.log('result :>> ', result.data.cart);
+      this.setCurrentCart(result.data.cart);
+    }
+  }
 }
 
 export { CartStore };

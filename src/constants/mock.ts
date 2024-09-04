@@ -595,6 +595,7 @@ const USER: DataModels.IUser = {
   email: 'user@mail.com',
   password: '123123',
   phoneNumber: '09990099',
+  id: '66d821f534d631e25f9066e3',
 };
 
 const LIST_CITY: DataModels.ILocation[] = [

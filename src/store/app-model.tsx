@@ -64,7 +64,10 @@ class AppModel {
       scopes: ['https://www.googleapis.com/auth/drive.readonly'],
     });
 
-    await this.categoryStore.fetchListCategory();
+    this.categoryStore.fetchListCategory();
+    if (this.userStore.authenticated) {
+      this.cartStore.fetchCart('66d821f534d631e25f9066e3');
+    }
   }
 
   async logout() {

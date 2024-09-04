@@ -1,4 +1,10 @@
-import { action, makeObservable, observable, runInAction } from 'mobx';
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+  runInAction,
+} from 'mobx';
 import { DataModels } from '@models';
 import { delay, ListHelpers } from '@utils';
 
@@ -9,6 +15,7 @@ class UserStore {
     makeObservable(this, {
       userProfile: observable,
       setUserProfile: action,
+      authenticated: computed,
     });
   }
 
@@ -46,6 +53,10 @@ class UserStore {
       this.userProfile = { ...this.userProfile, listShippingAddress: list };
     });
   };
+
+  get authenticated() {
+    return Boolean(this.userProfile);
+  }
 }
 
 export { UserStore };
