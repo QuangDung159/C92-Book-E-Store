@@ -339,6 +339,11 @@ const BookDetailScreen = ({ route, navigation }: any) => {
               onPressLeaveReview={() => {
                 setIsShowReviewPopup(true);
               }}
+              onPressColapse={() => {
+                setIsCollapseDescription(false);
+                setIsCollapseInformation(true);
+                setIsCollapseReview(true);
+              }}
             />
           </Collapsible>
           <Layouts.VSpace value={24} />

@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { ProgressBar } from 'react-native-paper';
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
-import { Buttons, Layouts } from '@components';
+import { Buttons, Icons, Layouts } from '@components';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
 import { userStore } from '@store';
@@ -18,11 +18,13 @@ import { COLORS, FONT_STYLES } from '@themes';
 interface ReviewSectionProps {
   book: DataModels.IBook;
   onPressLeaveReview: () => void;
+  onPressColapse?: () => void;
 }
 
 const ReviewSection: React.FC<ReviewSectionProps> = ({
   book,
   onPressLeaveReview,
+  onPressColapse,
 }) => {
   const { width } = Dimensions.get('window');
 
@@ -275,11 +277,40 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
         </View>
       </View>
       <Layouts.VSpace value={24} />
-      {(listReview || []).map((item) => {
-        return (
-          <React.Fragment key={item.id}>{renderComment(item)}</React.Fragment>
-        );
-      })}
+      {listReview?.length > 0 && (
+        <>
+          {listReview.map((item) => {
+            return (
+              <React.Fragment key={item.id}>
+                {renderComment(item)}
+              </React.Fragment>
+            );
+          })}
+          <TouchableOpacity
+            onPress={() => {
+              onPressColapse?.();
+            }}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Text
+                style={{
+                  ...FONT_STYLES.SEMIBOLD_12,
+                }}
+              >
+                Collapse
+              </Text>
+              <Icons.ChevronUpIcon size={20} />
+            </View>
+          </TouchableOpacity>
+          <Layouts.VSpace value={16} />
+        </>
+      )}
       <Buttons.CButton
         label={userStore.userProfile ? 'Leave your review' : 'Please sign in'}
         buttonType="primary"
