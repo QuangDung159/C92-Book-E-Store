@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
-import { Button, ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { ImageAssets } from '@assets';
 import { Layouts, SearchBar } from '@components';
 import { cartStore, searchStore, userStore } from '@store';
@@ -19,12 +19,6 @@ const HomeScreen = ({ navigation }: any) => {
       <SearchBar
         showCartIcon={userStore.authenticated}
         navigation={navigation}
-      />
-      <Button
-        title="asd"
-        onPress={() => {
-          cartStore.fetchCart('66d821f534d631e25f9066e3');
-        }}
       />
       <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}>
         <Layouts.VSpace value={12}></Layouts.VSpace>

@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { Layouts, SearchBar } from '@components';
 import { useNavigate } from '@hooks';
-import { categoryStore, searchStore } from '@store';
+import { categoryStore, searchStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { HorizontalListCard } from 'screens/home/components';
 import { CategoryList } from './components';
@@ -20,7 +20,11 @@ const CategoriesScreen = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
-      <SearchBar showCartIcon navigation={navigation} showSearch />
+      <SearchBar
+        showCartIcon={userStore.authenticated}
+        navigation={navigation}
+        showSearch
+      />
       {categoryStore.categorySelected && (
         <TouchableOpacity
           onPress={() => {
