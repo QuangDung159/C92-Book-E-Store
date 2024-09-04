@@ -43,13 +43,19 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
       <View>
         <View style={styles.listCommentContainer}>
           <View style={styles.commentHeader}>
-            <View style={styles.commentUserNameWrapper}>
-              <Text style={styles.commentUserName}>{review.username[0]}</Text>
-            </View>
+            {review.avartarUrl ? (
+              <></>
+            ) : (
+              <View style={styles.commentUserNameWrapper}>
+                <Text style={styles.commentUserName}>
+                  {review.name.charAt(0)}
+                </Text>
+              </View>
+            )}
             <Layouts.HSpace value={12} />
             <View style={styles.commnetUserNameTextWrapper}>
               <Text style={styles.commentUserFullName} numberOfLines={2}>
-                {review.username}
+                {review.name}
               </Text>
               <Text
                 style={{

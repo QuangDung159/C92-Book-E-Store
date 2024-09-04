@@ -6,4 +6,5 @@ export * from './momo-services';
 export * from './notification-services';
 export * from './order-services';
 export * from './reference-options-services';
+export * from './review-services';
 export * from './zalo-pay-services';
