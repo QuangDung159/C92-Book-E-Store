@@ -272,22 +272,10 @@ const LIST_ADMINITRATIVE_UNIT = [
 ];
 
 const LIST_PAYMENT_METHOD = [
-  {
-    value: 'cod',
-    label: 'Cash on Delivery',
-  },
-  {
-    value: 'momo',
-    label: 'Momo',
-  },
-  {
-    value: 'zalo_pay',
-    label: 'Zalo Pay',
-  },
-  {
-    value: 'credit_card',
-    label: 'Credit Card',
-  },
+  { id: '1', value: 'cod', label: 'Cash on Delivery' },
+  { id: '2', value: 'momo', label: 'Momo' },
+  { id: '3', value: 'zalo_pay', label: 'Zalo Pay' },
+  { id: '4', value: 'credit_card', label: 'Credit Card' },
 ];
 
 const TOP_BOOKS: Array<DataModels.IBook> = [
@@ -316,28 +304,28 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
           '123 asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd',
         createdAt: '12/12/12 12:12:12 PM',
         rating: 4,
-        username: 'asd asd asd asd asd asd asd asd asd asd asd',
+        name: 'asd asd asd asd asd asd asd asd asd asd asd',
         id: '1',
       },
       {
         content: '123 123 123',
         createdAt: '12/12/12 12:12:12 PM',
         rating: 4,
-        username: 'asd 123',
+        name: 'asd 123',
         id: '2',
       },
       {
         content: '123 45 345',
         createdAt: '12/12/12 12:12:12 AM',
         rating: 2,
-        username: 'asd 345',
+        name: 'asd 345',
         id: '3',
       },
       {
         content: '123',
         createdAt: '12/12/12 12:12:12 PM',
         rating: 4,
-        username: 'asd',
+        name: 'asd',
         id: '4',
       },
     ],
@@ -874,6 +862,7 @@ const LIST_ORDER: DataModels.IOrder[] = [
       paymentMethod: {
         paymentInfo: {},
         paymentType: 'cod',
+        id: '1',
       },
       shipping: 12000,
       shippingAddress: '123 123 123',

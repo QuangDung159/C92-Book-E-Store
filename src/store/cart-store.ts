@@ -72,6 +72,7 @@ class CartStore {
 
     this.paymentSelected = {
       paymentType: LIST_PAYMENT_METHOD[0].value as PaymentType,
+      id: LIST_PAYMENT_METHOD[0].id,
     };
   }
 

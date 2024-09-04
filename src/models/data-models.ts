@@ -63,6 +63,7 @@ export interface IShippingAddress {
 }
 
 export interface IPaymentMethod {
+  id: string;
   paymentType: PaymentType;
   paymentInfo?: any | ICreditCard;
 }
