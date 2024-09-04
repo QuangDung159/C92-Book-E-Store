@@ -137,6 +137,7 @@ const CheckoutScreen = ({ navigation }: any) => {
             cartStore.setPaymentSelected({
               paymentType: value as PaymentType,
               paymentInfo: {},
+              id: value,
             });
           }}
           value={cartStore.paymentSelected.paymentType}
@@ -185,6 +186,7 @@ const CheckoutScreen = ({ navigation }: any) => {
               cartStore.setPaymentSelected({
                 paymentType: PAYMENT_TYPE.creditCard as PaymentType,
                 paymentInfo: {},
+                id: value,
               });
 
               cartStore.setCreditCardSelected(value);

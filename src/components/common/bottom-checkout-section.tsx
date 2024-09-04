@@ -9,6 +9,7 @@ interface BottomCheckoutSectionProps {
   priceDisplay: number;
   disabled?: boolean;
   buttonTitle?: string;
+  priceNotSale?: number;
 }
 
 const BottomCheckoutSection: React.FC<BottomCheckoutSectionProps> = ({
@@ -16,14 +17,22 @@ const BottomCheckoutSection: React.FC<BottomCheckoutSectionProps> = ({
   priceDisplay,
   disabled,
   buttonTitle,
+  priceNotSale,
 }) => {
   return (
     <View style={styles.buttonWrapper}>
       <Layouts.VSpace value={10} />
       <View style={styles.totalWrapper}>
-        <Text style={styles.total}>
-          {StringHelpers.formatCurrency(priceDisplay)}
-        </Text>
+        <View style={styles.priceSection}>
+          {priceNotSale !== 0 && (
+            <Text style={styles.notSale}>
+              {StringHelpers.formatCurrency(priceNotSale)}
+            </Text>
+          )}
+          <Text style={styles.total}>
+            {StringHelpers.formatCurrency(priceDisplay)}
+          </Text>
+        </View>
         <Buttons.CButton
           style={styles.buttonStyle}
           onPress={() => onPress?.()}
@@ -51,8 +60,16 @@ const styles = StyleSheet.create({
   total: {
     ...FONT_STYLES.BOLD_22,
   },
+  notSale: {
+    ...FONT_STYLES.REGULAR_16,
+    textDecorationLine: 'line-through',
+  },
   buttonStyle: {
     width: 150,
+  },
+  priceSection: {
+    flexDirection: 'column',
+    alignItems: 'flex-end',
   },
 });
 

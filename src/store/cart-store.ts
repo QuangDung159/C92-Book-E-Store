@@ -29,7 +29,6 @@ class CartStore {
   creditCardSelected: DataModels.ICreditCard | null = null;
   currentOrder: DataModels.IOrder | null = null;
   zaloAppTransId: string = '';
-  currentCart: DataModels.ICart | null = null;
 
   constructor(
     userStore: UserStore,
@@ -46,8 +45,6 @@ class CartStore {
       creditCardSelected: observable,
       currentOrder: observable,
       zaloAppTransId: observable,
-      currentCart: observable,
-      setCurrentCart: action,
       setCreditCardSelected: action,
       setZaloAppTransId: action,
       setPaymentSelected: action,
@@ -74,10 +71,6 @@ class CartStore {
       paymentType: LIST_PAYMENT_METHOD[0].value as PaymentType,
       id: LIST_PAYMENT_METHOD[0].id,
     };
-  }
-
-  setCurrentCart(value: DataModels.ICart) {
-    this.currentCart = value;
   }
 
   // fromJsonObject(cart: DataModels.ICart) {
@@ -150,6 +143,18 @@ class CartStore {
     return subTotalValue;
   }
 
+  get subPriceNotSale() {
+    let subTotalValue = 0;
+
+    const list = [...this.listCartItem];
+
+    list.forEach((item) => {
+      subTotalValue += item.book.priceNotSale * item.count;
+    });
+
+    return subTotalValue;
+  }
+
   get total() {
     return (
       this.subTotal +
@@ -215,7 +220,7 @@ class CartStore {
   };
 
   get cartCount() {
-    return this.currentCart?.listCartItem.length || 0;
+    return this.listCartItem.length || 0;
   }
 
   get shippingAddressData() {
@@ -385,8 +390,7 @@ class CartStore {
     const result = await CartServices.fetchCart(userId);
 
     if (result && result.success && result.data) {
-      console.log('result :>> ', result.data.cart);
-      this.setCurrentCart(result.data.cart);
+      this.setListCartItem(result.data.cart?.listCartItem || []);
     }
   }
 }

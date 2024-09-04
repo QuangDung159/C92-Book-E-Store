@@ -43,6 +43,11 @@ const CartScreen = ({ navigation }: any) => {
         onPress={openCheckoutScreen}
         priceDisplay={cartStore.subTotal}
         disabled={cartStore.cartCount === 0}
+        priceNotSale={
+          cartStore.subPriceNotSale !== cartStore.subTotal
+            ? cartStore.subPriceNotSale
+            : 0
+        }
       />
     </View>
   );
