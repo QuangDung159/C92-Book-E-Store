@@ -3,26 +3,41 @@ import React, { useRef } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import StarRating from 'react-native-star-rating-widget';
 import { Buttons, Inputs, Layouts } from '@components';
-import { DataModels } from '@models';
 import { COLORS, FONT_STYLES } from '@themes';
+import { delay, ToastHelpers } from '@utils';
 import { ReviewViewModel } from '../view-models';
 
 interface ReviewPopupProps {
   visible: boolean;
   onDismiss: () => void;
-  onSubmit: (data: DataModels.IReviewInput) => void;
+  onSubmitSuccess: () => void;
+  bookId: string;
 }
 
 const ReviewPopup: React.FC<ReviewPopupProps> = ({
   visible,
   onDismiss,
-  onSubmit,
+  bookId,
+  onSubmitSuccess,
 }) => {
   const reviewVM = useRef(new ReviewViewModel()).current;
 
   const closePopup = () => {
     onDismiss();
     reviewVM.resetReview();
+  };
+
+  const onSubmitReview = async () => {
+    const result = await reviewVM.submitReview();
+
+    if (result && result.success) {
+      ToastHelpers.showToast({
+        title: 'Success',
+      });
+      closePopup();
+      await delay(1000);
+      onSubmitSuccess?.();
+    }
   };
 
   return (
@@ -35,7 +50,8 @@ const ReviewPopup: React.FC<ReviewPopupProps> = ({
           onChangeText={(value) => {
             reviewVM.setReview({
               ...reviewVM.review,
-              username: value,
+              name: value,
+              book: bookId,
             });
           }}
         />
@@ -72,8 +88,7 @@ const ReviewPopup: React.FC<ReviewPopupProps> = ({
       <Buttons.CButton
         label="Submit"
         onPress={() => {
-          closePopup();
-          onSubmit(reviewVM.review);
+          onSubmitReview();
         }}
         buttonType="primary"
       />

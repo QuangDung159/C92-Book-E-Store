@@ -44,12 +44,17 @@ const BookDetailScreen = ({ route, navigation }: any) => {
 
   const loadDetail = useCallback(async () => {
     setBookInfo(book);
-
     if (book?.id) {
       const result = await BookServices.fetchBookDetail(book?.id);
 
       if (result?.data?.book) {
-        const bookData = result.data.book;
+        const bookData = result.data.book as DataModels.IBook;
+
+        let rating = 0;
+        bookData.reviews.forEach((item) => {
+          rating += item.rating;
+        });
+
         const bookDetail: DataModels.IBook = {
           ...bookData,
           reviews: bookData.reviews.map(
@@ -59,6 +64,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
                 username: item.user?.username,
               }) as DataModels.IReview,
           ),
+          rating: +(rating / bookData.reviews.length).toFixed(1),
         };
         setBookInfo(bookDetail);
       }
@@ -105,8 +111,9 @@ const BookDetailScreen = ({ route, navigation }: any) => {
         onDismiss={() => {
           setIsShowReviewPopup(false);
         }}
-        onSubmit={(data) => {
-          console.log('data :>> ', data);
+        bookId={bookInfo?.id}
+        onSubmitSuccess={() => {
+          loadDetail();
         }}
       />
       {bookInfo && (
@@ -331,6 +338,11 @@ const BookDetailScreen = ({ route, navigation }: any) => {
               book={bookInfo}
               onPressLeaveReview={() => {
                 setIsShowReviewPopup(true);
+              }}
+              onPressColapse={() => {
+                setIsCollapseDescription(false);
+                setIsCollapseInformation(true);
+                setIsCollapseReview(true);
               }}
             />
           </Collapsible>

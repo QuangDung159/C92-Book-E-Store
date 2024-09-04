@@ -10,15 +10,17 @@ export interface IReviewInput {
   rating: number;
   createdAt: string; // MM/dd/yyyy hh:mm:ss tt
   content: string;
-  username: string;
+  name: string;
+  avartarUrl?: string;
+  book: string;
 }
 
 export interface IReview {
   rating: number;
   createdAt: string; // MM/dd/yyyy hh:mm:ss tt
   content: string;
-  username: string;
-  avartar?: string;
+  name: string;
+  avartarUrl?: string;
   id: string;
 }
 export interface IBook {
