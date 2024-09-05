@@ -204,7 +204,8 @@ const SearchScreen = ({ route, navigation }: any) => {
         }}
       />
       <SearchBar
-        showCartIcon={userStore.authenticated}
+        showCartIcon={true}
+        // showCartIcon={userStore.authenticated}
         showBackIcon
         navigation={navigation}
         autoFocus={route?.params?.autoFocus}

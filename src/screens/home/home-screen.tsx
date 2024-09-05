@@ -11,7 +11,8 @@ const HomeScreen = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
       <SearchBar
-        showCartIcon={userStore.authenticated}
+        showCartIcon={true}
+        // showCartIcon={userStore.authenticated}
         navigation={navigation}
       />
       <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}>

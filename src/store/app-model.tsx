@@ -65,6 +65,7 @@ class AppModel {
     });
 
     this.categoryStore.fetchListCategory();
+    this.cartStore.fetchCart('66d821f534d631e25f9066e3');
     if (this.userStore.authenticated) {
       this.cartStore.fetchCart('66d821f534d631e25f9066e3');
     }

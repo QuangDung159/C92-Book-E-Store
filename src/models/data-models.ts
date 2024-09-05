@@ -1,5 +1,6 @@
 import { ERROR_CODES } from '@constants';
 import {
+  CartStatus,
   OrderStatus,
   PaymentCardType,
   PaymentStatus,
@@ -99,7 +100,7 @@ export interface ICart {
   paymentType?: string;
   paymentInfo?: string;
   total?: number;
-  status?: string;
+  status?: CartStatus;
   user?: string;
 }
 

@@ -31,13 +31,9 @@ type ZaloPayOrder = {
   description: string;
 };
 
-type PaymentStatus = 'success' | 'fail' | 'waiting-for-pay' | 'in-cart';
-type OrderStatus =
-  | 'completed'
-  | 'canceled'
-  | 'processing'
-  | 'created'
-  | 'in-cart';
+type PaymentStatus = 'success' | 'fail' | 'waiting-for-pay';
+type OrderStatus = 'completed' | 'canceled' | 'processing' | 'created';
+type CartStatus = 'done' | 'processing';
 
 type NotificationParam = {
   sound?: string;
@@ -74,10 +70,11 @@ type PaymentCardType = 'master-card' | 'jcb' | 'visa';
 
 export {
   AdministrativeUnitEnum,
-  PaymentCardType,
+  CartStatus,
   GoogleUser,
   NotificationParam,
   OrderStatus,
+  PaymentCardType,
   PaymentData,
   PaymentStatus,
   PaymentType,

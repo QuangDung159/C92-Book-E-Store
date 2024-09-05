@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 import { Divider } from 'react-native-paper';
 import { BottomCheckoutSection, Layouts, ScreenHeader } from '@components';
 import { useNavigate } from '@hooks';
@@ -11,6 +11,21 @@ import { ListCartItem } from './components/list-cart-item';
 
 const CartScreen = ({ navigation }: any) => {
   const { openCheckoutScreen } = useNavigate(navigation);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onFecthCart = async () => {
+    await cartStore.fetchCart('66d821f534d631e25f9066e3');
+  };
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await onFecthCart();
+    setRefreshing(false);
+  };
+
+  useEffect(() => {
+    onFecthCart();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -23,6 +38,9 @@ const CartScreen = ({ navigation }: any) => {
         scrollEnabled={true}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.wrapper}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       >
         <ListCartItem listItem={cartStore.listCartItem} />
         <Divider />
