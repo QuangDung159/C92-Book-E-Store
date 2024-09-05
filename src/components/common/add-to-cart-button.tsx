@@ -4,7 +4,7 @@ import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { Buttons, Icons, Layouts } from '@components';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
-import { cartStore, searchStore } from '@store';
+import { cartStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { ToastHelpers } from '@utils';
 
@@ -30,11 +30,6 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
     cartStore.addToCart({
       book: bookCardItem,
       count: itemCount,
-    });
-
-    searchStore.updateBookItem({
-      ...bookCardItem,
-      count: 1,
     });
 
     ToastHelpers.showToast({

@@ -182,7 +182,7 @@ class CartStore {
 
   createCartItem = async (cartItem: DataModels.ICartItem) => {
     const result = await CartServices.createCartItem({
-      count: 1,
+      count: cartItem.count,
       book: cartItem.book.id,
       cart: this.cart.id,
     });
