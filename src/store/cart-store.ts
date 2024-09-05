@@ -14,7 +14,7 @@ import {
   ZaloPayServices,
 } from '@services';
 import { PaymentData, PaymentStatus, PaymentType, ZaloPayOrder } from '@types';
-import { DatetimeHelpers, StringHelpers } from '@utils';
+import { DatetimeHelpers, delay, StringHelpers } from '@utils';
 import { ReferenceOptionsStore } from './reference-options-store';
 import { UserStore } from './user-store';
 
@@ -180,35 +180,56 @@ class CartStore {
     };
   };
 
-  addToCart = async (addToCartItem: DataModels.ICartItem) => {
-    runInAction(async () => {
-      const cartItemExist = this.getCartItemByBook(
-        addToCartItem.book.id,
-      )?.cartItem;
-
-      if (cartItemExist) {
-        // update count
-        const result = await CartServices.updateCartItem({
-          id: cartItemExist.id,
-          count: addToCartItem.count + cartItemExist.count,
-        });
-
-        if (result?.success) {
-          this.fetchCart('66d821f534d631e25f9066e3');
-        }
-      } else {
-        // add new cart item
-        const result = await CartServices.createCartItem({
-          count: 1,
-          book: addToCartItem.book.id,
-          cart: this.cart.id,
-        });
-
-        if (result?.success) {
-          this.fetchCart('66d821f534d631e25f9066e3');
-        }
-      }
+  createCartItem = async (cartItem: DataModels.ICartItem) => {
+    const result = await CartServices.createCartItem({
+      count: 1,
+      book: cartItem.book.id,
+      cart: this.cart.id,
     });
+
+    if (result?.success) {
+      this.fetchCart('66d821f534d631e25f9066e3');
+    }
+  };
+
+  addToCart = async (addToCartItem: DataModels.ICartItem) => {
+    if (this.cart) {
+      // user have cart in processing
+      runInAction(async () => {
+        const cartItemExist = this.getCartItemByBook(
+          addToCartItem.book.id,
+        )?.cartItem;
+
+        if (cartItemExist) {
+          // update count
+          const result = await CartServices.updateCartItem({
+            id: cartItemExist.id,
+            count: addToCartItem.count + cartItemExist.count,
+          });
+
+          if (result?.success) {
+            this.fetchCart('66d821f534d631e25f9066e3');
+          }
+        } else {
+          // add new cart item
+          this.createCartItem(addToCartItem);
+        }
+      });
+    } else {
+      // user don't have cart in processing
+      runInAction(async () => {
+        const result = await this.createCart({
+          user: '66d821f534d631e25f9066e3',
+          status: 'processing',
+        });
+
+        await delay(1000);
+
+        if (result?.success) {
+          this.createCartItem(addToCartItem);
+        }
+      });
+    }
   };
 
   deleteCartItem = async (id: string) => {
@@ -384,6 +405,8 @@ class CartStore {
     if (result?.success && result.data) {
       this.setCart(result.data.cart);
     }
+
+    return result;
   }
 
   async fetchCart(userId: string) {
