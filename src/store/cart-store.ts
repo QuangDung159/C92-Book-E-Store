@@ -29,6 +29,7 @@ class CartStore {
   creditCardSelected: DataModels.ICreditCard | null = null;
   currentOrder: DataModels.IOrder | null = null;
   zaloAppTransId: string = '';
+  cart: DataModels.ICart | null = null;
 
   constructor(
     userStore: UserStore,
@@ -45,6 +46,8 @@ class CartStore {
       creditCardSelected: observable,
       currentOrder: observable,
       zaloAppTransId: observable,
+      cart: observable,
+      setCart: action,
       setCreditCardSelected: action,
       setZaloAppTransId: action,
       setPaymentSelected: action,
@@ -59,7 +62,6 @@ class CartStore {
       shipping: computed,
       cartCount: computed,
       shippingAddressData: computed,
-      cart: computed,
       toJsonObject: computed,
     });
 
@@ -73,8 +75,9 @@ class CartStore {
     };
   }
 
-  // fromJsonObject(cart: DataModels.ICart) {
-  // }
+  setCart(value: DataModels.ICart) {
+    this.cart = value;
+  }
 
   setCurrentOrder(value: DataModels.IOrder) {
     this.currentOrder = value;
@@ -178,45 +181,55 @@ class CartStore {
   };
 
   addToCart = async (addToCartItem: DataModels.ICartItem) => {
-    runInAction(() => {
+    runInAction(async () => {
       const cartItemExist = this.getCartItemByBook(addToCartItem.book.id);
-
-      const list = [...this.listCartItem];
 
       if (cartItemExist.cartItem) {
         const cartItemUpdate = cartItemExist.cartItem;
 
         cartItemUpdate.count = cartItemUpdate.count + addToCartItem.count;
 
-        list.splice(cartItemExist.index, 1, cartItemUpdate);
+        // update cout
+        const result = await CartServices.updateCartItem({
+          id: cartItemUpdate.id,
+          count: cartItemUpdate.count,
+        });
+
+        if (result?.success) {
+          this.fetchCart('66d821f534d631e25f9066e3');
+        }
       } else {
-        list.push(addToCartItem);
+        // add new cart item
+        const result = await CartServices.createCartItem({
+          count: 1,
+          book: addToCartItem.book.id,
+          cart: this.cart.id,
+        });
+
+        if (result?.success) {
+          this.fetchCart('66d821f534d631e25f9066e3');
+        }
       }
-      this.listCartItem = list;
     });
   };
 
-  removeCartItem = async (
-    cartItem: DataModels.ICartItem,
-    removeCount: number,
-  ) => {
-    runInAction(() => {
-      const cartItemExist = this.getCartItemByBook(cartItem.book.id);
+  deleteCartItem = async (id: string) => {
+    const result = await CartServices.deleteCartItem(id);
 
-      let list = [...this.listCartItem];
+    if (result?.success) {
+      this.fetchCart('66d821f534d631e25f9066e3');
+    }
+  };
 
-      if (cartItemExist.cartItem) {
-        const cartItemUpdate = cartItemExist.cartItem;
-
-        if (removeCount >= cartItemUpdate.count) {
-          list.splice(cartItemExist.index, 1);
-        } else {
-          cartItemUpdate.count = cartItemUpdate.count - removeCount;
-          list = list.splice(cartItemExist.index, 1, cartItemUpdate);
-        }
-      }
-      this.listCartItem = list;
+  decreaseCartItem = async (cartItem: DataModels.ICartItem) => {
+    const result = await CartServices.updateCartItem({
+      ...cartItem,
+      count: cartItem.count - 1,
     });
+
+    if (result?.success) {
+      this.fetchCart('66d821f534d631e25f9066e3');
+    }
   };
 
   get cartCount() {
@@ -229,22 +242,6 @@ class CartStore {
     ).find((item) => item.primary);
 
     return shippingAddress;
-  }
-
-  get cart() {
-    const cart: DataModels.ICart = {
-      discount: this.discount,
-      id: StringHelpers.genLocalId(),
-      listCartItem: this.listCartItem,
-      paymentMethod: this.paymentSelected,
-      shipping: this.shipping,
-      // shippingAddress: StringHelpers.getFullAddress(this.shippingAddressData),
-      shippingAddress: 'aas duong',
-      subTotal: this.subTotal,
-      total: this.total,
-    };
-
-    return cart;
   }
 
   createOrder = async () => {
@@ -383,14 +380,19 @@ class CartStore {
   async createCart(cartInput: DataModels.ICartInput) {
     const result = await CartServices.createCart(cartInput);
 
-    console.log('result :>> ', result);
+    if (result?.success && result.data) {
+      this.setCart(result.data.cart);
+    }
   }
 
   async fetchCart(userId: string) {
     const result = await CartServices.fetchCart(userId);
 
     if (result && result.success && result.data) {
-      this.setListCartItem(result.data.cart?.listCartItem || []);
+      const data = result.data;
+
+      this.setCart(data.cart);
+      this.setListCartItem(data.cart?.listCartItem || []);
     }
   }
 }

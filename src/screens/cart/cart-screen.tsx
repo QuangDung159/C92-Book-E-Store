@@ -32,7 +32,6 @@ const CartScreen = ({ navigation }: any) => {
       <ScreenHeader
         title={`Cart (${cartStore.cartCount})`}
         navigation={navigation}
-        onGoBack={() => {}}
       />
       <ScrollView
         scrollEnabled={true}

@@ -96,10 +96,7 @@ const CartItem: React.FC<CartItemProps> = ({
                   <Layouts.MaxSpace />
                   <Icons.CloseIcon
                     onPress={() => {
-                      cartStore.removeCartItem(
-                        bookCartItem,
-                        bookCartItem.count,
-                      );
+                      cartStore.deleteCartItem(bookCartItem.id);
                     }}
                   />
                 </>

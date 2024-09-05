@@ -1,16 +1,42 @@
 import { DataModels } from '@models';
 import { HttpServices } from './http-services';
 
-const baseUrl = process.env.EXPO_PUBLIC_BASE_URL + '/cart';
+const cartBaseUrl = process.env.EXPO_PUBLIC_BASE_URL + '/cart';
+const cartItemBaseUrl = process.env.EXPO_PUBLIC_BASE_URL + '/cart-item';
 
 const createCart = async (cartInput: DataModels.ICartInput) => {
-  const result = await HttpServices.post(baseUrl + '/create-one', cartInput);
+  const result = await HttpServices.post(
+    cartBaseUrl + '/create-one',
+    cartInput,
+  );
 
-  console.log('result :>> ', result);
+  return result;
 };
 
 const fetchCart = async (userId: string) => {
-  return await HttpServices.get(baseUrl + `/get?userId=${userId}`);
+  return await HttpServices.get(cartBaseUrl + `/get?userId=${userId}`);
 };
 
-export const CartServices = { createCart, fetchCart };
+const updateCartItem = async (params: any) => {
+  return await HttpServices.post(cartItemBaseUrl + '/update-one', params);
+};
+
+const createCartItem = async (params: {
+  count: number;
+  cart: string;
+  book: string;
+}) => {
+  return await HttpServices.post(cartItemBaseUrl + '/create-one', params);
+};
+
+const deleteCartItem = async (id: string) => {
+  return await HttpServices.post(cartItemBaseUrl + '/delete-one', { id });
+};
+
+export const CartServices = {
+  createCart,
+  fetchCart,
+  updateCartItem,
+  createCartItem,
+  deleteCartItem,
+};
