@@ -50,7 +50,7 @@ const CODE_PUSH_NUMBER = '1725119569';
 const PAYMENT_STATUS = {
   success: 'success',
   fail: 'fail',
-  waitingForPay: 'waiting_for_pay',
+  waitingForPay: 'waiting-for-pay',
 };
 
 const DEEP_LINK_URL = 'c92bookestorev1:///';

@@ -31,8 +31,13 @@ type ZaloPayOrder = {
   description: string;
 };
 
-type PaymentStatus = 'success' | 'fail' | 'waiting_for_pay';
-type OrderStatus = 'completed' | 'canceled' | 'processing' | 'created';
+type PaymentStatus = 'success' | 'fail' | 'waiting-for-pay' | 'in-cart';
+type OrderStatus =
+  | 'completed'
+  | 'canceled'
+  | 'processing'
+  | 'created'
+  | 'in-cart';
 
 type NotificationParam = {
   sound?: string;
