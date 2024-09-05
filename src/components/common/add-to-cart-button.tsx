@@ -29,7 +29,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   const onAddToCart = () => {
     cartStore.addToCart({
       book: bookCardItem,
-      count: bookCardItem.count,
+      count: itemCount,
     });
 
     searchStore.updateBookItem({
@@ -50,12 +50,12 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
         <View style={styles.addToCart}>
           <Icons.MinusIcon
             disabled={itemCount === 1}
-            onPress={() => onUpdateCount(-1)}
+            onPress={() => onUpdateCount?.(itemCount - 1)}
             color={COLORS.primaryWhite}
           />
           <Text style={styles.cartNumber}>{itemCount}</Text>
           <Icons.PlusIcon
-            onPress={() => onUpdateCount(1)}
+            onPress={() => onUpdateCount?.(itemCount + 1)}
             disabled={itemCount >= bookCardItem.stock}
             color={COLORS.primaryWhite}
           />

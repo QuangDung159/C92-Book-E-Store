@@ -23,7 +23,7 @@ const CartUpdateNumber: React.FC<CartUpdateNumberProps> = ({
           <Icons.MinusIcon
             color={COLORS.primaryWhite}
             onPress={() => {
-              cartStore.decreaseCartItem(bookCartItem);
+              cartStore.adjustCartItemCount(bookCartItem, -1);
             }}
             disabled={itemCount <= 1}
           />
@@ -32,10 +32,7 @@ const CartUpdateNumber: React.FC<CartUpdateNumberProps> = ({
             disabled={itemCount >= bookCartItem.book.stock}
             color={COLORS.primaryWhite}
             onPress={() => {
-              cartStore.addToCart({
-                ...bookCartItem,
-                count: 1,
-              });
+              cartStore.adjustCartItemCount(bookCartItem, 1);
             }}
           />
         </View>

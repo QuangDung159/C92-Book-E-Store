@@ -182,17 +182,15 @@ class CartStore {
 
   addToCart = async (addToCartItem: DataModels.ICartItem) => {
     runInAction(async () => {
-      const cartItemExist = this.getCartItemByBook(addToCartItem.book.id);
+      const cartItemExist = this.getCartItemByBook(
+        addToCartItem.book.id,
+      )?.cartItem;
 
-      if (cartItemExist.cartItem) {
-        const cartItemUpdate = cartItemExist.cartItem;
-
-        cartItemUpdate.count = cartItemUpdate.count + addToCartItem.count;
-
-        // update cout
+      if (cartItemExist) {
+        // update count
         const result = await CartServices.updateCartItem({
-          id: cartItemUpdate.id,
-          count: cartItemUpdate.count,
+          id: cartItemExist.id,
+          count: addToCartItem.count + cartItemExist.count,
         });
 
         if (result?.success) {
@@ -221,10 +219,13 @@ class CartStore {
     }
   };
 
-  decreaseCartItem = async (cartItem: DataModels.ICartItem) => {
+  adjustCartItemCount = async (
+    cartItem: DataModels.ICartItem,
+    adjustType: 1 | -1,
+  ) => {
     const result = await CartServices.updateCartItem({
       ...cartItem,
-      count: cartItem.count - 1,
+      count: cartItem.count + adjustType,
     });
 
     if (result?.success) {
