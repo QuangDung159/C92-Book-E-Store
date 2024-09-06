@@ -242,11 +242,11 @@ class CartStore {
 
   adjustCartItemCount = async (
     cartItem: DataModels.ICartItem,
-    adjustType: 1 | -1,
+    count: number,
   ) => {
     const result = await CartServices.updateCartItem({
       ...cartItem,
-      count: cartItem.count + adjustType,
+      count: cartItem.count + count,
     });
 
     if (result?.success) {
