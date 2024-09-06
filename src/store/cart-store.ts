@@ -92,9 +92,9 @@ class CartStore {
     this.zaloAppTransId = value;
   }
 
-  setCreditCardSelected(cardNumber: string) {
+  setCreditCardSelected(id: string) {
     const creditCard = (this.userStore.userProfile?.listCreditCard || []).find(
-      (item) => item.cardNumber === cardNumber,
+      (item) => item.id === id,
     );
 
     if (creditCard) {
@@ -193,7 +193,9 @@ class CartStore {
     });
 
     if (result?.success) {
-      this.fetchCart('66d821f534d631e25f9066e3');
+      if (this.userStore.authenticated) {
+        this.fetchCart(this.userStore.userProfile.id);
+      }
     }
   };
 
@@ -213,7 +215,9 @@ class CartStore {
           });
 
           if (result?.success) {
-            this.fetchCart('66d821f534d631e25f9066e3');
+            if (this.userStore.authenticated) {
+              this.fetchCart(this.userStore.userProfile.id);
+            }
           }
         } else {
           // add new cart item
@@ -224,7 +228,7 @@ class CartStore {
       // user don't have cart in processing
       runInAction(async () => {
         const result = await this.createCart({
-          user: '66d821f534d631e25f9066e3',
+          user: this.userStore.userProfile.id,
           status: 'processing',
         });
 
@@ -241,7 +245,9 @@ class CartStore {
     const result = await CartServices.deleteCartItem(id);
 
     if (result?.success) {
-      this.fetchCart('66d821f534d631e25f9066e3');
+      if (this.userStore.authenticated) {
+        this.fetchCart(this.userStore.userProfile.id);
+      }
     }
   };
 
@@ -255,7 +261,9 @@ class CartStore {
     });
 
     if (result?.success) {
-      this.fetchCart('66d821f534d631e25f9066e3');
+      if (this.userStore.authenticated) {
+        this.fetchCart(this.userStore.userProfile.id);
+      }
     }
   };
 
@@ -460,7 +468,9 @@ class CartStore {
 
     this.clearAllCurrentPaymentInfo();
 
-    this.fetchCart('66d821f534d631e25f9066e3');
+    if (this.userStore.authenticated) {
+      this.fetchCart(this.userStore.userProfile.id);
+    }
   }
 }
 

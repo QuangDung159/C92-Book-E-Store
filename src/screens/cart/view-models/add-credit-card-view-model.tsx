@@ -29,13 +29,13 @@ class AddCreditCardViewModel {
     this.cardNumber = value;
   }
 
-  async addCreditCard() {
+  async addCreditCard(userId: string) {
     const result = await AuthenticationServices.createCreditCard({
       cardHolder: this.cardHolder,
       cardNumber: this.cardNumber,
       cardType: 'master-card',
       expirationDate: this.expirationDate,
-      user: '66d821f534d631e25f9066e3',
+      user: userId,
     });
 
     if (result?.success) {

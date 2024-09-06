@@ -11,6 +11,7 @@ import { delay, ToastHelpers } from '@utils';
 import { HttpServices } from './http-services';
 
 const creditCardUrl = process.env.EXPO_PUBLIC_BASE_URL + '/credit-card';
+const userUrl = process.env.EXPO_PUBLIC_BASE_URL + '/user';
 
 const signUp = async () => {
   // await delay(1000);
@@ -122,6 +123,10 @@ const createCreditCard = async (params: DataModels.ICreditCardParams) => {
   return await HttpServices.post(creditCardUrl + '/create-one', params);
 };
 
+const fetchUser = async (userId: string) => {
+  return await HttpServices.get(userUrl + '/' + userId);
+};
+
 export const AuthenticationServices = {
   signUp,
   sendVerificationCode,
@@ -131,4 +136,5 @@ export const AuthenticationServices = {
   facebookSignIn,
   facebookSignOut,
   createCreditCard,
+  fetchUser,
 };

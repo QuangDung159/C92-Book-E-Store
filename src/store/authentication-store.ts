@@ -138,6 +138,17 @@ class AuthenticationStore {
       });
     }
   };
+
+  fetchUser = async () => {
+    const result = await AuthenticationServices.fetchUser(
+      '66d821f534d631e25f9066e3',
+    );
+
+    if (result?.success) {
+      const user = result.data?.user;
+      this.userStore.setUserProfile(user);
+    }
+  };
 }
 
 export { AuthenticationStore };

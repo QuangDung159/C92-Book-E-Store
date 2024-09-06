@@ -25,7 +25,7 @@ const CreditCardItem: React.FC<CreditCardItemProps> = ({ cardItem }) => {
   return (
     <View style={styles.container}>
       <Layouts.HSpace value={20} />
-      <RadioButton.Android value={cardItem.cardNumber} />
+      <RadioButton.Android value={cardItem.id} />
       <Layouts.HSpace value={12} />
       {getCardTypeIcon()}
       <Layouts.HSpace value={12} />

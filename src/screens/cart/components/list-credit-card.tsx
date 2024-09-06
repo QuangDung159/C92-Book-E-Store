@@ -24,7 +24,7 @@ const ListCreditCard: React.FC<ListCreditCardProps> = ({
         <RadioButton.Group onValueChange={onValueChange} value={selectedValue}>
           {listCreditCard.map((item) => {
             return (
-              <React.Fragment key={item.cardNumber}>
+              <React.Fragment key={item.id}>
                 <CreditCardItem cardItem={item} />
               </React.Fragment>
             );

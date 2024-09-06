@@ -63,12 +63,6 @@ class AppModel {
       iosClientId: process.env.EXPO_PUBLIC_IOS_CLIENT_ID,
       scopes: ['https://www.googleapis.com/auth/drive.readonly'],
     });
-
-    this.categoryStore.fetchListCategory();
-    this.cartStore.fetchCart('66d821f534d631e25f9066e3');
-    if (this.userStore.authenticated) {
-      this.cartStore.fetchCart('66d821f534d631e25f9066e3');
-    }
   }
 
   async logout() {
@@ -89,6 +83,14 @@ class AppModel {
     this.searchStore.fetchListBookHomePage(LIST_HOME_PAGE_TITLE.latest);
     this.searchStore.fetchListBookHomePage(LIST_HOME_PAGE_TITLE.topBook);
     this.searchStore.fetchListBookHomePage(LIST_HOME_PAGE_TITLE.upcomming);
+
+    this.categoryStore.fetchListCategory();
+
+    await this.authenticationStore.fetchUser();
+
+    if (this.userStore.authenticated) {
+      await this.cartStore.fetchCart(this.userStore.userProfile.id);
+    }
   }
 }
 

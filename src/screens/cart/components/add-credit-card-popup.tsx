@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Buttons, Inputs, Layouts } from '@components';
+import { userStore } from '@store';
 import { FONT_STYLES } from '@themes';
 import { PopupHeader } from 'components/layouts';
 import { AddCreditCardViewModel } from '../view-models';
@@ -49,7 +50,9 @@ const AddCreditCardPopup: React.FC<AddCreditCardPopupProps> = ({
         <Buttons.CButton
           label="Submit"
           onPress={() => {
-            addCreditCardVM.addCreditCard();
+            if (userStore.authenticated) {
+              addCreditCardVM.addCreditCard(userStore.userProfile?.id);
+            }
             onDismiss();
           }}
           buttonType="primary"

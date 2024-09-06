@@ -235,7 +235,7 @@ const CheckoutScreen = ({ navigation }: any) => {
 
               cartStore.setCreditCardSelected(value);
             }}
-            selectedValue={cartStore.creditCardSelected?.cardNumber}
+            selectedValue={cartStore.creditCardSelected?.id}
             onPressAddCreditCard={() => {
               setShowAddCreditCardPopup(true);
             }}

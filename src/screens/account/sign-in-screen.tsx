@@ -10,7 +10,13 @@ import {
 } from 'react-native';
 import { Buttons, Inputs, Layouts, ScreenHeader } from '@components';
 import { useNavigate } from '@hooks';
-import { appModel, authenticationStore, cartStore, sharedStore } from '@store';
+import {
+  appModel,
+  authenticationStore,
+  cartStore,
+  sharedStore,
+  userStore,
+} from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { SignInViewModel } from './view-models';
 
@@ -29,7 +35,10 @@ const SignInScreen = ({ navigation }: any) => {
 
     sharedStore.setShowLoading(true);
     await authenticationStore.signIn(signInVM.username, signInVM.password);
-    await cartStore.fetchCart('66d821f534d631e25f9066e3');
+
+    if (userStore.authenticated) {
+      await cartStore.fetchCart(userStore.userProfile.id);
+    }
     sharedStore.setShowLoading(false);
     openHomeScreen();
   };

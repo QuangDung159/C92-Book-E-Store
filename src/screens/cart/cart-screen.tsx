@@ -4,7 +4,7 @@ import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 import { Divider } from 'react-native-paper';
 import { BottomCheckoutSection, Layouts, ScreenHeader } from '@components';
 import { useNavigate } from '@hooks';
-import { cartStore, searchStore } from '@store';
+import { cartStore, searchStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { HorizontalListCard } from 'screens/home/components';
 import { ListCartItem } from './components/list-cart-item';
@@ -14,7 +14,9 @@ const CartScreen = ({ navigation }: any) => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onFecthCart = async () => {
-    await cartStore.fetchCart('66d821f534d631e25f9066e3');
+    if (userStore.authenticated) {
+      await cartStore.fetchCart(userStore.userProfile.id);
+    }
   };
 
   const onRefresh = async () => {
