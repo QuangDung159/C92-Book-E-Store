@@ -573,18 +573,21 @@ const LIST_VOUCHER: DataModels.IVoucher[] = [
 const LIST_CREDIT_CARD: DataModels.ICreditCard[] = [
   {
     cardHolder: 'LU QUANG DUNG',
-    cartType: 'visa',
+    cardType: 'visa',
     cardNumber: '3214xxxxxxxx2345',
+    expirationDate: '123123',
   },
   {
     cardHolder: 'LU QUANG DUNG',
-    cartType: 'jcb',
+    cardType: 'jcb',
     cardNumber: '3212xxxxxxxx2344',
+    expirationDate: '123123',
   },
   {
     cardHolder: 'LU QUANG DUNG',
-    cartType: 'master-card',
+    cardType: 'master-card',
     cardNumber: '3214xxxxxxxx2345',
+    expirationDate: '123123',
   },
 ];
 
@@ -595,6 +598,7 @@ const USER: DataModels.IUser = {
   email: 'user@mail.com',
   password: '123123',
   phoneNumber: '09990099',
+  id: '66d821f534d631e25f9066e3',
 };
 
 const LIST_CITY: DataModels.ILocation[] = [

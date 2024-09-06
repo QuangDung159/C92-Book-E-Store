@@ -1,5 +1,6 @@
 import { ERROR_CODES } from '@constants';
 import {
+  CartStatus,
   OrderStatus,
   PaymentCardType,
   PaymentStatus,
@@ -75,6 +76,19 @@ export interface IVoucher {
   discountValue: number;
 }
 
+export interface ICartParams {
+  subTotal?: number;
+  shipping?: number;
+  discount?: number;
+  shippingAddress?: string;
+  paymentType?: string;
+  paymentInfo?: string;
+  total?: number;
+  status: string;
+  user?: string;
+  id?: string;
+}
+
 export interface ICart {
   id: string;
   listCartItem: ICartItem[];
@@ -82,8 +96,12 @@ export interface ICart {
   shipping: number;
   discount: number;
   shippingAddress: string;
-  paymentMethod: IPaymentMethod;
+  paymentMethod?: IPaymentMethod;
+  paymentType?: string;
+  paymentInfo?: string;
   total?: number;
+  status?: CartStatus;
+  user?: string;
 }
 
 export interface ITopBooksFilter {
@@ -134,10 +152,21 @@ export interface IReferenceOptions {
   extraData?: any;
 }
 
-export interface ICreditCard {
+export interface ICreditCardParams {
+  id?: string;
   cardNumber: string;
   cardHolder: string;
-  cartType: PaymentCardType;
+  cardType: PaymentCardType;
+  expirationDate: string;
+  user?: string;
+}
+
+export interface ICreditCard {
+  id?: string;
+  cardNumber: string;
+  cardHolder: string;
+  cardType: PaymentCardType;
+  expirationDate: string;
 }
 
 export interface IUser {
@@ -148,6 +177,7 @@ export interface IUser {
   phoneNumber: string;
   password: string;
   avatarUrl?: string;
+  id: string;
 }
 
 export interface ILocation {

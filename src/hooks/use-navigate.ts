@@ -144,9 +144,12 @@ export const useNavigate = (navigation: any) => {
     });
   };
 
-  const openOrderDetailScreen = () => {
+  const openOrderDetailScreen = (order: DataModels.IOrder) => {
     navigation.navigate(SCREEN_NAME.ORDER_NAVIGATOR, {
       screen: SCREEN_NAME.ORDER_DETAIL_SCREEN,
+      params: {
+        order,
+      },
     });
   };
 

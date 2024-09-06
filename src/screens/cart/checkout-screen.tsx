@@ -35,13 +35,19 @@ import { cartStore, sharedStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { PaymentType } from '@types';
 import { delay, StringHelpers } from '@utils';
-import { CartInfoRow, ListCreditCard, ShippingAddress } from './components';
+import {
+  AddCreditCardPopup,
+  CartInfoRow,
+  ListCreditCard,
+  ShippingAddress,
+} from './components';
 import { ListCartItem } from './components/list-cart-item';
 
 const CheckoutScreen = ({ navigation }: any) => {
   const { openAddressScreen } = useNavigate(navigation);
   const [isShowListCreditCart, setIsShowListCreditCart] = useState(false);
   const [fetchZaloPayOrderDone, setFetchZaloPayOrderDone] = useState(false);
+  const [showAddCreditCardPopup, setShowAddCreditCardPopup] = useState(false);
 
   const appState = useRef(AppState.currentState);
 
@@ -104,8 +110,46 @@ const CheckoutScreen = ({ navigation }: any) => {
     };
   }, [cartStore?.zaloAppTransId, fetchZaloPayOrderDone, onFetchPaymentInfo]);
 
+  const onSubmitCheckout = async () => {
+    sharedStore.setShowLoading(true);
+
+    // await cartStore.createOrder();
+
+    // if (cartStore.paymentSelected.paymentType === PAYMENT_TYPE.momo) {
+    //   cartStore.handleMoMoPayment(async (result) => {
+    //     if (await Linking.canOpenURL(result.data.payUrl)) {
+    //       Linking.openURL(result.data.payUrl);
+    //     }
+    //   });
+
+    //   sharedStore.setShowLoading(false);
+    //   cartStore.clearAllCurrentPaymentInfo();
+    //   return;
+    // }
+
+    // if (cartStore.paymentSelected.paymentType === PAYMENT_TYPE.zalo_pay) {
+    //   await cartStore.handleZaloPayPayment();
+    //   return;
+    // }
+
+    // Linking.openURL(
+    //   `${DEEP_LINK_PAYMENT_SUCCESS_URL}orderId=${cartStore.currentOrder.id}&message=Payment success!`,
+    // );
+
+    await cartStore.submitOrder();
+
+    sharedStore.setShowLoading(false);
+  };
+
   return (
     <View style={styles.container}>
+      <AddCreditCardPopup
+        visible={showAddCreditCardPopup}
+        onDismiss={() => {
+          setShowAddCreditCardPopup(false);
+        }}
+        onDoneDismiss={() => {}}
+      />
       <ScreenHeader title="Checkout" navigation={navigation} />
       <ScrollView
         scrollEnabled={true}
@@ -137,6 +181,7 @@ const CheckoutScreen = ({ navigation }: any) => {
             cartStore.setPaymentSelected({
               paymentType: value as PaymentType,
               paymentInfo: {},
+              id: value,
             });
           }}
           value={cartStore.paymentSelected.paymentType}
@@ -185,11 +230,15 @@ const CheckoutScreen = ({ navigation }: any) => {
               cartStore.setPaymentSelected({
                 paymentType: PAYMENT_TYPE.creditCard as PaymentType,
                 paymentInfo: {},
+                id: value,
               });
 
               cartStore.setCreditCardSelected(value);
             }}
-            selectedValue={cartStore.creditCardSelected?.cardNumber}
+            selectedValue={cartStore.creditCardSelected?.id}
+            onPressAddCreditCard={() => {
+              setShowAddCreditCardPopup(true);
+            }}
           />
         </Collapsible>
         <Layouts.VSpace value={12} />
@@ -209,34 +258,8 @@ const CheckoutScreen = ({ navigation }: any) => {
         <Layouts.VSpace value={24} />
       </ScrollView>
       <BottomCheckoutSection
-        onPress={async () => {
-          sharedStore.setShowLoading(true);
-
-          await cartStore.createOrder();
-
-          if (cartStore.paymentSelected.paymentType === PAYMENT_TYPE.momo) {
-            cartStore.handleMoMoPayment(async (result) => {
-              if (await Linking.canOpenURL(result.data.payUrl)) {
-                Linking.openURL(result.data.payUrl);
-              }
-            });
-
-            sharedStore.setShowLoading(false);
-            cartStore.clearAllCurrentPaymentInfo();
-            return;
-          }
-
-          if (cartStore.paymentSelected.paymentType === PAYMENT_TYPE.zalo_pay) {
-            await cartStore.handleZaloPayPayment();
-            return;
-          }
-
-          Linking.openURL(
-            `${DEEP_LINK_PAYMENT_SUCCESS_URL}orderId=${cartStore.currentOrder.id}&message=Payment success!`,
-          );
-
-          sharedStore.setShowLoading(false);
-          cartStore.clearAllCurrentPaymentInfo();
+        onPress={() => {
+          onSubmitCheckout();
         }}
         priceDisplay={cartStore.total}
         disabled={cartStore.cartCount === 0}

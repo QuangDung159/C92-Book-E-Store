@@ -8,6 +8,7 @@ import { Layouts, ScreenHeader } from '@components';
 import {
   CanceledOrdersScreen,
   CompletedOrdersScreen,
+  CreatedOrdersScreen,
   ProcessingOrdersScreen,
 } from '@screens';
 import { COLORS, FONT_STYLES } from '@themes';
@@ -36,16 +37,20 @@ function OrderTopTabbarNavigator() {
         }}
       >
         <Tab.Screen
+          name={SCREEN_NAME.CREATED_ORDERS_SCREEN}
+          component={CreatedOrdersScreen}
+        />
+        <Tab.Screen
+          name={SCREEN_NAME.PROCESSING_ORDERS_SCREEN}
+          component={ProcessingOrdersScreen}
+        />
+        <Tab.Screen
           name={SCREEN_NAME.COMPLETED_ORDERS_SCREEN}
           component={CompletedOrdersScreen}
         />
         <Tab.Screen
           name={SCREEN_NAME.CANCELED_ORDERS_SCREEN}
           component={CanceledOrdersScreen}
-        />
-        <Tab.Screen
-          name={SCREEN_NAME.PROCESSING_ORDERS_SCREEN}
-          component={ProcessingOrdersScreen}
         />
       </Tab.Navigator>
     </SafeAreaView>

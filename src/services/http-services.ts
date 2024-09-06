@@ -19,6 +19,8 @@ const post = async (
       url,
       JSON.stringify(data),
     );
+    console.log('POST :>> ', url);
+    console.log('data :>> ', data);
     return buildAxiosResponse({
       success: true,
       data: response.data.data,
@@ -49,6 +51,7 @@ const get = async (
 ): Promise<DataModels.ServiceResult<any>> => {
   try {
     const response = await (apiClient || apiClientDefault).get(url);
+    console.log('GET :>> ', url);
     return buildAxiosResponse({
       success: true,
       data: response.data.data,
@@ -66,6 +69,8 @@ const get = async (
 const buildAxiosResponse = (
   serviceResult: DataModels.ServiceResult<any>,
 ): DataModels.ServiceResult<any> => {
+  console.log('Response :>> ', serviceResult);
+  console.log('-');
   return serviceResult;
 };
 

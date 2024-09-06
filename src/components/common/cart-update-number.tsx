@@ -22,19 +22,18 @@ const CartUpdateNumber: React.FC<CartUpdateNumberProps> = ({
         <View style={styles.addToCart}>
           <Icons.MinusIcon
             color={COLORS.primaryWhite}
-            onPress={() => cartStore.removeCartItem(bookCartItem, 1)}
+            onPress={() => {
+              cartStore.adjustCartItemCount(bookCartItem, -1);
+            }}
             disabled={itemCount <= 1}
           />
           <Text style={styles.cartNumber}>{itemCount}</Text>
           <Icons.PlusIcon
             disabled={itemCount >= bookCartItem.book.stock}
             color={COLORS.primaryWhite}
-            onPress={() =>
-              cartStore.addToCart({
-                ...bookCartItem,
-                count: 1,
-              })
-            }
+            onPress={() => {
+              cartStore.adjustCartItemCount(bookCartItem, 1);
+            }}
           />
         </View>
       </View>

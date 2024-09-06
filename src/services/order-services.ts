@@ -1,22 +1,29 @@
-import { PAYMENT_STATUS } from '@constants';
 import { DataModels } from '@models';
-import { PaymentStatus } from '@types';
-import { delay, StringHelpers } from '@utils';
+import { OrderStatus } from '@types';
+import { HttpServices } from './http-services';
 
-const createOrder = async (cart: DataModels.ICart) => {
-  await delay(2000);
-  const order: DataModels.IOrder = {
-    cart,
-    paymentStatus: PAYMENT_STATUS.waitingForPay as PaymentStatus,
-    id: StringHelpers.genLocalId('order'),
-    status: 'created',
-  };
-  return order;
+const orderBaseUrl = process.env.EXPO_PUBLIC_BASE_URL + '/order';
+
+const createOrder = async (params: { cartId: string; userId: string }) => {
+  return await HttpServices.post(orderBaseUrl + '/create-one', {
+    cart: params.cartId,
+    user: params.userId,
+  });
 };
 
-const updateOrder = async (order: DataModels.IOrder) => {
-  await delay(2000);
-  return order;
+const updateOrder = async (params: DataModels.IOrder) => {
+  return await HttpServices.post(orderBaseUrl + '/update-one', params);
 };
 
-export const OrderServices = { createOrder, updateOrder };
+const fetchListOrder = async (params: {
+  userId: string;
+  orderStatus: OrderStatus;
+}) => {
+  return await HttpServices.get(
+    orderBaseUrl +
+      '/get' +
+      `?userId=${params.userId}&status=${params.orderStatus}`,
+  );
+};
+
+export const OrderServices = { createOrder, updateOrder, fetchListOrder };

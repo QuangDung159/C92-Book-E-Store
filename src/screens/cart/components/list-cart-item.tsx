@@ -51,7 +51,7 @@ const ListCartItem: React.FC<ListCartItemProps> = ({
                 alignSelf: 'flex-end',
                 flexDirection: 'row',
               }}
-              onPress={() => cartStore.removeCartItem(item, item.count)}
+              onPress={() => cartStore.deleteCartItem(item.id)}
             >
               <View
                 style={{
@@ -68,7 +68,7 @@ const ListCartItem: React.FC<ListCartItemProps> = ({
                 <Icons.TrashIcon
                   color={COLORS.primaryWhite}
                   size={24}
-                  onPress={() => cartStore.removeCartItem(item, item.count)}
+                  onPress={() => cartStore.deleteCartItem(item.id)}
                 />
               </View>
             </TouchableOpacity>

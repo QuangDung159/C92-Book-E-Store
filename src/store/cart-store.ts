@@ -5,25 +5,26 @@ import {
   observable,
   runInAction,
 } from 'mobx';
+import { Linking } from 'react-native';
 import {
   DEEP_LINK_PAYMENT_SUCCESS_URL,
   LIST_PAYMENT_METHOD,
-  TOP_BOOKS,
+  PAYMENT_TYPE,
 } from '@constants';
 import { DataModels } from '@models';
-import { MomoServices, OrderServices, ZaloPayServices } from '@services';
+import {
+  CartServices,
+  MomoServices,
+  OrderServices,
+  ZaloPayServices,
+} from '@services';
 import { PaymentData, PaymentStatus, PaymentType, ZaloPayOrder } from '@types';
-import { DatetimeHelpers, StringHelpers } from '@utils';
+import { DatetimeHelpers, delay, StringHelpers } from '@utils';
 import { ReferenceOptionsStore } from './reference-options-store';
 import { UserStore } from './user-store';
 
 class CartStore {
-  listCartItem: DataModels.ICartItem[] = [
-    {
-      book: TOP_BOOKS[0],
-      count: 1,
-    },
-  ];
+  listCartItem: DataModels.ICartItem[] = [];
   listVoucher: DataModels.IVoucher[] = [];
   listPaymentMethod: DataModels.IPaymentMethod[] = [];
   listVoucherIdSelected: string[] = [];
@@ -33,6 +34,7 @@ class CartStore {
   creditCardSelected: DataModels.ICreditCard | null = null;
   currentOrder: DataModels.IOrder | null = null;
   zaloAppTransId: string = '';
+  cart: DataModels.ICart | null = null;
 
   constructor(
     userStore: UserStore,
@@ -49,6 +51,8 @@ class CartStore {
       creditCardSelected: observable,
       currentOrder: observable,
       zaloAppTransId: observable,
+      cart: observable,
+      setCart: action,
       setCreditCardSelected: action,
       setZaloAppTransId: action,
       setPaymentSelected: action,
@@ -63,7 +67,7 @@ class CartStore {
       shipping: computed,
       cartCount: computed,
       shippingAddressData: computed,
-      cart: computed,
+      toJsonObject: computed,
     });
 
     this.userStore = userStore;
@@ -76,6 +80,10 @@ class CartStore {
     };
   }
 
+  setCart(value: DataModels.ICart) {
+    this.cart = value;
+  }
+
   setCurrentOrder(value: DataModels.IOrder) {
     this.currentOrder = value;
   }
@@ -84,9 +92,9 @@ class CartStore {
     this.zaloAppTransId = value;
   }
 
-  setCreditCardSelected(cardNumber: string) {
+  setCreditCardSelected(id: string) {
     const creditCard = (this.userStore.userProfile?.listCreditCard || []).find(
-      (item) => item.cardNumber === cardNumber,
+      (item) => item.id === id,
     );
 
     if (creditCard) {
@@ -143,6 +151,18 @@ class CartStore {
     return subTotalValue;
   }
 
+  get subPriceNotSale() {
+    let subTotalValue = 0;
+
+    const list = [...this.listCartItem];
+
+    list.forEach((item) => {
+      subTotalValue += item.book.priceNotSale * item.count;
+    });
+
+    return subTotalValue;
+  }
+
   get total() {
     return (
       this.subTotal +
@@ -165,50 +185,90 @@ class CartStore {
     };
   };
 
-  addToCart = async (addToCartItem: DataModels.ICartItem) => {
-    runInAction(() => {
-      const cartItemExist = this.getCartItemByBook(addToCartItem.book.id);
-
-      const list = [...this.listCartItem];
-
-      if (cartItemExist.cartItem) {
-        const cartItemUpdate = cartItemExist.cartItem;
-
-        cartItemUpdate.count = cartItemUpdate.count + addToCartItem.count;
-
-        list.splice(cartItemExist.index, 1, cartItemUpdate);
-      } else {
-        list.push(addToCartItem);
-      }
-      this.listCartItem = list;
+  createCartItem = async (cartItem: DataModels.ICartItem) => {
+    const result = await CartServices.createCartItem({
+      count: cartItem.count,
+      book: cartItem.book.id,
+      cart: this.cart.id,
     });
+
+    if (result?.success) {
+      if (this.userStore.authenticated) {
+        this.fetchCart(this.userStore.userProfile.id);
+      }
+    }
   };
 
-  removeCartItem = async (
-    cartItem: DataModels.ICartItem,
-    removeCount: number,
-  ) => {
-    runInAction(() => {
-      const cartItemExist = this.getCartItemByBook(cartItem.book.id);
+  addToCart = async (addToCartItem: DataModels.ICartItem) => {
+    if (this.cart) {
+      // user have cart in processing
+      runInAction(async () => {
+        const cartItemExist = this.getCartItemByBook(
+          addToCartItem.book.id,
+        )?.cartItem;
 
-      let list = [...this.listCartItem];
+        if (cartItemExist) {
+          // update count
+          const result = await CartServices.updateCartItem({
+            id: cartItemExist.id,
+            count: addToCartItem.count + cartItemExist.count,
+          });
 
-      if (cartItemExist.cartItem) {
-        const cartItemUpdate = cartItemExist.cartItem;
-
-        if (removeCount >= cartItemUpdate.count) {
-          list.splice(cartItemExist.index, 1);
+          if (result?.success) {
+            if (this.userStore.authenticated) {
+              this.fetchCart(this.userStore.userProfile.id);
+            }
+          }
         } else {
-          cartItemUpdate.count = cartItemUpdate.count - removeCount;
-          list = list.splice(cartItemExist.index, 1, cartItemUpdate);
+          // add new cart item
+          this.createCartItem(addToCartItem);
         }
+      });
+    } else {
+      // user don't have cart in processing
+      runInAction(async () => {
+        const result = await this.createCart({
+          user: this.userStore.userProfile.id,
+          status: 'processing',
+        });
+
+        await delay(1000);
+
+        if (result?.success) {
+          this.createCartItem(addToCartItem);
+        }
+      });
+    }
+  };
+
+  deleteCartItem = async (id: string) => {
+    const result = await CartServices.deleteCartItem(id);
+
+    if (result?.success) {
+      if (this.userStore.authenticated) {
+        this.fetchCart(this.userStore.userProfile.id);
       }
-      this.listCartItem = list;
+    }
+  };
+
+  adjustCartItemCount = async (
+    cartItem: DataModels.ICartItem,
+    count: number,
+  ) => {
+    const result = await CartServices.updateCartItem({
+      ...cartItem,
+      count: cartItem.count + count,
     });
+
+    if (result?.success) {
+      if (this.userStore.authenticated) {
+        this.fetchCart(this.userStore.userProfile.id);
+      }
+    }
   };
 
   get cartCount() {
-    return this.listCartItem.length;
+    return this.listCartItem.length || 0;
   }
 
   get shippingAddressData() {
@@ -219,34 +279,38 @@ class CartStore {
     return shippingAddress;
   }
 
-  get cart() {
-    const cart: DataModels.ICart = {
-      discount: this.discount,
-      id: StringHelpers.genLocalId(),
-      listCartItem: this.listCartItem,
-      paymentMethod: this.paymentSelected,
-      shipping: this.shipping,
-      // shippingAddress: StringHelpers.getFullAddress(this.shippingAddressData),
-      shippingAddress: 'aas duong',
-      subTotal: this.subTotal,
-      total: this.total,
-    };
-
-    return cart;
-  }
-
   createOrder = async () => {
-    const order = await OrderServices.createOrder(this.cart);
-    this.setCurrentOrder(order);
-    return order;
+    const result = await OrderServices.createOrder({
+      cartId: this.cart.id,
+      userId: this.userStore.userProfile.id,
+    });
+
+    if (result?.success && result.data) {
+      this.setCurrentOrder(result.data.order);
+    }
+
+    return (result?.data?.order || null) as DataModels.IOrder;
   };
 
   updateOrderStatus = async (status: PaymentStatus) => {
-    const order = await OrderServices.updateOrder({
+    const result = await OrderServices.updateOrder({
       ...this.currentOrder,
       paymentStatus: status,
     });
-    this.setCurrentOrder(order);
+
+    if (result?.success && result.data) {
+      this.setCurrentOrder(result.data.order);
+    }
+  };
+
+  updateCart = async () => {
+    const params = {
+      ...this.toJsonObject,
+      status: 'done',
+      id: this.cart.id,
+    };
+
+    return await CartServices.updateCart(params);
   };
 
   onPaymentWithMoMo = async (
@@ -347,6 +411,78 @@ class CartStore {
 
     return response;
   };
+
+  get toJsonObject(): DataModels.ICartParams {
+    const data: DataModels.ICartParams = {
+      subTotal: this.subTotal,
+      shipping: this.shipping,
+      discount: this.discount,
+      shippingAddress: 'this.shippingAddressData.address',
+      total: this.total,
+      paymentType: this.paymentSelected.paymentType,
+      status: 'processing',
+    };
+
+    if (this.paymentSelected.paymentType === 'credit_card') {
+      data.paymentInfo = this.paymentSelected.id;
+    }
+
+    return data;
+  }
+
+  async createCart(cartInput: DataModels.ICartParams) {
+    const result = await CartServices.createCart(cartInput);
+
+    if (result?.success && result.data) {
+      this.setCart(result.data.cart);
+    }
+
+    return result;
+  }
+
+  async fetchCart(userId: string) {
+    const result = await CartServices.fetchCart(userId);
+
+    if (result && result.success && result.data) {
+      const data = result.data;
+
+      this.setCart(data.cart);
+      this.setListCartItem(data.cart?.listCartItem || []);
+    }
+  }
+
+  async submitOrder() {
+    const result = await this.updateCart();
+
+    let createOrderResult = null;
+    if (result?.success) {
+      createOrderResult = await this.createOrder();
+    }
+
+    if (createOrderResult)
+      if (this.paymentSelected.paymentType === PAYMENT_TYPE.momo) {
+        await this.handleMoMoPayment(async (result) => {
+          if (await Linking.canOpenURL(result.data.payUrl)) {
+            Linking.openURL(result.data.payUrl);
+          }
+        });
+      } else {
+        if (this.paymentSelected.paymentType === PAYMENT_TYPE.zalo_pay) {
+          this.handleZaloPayPayment();
+        } else {
+          Linking.openURL(
+            `${DEEP_LINK_PAYMENT_SUCCESS_URL}orderId=${this.currentOrder.id}&message=Payment success!`,
+          );
+        }
+      }
+
+    this.clearAllCurrentPaymentInfo();
+
+    if (this.userStore.authenticated) {
+      this.fetchCart(this.userStore.userProfile.id);
+      this.userStore.fetchListOrder('created');
+    }
+  }
 }
 
 export { CartStore };
