@@ -1,9 +1,10 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Layouts } from '@components';
+import React, { useRef } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Buttons, Inputs, Layouts } from '@components';
 import { FONT_STYLES } from '@themes';
 import { PopupHeader } from 'components/layouts';
+import { AddCreditCardViewModel } from '../view-models';
 
 interface AddCreditCardPopupProps {
   visible: boolean;
@@ -16,16 +17,43 @@ const AddCreditCardPopup: React.FC<AddCreditCardPopupProps> = ({
   onDismiss,
   onDoneDismiss,
 }) => {
+  const addCreditCardVM = useRef(new AddCreditCardViewModel()).current;
+
   return (
     <Layouts.BottomPopup visible={visible} onDismiss={onDoneDismiss}>
       <PopupHeader
-        label="Sort"
+        label="Add new card"
         onDismiss={() => {
           onDismiss();
         }}
       />
       <View style={styles.contentWrapper}>
-        <Text>asd</Text>
+        <Inputs.CTextInput
+          placeholder="Card number"
+          label="Card number"
+          onChangeText={(value) => addCreditCardVM.setCardNumber(value)}
+        />
+        <Layouts.VSpace value={24} />
+        <Inputs.CTextInput
+          placeholder="Card holder"
+          label="Card Holder"
+          onChangeText={(value) => addCreditCardVM.setCardHolder(value)}
+        />
+        <Layouts.VSpace value={24} />
+        <Inputs.CTextInput
+          placeholder="Expiration date"
+          label="Expiration date"
+          onChangeText={(value) => addCreditCardVM.setExpirationDate(value)}
+        />
+        <Layouts.VSpace value={24} />
+        <Buttons.CButton
+          label="Submit"
+          onPress={() => {
+            addCreditCardVM.addCreditCard();
+            onDismiss();
+          }}
+          buttonType="primary"
+        />
       </View>
       <Layouts.VSpace value={12} />
     </Layouts.BottomPopup>

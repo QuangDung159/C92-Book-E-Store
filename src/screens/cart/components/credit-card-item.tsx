@@ -12,7 +12,7 @@ interface CreditCardItemProps {
 
 const CreditCardItem: React.FC<CreditCardItemProps> = ({ cardItem }) => {
   const getCardTypeIcon = () => {
-    switch (cardItem.cartType) {
+    switch (cardItem.cardType) {
       case PAYMENT_CARD_TYPE.masterCard:
         return <Icons.MasterCardIcon />;
       case PAYMENT_CARD_TYPE.visa:

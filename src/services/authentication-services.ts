@@ -8,6 +8,9 @@ import { AccessToken, LoginManager } from 'react-native-fbsdk-next';
 import { USER } from '@constants';
 import { DataModels } from '@models';
 import { delay, ToastHelpers } from '@utils';
+import { HttpServices } from './http-services';
+
+const creditCardUrl = process.env.EXPO_PUBLIC_BASE_URL + '/credit-card';
 
 const signUp = async () => {
   // await delay(1000);
@@ -115,6 +118,10 @@ const facebookSignIn: () => Promise<
 
 const facebookSignOut = async () => {};
 
+const createCreditCard = async (params: DataModels.ICreditCardParams) => {
+  return await HttpServices.post(creditCardUrl + '/create-one', params);
+};
+
 export const AuthenticationServices = {
   signUp,
   sendVerificationCode,
@@ -123,4 +130,5 @@ export const AuthenticationServices = {
   googleSignOut,
   facebookSignIn,
   facebookSignOut,
+  createCreditCard,
 };

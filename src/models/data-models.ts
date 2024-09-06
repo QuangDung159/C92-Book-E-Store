@@ -152,11 +152,21 @@ export interface IReferenceOptions {
   extraData?: any;
 }
 
+export interface ICreditCardParams {
+  id?: string;
+  cardNumber: string;
+  cardHolder: string;
+  cardType: PaymentCardType;
+  expirationDate: string;
+  user?: string;
+}
+
 export interface ICreditCard {
   id?: string;
   cardNumber: string;
   cardHolder: string;
-  cartType: PaymentCardType;
+  cardType: PaymentCardType;
+  expirationDate: string;
 }
 
 export interface IUser {
