@@ -5,7 +5,12 @@ import {
   observable,
   runInAction,
 } from 'mobx';
-import { DEEP_LINK_PAYMENT_SUCCESS_URL, LIST_PAYMENT_METHOD } from '@constants';
+import { Linking } from 'react-native';
+import {
+  DEEP_LINK_PAYMENT_SUCCESS_URL,
+  LIST_PAYMENT_METHOD,
+  PAYMENT_TYPE,
+} from '@constants';
 import { DataModels } from '@models';
 import {
   CartServices,
@@ -418,6 +423,28 @@ class CartStore {
       this.setCart(data.cart);
       this.setListCartItem(data.cart?.listCartItem || []);
     }
+  }
+
+  async submitOrder() {
+    await this.createOrder();
+
+    if (this.paymentSelected.paymentType === PAYMENT_TYPE.momo) {
+      await this.handleMoMoPayment(async (result) => {
+        if (await Linking.canOpenURL(result.data.payUrl)) {
+          Linking.openURL(result.data.payUrl);
+        }
+      });
+    } else {
+      if (this.paymentSelected.paymentType === PAYMENT_TYPE.zalo_pay) {
+        this.handleZaloPayPayment();
+      } else {
+        Linking.openURL(
+          `${DEEP_LINK_PAYMENT_SUCCESS_URL}orderId=${this.currentOrder.id}&message=Payment success!`,
+        );
+      }
+    }
+
+    this.clearAllCurrentPaymentInfo();
   }
 }
 
