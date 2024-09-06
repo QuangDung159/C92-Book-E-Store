@@ -76,17 +76,17 @@ export interface IVoucher {
   discountValue: number;
 }
 
-export interface ICartInput {
+export interface ICartParams {
   subTotal?: number;
   shipping?: number;
   discount?: number;
   shippingAddress?: string;
-  paymentMethod?: IPaymentMethod;
   paymentType?: string;
   paymentInfo?: string;
   total?: number;
   status: string;
-  user: string;
+  user?: string;
+  id?: string;
 }
 
 export interface ICart {

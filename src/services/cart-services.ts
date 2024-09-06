@@ -4,7 +4,7 @@ import { HttpServices } from './http-services';
 const cartBaseUrl = process.env.EXPO_PUBLIC_BASE_URL + '/cart';
 const cartItemBaseUrl = process.env.EXPO_PUBLIC_BASE_URL + '/cart-item';
 
-const createCart = async (cartInput: DataModels.ICartInput) => {
+const createCart = async (cartInput: DataModels.ICartParams) => {
   const result = await HttpServices.post(
     cartBaseUrl + '/create-one',
     cartInput,
@@ -15,6 +15,10 @@ const createCart = async (cartInput: DataModels.ICartInput) => {
 
 const fetchCart = async (userId: string) => {
   return await HttpServices.get(cartBaseUrl + `/get?userId=${userId}`);
+};
+
+const updateCart = async (cartParams: DataModels.ICartParams) => {
+  return await HttpServices.post(cartBaseUrl + '/update-one', cartParams);
 };
 
 const updateCartItem = async (params: any) => {
@@ -39,4 +43,5 @@ export const CartServices = {
   updateCartItem,
   createCartItem,
   deleteCartItem,
+  updateCart,
 };

@@ -285,6 +285,16 @@ class CartStore {
     this.setCurrentOrder(order);
   };
 
+  updateCart = async () => {
+    const params = {
+      ...this.toJsonObject,
+      status: 'done',
+      id: this.cart.id,
+    };
+
+    return await CartServices.updateCart(params);
+  };
+
   onPaymentWithMoMo = async (
     orderId: string,
     requestId: string,
@@ -384,27 +394,25 @@ class CartStore {
     return response;
   };
 
-  get toJsonObject(): DataModels.ICartInput {
-    const cart = this.cart;
-    const data: DataModels.ICartInput = {
-      subTotal: cart.subTotal,
-      shipping: cart.shipping,
-      discount: cart.discount,
-      shippingAddress: cart.shippingAddress,
-      total: cart.total,
-      paymentType: cart.paymentMethod.paymentType,
-      user: '66d821f534d631e25f9066e3',
+  get toJsonObject(): DataModels.ICartParams {
+    const data: DataModels.ICartParams = {
+      subTotal: this.subTotal,
+      shipping: this.shipping,
+      discount: this.discount,
+      shippingAddress: 'this.shippingAddressData.address',
+      total: this.total,
+      paymentType: this.paymentSelected.paymentType,
       status: 'processing',
     };
 
-    if (cart.paymentMethod.paymentType === 'credit_card') {
-      data.paymentInfo = cart.paymentMethod.paymentInfo?.id;
+    if (this.paymentSelected.paymentType === 'credit_card') {
+      data.paymentInfo = this.paymentSelected.paymentInfo;
     }
 
     return data;
   }
 
-  async createCart(cartInput: DataModels.ICartInput) {
+  async createCart(cartInput: DataModels.ICartParams) {
     const result = await CartServices.createCart(cartInput);
 
     if (result?.success && result.data) {
@@ -426,25 +434,33 @@ class CartStore {
   }
 
   async submitOrder() {
-    await this.createOrder();
+    const result = await this.updateCart();
 
-    if (this.paymentSelected.paymentType === PAYMENT_TYPE.momo) {
-      await this.handleMoMoPayment(async (result) => {
-        if (await Linking.canOpenURL(result.data.payUrl)) {
-          Linking.openURL(result.data.payUrl);
-        }
-      });
-    } else {
-      if (this.paymentSelected.paymentType === PAYMENT_TYPE.zalo_pay) {
-        this.handleZaloPayPayment();
-      } else {
-        Linking.openURL(
-          `${DEEP_LINK_PAYMENT_SUCCESS_URL}orderId=${this.currentOrder.id}&message=Payment success!`,
-        );
-      }
+    let createOrderResult = null;
+    if (result?.success) {
+      createOrderResult = await this.createOrder();
     }
 
+    if (createOrderResult)
+      if (this.paymentSelected.paymentType === PAYMENT_TYPE.momo) {
+        await this.handleMoMoPayment(async (result) => {
+          if (await Linking.canOpenURL(result.data.payUrl)) {
+            Linking.openURL(result.data.payUrl);
+          }
+        });
+      } else {
+        if (this.paymentSelected.paymentType === PAYMENT_TYPE.zalo_pay) {
+          this.handleZaloPayPayment();
+        } else {
+          Linking.openURL(
+            `${DEEP_LINK_PAYMENT_SUCCESS_URL}orderId=${this.currentOrder.id}&message=Payment success!`,
+          );
+        }
+      }
+
     this.clearAllCurrentPaymentInfo();
+
+    this.fetchCart('66d821f534d631e25f9066e3');
   }
 }
 
