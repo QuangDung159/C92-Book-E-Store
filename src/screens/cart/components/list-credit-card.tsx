@@ -20,7 +20,7 @@ const ListCreditCard: React.FC<ListCreditCardProps> = ({
 }) => {
   return (
     <View>
-      {listCreditCard.length > 0 ? (
+      {listCreditCard.length > 0 && (
         <RadioButton.Group onValueChange={onValueChange} value={selectedValue}>
           {listCreditCard.map((item) => {
             return (
@@ -30,16 +30,15 @@ const ListCreditCard: React.FC<ListCreditCardProps> = ({
             );
           })}
         </RadioButton.Group>
-      ) : (
-        <View style={styles.addNew}>
-          <Buttons.CButton
-            onPress={() => {
-              onPressAddCreditCard();
-            }}
-            label="Add new Credit Card"
-          />
-        </View>
       )}
+      <View style={styles.addNew}>
+        <Buttons.CButton
+          onPress={() => {
+            onPressAddCreditCard();
+          }}
+          label="Add new Credit Card"
+        />
+      </View>
     </View>
   );
 };

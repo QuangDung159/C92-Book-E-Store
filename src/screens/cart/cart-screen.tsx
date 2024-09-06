@@ -58,16 +58,17 @@ const CartScreen = ({ navigation }: any) => {
         />
         <Layouts.VSpace value={24} />
       </ScrollView>
-      <BottomCheckoutSection
-        onPress={openCheckoutScreen}
-        priceDisplay={cartStore.subTotal}
-        disabled={cartStore.cartCount === 0}
-        priceNotSale={
-          cartStore.subPriceNotSale !== cartStore.subTotal
-            ? cartStore.subPriceNotSale
-            : 0
-        }
-      />
+      {cartStore.cartCount !== 0 && (
+        <BottomCheckoutSection
+          onPress={openCheckoutScreen}
+          priceDisplay={cartStore.subTotal}
+          priceNotSale={
+            cartStore.subPriceNotSale !== cartStore.subTotal
+              ? cartStore.subPriceNotSale
+              : 0
+          }
+        />
+      )}
     </View>
   );
 };

@@ -414,7 +414,7 @@ class CartStore {
     };
 
     if (this.paymentSelected.paymentType === 'credit_card') {
-      data.paymentInfo = this.paymentSelected.paymentInfo;
+      data.paymentInfo = this.paymentSelected.id;
     }
 
     return data;

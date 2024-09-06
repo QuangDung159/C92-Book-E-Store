@@ -24,7 +24,7 @@ const BottomCheckoutSection: React.FC<BottomCheckoutSectionProps> = ({
       <Layouts.VSpace value={10} />
       <View style={styles.totalWrapper}>
         <View style={styles.priceSection}>
-          {priceNotSale !== 0 && (
+          {priceNotSale && (
             <Text style={styles.notSale}>
               {StringHelpers.formatCurrency(priceNotSale)}
             </Text>
