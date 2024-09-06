@@ -5,10 +5,10 @@ import { userStore } from '@store';
 import { COLORS } from '@themes';
 import { ListOrder } from './components';
 
-const CanceledOrdersScreen = () => {
+const CreatedOrdersScreen = () => {
   return (
     <View style={styles.container}>
-      <ListOrder listOrder={userStore.listCanceledOrder} />
+      <ListOrder listOrder={userStore.listCreatedOrder} />
     </View>
   );
 };
@@ -20,5 +20,5 @@ const styles = StyleSheet.create({
   },
 });
 
-const observable = observer(CanceledOrdersScreen);
-export { observable as CanceledOrdersScreen };
+const observable = observer(CreatedOrdersScreen);
+export { observable as CreatedOrdersScreen };
