@@ -280,17 +280,27 @@ class CartStore {
   }
 
   createOrder = async () => {
-    const order = await OrderServices.createOrder(this.cart);
-    this.setCurrentOrder(order);
-    return order;
+    const result = await OrderServices.createOrder({
+      cartId: this.cart.id,
+      userId: this.userStore.userProfile.id,
+    });
+
+    if (result?.success && result.data) {
+      this.setCurrentOrder(result.data.order);
+    }
+
+    return (result?.data?.order || null) as DataModels.IOrder;
   };
 
   updateOrderStatus = async (status: PaymentStatus) => {
-    const order = await OrderServices.updateOrder({
+    const result = await OrderServices.updateOrder({
       ...this.currentOrder,
       paymentStatus: status,
     });
-    this.setCurrentOrder(order);
+
+    if (result?.success && result.data) {
+      this.setCurrentOrder(result.data.order);
+    }
   };
 
   updateCart = async () => {
