@@ -9,12 +9,14 @@ interface ListCreditCardProps {
   listCreditCard: DataModels.ICreditCard[];
   onValueChange: (value: string) => void;
   selectedValue: string;
+  onPressAddCreditCard: () => void;
 }
 
 const ListCreditCard: React.FC<ListCreditCardProps> = ({
   listCreditCard,
   onValueChange,
   selectedValue,
+  onPressAddCreditCard,
 }) => {
   return (
     <View>
@@ -30,7 +32,12 @@ const ListCreditCard: React.FC<ListCreditCardProps> = ({
         </RadioButton.Group>
       ) : (
         <View style={styles.addNew}>
-          <Buttons.CButton onPress={() => {}} label="Add new Credit Card" />
+          <Buttons.CButton
+            onPress={() => {
+              onPressAddCreditCard();
+            }}
+            label="Add new Credit Card"
+          />
         </View>
       )}
     </View>

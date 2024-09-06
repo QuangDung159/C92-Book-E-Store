@@ -35,13 +35,19 @@ import { cartStore, sharedStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { PaymentType } from '@types';
 import { delay, StringHelpers } from '@utils';
-import { CartInfoRow, ListCreditCard, ShippingAddress } from './components';
+import {
+  AddCreditCardPopup,
+  CartInfoRow,
+  ListCreditCard,
+  ShippingAddress,
+} from './components';
 import { ListCartItem } from './components/list-cart-item';
 
 const CheckoutScreen = ({ navigation }: any) => {
   const { openAddressScreen } = useNavigate(navigation);
   const [isShowListCreditCart, setIsShowListCreditCart] = useState(false);
   const [fetchZaloPayOrderDone, setFetchZaloPayOrderDone] = useState(false);
+  const [showAddCreditCardPopup, setShowAddCreditCardPopup] = useState(false);
 
   const appState = useRef(AppState.currentState);
 
@@ -137,6 +143,13 @@ const CheckoutScreen = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
+      <AddCreditCardPopup
+        visible={showAddCreditCardPopup}
+        onDismiss={() => {
+          setShowAddCreditCardPopup(false);
+        }}
+        onDoneDismiss={() => {}}
+      />
       <ScreenHeader title="Checkout" navigation={navigation} />
       <ScrollView
         scrollEnabled={true}
@@ -223,6 +236,9 @@ const CheckoutScreen = ({ navigation }: any) => {
               cartStore.setCreditCardSelected(value);
             }}
             selectedValue={cartStore.creditCardSelected?.cardNumber}
+            onPressAddCreditCard={() => {
+              setShowAddCreditCardPopup(true);
+            }}
           />
         </Collapsible>
         <Layouts.VSpace value={12} />
