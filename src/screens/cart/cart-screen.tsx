@@ -1,28 +1,47 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 import { Divider } from 'react-native-paper';
 import { BottomCheckoutSection, Layouts, ScreenHeader } from '@components';
 import { useNavigate } from '@hooks';
-import { cartStore, searchStore } from '@store';
+import { cartStore, searchStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { HorizontalListCard } from 'screens/home/components';
 import { ListCartItem } from './components/list-cart-item';
 
 const CartScreen = ({ navigation }: any) => {
   const { openCheckoutScreen } = useNavigate(navigation);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onFecthCart = async () => {
+    if (userStore.authenticated) {
+      await cartStore.fetchCart(userStore.userProfile.id);
+    }
+  };
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await onFecthCart();
+    setRefreshing(false);
+  };
+
+  useEffect(() => {
+    onFecthCart();
+  }, []);
 
   return (
     <View style={styles.container}>
       <ScreenHeader
         title={`Cart (${cartStore.cartCount})`}
         navigation={navigation}
-        onGoBack={() => {}}
       />
       <ScrollView
         scrollEnabled={true}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.wrapper}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       >
         <ListCartItem listItem={cartStore.listCartItem} />
         <Divider />
@@ -39,11 +58,17 @@ const CartScreen = ({ navigation }: any) => {
         />
         <Layouts.VSpace value={24} />
       </ScrollView>
-      <BottomCheckoutSection
-        onPress={openCheckoutScreen}
-        priceDisplay={cartStore.subTotal}
-        disabled={cartStore.cartCount === 0}
-      />
+      {cartStore.cartCount !== 0 && (
+        <BottomCheckoutSection
+          onPress={openCheckoutScreen}
+          priceDisplay={cartStore.subTotal}
+          priceNotSale={
+            cartStore.subPriceNotSale !== cartStore.subTotal
+              ? cartStore.subPriceNotSale
+              : 0
+          }
+        />
+      )}
     </View>
   );
 };

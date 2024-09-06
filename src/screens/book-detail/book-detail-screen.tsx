@@ -41,6 +41,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
     {},
   );
   const [bookInfo, setBookInfo] = useState<DataModels.IBook>();
+  const [itemCount, setItemCount] = useState(1);
 
   const loadDetail = useCallback(async () => {
     setBookInfo(book);
@@ -190,7 +191,10 @@ const BookDetailScreen = ({ route, navigation }: any) => {
               </Text>
             </View>
             <AddToCartButton
-              itemCount={1}
+              itemCount={itemCount}
+              onUpdateCount={(count) => {
+                setItemCount(count);
+              }}
               containerStyle={{
                 flexDirection: 'row',
                 alignSelf: 'center',

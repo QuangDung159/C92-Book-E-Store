@@ -58,7 +58,12 @@ const OrderItem: React.FC<OrderItemProps> = ({
 
   return (
     <React.Fragment key={orderItem.id}>
-      <TouchableOpacity onPress={openOrderDetailScreen} activeOpacity={0.8}>
+      <TouchableOpacity
+        onPress={() => {
+          openOrderDetailScreen(orderItem);
+        }}
+        activeOpacity={0.8}
+      >
         <View style={styles.container}>
           {isShowFullListCart ? (
             <>{renderListCartItem()}</>

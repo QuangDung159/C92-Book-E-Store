@@ -33,7 +33,7 @@ const PaymentSuccessScreen = ({ navigation, route }) => {
       <Layouts.VSpace value={8} />
       <Text
         style={styles.desc}
-      >{`Your order #${orderId} has been confirmed.`}</Text>
+      >{`Your order \n${orderId}\nhas been confirmed.`}</Text>
       <Layouts.VSpace value={12} />
       <Buttons.CButton
         label="Back to Home"
@@ -55,12 +55,13 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primaryWhite,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 24,
   },
   success: {
     ...FONT_STYLES.BOLD_18,
   },
   desc: {
-    ...FONT_STYLES.REGULAR_16,
+    ...FONT_STYLES.SEMIBOLD_14,
     textAlign: 'center',
   },
 });

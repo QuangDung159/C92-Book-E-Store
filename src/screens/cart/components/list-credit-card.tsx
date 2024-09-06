@@ -9,30 +9,36 @@ interface ListCreditCardProps {
   listCreditCard: DataModels.ICreditCard[];
   onValueChange: (value: string) => void;
   selectedValue: string;
+  onPressAddCreditCard: () => void;
 }
 
 const ListCreditCard: React.FC<ListCreditCardProps> = ({
   listCreditCard,
   onValueChange,
   selectedValue,
+  onPressAddCreditCard,
 }) => {
   return (
     <View>
-      {listCreditCard.length > 0 ? (
+      {listCreditCard.length > 0 && (
         <RadioButton.Group onValueChange={onValueChange} value={selectedValue}>
           {listCreditCard.map((item) => {
             return (
-              <React.Fragment key={item.cardNumber}>
+              <React.Fragment key={item.id}>
                 <CreditCardItem cardItem={item} />
               </React.Fragment>
             );
           })}
         </RadioButton.Group>
-      ) : (
-        <View style={styles.addNew}>
-          <Buttons.CButton onPress={() => {}} label="Add new Credit Card" />
-        </View>
       )}
+      <View style={styles.addNew}>
+        <Buttons.CButton
+          onPress={() => {
+            onPressAddCreditCard();
+          }}
+          label="Add new Credit Card"
+        />
+      </View>
     </View>
   );
 };

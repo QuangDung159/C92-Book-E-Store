@@ -3,14 +3,18 @@ import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { ImageAssets } from '@assets';
 import { Layouts, SearchBar } from '@components';
-import { searchStore } from '@store';
+import { searchStore, userStore } from '@store';
 import { COLORS } from '@themes';
 import { BestDealCarousel, HorizontalListCard } from './components';
 
 const HomeScreen = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
-      <SearchBar showCartIcon navigation={navigation} />
+      <SearchBar
+        showCartIcon={true}
+        // showCartIcon={userStore.authenticated}
+        navigation={navigation}
+      />
       <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}>
         <Layouts.VSpace value={12}></Layouts.VSpace>
         <BestDealCarousel

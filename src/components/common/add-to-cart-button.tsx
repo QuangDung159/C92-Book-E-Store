@@ -4,7 +4,7 @@ import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { Buttons, Icons, Layouts } from '@components';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
-import { cartStore, searchStore } from '@store';
+import { cartStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { ToastHelpers } from '@utils';
 
@@ -29,12 +29,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   const onAddToCart = () => {
     cartStore.addToCart({
       book: bookCardItem,
-      count: bookCardItem.count,
-    });
-
-    searchStore.updateBookItem({
-      ...bookCardItem,
-      count: 1,
+      count: itemCount,
     });
 
     ToastHelpers.showToast({
@@ -50,12 +45,12 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
         <View style={styles.addToCart}>
           <Icons.MinusIcon
             disabled={itemCount === 1}
-            onPress={() => onUpdateCount(-1)}
+            onPress={() => onUpdateCount?.(itemCount - 1)}
             color={COLORS.primaryWhite}
           />
           <Text style={styles.cartNumber}>{itemCount}</Text>
           <Icons.PlusIcon
-            onPress={() => onUpdateCount(1)}
+            onPress={() => onUpdateCount?.(itemCount + 1)}
             disabled={itemCount >= bookCardItem.stock}
             color={COLORS.primaryWhite}
           />
