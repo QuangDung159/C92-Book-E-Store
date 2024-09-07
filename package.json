@@ -31,9 +31,9 @@
     "build:aab:local": "npm run set:env:prod:build && dotenv -- eas build -p android --profile production --local && npm run set:env:revert",
     "build:ios:dev": "eas build -p ios --profile development",
     "build:nodev": "npx expo start --no-dev",
-    "eas:update:qa": "eas update --branch preview.qa --message",
-    "eas:update:stg": "eas update --branch preview.stg --message",
-    "eas:update:prod": "eas update --branch production --message",
+    "eas:update:qa": "npm run set:env:qa && eas update --branch preview.qa --message \"$npm_config_message\" && npm run set:env:revert",
+    "eas:update:stg": "npm run set:env:stg && eas update --branch preview.stg --message \"$npm_config_message\" && npm run set:env:revert",
+    "eas:update:prod": "npm run set:env:prod && eas update --branch production --message \"$npm_config_message\" && npm run set:env:revert",
     "prebuild": "expo prebuild",
     "build:android:qa:local:test": "npm run set:env:qa:build && npm run set:env:revert"
   },
