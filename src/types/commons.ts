@@ -1,4 +1,4 @@
-type AdministrativeUnitEnum = 'city' | 'district' | 'ward';
+type AdministrativeUnitEnum = 'province' | 'district' | 'ward';
 
 type ServiceResultHandler = {
   onSuccess?: () => void;

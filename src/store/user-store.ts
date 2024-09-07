@@ -61,7 +61,7 @@ class UserStore {
 
     runInAction(() => {
       let list: DataModels.IShippingAddress[] = [
-        ...this.userProfile.listShippingAddress,
+        ...(this.userProfile.listShippingAddress || []),
       ];
 
       if (isAddNew) {

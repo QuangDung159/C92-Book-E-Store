@@ -27,7 +27,7 @@ const PAYMENT_TYPE = {
 };
 
 const ADMINISTRATIVE = {
-  city: 'City',
+  province: 'Province',
   district: 'District',
   ward: 'Ward',
 };

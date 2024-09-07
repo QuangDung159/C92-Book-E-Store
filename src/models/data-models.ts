@@ -181,6 +181,7 @@ export interface IUser {
 }
 
 export interface ILocation {
+  id: string;
   name: string;
   parent?: string;
 }
