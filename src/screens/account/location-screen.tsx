@@ -134,7 +134,7 @@ const LocationScreen = ({ navigation, route }: any) => {
                 }}
               >
                 <Text>{item.label}</Text>
-                <RadioButton.IOS value={item.label} />
+                <RadioButton.IOS value={item.value} />
               </View>
               <Divider />
             </React.Fragment>

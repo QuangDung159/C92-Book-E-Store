@@ -11,7 +11,7 @@ class AddEditAddressViewModel {
   name: string = '';
   phoneNumber: string = '';
   address: string = '';
-  city: string = '';
+  province: string = '';
   district: string = '';
   ward: string = '';
   primary: boolean = false;
@@ -24,12 +24,12 @@ class AddEditAddressViewModel {
       name: observable,
       phoneNumber: observable,
       address: observable,
-      city: observable,
+      province: observable,
       ward: observable,
       district: observable,
       primary: observable,
       setAddress: action,
-      setCity: action,
+      setProvince: action,
       setWard: action,
       setDistrict: action,
       setPhoneNumber: action,
@@ -54,7 +54,7 @@ class AddEditAddressViewModel {
     name,
     phoneNumber,
     address,
-    city,
+    province,
     district,
     ward,
     primary,
@@ -64,7 +64,7 @@ class AddEditAddressViewModel {
       name,
       phoneNumber,
       address,
-      city,
+      province,
       district,
       ward,
       primary,
@@ -75,7 +75,7 @@ class AddEditAddressViewModel {
   get toJsonObject(): DataModels.IShippingAddress {
     return {
       address: this.address,
-      city: this.city,
+      province: this.province,
       district: this.district,
       id: this.id,
       name: this.name,
@@ -94,8 +94,8 @@ class AddEditAddressViewModel {
     this.address = value;
   }
 
-  setCity(value: string) {
-    this.city = value;
+  setProvince(value: string) {
+    this.province = value;
   }
 
   setDistrict(value: string) {

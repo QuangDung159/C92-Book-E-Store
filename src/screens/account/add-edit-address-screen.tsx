@@ -19,10 +19,10 @@ import {
 } from '@components';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
-import { sharedStore } from '@store';
+import { referenceOptionsStore, sharedStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 
-import { delay } from '@utils';
+import { delay, ListHelpers } from '@utils';
 import { AddEditAddressViewModel } from './view-models';
 
 const AddEditAddressScreen = ({ navigation, route }: any) => {
@@ -61,20 +61,20 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
   };
 
   const onSubmitAdministrative = (
-    city: string,
+    province: string,
     district: string,
     ward: string,
   ) => {
-    addEditVM.setCity(city);
+    addEditVM.setProvince(province);
     addEditVM.setDistrict(district);
     addEditVM.setWard(ward);
 
     if (shippingAddress) {
       onSubmitShippingAddress({
         ...shippingAddress,
-        city: addEditVM.city,
+        province: addEditVM.province,
         district: addEditVM.district,
-        ward: addEditVM.city,
+        ward: addEditVM.ward,
       });
     }
   };
@@ -132,9 +132,17 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
           }}
         >
           <View style={styles.addressContainer}>
-            {addEditVM.city ? (
+            {addEditVM.province ? (
               <View>
-                <Text style={styles.addressInfo}>{addEditVM.city}</Text>
+                <Text style={styles.addressInfo}>
+                  {
+                    ListHelpers.getItemByField(
+                      referenceOptionsStore.provinceDataSource,
+                      addEditVM.province,
+                      'value',
+                    )?.data?.label
+                  }
+                </Text>
                 <Text style={styles.addressInfo}>{addEditVM.district}</Text>
                 <Text style={styles.addressInfo}>{addEditVM.ward}</Text>
               </View>

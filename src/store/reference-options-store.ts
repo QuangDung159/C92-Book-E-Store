@@ -132,6 +132,14 @@ class ReferenceOptionsStore {
       }
     }
   }
+
+  getItemByValue = (
+    value: string,
+    dataSource: DataModels.IReferenceOptions[],
+  ) => {
+    const item = dataSource.find((i) => i.value === value);
+    return item || null;
+  };
 }
 
 export { ReferenceOptionsStore };

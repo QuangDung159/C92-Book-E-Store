@@ -509,42 +509,6 @@ const TOP_BOOKS: Array<DataModels.IBook> = [
   },
 ];
 
-const LIST_SHIPPING_ADDRESS: DataModels.IShippingAddress[] = [
-  {
-    address: '115 Chu Thien',
-    city: 'Ho Chi Minh City',
-    district: 'Tan Phu District',
-    id: '1',
-    shippingFee: 10000,
-    ward: 'Hiep Tan Ward',
-    primary: false,
-    name: 'Lu Quang Dung',
-    phoneNumber: '0933522615',
-  },
-  {
-    address: '117 Nguyen Cuu Dam',
-    city: 'Ho Chi Minh City',
-    district: 'Tan Phu District',
-    id: '2',
-    shippingFee: 17000,
-    ward: 'Ward 12',
-    primary: true,
-    name: 'Quang Dung Quang Dung',
-    phoneNumber: '0933522615',
-  },
-  {
-    address: '117 Nguyen Cuu Dam',
-    city: 'Ho Chi Minh City',
-    district: 'Tan Phu District',
-    id: '3',
-    shippingFee: 20000,
-    ward: 'Ward 17',
-    primary: false,
-    name: 'Quang Dung',
-    phoneNumber: '0933522615',
-  },
-];
-
 const LIST_VOUCHER: DataModels.IVoucher[] = [
   {
     code: 'discount-1',
@@ -592,7 +556,7 @@ const LIST_CREDIT_CARD: DataModels.ICreditCard[] = [
 
 const USER: DataModels.IUser = {
   username: 'Joe',
-  listShippingAddress: [LIST_SHIPPING_ADDRESS[0], LIST_SHIPPING_ADDRESS[1]],
+  listShippingAddress: [],
   listCreditCard: [LIST_CREDIT_CARD[0], LIST_CREDIT_CARD[1]],
   email: 'user@mail.com',
   password: '123123',
@@ -706,7 +670,6 @@ export {
   LIST_ORDER,
   LIST_PAYMENT_METHOD,
   LIST_PUBLISHER,
-  LIST_SHIPPING_ADDRESS,
   LIST_SORT_OPTION,
   LIST_VOUCHER,
   TOP_BOOKS,

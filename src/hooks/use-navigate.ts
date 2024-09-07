@@ -75,7 +75,7 @@ export const useNavigate = (navigation: any) => {
   const openLocationScreen = (
     shippingAddress?: DataModels.IShippingAddress,
     onSubmitAdministrative?: (
-      city: string,
+      province: string,
       district: string,
       ward: string,
     ) => void,

@@ -46,9 +46,9 @@ class LocationViewModel {
     this.administrativeSelected = value;
   }
 
-  fromJsonObject({ city, district, ward }: DataModels.IShippingAddress) {
+  fromJsonObject({ province, district, ward }: DataModels.IShippingAddress) {
     Object.assign(this, {
-      city,
+      province,
       district,
       ward,
     });
@@ -65,11 +65,26 @@ class LocationViewModel {
   getlabelSelected(administrative: AdministrativeUnitEnum) {
     switch (administrative) {
       case 'province':
-        return this.province;
+        return (
+          this.referenceOptionsStore.getItemByValue(
+            this.province,
+            this.referenceOptionsStore.provinceDataSource,
+          )?.label || this.province
+        );
       case 'district':
-        return this.district;
+        return (
+          this.referenceOptionsStore.getItemByValue(
+            this.district,
+            this.referenceOptionsStore.districtDataSource,
+          )?.label || this.district
+        );
       default:
-        return this.ward;
+        return (
+          this.referenceOptionsStore.getItemByValue(
+            this.ward,
+            this.referenceOptionsStore.wardDataSource,
+          )?.label || this.ward
+        );
     }
   }
 
@@ -85,10 +100,6 @@ class LocationViewModel {
   }
 
   get administrativeDataSource() {
-    console.log(
-      'this.referenceOptionsStore.provinceDataSource :>> ',
-      this.referenceOptionsStore.provinceDataSource,
-    );
     switch (this.administrativeSelected) {
       case 'province':
         return this.referenceOptionsStore.provinceDataSource;

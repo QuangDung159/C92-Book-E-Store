@@ -50,11 +50,11 @@ export const formatCurrency = (amount: number) => {
 };
 
 export const getFullAddress = (address: DataModels.IShippingAddress) => {
-  return `${address.address}, ${address.ward}, ${address.district}, ${address.city}`;
+  return `${address.address}, ${address.ward}, ${address.district}, ${address.province}`;
 };
 
 export const getShortAddress = (address: DataModels.IShippingAddress) => {
-  return `${address.ward}, ${address.district}, ${address.city}`;
+  return `${address.ward}, ${address.district}, ${address.province}`;
 };
 
 export const buildDataForSignature = (params: PaymentData) => {

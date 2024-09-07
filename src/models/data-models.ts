@@ -56,7 +56,7 @@ export interface IShippingAddress {
   address: string;
   district: string;
   ward: string;
-  city: string;
+  province: string;
   shippingFee: number;
   primary: boolean;
   name: string;
