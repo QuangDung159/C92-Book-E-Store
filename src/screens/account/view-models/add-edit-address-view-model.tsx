@@ -6,6 +6,8 @@ import {
   runInAction,
 } from 'mobx';
 import { DataModels } from '@models';
+import { ReferenceOptionsStore } from '@store';
+import { ListHelpers } from '@utils';
 
 class AddEditAddressViewModel {
   name: string = '';
@@ -18,8 +20,12 @@ class AddEditAddressViewModel {
   id: string = '';
   shippingAddress: DataModels.IShippingAddress | null = null;
   shouldShowValidationErrors: boolean = false;
+  referenceOptionsStore: ReferenceOptionsStore | null = null;
 
-  constructor(shippingAddress?: DataModels.IShippingAddress) {
+  constructor(
+    shippingAddress?: DataModels.IShippingAddress,
+    referenceOptionsStore?: ReferenceOptionsStore,
+  ) {
     makeObservable(this, {
       name: observable,
       phoneNumber: observable,
@@ -28,6 +34,7 @@ class AddEditAddressViewModel {
       ward: observable,
       district: observable,
       primary: observable,
+      referenceOptionsStore: observable,
       setAddress: action,
       setProvince: action,
       setWard: action,
@@ -37,6 +44,9 @@ class AddEditAddressViewModel {
       setName: action,
       fromJsonObject: action,
       toJsonObject: computed,
+      provinceFromSource: computed,
+      districtFromSource: computed,
+      wardFromSource: computed,
 
       // validation
       validationErrors: computed,
@@ -47,6 +57,10 @@ class AddEditAddressViewModel {
     if (shippingAddress) {
       this.fromJsonObject(shippingAddress);
       this.shippingAddress = shippingAddress;
+    }
+
+    if (referenceOptionsStore) {
+      this.referenceOptionsStore = referenceOptionsStore;
     }
   }
 
@@ -141,6 +155,30 @@ class AddEditAddressViewModel {
 
   get hasAnyValidationError() {
     return this.validationErrors.size > 0;
+  }
+
+  get provinceFromSource() {
+    return ListHelpers.getItemByField(
+      this.referenceOptionsStore.provinceDataSource,
+      this.province,
+      'value',
+    )?.data as DataModels.IReferenceOptions;
+  }
+
+  get districtFromSource() {
+    return ListHelpers.getItemByField(
+      this.referenceOptionsStore.districtDataSource,
+      this.district,
+      'value',
+    )?.data as DataModels.IReferenceOptions;
+  }
+
+  get wardFromSource() {
+    return ListHelpers.getItemByField(
+      this.referenceOptionsStore.wardDataSource,
+      this.ward,
+      'value',
+    )?.data as DataModels.IReferenceOptions;
   }
 }
 

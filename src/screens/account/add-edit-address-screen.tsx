@@ -22,7 +22,7 @@ import { DataModels } from '@models';
 import { referenceOptionsStore, sharedStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 
-import { delay, ListHelpers } from '@utils';
+import { delay } from '@utils';
 import { AddEditAddressViewModel } from './view-models';
 
 const AddEditAddressScreen = ({ navigation, route }: any) => {
@@ -37,7 +37,7 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
   const { openLocationScreen } = useNavigate(navigation);
 
   const addEditVM = useRef(
-    new AddEditAddressViewModel(shippingAddress),
+    new AddEditAddressViewModel(shippingAddress, referenceOptionsStore),
   ).current;
 
   const onSubmit = async () => {
@@ -135,16 +135,14 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
             {addEditVM.province ? (
               <View>
                 <Text style={styles.addressInfo}>
-                  {
-                    ListHelpers.getItemByField(
-                      referenceOptionsStore.provinceDataSource,
-                      addEditVM.province,
-                      'value',
-                    )?.data?.label
-                  }
+                  {addEditVM.provinceFromSource?.label}
                 </Text>
-                <Text style={styles.addressInfo}>{addEditVM.district}</Text>
-                <Text style={styles.addressInfo}>{addEditVM.ward}</Text>
+                <Text style={styles.addressInfo}>
+                  {addEditVM.districtFromSource?.label}
+                </Text>
+                <Text style={styles.addressInfo}>
+                  {addEditVM.wardFromSource?.label}
+                </Text>
               </View>
             ) : (
               <Text
