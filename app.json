@@ -2,7 +2,7 @@
   "expo": {
     "name": "Book E-Store",
     "slug": "c92-book-e-store-v1",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./src/assets/images/e-book-logo.png",
     "scheme": "c92bookestorev1",
@@ -24,7 +24,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.dragonc92team.BookEStoreV1",
-      "versionCode": 36,
+      "versionCode": 37,
       "googleServicesFile": "./android/app/google-services.json"
     },
     "web": {
@@ -71,7 +71,7 @@
       },
       "oneSignalAppId": "dc2647d3-ec46-4ea2-ab0d-c6528b0ea567"
     },
-    "runtimeVersion": "1.0.1",
+    "runtimeVersion": "1.0.4",
     "updates": {
       "url": "https://u.expo.dev/aaff14e3-7daa-4336-9788-1145c8bd95fe"
     }
