@@ -22,8 +22,8 @@ class AppModel {
   authenticationStore: AuthenticationStore;
 
   constructor() {
-    this.userStore = new UserStore();
     this.referenceOptionsStore = new ReferenceOptionsStore();
+    this.userStore = new UserStore(this.referenceOptionsStore);
     this.cartStore = new CartStore(this.userStore, this.referenceOptionsStore);
     this.categoryStore = new CategoryStore();
     this.searchStore = new SearchStore();

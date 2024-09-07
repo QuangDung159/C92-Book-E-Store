@@ -6,7 +6,8 @@ import {
   runInAction,
 } from 'mobx';
 import { DataModels } from '@models';
-import { ReferenceOptionsStore } from '@store';
+import { UserServices } from '@services';
+import { authenticationStore, ReferenceOptionsStore } from '@store';
 import { ListHelpers } from '@utils';
 
 class AddEditAddressViewModel {
@@ -180,6 +181,17 @@ class AddEditAddressViewModel {
       'value',
     )?.data as DataModels.IReferenceOptions;
   }
+
+  createShippingAddress = async (userId: string) => {
+    const result = await UserServices.createShippingAddress(
+      this.toJsonObject,
+      userId,
+    );
+
+    if (result?.success && result.data) {
+      authenticationStore.fetchUser();
+    }
+  };
 }
 
 export { AddEditAddressViewModel };

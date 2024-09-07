@@ -5,8 +5,8 @@ import { Divider } from 'react-native-paper';
 import { Layouts } from '@components';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
+import { userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
-import { StringHelpers } from '@utils';
 
 interface AddressItemProps {
   addressItem: DataModels.IShippingAddress;
@@ -41,7 +41,7 @@ const AddressItem: React.FC<AddressItemProps> = ({
       <Text style={styles.textStyle}>{addressItem.address}</Text>
       <Layouts.VSpace value={4} />
       <Text style={styles.textStyle}>
-        {StringHelpers.getShortAddress(addressItem)}
+        {userStore.getShortAddress(addressItem)}
       </Text>
       <Layouts.VSpace value={8} />
       {addressItem.primary && (

@@ -19,7 +19,7 @@ import {
 } from '@components';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
-import { referenceOptionsStore, sharedStore } from '@store';
+import { referenceOptionsStore, sharedStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 
 import { delay } from '@utils';
@@ -50,6 +50,7 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
 
     sharedStore.setShowLoading(true);
     onSubmitShippingAddress?.(addEditVM.toJsonObject, !shippingAddress);
+    addEditVM.createShippingAddress(userStore.userProfile.id);
 
     sharedStore.setShowLoading(true);
 

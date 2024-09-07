@@ -1,8 +1,6 @@
+import { API_URL } from '@constants';
 import { AdministrativeUnitEnum } from '@types';
 import { HttpServices } from './http-services';
-
-const shippingAddressApiUrl =
-  process.env.EXPO_PUBLIC_BASE_URL + '/shipping-address';
 
 const fetchListCategory = async () => {
   const result = await HttpServices.get(
@@ -38,7 +36,7 @@ const fetchListForm = async () => {
 
 const fetchListAdministrative = async (level: AdministrativeUnitEnum) => {
   const result = await HttpServices.get(
-    shippingAddressApiUrl + `/get-all-administrative-by-level?level=${level}`,
+    API_URL.shippingAddress + `/get-all-administrative-by-level?level=${level}`,
   );
 
   return result;
