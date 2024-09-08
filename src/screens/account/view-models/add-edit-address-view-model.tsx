@@ -191,6 +191,8 @@ class AddEditAddressViewModel {
     if (result?.success && result.data) {
       authenticationStore.fetchUser();
     }
+
+    return result?.success;
   };
 }
 

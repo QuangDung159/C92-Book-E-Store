@@ -49,15 +49,17 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
     }
 
     sharedStore.setShowLoading(true);
-    onSubmitShippingAddress?.(addEditVM.toJsonObject, !shippingAddress);
-    addEditVM.createShippingAddress(userStore.userProfile.id);
 
-    sharedStore.setShowLoading(true);
+    const isSuccess = await addEditVM.createShippingAddress(
+      userStore.userProfile.id,
+    );
 
-    delay(1000).then(() => {
+    await delay(1000);
+
+    if (isSuccess) {
       navigation.goBack();
-      sharedStore.setShowLoading(false);
-    });
+    }
+
     sharedStore.setShowLoading(false);
   };
 
