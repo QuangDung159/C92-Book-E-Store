@@ -194,6 +194,19 @@ class AddEditAddressViewModel {
 
     return result?.success;
   };
+
+  updateShippingAddress = async (addressId: string) => {
+    const result = await UserServices.updateShippingAddress(
+      this.toJsonObject,
+      addressId,
+    );
+
+    if (result?.success && result.data) {
+      authenticationStore.fetchUser();
+    }
+
+    return result?.success;
+  };
 }
 
 export { AddEditAddressViewModel };

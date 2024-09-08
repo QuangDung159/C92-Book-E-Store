@@ -17,4 +17,19 @@ const createShippingAddress = async (
   );
 };
 
-export const UserServices = { createShippingAddress };
+const updateShippingAddress = async (
+  params: DataModels.IShippingAddress,
+  addressId: string,
+) => {
+  const body = {
+    ...params,
+    id: addressId,
+  };
+
+  return await HttpServices.post(
+    API_URL.shippingAddress + '/update-shipping-address',
+    body,
+  );
+};
+
+export const UserServices = { createShippingAddress, updateShippingAddress };

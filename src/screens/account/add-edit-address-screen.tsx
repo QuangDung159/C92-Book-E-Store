@@ -50,9 +50,15 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
 
     sharedStore.setShowLoading(true);
 
-    const isSuccess = await addEditVM.createShippingAddress(
-      userStore.userProfile.id,
-    );
+    let isSuccess = false;
+
+    if (shippingAddress) {
+      isSuccess = await addEditVM.updateShippingAddress(shippingAddress.id);
+    } else {
+      isSuccess = await addEditVM.createShippingAddress(
+        userStore.userProfile.id,
+      );
+    }
 
     await delay(1000);
 
