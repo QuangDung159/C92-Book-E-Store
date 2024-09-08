@@ -104,8 +104,8 @@ class UserStore {
 
       if (result?.success && result.data) {
         const listOrder = result.data.listOrder || [];
-        if (status === 'canceled') {
-          this.setListCanceledOrder(listOrder);
+        if (status === 'created') {
+          this.setListCreatedOrder(listOrder);
         }
 
         if (status === 'completed') {
@@ -116,7 +116,9 @@ class UserStore {
           this.setListCanceledOrder(listOrder);
         }
 
-        this.setListCreatedOrder(listOrder);
+        if (status === 'processing') {
+          this.setListProcessingOrder(listOrder);
+        }
       }
     }
   };

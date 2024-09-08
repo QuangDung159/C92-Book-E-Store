@@ -1,8 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
+  RefreshControl,
   ScrollView,
   StyleProp,
   StyleSheet,
@@ -27,6 +28,22 @@ const AccountView: React.FC = () => {
     openBookListingScreen,
     openOrdersScreen,
   } = useNavigate(navigation);
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    onLoadData();
+  }, []);
+
+  const onLoadData = async () => {
+    await authenticationStore.fetchUser();
+  };
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await onLoadData();
+    setRefreshing(false);
+  };
 
   const loadListFavourite = async () => {
     sharedStore.setShowLoading(true);
@@ -72,7 +89,12 @@ const AccountView: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <Layouts.VSpace value={24} />
         <View style={styles.avatarIcon}>
           {userStore.userProfile?.avatarUrl ? (
