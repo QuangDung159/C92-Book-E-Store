@@ -19,7 +19,12 @@ import {
 } from '@components';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
-import { referenceOptionsStore, sharedStore, userStore } from '@store';
+import {
+  authenticationStore,
+  referenceOptionsStore,
+  sharedStore,
+  userStore,
+} from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 
 import { delay } from '@utils';
@@ -85,6 +90,21 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
         district: addEditVM.district,
         ward: addEditVM.ward,
       });
+    }
+  };
+
+  const onDeleteAddress = async () => {
+    if (shippingAddress?.id) {
+      sharedStore.setShowLoading(true);
+      const isSuccess = await userStore.deleteShippingAddress(
+        shippingAddress.id,
+      );
+
+      if (isSuccess) {
+        await authenticationStore.fetchUser();
+        navigation.goBack();
+      }
+      sharedStore.setShowLoading(false);
     }
   };
 
@@ -187,7 +207,7 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
             <Layouts.VSpace value={24} />
             <Buttons.CButton
               label="Delete address"
-              onPress={() => {}}
+              onPress={() => onDeleteAddress()}
               labelStyle={{
                 color: COLORS.error50,
               }}

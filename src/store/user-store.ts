@@ -6,7 +6,7 @@ import {
   runInAction,
 } from 'mobx';
 import { DataModels } from '@models';
-import { OrderServices } from '@services';
+import { OrderServices, UserServices } from '@services';
 import { OrderStatus } from '@types';
 import { delay, ListHelpers } from '@utils';
 import { ReferenceOptionsStore } from './reference-options-store';
@@ -145,6 +145,12 @@ class UserStore {
     )?.data?.label;
 
     return `${ward}, ${district}, ${province}`;
+  };
+
+  deleteShippingAddress = async (addressId: string) => {
+    const result = await UserServices.deleteShippingAddress(addressId);
+
+    return result?.success;
   };
 }
 

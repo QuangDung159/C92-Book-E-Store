@@ -32,4 +32,14 @@ const updateShippingAddress = async (
   );
 };
 
-export const UserServices = { createShippingAddress, updateShippingAddress };
+const deleteShippingAddress = async (addressId: string) => {
+  return await HttpServices.get(
+    API_URL.shippingAddress + '/delete-shipping-address' + `?id=${addressId}`,
+  );
+};
+
+export const UserServices = {
+  createShippingAddress,
+  updateShippingAddress,
+  deleteShippingAddress,
+};
