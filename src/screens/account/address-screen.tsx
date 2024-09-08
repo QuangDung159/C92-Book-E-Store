@@ -49,7 +49,7 @@ const AddressScreen = ({ navigation }: any) => {
         <Layouts.VSpace value={24} />
       </ScrollView>
       <BottomButtonSection
-        onPress={() => openAddEditAddressScreen(null)}
+        onPress={() => openAddEditAddressScreen()}
         buttonTitle="Add new Shipping Address"
       />
     </View>

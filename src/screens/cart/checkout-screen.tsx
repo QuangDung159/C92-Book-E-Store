@@ -34,7 +34,7 @@ import { useNavigate } from '@hooks';
 import { cartStore, sharedStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { PaymentType } from '@types';
-import { delay, StringHelpers } from '@utils';
+import { delay } from '@utils';
 import {
   AddCreditCardPopup,
   CartInfoRow,
@@ -162,7 +162,7 @@ const CheckoutScreen = ({ navigation }: any) => {
         <ShippingAddress
           address={
             cartStore.shippingAddressData
-              ? StringHelpers.getFullAddress(cartStore.shippingAddressData)
+              ? userStore.getFullAddress(cartStore.shippingAddressData)
               : ''
           }
           onPressChange={() => openAddressScreen()}

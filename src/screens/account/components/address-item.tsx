@@ -10,23 +10,16 @@ import { COLORS, FONT_STYLES } from '@themes';
 
 interface AddressItemProps {
   addressItem: DataModels.IShippingAddress;
-  onSubmitShippingAddress?: (
-    shippingAddress: DataModels.IShippingAddress,
-    isAddNew?: boolean,
-  ) => void;
 }
 
-const AddressItem: React.FC<AddressItemProps> = ({
-  addressItem,
-  onSubmitShippingAddress,
-}) => {
+const AddressItem: React.FC<AddressItemProps> = ({ addressItem }) => {
   const navigation = useNavigation();
   const { openAddEditAddressScreen } = useNavigate(navigation);
 
   return (
     <TouchableOpacity
       onPress={() => {
-        openAddEditAddressScreen(addressItem, onSubmitShippingAddress);
+        openAddEditAddressScreen(addressItem);
       }}
     >
       <View style={styles.container}>
