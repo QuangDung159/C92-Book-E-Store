@@ -25,9 +25,11 @@ const ShippingAddress: React.FC<ShippingAddressProps> = ({
     <View style={styles.container}>
       <View style={styles.addressContainer}>
         <TouchableOpacity onPress={() => onPressChange?.()}>
-          <Text style={styles.address}>
-            {shippingAddress.name} - {shippingAddress.phoneNumber}
-          </Text>
+          {shippingAddress && (
+            <Text style={styles.address}>
+              {shippingAddress.name} - {shippingAddress.phoneNumber}
+            </Text>
+          )}
           <Text style={styles.address}>{address}</Text>
         </TouchableOpacity>
       </View>

@@ -47,9 +47,15 @@ const OrderDetailScreen = ({ navigation, route }: any) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <ListOrder listOrder={[order]} isShowFullListCart />
         <View style={styles.wrapper}>
-          {renderOrderInfoItem('Status:', order.status)}
+          {renderOrderInfoItem('Status:', order.status?.toUpperCase())}
           <Layouts.VSpace value={12} />
-          {renderOrderInfoItem('Shipping address:', order.cart.shippingAddress)}
+          {renderOrderInfoItem('Shipping address:', order.cart.shippingInfo)}
+          <Text
+            style={{
+              ...FONT_STYLES.REGULAR_14,
+              marginTop: 4,
+            }}
+          >{`${order.cart.shippingAddress}`}</Text>
           <Layouts.VSpace value={12} />
           {renderOrderInfoItem('Payment method:', paymentTypeText)}
         </View>

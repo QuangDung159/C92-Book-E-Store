@@ -87,6 +87,7 @@ export interface ICartParams {
   status: string;
   user?: string;
   id?: string;
+  shippingInfo?: string;
 }
 
 export interface ICart {
@@ -102,6 +103,7 @@ export interface ICart {
   total?: number;
   status?: CartStatus;
   user?: string;
+  shippingInfo?: string;
 }
 
 export interface ITopBooksFilter {

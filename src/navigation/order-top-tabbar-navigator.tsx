@@ -24,7 +24,7 @@ function OrderTopTabbarNavigator() {
       <Layouts.TopToast />
       <ScreenHeader title="Orders" navigation={navigation} showBackIcon />
       <Tab.Navigator
-        initialRouteName={SCREEN_NAME.PROCESSING_ORDERS_SCREEN}
+        initialRouteName={SCREEN_NAME.CREATED_ORDERS_SCREEN}
         screenOptions={{
           tabBarLabelStyle: {
             textTransform: 'none',

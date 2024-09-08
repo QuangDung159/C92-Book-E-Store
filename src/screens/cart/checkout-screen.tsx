@@ -34,7 +34,7 @@ import { useNavigate } from '@hooks';
 import { cartStore, sharedStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { PaymentType } from '@types';
-import { delay } from '@utils';
+import { delay, ToastHelpers } from '@utils';
 import {
   AddCreditCardPopup,
   CartInfoRow,
@@ -255,7 +255,15 @@ const CheckoutScreen = ({ navigation }: any) => {
       </ScrollView>
       <BottomCheckoutSection
         onPress={() => {
-          onSubmitCheckout();
+          if (!cartStore.shippingAddressData) {
+            ToastHelpers.showToast({
+              title: 'Error',
+              content: 'Please choose your shipping address',
+              type: 'error',
+            });
+          } else {
+            onSubmitCheckout();
+          }
         }}
         priceDisplay={cartStore.total}
         disabled={cartStore.cartCount === 0}
