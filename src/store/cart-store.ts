@@ -417,7 +417,7 @@ class CartStore {
       subTotal: this.subTotal,
       shipping: this.shipping,
       discount: this.discount,
-      shippingAddress: 'this.shippingAddressData.address',
+      shippingAddress: this.shippingAddressData?.address || 'null',
       total: this.total,
       paymentType: this.paymentSelected.paymentType,
       status: 'processing',

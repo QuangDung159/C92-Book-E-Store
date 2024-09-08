@@ -160,12 +160,8 @@ const CheckoutScreen = ({ navigation }: any) => {
         <SectionTitle title="Shipping Address" />
         <Layouts.VSpace value={12} />
         <ShippingAddress
-          address={
-            cartStore.shippingAddressData
-              ? userStore.getFullAddress(cartStore.shippingAddressData)
-              : ''
-          }
           onPressChange={() => openAddressScreen()}
+          shippingAddress={cartStore.shippingAddressData}
         />
         <ListCartItem
           listItem={cartStore.listCartItem}
