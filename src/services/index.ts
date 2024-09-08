@@ -8,4 +8,5 @@ export * from './notification-services';
 export * from './order-services';
 export * from './reference-options-services';
 export * from './review-services';
+export * from './user-services';
 export * from './zalo-pay-services';

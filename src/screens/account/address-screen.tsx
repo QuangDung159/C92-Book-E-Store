@@ -1,15 +1,27 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import React, { useState } from 'react';
+import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 import { BottomButtonSection, Layouts, ScreenHeader } from '@components';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
-import { userStore } from '@store';
+import { authenticationStore, userStore } from '@store';
 import { COLORS } from '@themes';
 import { ListAddressItem } from './components';
 
 const AddressScreen = ({ navigation }: any) => {
   const { openAddEditAddressScreen } = useNavigate(navigation);
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onLoadData = async () => {
+    await authenticationStore.fetchUser();
+  };
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await onLoadData();
+    setRefreshing(false);
+  };
 
   const onSubmitShippingAddress = (
     shippingAddress: DataModels.IShippingAddress,
@@ -25,6 +37,9 @@ const AddressScreen = ({ navigation }: any) => {
         scrollEnabled={true}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.wrapper}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       >
         <Layouts.VSpace value={24} />
         <ListAddressItem
@@ -34,7 +49,7 @@ const AddressScreen = ({ navigation }: any) => {
         <Layouts.VSpace value={24} />
       </ScrollView>
       <BottomButtonSection
-        onPress={() => openAddEditAddressScreen(null, onSubmitShippingAddress)}
+        onPress={() => openAddEditAddressScreen()}
         buttonTitle="Add new Shipping Address"
       />
     </View>

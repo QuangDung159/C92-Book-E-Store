@@ -58,16 +58,11 @@ export const useNavigate = (navigation: any) => {
 
   const openAddEditAddressScreen = (
     shippingAddress?: DataModels.IShippingAddress,
-    onSubmitShippingAddress?: (
-      shippingAddress: DataModels.IShippingAddress,
-      isAddNew?: boolean,
-    ) => void,
   ) => {
     navigation.navigate(SCREEN_NAME.ACCOUNT_NAVIGATOR, {
       screen: SCREEN_NAME.ADD_EDIT_ADDRESS_SCREEN,
       params: {
         shippingAddress,
-        onSubmitShippingAddress,
       },
     });
   };
@@ -75,7 +70,7 @@ export const useNavigate = (navigation: any) => {
   const openLocationScreen = (
     shippingAddress?: DataModels.IShippingAddress,
     onSubmitAdministrative?: (
-      city: string,
+      province: string,
       district: string,
       ward: string,
     ) => void,
@@ -139,9 +134,7 @@ export const useNavigate = (navigation: any) => {
   };
 
   const openOrdersScreen = () => {
-    navigation.navigate(SCREEN_NAME.ORDER_TOP_TABBAR_NAVIGATOR, {
-      screen: SCREEN_NAME.ORDERS_SCREEN,
-    });
+    navigation.navigate(SCREEN_NAME.ORDER_TOP_TABBAR_NAVIGATOR);
   };
 
   const openOrderDetailScreen = (order: DataModels.IOrder) => {

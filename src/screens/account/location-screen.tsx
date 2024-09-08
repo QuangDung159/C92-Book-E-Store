@@ -134,7 +134,7 @@ const LocationScreen = ({ navigation, route }: any) => {
                 }}
               >
                 <Text>{item.label}</Text>
-                <RadioButton.IOS value={item.label} />
+                <RadioButton.IOS value={item.value} />
               </View>
               <Divider />
             </React.Fragment>
@@ -182,7 +182,7 @@ const LocationScreen = ({ navigation, route }: any) => {
         )}
         {renderAdministrativeUnitItem(
           LIST_ADMINITRATIVE_UNIT[1].value,
-          addEditVM.city !== ADMINISTRATIVE.city,
+          addEditVM.province !== ADMINISTRATIVE.province,
         )}
         {renderAdministrativeUnitItem(
           LIST_ADMINITRATIVE_UNIT[2].value,
@@ -211,7 +211,7 @@ const LocationScreen = ({ navigation, route }: any) => {
         onPress={() => {
           navigation.goBack();
           onSubmitAdministrative?.(
-            addEditVM.city,
+            addEditVM.province,
             addEditVM.district,
             addEditVM.ward,
           );

@@ -5,23 +5,23 @@ import { ReferenceOptionsStore } from '@store';
 import { AdministrativeUnitEnum } from '@types';
 
 class LocationViewModel {
-  city: string = ADMINISTRATIVE.city;
+  province: string = ADMINISTRATIVE.province;
   district: string = ADMINISTRATIVE.district;
   ward: string = ADMINISTRATIVE.ward;
   referenceOptionsStore: ReferenceOptionsStore = null;
-  administrativeSelected: AdministrativeUnitEnum = 'city';
+  administrativeSelected: AdministrativeUnitEnum = 'province';
 
   constructor(
     referenceOptionsStore: ReferenceOptionsStore,
     shippingAddress?: DataModels.IShippingAddress,
   ) {
     makeObservable(this, {
-      city: observable,
+      province: observable,
       ward: observable,
       district: observable,
       administrativeSelected: observable,
       setAdministrativeSelected: action,
-      setCity: action,
+      setProvince: action,
       setWard: action,
       setDistrict: action,
       fromJsonObject: action,
@@ -46,9 +46,9 @@ class LocationViewModel {
     this.administrativeSelected = value;
   }
 
-  fromJsonObject({ city, district, ward }: DataModels.IShippingAddress) {
+  fromJsonObject({ province, district, ward }: DataModels.IShippingAddress) {
     Object.assign(this, {
-      city,
+      province,
       district,
       ward,
     });
@@ -56,7 +56,7 @@ class LocationViewModel {
 
   get districtDataSource() {
     const list = this.referenceOptionsStore.districtDataSource.filter(
-      (item) => item.extraData.parent === this.city,
+      (item) => item.extraData.parent === this.province,
     );
 
     return list;
@@ -64,19 +64,34 @@ class LocationViewModel {
 
   getlabelSelected(administrative: AdministrativeUnitEnum) {
     switch (administrative) {
-      case 'city':
-        return this.city;
+      case 'province':
+        return (
+          this.referenceOptionsStore.getItemByValue(
+            this.province,
+            this.referenceOptionsStore.provinceDataSource,
+          )?.label || this.province
+        );
       case 'district':
-        return this.district;
+        return (
+          this.referenceOptionsStore.getItemByValue(
+            this.district,
+            this.referenceOptionsStore.districtDataSource,
+          )?.label || this.district
+        );
       default:
-        return this.ward;
+        return (
+          this.referenceOptionsStore.getItemByValue(
+            this.ward,
+            this.referenceOptionsStore.wardDataSource,
+          )?.label || this.ward
+        );
     }
   }
 
   get selectedAdministrativeValue() {
     switch (this.administrativeSelected) {
-      case 'city':
-        return this.city;
+      case 'province':
+        return this.province;
       case 'district':
         return this.district;
       default:
@@ -86,8 +101,8 @@ class LocationViewModel {
 
   get administrativeDataSource() {
     switch (this.administrativeSelected) {
-      case 'city':
-        return this.referenceOptionsStore.cityDataSource;
+      case 'province':
+        return this.referenceOptionsStore.provinceDataSource;
       case 'district':
         return this.districtDataSource;
       default:
@@ -103,12 +118,12 @@ class LocationViewModel {
     return list;
   }
 
-  setCity(value: string) {
-    if (this.city === value) {
+  setProvince(value: string) {
+    if (this.province === value) {
       return;
     }
 
-    this.city = value;
+    this.province = value;
     this.district = ADMINISTRATIVE.district;
     this.ward = ADMINISTRATIVE.ward;
 
@@ -127,11 +142,11 @@ class LocationViewModel {
   }
 
   onReset = () => {
-    this.setCity(ADMINISTRATIVE.city);
+    this.setProvince(ADMINISTRATIVE.province);
     this.setDistrict(ADMINISTRATIVE.district);
     this.setWard(ADMINISTRATIVE.ward);
 
-    this.setAdministrativeSelected('city');
+    this.setAdministrativeSelected('province');
   };
 
   setWard(value: string) {
@@ -140,8 +155,8 @@ class LocationViewModel {
 
   onSelectedAdministrativeItem = (value: string) => {
     switch (this.administrativeSelected) {
-      case 'city':
-        this.setCity(value);
+      case 'province':
+        this.setProvince(value);
         break;
       case 'district':
         this.setDistrict(value);
@@ -154,7 +169,7 @@ class LocationViewModel {
 
   get isCanSubmit() {
     return (
-      this.city !== ADMINISTRATIVE.city &&
+      this.province !== ADMINISTRATIVE.province &&
       this.district !== ADMINISTRATIVE.district &&
       this.ward !== ADMINISTRATIVE.ward
     );

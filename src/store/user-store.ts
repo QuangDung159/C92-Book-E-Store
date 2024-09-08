@@ -6,9 +6,10 @@ import {
   runInAction,
 } from 'mobx';
 import { DataModels } from '@models';
-import { OrderServices } from '@services';
+import { OrderServices, UserServices } from '@services';
 import { OrderStatus } from '@types';
 import { delay, ListHelpers } from '@utils';
+import { ReferenceOptionsStore } from './reference-options-store';
 
 class UserStore {
   userProfile: DataModels.IUser | null = null;
@@ -16,14 +17,16 @@ class UserStore {
   listCanceledOrder: DataModels.IOrder[] = [];
   listProcessingOrder: DataModels.IOrder[] = [];
   listCreatedOrder: DataModels.IOrder[] = [];
+  referenceOptionsStore: ReferenceOptionsStore | null = null;
 
-  constructor() {
+  constructor(referenceOptionsStore: ReferenceOptionsStore) {
     makeObservable(this, {
       userProfile: observable,
       listCompletedOrder: observable,
       listCanceledOrder: observable,
       listProcessingOrder: observable,
       listCreatedOrder: observable,
+      referenceOptionsStore: observable,
       setListCreatedOrder: action,
       setListCompletedOrder: action,
       setListCanceledOrder: action,
@@ -31,6 +34,10 @@ class UserStore {
       setUserProfile: action,
       authenticated: computed,
     });
+
+    if (referenceOptionsStore) {
+      this.referenceOptionsStore = referenceOptionsStore;
+    }
   }
 
   setListCreatedOrder(values: DataModels.IOrder[]) {
@@ -61,7 +68,7 @@ class UserStore {
 
     runInAction(() => {
       let list: DataModels.IShippingAddress[] = [
-        ...this.userProfile.listShippingAddress,
+        ...(this.userProfile.listShippingAddress || []),
       ];
 
       if (isAddNew) {
@@ -112,6 +119,38 @@ class UserStore {
         this.setListCreatedOrder(listOrder);
       }
     }
+  };
+
+  getFullAddress = (address: DataModels.IShippingAddress) => {
+    return `${address.address}, ${this.getShortAddress(address)}`;
+  };
+
+  getShortAddress = (address: DataModels.IShippingAddress) => {
+    const ward = ListHelpers.getItemByField(
+      this.referenceOptionsStore.wardDataSource,
+      address.ward,
+      'value',
+    )?.data?.label;
+
+    const province = ListHelpers.getItemByField(
+      this.referenceOptionsStore.provinceDataSource,
+      address.province,
+      'value',
+    )?.data?.label;
+
+    const district = ListHelpers.getItemByField(
+      this.referenceOptionsStore.districtDataSource,
+      address.district,
+      'value',
+    )?.data?.label;
+
+    return `${ward}, ${district}, ${province}`;
+  };
+
+  deleteShippingAddress = async (addressId: string) => {
+    const result = await UserServices.deleteShippingAddress(addressId);
+
+    return result?.success;
   };
 }
 

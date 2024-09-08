@@ -49,14 +49,6 @@ export const formatCurrency = (amount: number) => {
   return amount;
 };
 
-export const getFullAddress = (address: DataModels.IShippingAddress) => {
-  return `${address.address}, ${address.ward}, ${address.district}, ${address.city}`;
-};
-
-export const getShortAddress = (address: DataModels.IShippingAddress) => {
-  return `${address.ward}, ${address.district}, ${address.city}`;
-};
-
 export const buildDataForSignature = (params: PaymentData) => {
   return `accessKey=${process.env.EXPO_PUBLIC_MOMO_ACCESS_KEY}&amount=${params.amount}&extraData=${params.extraData}&ipnUrl=${params.ipnUrl}&orderId=${params.orderId}&orderInfo=${params.orderInfo}&partnerCode=${process.env.EXPO_PUBLIC_MOMO_PARTNER_CODE}&redirectUrl=${params.redirectUrl}&requestId=${params.requestId}&requestType=captureWallet`;
 };
