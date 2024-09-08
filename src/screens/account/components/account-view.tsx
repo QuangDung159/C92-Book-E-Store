@@ -106,8 +106,6 @@ const AccountView: React.FC = () => {
         {renderMenuItem('Shipping Address', () => {
           openAddressScreen();
         })}
-        {renderMenuItem('Payment Methods', () => {})}
-        {renderMenuItem('Settings', () => {})}
         {renderMenuItem(
           'Sign Out',
           async () => {

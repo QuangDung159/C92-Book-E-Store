@@ -1,3 +1,5 @@
+import { API_URL } from '@constants';
+import { AdministrativeUnitEnum } from '@types';
 import { HttpServices } from './http-services';
 
 const fetchListCategory = async () => {
@@ -32,9 +34,18 @@ const fetchListForm = async () => {
   return result;
 };
 
+const fetchListAdministrative = async (level: AdministrativeUnitEnum) => {
+  const result = await HttpServices.get(
+    API_URL.shippingAddress + `/get-all-administrative-by-level?level=${level}`,
+  );
+
+  return result;
+};
+
 export const ReferenceOptionServices = {
   fetchListCategory,
   fetchListAuthor,
   fetchListPublisher,
   fetchListForm,
+  fetchListAdministrative,
 };

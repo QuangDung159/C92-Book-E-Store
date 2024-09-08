@@ -23,7 +23,7 @@ import {
 } from '@constants';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
-import { referenceOptionsStore, searchStore, userStore } from '@store';
+import { referenceOptionsStore, searchStore } from '@store';
 import { COLORS } from '@themes';
 import { StringHelpers } from '@utils';
 import { ListChipByListFilter, SortPopup, SortSection } from './components';

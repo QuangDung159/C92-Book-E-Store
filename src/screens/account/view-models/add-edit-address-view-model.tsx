@@ -6,30 +6,38 @@ import {
   runInAction,
 } from 'mobx';
 import { DataModels } from '@models';
+import { UserServices } from '@services';
+import { authenticationStore, ReferenceOptionsStore } from '@store';
+import { ListHelpers } from '@utils';
 
 class AddEditAddressViewModel {
   name: string = '';
   phoneNumber: string = '';
   address: string = '';
-  city: string = '';
+  province: string = '';
   district: string = '';
   ward: string = '';
   primary: boolean = false;
   id: string = '';
   shippingAddress: DataModels.IShippingAddress | null = null;
   shouldShowValidationErrors: boolean = false;
+  referenceOptionsStore: ReferenceOptionsStore | null = null;
 
-  constructor(shippingAddress?: DataModels.IShippingAddress) {
+  constructor(
+    shippingAddress?: DataModels.IShippingAddress,
+    referenceOptionsStore?: ReferenceOptionsStore,
+  ) {
     makeObservable(this, {
       name: observable,
       phoneNumber: observable,
       address: observable,
-      city: observable,
+      province: observable,
       ward: observable,
       district: observable,
       primary: observable,
+      referenceOptionsStore: observable,
       setAddress: action,
-      setCity: action,
+      setProvince: action,
       setWard: action,
       setDistrict: action,
       setPhoneNumber: action,
@@ -37,6 +45,9 @@ class AddEditAddressViewModel {
       setName: action,
       fromJsonObject: action,
       toJsonObject: computed,
+      provinceFromSource: computed,
+      districtFromSource: computed,
+      wardFromSource: computed,
 
       // validation
       validationErrors: computed,
@@ -48,13 +59,17 @@ class AddEditAddressViewModel {
       this.fromJsonObject(shippingAddress);
       this.shippingAddress = shippingAddress;
     }
+
+    if (referenceOptionsStore) {
+      this.referenceOptionsStore = referenceOptionsStore;
+    }
   }
 
   fromJsonObject({
     name,
     phoneNumber,
     address,
-    city,
+    province,
     district,
     ward,
     primary,
@@ -64,7 +79,7 @@ class AddEditAddressViewModel {
       name,
       phoneNumber,
       address,
-      city,
+      province,
       district,
       ward,
       primary,
@@ -75,7 +90,7 @@ class AddEditAddressViewModel {
   get toJsonObject(): DataModels.IShippingAddress {
     return {
       address: this.address,
-      city: this.city,
+      province: this.province,
       district: this.district,
       id: this.id,
       name: this.name,
@@ -94,8 +109,8 @@ class AddEditAddressViewModel {
     this.address = value;
   }
 
-  setCity(value: string) {
-    this.city = value;
+  setProvince(value: string) {
+    this.province = value;
   }
 
   setDistrict(value: string) {
@@ -142,6 +157,56 @@ class AddEditAddressViewModel {
   get hasAnyValidationError() {
     return this.validationErrors.size > 0;
   }
+
+  get provinceFromSource() {
+    return ListHelpers.getItemByField(
+      this.referenceOptionsStore.provinceDataSource,
+      this.province,
+      'value',
+    )?.data as DataModels.IReferenceOptions;
+  }
+
+  get districtFromSource() {
+    return ListHelpers.getItemByField(
+      this.referenceOptionsStore.districtDataSource,
+      this.district,
+      'value',
+    )?.data as DataModels.IReferenceOptions;
+  }
+
+  get wardFromSource() {
+    return ListHelpers.getItemByField(
+      this.referenceOptionsStore.wardDataSource,
+      this.ward,
+      'value',
+    )?.data as DataModels.IReferenceOptions;
+  }
+
+  createShippingAddress = async (userId: string) => {
+    const result = await UserServices.createShippingAddress(
+      this.toJsonObject,
+      userId,
+    );
+
+    if (result?.success && result.data) {
+      authenticationStore.fetchUser();
+    }
+
+    return result?.success;
+  };
+
+  updateShippingAddress = async (addressId: string) => {
+    const result = await UserServices.updateShippingAddress(
+      this.toJsonObject,
+      addressId,
+    );
+
+    if (result?.success && result.data) {
+      authenticationStore.fetchUser();
+    }
+
+    return result?.success;
+  };
 }
 
 export { AddEditAddressViewModel };

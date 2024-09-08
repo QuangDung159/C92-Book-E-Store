@@ -27,7 +27,7 @@ export const showToast = ({
       color: COLORS.primaryBlack,
     },
     text2Style: {
-      ...FONT_STYLES.REGULAR_14,
+      ...FONT_STYLES.REGULAR_12,
       color: COLORS.primaryBlack,
     },
   });

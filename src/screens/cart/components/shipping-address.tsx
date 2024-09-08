@@ -1,24 +1,36 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Layouts } from '@components';
+import { DataModels } from '@models';
+import { userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 
 interface ShippingAddressProps {
-  address?: string;
   onPressChange?: () => void;
+  shippingAddress?: DataModels.IShippingAddress;
 }
 
 const ShippingAddress: React.FC<ShippingAddressProps> = ({
-  address,
   onPressChange,
+  shippingAddress,
 }) => {
+  const address = useMemo(() => {
+    if (shippingAddress) {
+      return userStore.getFullAddress(shippingAddress);
+    }
+    return 'Add your shipping address';
+  }, [shippingAddress]);
+
   return (
     <View style={styles.container}>
       <View style={styles.addressContainer}>
         <TouchableOpacity onPress={() => onPressChange?.()}>
-          <Text style={styles.address}>
-            {address || 'Add your shipping address'}
-          </Text>
+          {shippingAddress && (
+            <Text style={styles.address}>
+              {shippingAddress.name} - {shippingAddress.phoneNumber}
+            </Text>
+          )}
+          <Text style={styles.address}>{address}</Text>
         </TouchableOpacity>
       </View>
       <Layouts.HSpace value={24} />
@@ -50,10 +62,11 @@ const styles = StyleSheet.create({
     flexShrink: 1,
   },
   address: {
-    ...FONT_STYLES.REGULAR_16,
+    ...FONT_STYLES.REGULAR_14,
     color: COLORS.primaryWhite,
+    lineHeight: 18,
   },
-  changeText: { ...FONT_STYLES.REGULAR_16, color: COLORS.primaryWhite },
+  changeText: { ...FONT_STYLES.SEMIBOLD_14, color: COLORS.primaryWhite },
 });
 
 export { ShippingAddress };

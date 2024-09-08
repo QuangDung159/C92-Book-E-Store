@@ -27,7 +27,7 @@ const PAYMENT_TYPE = {
 };
 
 const ADMINISTRATIVE = {
-  city: 'City',
+  province: 'Province',
   district: 'District',
   ward: 'Ward',
 };
@@ -69,8 +69,13 @@ const LIST_HOME_PAGE_TITLE = {
   upcomming: 'upcomming',
 };
 
+const API_URL = {
+  shippingAddress: process.env.EXPO_PUBLIC_BASE_URL + '/shipping-address',
+};
+
 export {
   ADMINISTRATIVE,
+  API_URL,
   CODE_PUSH_NUMBER,
   DEEP_LINK_PAYMENT_SUCCESS_URL,
   DEEP_LINK_URL,

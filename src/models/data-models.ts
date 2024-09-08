@@ -56,7 +56,7 @@ export interface IShippingAddress {
   address: string;
   district: string;
   ward: string;
-  city: string;
+  province: string;
   shippingFee: number;
   primary: boolean;
   name: string;
@@ -87,6 +87,7 @@ export interface ICartParams {
   status: string;
   user?: string;
   id?: string;
+  shippingInfo?: string;
 }
 
 export interface ICart {
@@ -102,6 +103,7 @@ export interface ICart {
   total?: number;
   status?: CartStatus;
   user?: string;
+  shippingInfo?: string;
 }
 
 export interface ITopBooksFilter {
@@ -181,6 +183,7 @@ export interface IUser {
 }
 
 export interface ILocation {
+  id: string;
   name: string;
   parent?: string;
 }

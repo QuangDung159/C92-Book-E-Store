@@ -19,7 +19,12 @@ import {
 } from '@components';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
-import { sharedStore } from '@store';
+import {
+  authenticationStore,
+  referenceOptionsStore,
+  sharedStore,
+  userStore,
+} from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 
 import { delay } from '@utils';
@@ -37,7 +42,7 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
   const { openLocationScreen } = useNavigate(navigation);
 
   const addEditVM = useRef(
-    new AddEditAddressViewModel(shippingAddress),
+    new AddEditAddressViewModel(shippingAddress, referenceOptionsStore),
   ).current;
 
   const onSubmit = async () => {
@@ -49,33 +54,57 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
     }
 
     sharedStore.setShowLoading(true);
-    onSubmitShippingAddress?.(addEditVM.toJsonObject, !shippingAddress);
 
-    sharedStore.setShowLoading(true);
+    let isSuccess = false;
 
-    delay(1000).then(() => {
+    if (shippingAddress) {
+      isSuccess = await addEditVM.updateShippingAddress(shippingAddress.id);
+    } else {
+      isSuccess = await addEditVM.createShippingAddress(
+        userStore.userProfile.id,
+      );
+    }
+
+    await delay(1000);
+
+    if (isSuccess) {
       navigation.goBack();
-      sharedStore.setShowLoading(false);
-    });
+    }
+
     sharedStore.setShowLoading(false);
   };
 
   const onSubmitAdministrative = (
-    city: string,
+    province: string,
     district: string,
     ward: string,
   ) => {
-    addEditVM.setCity(city);
+    addEditVM.setProvince(province);
     addEditVM.setDistrict(district);
     addEditVM.setWard(ward);
 
     if (shippingAddress) {
       onSubmitShippingAddress({
         ...shippingAddress,
-        city: addEditVM.city,
+        province: addEditVM.province,
         district: addEditVM.district,
-        ward: addEditVM.city,
+        ward: addEditVM.ward,
       });
+    }
+  };
+
+  const onDeleteAddress = async () => {
+    if (shippingAddress?.id) {
+      sharedStore.setShowLoading(true);
+      const isSuccess = await userStore.deleteShippingAddress(
+        shippingAddress.id,
+      );
+
+      if (isSuccess) {
+        await authenticationStore.fetchUser();
+        navigation.goBack();
+      }
+      sharedStore.setShowLoading(false);
     }
   };
 
@@ -132,11 +161,17 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
           }}
         >
           <View style={styles.addressContainer}>
-            {addEditVM.city ? (
+            {addEditVM.province ? (
               <View>
-                <Text style={styles.addressInfo}>{addEditVM.city}</Text>
-                <Text style={styles.addressInfo}>{addEditVM.district}</Text>
-                <Text style={styles.addressInfo}>{addEditVM.ward}</Text>
+                <Text style={styles.addressInfo}>
+                  {addEditVM.provinceFromSource?.label}
+                </Text>
+                <Text style={styles.addressInfo}>
+                  {addEditVM.districtFromSource?.label}
+                </Text>
+                <Text style={styles.addressInfo}>
+                  {addEditVM.wardFromSource?.label}
+                </Text>
               </View>
             ) : (
               <Text
@@ -172,7 +207,7 @@ const AddEditAddressScreen = ({ navigation, route }: any) => {
             <Layouts.VSpace value={24} />
             <Buttons.CButton
               label="Delete address"
-              onPress={() => {}}
+              onPress={() => onDeleteAddress()}
               labelStyle={{
                 color: COLORS.error50,
               }}

@@ -417,10 +417,12 @@ class CartStore {
       subTotal: this.subTotal,
       shipping: this.shipping,
       discount: this.discount,
-      shippingAddress: 'this.shippingAddressData.address',
+      shippingAddress:
+        this.userStore.getFullAddress(this.shippingAddressData) || 'null',
       total: this.total,
       paymentType: this.paymentSelected.paymentType,
       status: 'processing',
+      shippingInfo: `${this.shippingAddressData.name} - ${this.shippingAddressData.phoneNumber}`,
     };
 
     if (this.paymentSelected.paymentType === 'credit_card') {
