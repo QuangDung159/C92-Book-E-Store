@@ -29,7 +29,10 @@ class AppModel {
     this.searchStore = new SearchStore();
     this.sharedStore = new SharedStore();
     this.notificationStore = new NotificationStore();
-    this.authenticationStore = new AuthenticationStore(this.userStore);
+    this.authenticationStore = new AuthenticationStore(
+      this.userStore,
+      this.sharedStore,
+    );
   }
 
   async appInit() {

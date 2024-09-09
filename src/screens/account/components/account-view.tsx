@@ -54,6 +54,7 @@ const AccountView: React.FC = () => {
     return (
       <View style={styles.infoRow}>
         <Text style={styles.label}>{label}</Text>
+        <Layouts.VSpace value={4} />
         <Text style={styles.value}>{value}</Text>
       </View>
     );

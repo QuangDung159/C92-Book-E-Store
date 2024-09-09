@@ -3,16 +3,19 @@ import { DataModels } from '@models';
 import { AuthenticationServices } from '@services';
 import { ServiceResultHandler } from '@types';
 import { delay, ToastHelpers } from '@utils';
+import { SharedStore } from './shared-store';
 import { UserStore } from './user-store';
 
 class AuthenticationStore {
   userStore: UserStore | null = null;
+  sharedStore: SharedStore | null = null;
   googleSigned: boolean = false;
   facebookSigned: boolean = false;
 
-  constructor(userStore: UserStore) {
+  constructor(userStore: UserStore, sharedStore: SharedStore) {
     makeObservable(this, {
       userStore: observable,
+      sharedStore: observable,
       googleSigned: observable,
       facebookSigned: observable,
       setFacebookSigned: action,
@@ -20,6 +23,8 @@ class AuthenticationStore {
     });
 
     this.userStore = userStore;
+
+    this.sharedStore = sharedStore;
   }
 
   setFacebookSigned(value: boolean) {
@@ -32,11 +37,19 @@ class AuthenticationStore {
 
   signIn = async (username: string, password: string) => {
     await delay(1000);
-    this.userStore.setUserProfile({
-      ...this.userStore.userProfile,
-      username,
-      password,
-    });
+
+    await this.sharedStore.setStorageValue(
+      'userId',
+      '66df0b51f3cad97040c10e02',
+    );
+
+    this.fetchUser();
+
+    // this.userStore.setUserProfile({
+    //   ...this.userStore.userProfile,
+    //   username,
+    //   password,
+    // });
   };
 
   signUp = async (user: DataModels.IUser) => {
@@ -57,6 +70,7 @@ class AuthenticationStore {
       await this.facebookSignOut();
     }
 
+    this.sharedStore.removeStorageItem('userId');
     this.userStore.setUserProfile(null);
 
     ToastHelpers.showToast({
@@ -139,13 +153,17 @@ class AuthenticationStore {
   };
 
   fetchUser = async () => {
-    const result = await AuthenticationServices.fetchUser(
-      '66df0b51f3cad97040c10e02',
-    );
+    const userId = await this.sharedStore.getStorageValue('userId');
 
-    if (result?.success) {
-      const user = result.data?.user;
-      this.userStore.setUserProfile(user);
+    console.log('userId :>> ', userId);
+
+    if (userId) {
+      const result = await AuthenticationServices.fetchUser(userId);
+
+      if (result?.success) {
+        const user = result.data?.user;
+        this.userStore.setUserProfile(user);
+      }
     }
   };
 }
