@@ -191,6 +191,19 @@ class UserStore {
 
     return null;
   };
+
+  updateUser = async (user: DataModels.IUser) => {
+    const result = await UserServices.updateUser(user);
+
+    if (result?.success && result.data) {
+      this.setUserProfile(result.data.user);
+    }
+  };
+
+  isBookFavorite = (bookId: string) => {
+    const isFavorited = this.userProfile.listBookLiked.includes(bookId);
+    return isFavorited;
+  };
 }
 
 export { UserStore };

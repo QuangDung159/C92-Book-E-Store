@@ -15,7 +15,7 @@ import { CATEGORY } from '@constants';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
 import { BookServices } from '@services';
-import { referenceOptionsStore, searchStore } from '@store';
+import { referenceOptionsStore, searchStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { delay, StringHelpers } from '@utils';
 import { HorizontalListCard } from 'screens/home/components';
@@ -123,7 +123,11 @@ const BookDetailScreen = ({ route, navigation }: any) => {
           ref={scrollRef}
           scrollEnabled={true}
         >
-          <BookImage book={bookInfo} data={data} navigation={navigation} />
+          <BookImage
+            isFavorite={userStore.isBookFavorite(book.id)}
+            data={data}
+            navigation={navigation}
+          />
           <Layouts.VSpace value={12} />
           <Text
             style={{
