@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { observer } from 'mobx-react-lite';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
@@ -15,7 +16,7 @@ import { CATEGORY } from '@constants';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
 import { BookServices } from '@services';
-import { referenceOptionsStore, searchStore } from '@store';
+import { referenceOptionsStore, searchStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { delay, StringHelpers } from '@utils';
 import { HorizontalListCard } from 'screens/home/components';
@@ -73,6 +74,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
   }, [book]);
 
   useEffect(() => {
+    submitViewed();
     setIsCollapseDescription(true);
     setIsCollapseInformation(true);
     setIsCollapseReview(true);
@@ -87,6 +89,22 @@ const BookDetailScreen = ({ route, navigation }: any) => {
       loadDetail();
     }
   }, [book, loadDetail]);
+
+  const submitViewed = async () => {
+    const listBookViewed = [...userStore.userProfile.listBookViewed];
+    const index = listBookViewed.findIndex((item) => item === book.id);
+
+    if (index === -1) {
+      listBookViewed.unshift(book.id);
+    }
+
+    userStore.updateUser({
+      ...userStore.userProfile,
+      listBookViewed,
+    });
+
+    userStore.fetchListInAccountView('viewed');
+  };
 
   const data = [
     ImageAssets.bookImage1,

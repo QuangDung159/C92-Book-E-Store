@@ -15,8 +15,8 @@ import { ImageAssets } from '@assets';
 import {
   BookCardCarousel,
   BookCardPrice,
+  BookHeartIcon,
   BookTitle,
-  Icons,
   Layouts,
 } from '@components';
 import { useNavigate } from '@hooks';
@@ -61,13 +61,10 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
           containerStyle,
         ]}
       >
-        <View style={styles.heartIconWrapper}>
-          {bookCardItem.isLiked ? (
-            <Icons.HeartIcon size={20} />
-          ) : (
-            <Icons.HeartOutlineIcon size={20} />
-          )}
-        </View>
+        <BookHeartIcon
+          bookCardItem={bookCardItem}
+          containerStyle={styles.heartIconWrapper}
+        />
         <BookCardCarousel
           carouselHeight={carouselHeight}
           carouselWidth={carouselWidth}
@@ -78,13 +75,13 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
         <Layouts.VSpace value={12} />
         <View style={styles.info}>
           <Text style={styles.stock}>
-            {bookCardItem.category?.name || 'asdasd'}
+            {bookCardItem.category?.name || 'N/a'}
           </Text>
           <Layouts.VSpace value={4} />
           <View style={styles.inforSection}>
             <BookTitle navigation={navigation} book={bookCardItem} />
             <Text style={styles.author}>
-              {bookCardItem.author?.name || 'asasd'}
+              {bookCardItem.author?.name || 'N/a'}
             </Text>
           </View>
           <StarRatingDisplay

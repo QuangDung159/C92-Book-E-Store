@@ -1,4 +1,4 @@
-import { FlashList } from '@shopify/flash-list';
+import { ContentStyle, FlashList } from '@shopify/flash-list';
 import { toJS } from 'mobx';
 import React from 'react';
 import { RefreshControl } from 'react-native';
@@ -19,6 +19,7 @@ interface ListBookSearchProps {
   endOfListText?: string;
   onRefresh?: () => void;
   refreshing?: boolean;
+  contentContainerStyle?: ContentStyle;
 }
 
 const ListBookSearch: React.FC<ListBookSearchProps> = ({
@@ -31,12 +32,13 @@ const ListBookSearch: React.FC<ListBookSearchProps> = ({
   endOfListText,
   onRefresh,
   refreshing,
+  contentContainerStyle,
 }) => {
   const renderItem = ({ item, index }) => {
     if (viewStyle === SEARCH_VIEW_STYLE.list) {
       return (
         <BookCardItemVertical
-          bookCardItem={item}
+          bookCardItem={{ ...item, count: 1 }}
           onUpdateCount={(count) => {
             onUpdateCount(count, item);
           }}
@@ -50,6 +52,7 @@ const ListBookSearch: React.FC<ListBookSearchProps> = ({
 
   return (
     <FlashList
+      contentContainerStyle={contentContainerStyle}
       scrollEnabled
       ref={scrollRef}
       showsVerticalScrollIndicator={false}

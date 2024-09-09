@@ -11,28 +11,36 @@ import {
   Layouts,
   ScreenHeader,
 } from '@components';
-import { useNavigate } from '@hooks';
-import { appModel, userStore } from '@store';
+import { appModel, sharedStore, userStore } from '@store';
 import { COLORS } from '@themes';
+import { ToastHelpers } from '@utils';
 import { EditAccountViewModel } from './view-models';
 
 const EditAccountScreen = ({ navigation }: any) => {
   const editVM = useRef(new EditAccountViewModel(appModel.userStore)).current;
-  const { openHomeScreen } = useNavigate(navigation);
+
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const onSubmit = async () => {
     Keyboard.dismiss();
     //
+
     if (editVM.hasAnyValidationError) {
       editVM.showValidationErrors(true);
       return;
     }
 
-    openHomeScreen();
-  };
+    sharedStore.setShowLoading(true);
+    await editVM.submitUpdate();
+    sharedStore.setShowLoading(false);
 
-  const [showChangePassword, setShowChangePassword] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
+    editVM.setShowChangePassword(false);
+
+    ToastHelpers.showToast({
+      title: 'Success',
+      content: 'Update success',
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -74,11 +82,11 @@ const EditAccountScreen = ({ navigation }: any) => {
         <Buttons.CButton
           label="Change password"
           onPress={() => {
-            setShowChangePassword(!showChangePassword);
+            editVM.setShowChangePassword(!editVM.showChangePassword);
           }}
         />
         <Layouts.VSpace value={12} />
-        <Collapsible collapsed={!showChangePassword}>
+        <Collapsible collapsed={!editVM.showChangePassword}>
           <Inputs.CTextInput
             secureTextEntry
             value={editVM.currentPassword}

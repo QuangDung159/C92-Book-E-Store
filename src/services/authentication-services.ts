@@ -5,13 +5,12 @@ import {
 } from '@react-native-google-signin/google-signin';
 import axios, { AxiosResponse } from 'axios';
 import { AccessToken, LoginManager } from 'react-native-fbsdk-next';
-import { USER } from '@constants';
+import { API_URL, USER } from '@constants';
 import { DataModels } from '@models';
 import { delay, ToastHelpers } from '@utils';
 import { HttpServices } from './http-services';
 
 const creditCardUrl = process.env.EXPO_PUBLIC_BASE_URL + '/credit-card';
-const userUrl = process.env.EXPO_PUBLIC_BASE_URL + '/user';
 
 const signUp = async () => {
   // await delay(1000);
@@ -124,7 +123,11 @@ const createCreditCard = async (params: DataModels.ICreditCardParams) => {
 };
 
 const fetchUser = async (userId: string) => {
-  return await HttpServices.get(userUrl + '/' + userId);
+  return await HttpServices.get(API_URL.user + '/get-one/' + userId);
+};
+
+const signIn = async (params: { email: string; password: string }) => {
+  return await HttpServices.post(API_URL.user + '/sign-in', params);
 };
 
 export const AuthenticationServices = {
@@ -137,4 +140,5 @@ export const AuthenticationServices = {
   facebookSignOut,
   createCreditCard,
   fetchUser,
+  signIn,
 };

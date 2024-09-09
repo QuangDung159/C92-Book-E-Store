@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Dimensions,
+  Platform,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
@@ -34,10 +35,9 @@ const SearchScreen = ({ route, navigation }: any) => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [isShowSortPopup, setIsShowSortPopup] = useState(false);
 
   const { height } = Dimensions.get('window');
-
-  const [isShowSortPopup, setIsShowSortPopup] = useState(false);
 
   const screenName = route?.name;
 
@@ -227,7 +227,10 @@ const SearchScreen = ({ route, navigation }: any) => {
       <View
         style={{
           height,
-          paddingBottom: 216,
+          paddingBottom: Platform.select({
+            android: 155,
+            ios: 216,
+          }),
         }}
       >
         {searchStore.listBook.length > 0 ? (
