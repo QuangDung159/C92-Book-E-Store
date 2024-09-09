@@ -1,20 +1,15 @@
 import React from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
-import { BookCardCarousel, Icons } from '@components';
+import { BookCardCarousel, BookHeartIcon, Icons } from '@components';
+import { DataModels } from '@models';
 
 interface BookImageProps {
   navigation: any;
   data: any[];
-  isFavorite?: boolean;
-  onPressFavorite?: (isFavorite: boolean) => void;
+  book: DataModels.IBook;
 }
 
-const BookImage: React.FC<BookImageProps> = ({
-  isFavorite,
-  navigation,
-  data,
-  onPressFavorite,
-}) => {
+const BookImage: React.FC<BookImageProps> = ({ navigation, data, book }) => {
   const { width } = Dimensions.get('window');
 
   const carouselWidth = width - 48;
@@ -22,16 +17,10 @@ const BookImage: React.FC<BookImageProps> = ({
 
   return (
     <View style={styles.imageWrapper}>
-      <View style={styles.heartIconWrapper}>
-        {isFavorite ? (
-          <Icons.HeartIcon size={20} onPress={() => onPressFavorite?.(false)} />
-        ) : (
-          <Icons.HeartOutlineIcon
-            size={20}
-            onPress={() => onPressFavorite?.(true)}
-          />
-        )}
-      </View>
+      <BookHeartIcon
+        containerStyle={styles.heartIconWrapper}
+        bookCardItem={book}
+      />
       <View style={styles.backIcon}>
         <Icons.ChevronLeftIcon
           onPress={() => {
