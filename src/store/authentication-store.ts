@@ -35,21 +35,25 @@ class AuthenticationStore {
     this.googleSigned = value;
   }
 
-  signIn = async (username: string, password: string) => {
-    await delay(1000);
+  signIn = async (email: string, password: string) => {
+    const result = await AuthenticationServices.signIn({
+      email,
+      password,
+    });
 
-    await this.sharedStore.setStorageValue(
-      'userId',
-      '66df0b51f3cad97040c10e02',
-    );
+    if (result?.success && result.data) {
+      const user = result.data.user as DataModels.IUser;
 
-    this.fetchUser();
+      await this.sharedStore.setStorageValue('userId', user.id);
 
-    // this.userStore.setUserProfile({
-    //   ...this.userStore.userProfile,
-    //   username,
-    //   password,
-    // });
+      await delay(1000);
+      this.fetchUser();
+
+      ToastHelpers.showToast({
+        title: 'Success',
+        content: 'Sign in success',
+      });
+    }
   };
 
   signUp = async (user: DataModels.IUser) => {
@@ -154,8 +158,6 @@ class AuthenticationStore {
 
   fetchUser = async () => {
     const userId = await this.sharedStore.getStorageValue('userId');
-
-    console.log('userId :>> ', userId);
 
     if (userId) {
       const result = await AuthenticationServices.fetchUser(userId);

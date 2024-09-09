@@ -39,7 +39,7 @@ const deleteShippingAddress = async (addressId: string) => {
 };
 
 const updateUser = async (user: DataModels.IUser) => {
-  return await HttpServices.post(API_URL.user + `/${user.id}`, {
+  return await HttpServices.post(API_URL.user + `/update-one/${user.id}`, {
     ...user,
   });
 };

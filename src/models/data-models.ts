@@ -5,6 +5,7 @@ import {
   PaymentCardType,
   PaymentStatus,
   PaymentType,
+  SignUpMethod,
 } from '@types';
 
 export interface IReviewInput {
@@ -182,6 +183,7 @@ export interface IUser {
   id: string;
   listBookViewed?: string[];
   listBookLiked?: string[];
+  signUpMethod?: SignUpMethod;
 }
 
 export interface ILocation {
