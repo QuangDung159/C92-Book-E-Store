@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     right: 0,
     flexDirection: 'row',
     top: -4,
+    zIndex: 999,
   },
   image: {
     width: 200 * 0.64,
