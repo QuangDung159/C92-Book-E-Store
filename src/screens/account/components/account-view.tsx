@@ -1,8 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
+  RefreshControl,
   ScrollView,
   StyleProp,
   StyleSheet,
@@ -14,7 +15,6 @@ import {
 import { Divider } from 'react-native-paper';
 import { Icons, Layouts } from '@components';
 import { useNavigate } from '@hooks';
-import { BookServices } from '@services';
 import { authenticationStore, sharedStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { AppVersionText } from './app-version-text';
@@ -28,28 +28,33 @@ const AccountView: React.FC = () => {
     openOrdersScreen,
   } = useNavigate(navigation);
 
-  const loadListFavourite = async () => {
+  const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
     sharedStore.setShowLoading(true);
-    const result = await BookServices.loadListFavourite();
-    if (result.success) {
-      openBookListingScreen(result.data?.list || [], 'Favourite');
-    }
+    onLoadData();
     sharedStore.setShowLoading(false);
+  }, []);
+
+  const onLoadData = async () => {
+    await authenticationStore.fetchUser();
+    await Promise.all([
+      userStore.fetchListInAccountView('favorite'),
+      userStore.fetchListInAccountView('viewed'),
+    ]);
   };
 
-  const loadListViewed = async () => {
-    sharedStore.setShowLoading(true);
-    const result = await BookServices.loadListFavourite();
-    if (result.success) {
-      openBookListingScreen(result.data?.list || [], 'Viewed');
-    }
-    sharedStore.setShowLoading(false);
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await onLoadData();
+    setRefreshing(false);
   };
 
   const renderInfoRow = (label: string, value: string) => {
     return (
       <View style={styles.infoRow}>
         <Text style={styles.label}>{label}</Text>
+        <Layouts.VSpace value={4} />
         <Text style={styles.value}>{value}</Text>
       </View>
     );
@@ -72,7 +77,12 @@ const AccountView: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <Layouts.VSpace value={24} />
         <View style={styles.avatarIcon}>
           {userStore.userProfile?.avatarUrl ? (
@@ -95,10 +105,10 @@ const AccountView: React.FC = () => {
           </View>
         </View>
         {renderMenuItem('Favourites', () => {
-          loadListFavourite();
+          openBookListingScreen(userStore.listFavorite || [], 'Favourite');
         })}
         {renderMenuItem('Viewed', () => {
-          loadListViewed();
+          openBookListingScreen(userStore.listViewed || [], 'Viewed');
         })}
         {renderMenuItem('Orders', () => {
           openOrdersScreen();

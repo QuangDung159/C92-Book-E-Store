@@ -13,8 +13,8 @@ import {
   AddToCartButton,
   BookCardInfo,
   BookCardPrice,
+  BookHeartIcon,
   BookTitle,
-  Icons,
   Layouts,
 } from '@components';
 import { DataModels } from '@models';
@@ -66,11 +66,7 @@ const BookCardItemVertical: React.FC<BookCardItemVerticalProps> = ({
                 />
               </View>
               <Layouts.MaxSpace />
-              {bookCardItem.isLiked ? (
-                <Icons.HeartIcon size={20} />
-              ) : (
-                <Icons.HeartOutlineIcon size={20} />
-              )}
+              <BookHeartIcon bookCardItem={bookCardItem} />
             </View>
             <BookCardInfo book={bookCardItem} />
           </View>

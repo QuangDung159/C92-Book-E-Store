@@ -14,7 +14,7 @@ const AccountScreen = ({ navigation }: any) => {
         navigation={navigation}
         showBackIcon={false}
       />
-      {userStore.userProfile ? <AccountView /> : <AuthenView />}
+      {userStore.authenticated ? <AccountView /> : <AuthenView />}
       {/* <TestZalo /> */}
     </View>
   );

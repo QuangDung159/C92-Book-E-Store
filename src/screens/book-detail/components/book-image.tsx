@@ -1,15 +1,15 @@
 import React from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
-import { BookCardCarousel, Icons } from '@components';
+import { BookCardCarousel, BookHeartIcon, Icons } from '@components';
 import { DataModels } from '@models';
 
 interface BookImageProps {
-  book: DataModels.IBook;
   navigation: any;
   data: any[];
+  book: DataModels.IBook;
 }
 
-const BookImage: React.FC<BookImageProps> = ({ book, navigation, data }) => {
+const BookImage: React.FC<BookImageProps> = ({ navigation, data, book }) => {
   const { width } = Dimensions.get('window');
 
   const carouselWidth = width - 48;
@@ -17,13 +17,10 @@ const BookImage: React.FC<BookImageProps> = ({ book, navigation, data }) => {
 
   return (
     <View style={styles.imageWrapper}>
-      <View style={styles.heartIconWrapper}>
-        {book.isLiked ? (
-          <Icons.HeartIcon size={20} />
-        ) : (
-          <Icons.HeartOutlineIcon size={20} />
-        )}
-      </View>
+      <BookHeartIcon
+        containerStyle={styles.heartIconWrapper}
+        bookCardItem={book}
+      />
       <View style={styles.backIcon}>
         <Icons.ChevronLeftIcon
           onPress={() => {

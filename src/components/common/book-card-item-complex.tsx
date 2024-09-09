@@ -14,8 +14,8 @@ import {
   BookCardCarousel,
   BookCardInfo,
   BookCardPrice,
+  BookHeartIcon,
   BookTitle,
-  Icons,
   Layouts,
 } from '@components';
 import { DataModels } from '@models';
@@ -49,13 +49,10 @@ const BookCardItemComplex: React.FC<BookCardItemComplexProps> = ({
     <React.Fragment key={bookCardItem.id}>
       <View style={[styles.container, containerStyle]}>
         <View style={styles.imageWrapper}>
-          <View style={styles.heartIconWrapper}>
-            {bookCardItem.isLiked ? (
-              <Icons.HeartIcon size={20} />
-            ) : (
-              <Icons.HeartOutlineIcon size={20} />
-            )}
-          </View>
+          <BookHeartIcon
+            bookCardItem={bookCardItem}
+            containerStyle={styles.heartIconWrapper}
+          />
           <BookCardCarousel
             carouselHeight={carouselHeight}
             carouselWidth={carouselWidth}
@@ -104,6 +101,7 @@ const styles = StyleSheet.create({
     right: 0,
     flexDirection: 'row',
     top: -4,
+    zIndex: 999,
   },
   image: {
     width: 200 * 0.64,

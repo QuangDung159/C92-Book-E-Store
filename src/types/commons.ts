@@ -68,6 +68,8 @@ type PaymentType = 'cod' | 'credit_card' | 'momo' | 'zalo_pay';
 
 type PaymentCardType = 'master-card' | 'jcb' | 'visa';
 
+type SignUpMethod = 'in-app' | 'google' | 'facebook';
+
 export {
   AdministrativeUnitEnum,
   CartStatus,
@@ -80,4 +82,5 @@ export {
   PaymentType,
   ServiceResultHandler,
   ZaloPayOrder,
+  SignUpMethod,
 };

@@ -1,19 +1,21 @@
 import { action, makeObservable, observable } from 'mobx';
-import { USER } from '@constants';
 import { DataModels } from '@models';
 import { AuthenticationServices } from '@services';
 import { ServiceResultHandler } from '@types';
 import { delay, ToastHelpers } from '@utils';
+import { SharedStore } from './shared-store';
 import { UserStore } from './user-store';
 
 class AuthenticationStore {
   userStore: UserStore | null = null;
+  sharedStore: SharedStore | null = null;
   googleSigned: boolean = false;
   facebookSigned: boolean = false;
 
-  constructor(userStore: UserStore) {
+  constructor(userStore: UserStore, sharedStore: SharedStore) {
     makeObservable(this, {
       userStore: observable,
+      sharedStore: observable,
       googleSigned: observable,
       facebookSigned: observable,
       setFacebookSigned: action,
@@ -21,6 +23,8 @@ class AuthenticationStore {
     });
 
     this.userStore = userStore;
+
+    this.sharedStore = sharedStore;
   }
 
   setFacebookSigned(value: boolean) {
@@ -31,19 +35,31 @@ class AuthenticationStore {
     this.googleSigned = value;
   }
 
-  signIn = async (username: string, password: string) => {
-    await delay(1000);
-    this.userStore.setUserProfile({
-      ...USER,
-      username,
+  signIn = async (email: string, password: string) => {
+    const result = await AuthenticationServices.signIn({
+      email,
       password,
     });
+
+    if (result?.success && result.data) {
+      const user = result.data.user as DataModels.IUser;
+
+      await this.sharedStore.setStorageValue('userId', user.id);
+
+      await delay(1000);
+      this.fetchUser();
+
+      ToastHelpers.showToast({
+        title: 'Success',
+        content: 'Sign in success',
+      });
+    }
   };
 
   signUp = async (user: DataModels.IUser) => {
     await delay(1000);
     this.userStore.setUserProfile({
-      ...USER,
+      ...this.userStore.userProfile,
       email: user.email,
       username: user.username,
     });
@@ -58,6 +74,7 @@ class AuthenticationStore {
       await this.facebookSignOut();
     }
 
+    this.sharedStore.removeStorageItem('userId');
     this.userStore.setUserProfile(null);
 
     ToastHelpers.showToast({
@@ -100,7 +117,7 @@ class AuthenticationStore {
     if (response?.user) {
       const user = response.user;
       this.userStore.setUserProfile({
-        ...USER,
+        ...this.userStore.userProfile,
         email: user.email,
         username: user.name,
         avatarUrl: user.photo,
@@ -131,7 +148,7 @@ class AuthenticationStore {
     if (response?.status === 200) {
       const data = response.data;
       this.userStore.setUserProfile({
-        ...USER,
+        ...this.userStore.userProfile,
         email: data.email,
         username: data.first_name,
         avatarUrl: data.picture?.data?.url,
@@ -140,13 +157,15 @@ class AuthenticationStore {
   };
 
   fetchUser = async () => {
-    const result = await AuthenticationServices.fetchUser(
-      '66d821f534d631e25f9066e3',
-    );
+    const userId = await this.sharedStore.getStorageValue('userId');
 
-    if (result?.success) {
-      const user = result.data?.user;
-      this.userStore.setUserProfile(user);
+    if (userId) {
+      const result = await AuthenticationServices.fetchUser(userId);
+
+      if (result?.success) {
+        const user = result.data?.user;
+        this.userStore.setUserProfile(user);
+      }
     }
   };
 }
