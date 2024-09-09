@@ -12,7 +12,7 @@ const loadListFavourite = async () => {
   return HttpServices.buildAxiosResponse({
     success: true,
     data: {
-      list: result,
+      list: TOP_BOOKS,
     },
   });
 };
