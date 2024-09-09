@@ -5,8 +5,8 @@ import {
   observable,
   runInAction,
 } from 'mobx';
-import { USER } from '@constants';
 import { DataModels } from '@models';
+import { UserServices } from '@services';
 import { UserStore } from '@store';
 
 class EditAccountViewModel {
@@ -16,6 +16,7 @@ class EditAccountViewModel {
   confirmPassword: string = '';
   userStore: UserStore | null = null;
   shouldShowValidationErrors: boolean = false;
+  showChangePassword: boolean = false;
 
   constructor(userStore: UserStore) {
     makeObservable(this, {
@@ -25,6 +26,8 @@ class EditAccountViewModel {
       userStore: observable,
       shouldShowValidationErrors: observable,
       currentPassword: observable,
+      showChangePassword: observable,
+      setShowChangePassword: action,
       setCurrentPassword: action,
       setConfirmPassword: action,
       setPhoneNumber: action,
@@ -35,6 +38,11 @@ class EditAccountViewModel {
     });
 
     this.userStore = userStore;
+    this.phoneNumber = userStore.userProfile.phoneNumber;
+  }
+
+  setShowChangePassword(value: boolean) {
+    this.showChangePassword = value;
   }
 
   setPassword(value: string) {
@@ -54,10 +62,11 @@ class EditAccountViewModel {
   }
 
   get toJsonObject(): DataModels.IUser {
+    console.log('this.phoneNumber :>> ', this.phoneNumber);
     return {
-      ...USER,
+      ...this.userStore.userProfile,
       password: this.password,
-      phoneNumber: this.password,
+      phoneNumber: this.phoneNumber,
     };
   }
 
@@ -65,24 +74,26 @@ class EditAccountViewModel {
   get validationErrors() {
     const errorMap: Map<string, string> = new Map();
 
-    if (!this.password) {
-      errorMap.set('password', 'Please enter password');
-    }
-
     if (!this.phoneNumber) {
       errorMap.set('phoneNumber', 'Please enter phone number');
     }
 
-    if (!this.confirmPassword) {
-      errorMap.set('confirmPassword', 'Please enter confirm password');
-    }
+    if (this.showChangePassword) {
+      if (!this.password) {
+        errorMap.set('password', 'Please enter password');
+      }
 
-    if (this.confirmPassword !== this.password) {
-      errorMap.set('confirmPassword', 'Confirm password not match');
-    }
+      if (!this.confirmPassword) {
+        errorMap.set('confirmPassword', 'Please enter confirm password');
+      }
 
-    if (this.currentPassword !== this.userStore.userProfile?.password) {
-      errorMap.set('currentPassword', 'Current password wrong');
+      if (this.confirmPassword !== this.password) {
+        errorMap.set('confirmPassword', 'Confirm password not match');
+      }
+
+      if (this.currentPassword !== this.userStore.userProfile?.password) {
+        errorMap.set('currentPassword', 'Current password wrong');
+      }
     }
 
     return errorMap;
@@ -97,6 +108,14 @@ class EditAccountViewModel {
   get hasAnyValidationError() {
     return this.validationErrors.size > 0;
   }
+
+  submitUpdate = async () => {
+    const result = await UserServices.updateUser(this.toJsonObject);
+
+    if (result?.success && result.data) {
+      this.userStore.setUserProfile(result.data.user);
+    }
+  };
 }
 
 export { EditAccountViewModel };

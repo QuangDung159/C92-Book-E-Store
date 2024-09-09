@@ -5,7 +5,6 @@ import {
   observable,
   runInAction,
 } from 'mobx';
-import { USER } from '@constants';
 import { UserStore } from '@store';
 import { delay } from '@utils';
 
@@ -40,7 +39,7 @@ class SignInViewModel {
 
   login = async () => {
     await delay(1000);
-    this.userStore.setUserProfile(USER);
+    this.userStore.setUserProfile(this.userStore.userProfile);
   };
 
   // validation

@@ -5,7 +5,6 @@ import {
   observable,
   runInAction,
 } from 'mobx';
-import { USER } from '@constants';
 import { DataModels } from '@models';
 import { UserStore } from '@store';
 
@@ -62,7 +61,7 @@ class SignUpViewModel {
 
   get toJsonObject(): DataModels.IUser {
     return {
-      ...USER,
+      ...this.userStore.userProfile,
       username: this.username,
       password: this.password,
       phoneNumber: this.password,

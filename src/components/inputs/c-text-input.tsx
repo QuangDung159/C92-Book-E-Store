@@ -96,6 +96,9 @@ const CTextInput: FC<CTextInputProps> = ({
           placeholder={placeholder}
           style={[
             styles.searchInput,
+            disabled && {
+              opacity: 0.6,
+            },
             multiline && {
               height: 120,
             },

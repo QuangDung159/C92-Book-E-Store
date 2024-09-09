@@ -1,5 +1,4 @@
 import { action, makeObservable, observable } from 'mobx';
-import { USER } from '@constants';
 import { DataModels } from '@models';
 import { AuthenticationServices } from '@services';
 import { ServiceResultHandler } from '@types';
@@ -34,7 +33,7 @@ class AuthenticationStore {
   signIn = async (username: string, password: string) => {
     await delay(1000);
     this.userStore.setUserProfile({
-      ...USER,
+      ...this.userStore.userProfile,
       username,
       password,
     });
@@ -43,7 +42,7 @@ class AuthenticationStore {
   signUp = async (user: DataModels.IUser) => {
     await delay(1000);
     this.userStore.setUserProfile({
-      ...USER,
+      ...this.userStore.userProfile,
       email: user.email,
       username: user.username,
     });
@@ -100,7 +99,7 @@ class AuthenticationStore {
     if (response?.user) {
       const user = response.user;
       this.userStore.setUserProfile({
-        ...USER,
+        ...this.userStore.userProfile,
         email: user.email,
         username: user.name,
         avatarUrl: user.photo,
@@ -131,7 +130,7 @@ class AuthenticationStore {
     if (response?.status === 200) {
       const data = response.data;
       this.userStore.setUserProfile({
-        ...USER,
+        ...this.userStore.userProfile,
         email: data.email,
         username: data.first_name,
         avatarUrl: data.picture?.data?.url,
@@ -141,7 +140,7 @@ class AuthenticationStore {
 
   fetchUser = async () => {
     const result = await AuthenticationServices.fetchUser(
-      '66d821f534d631e25f9066e3',
+      '66df0b51f3cad97040c10e02',
     );
 
     if (result?.success) {

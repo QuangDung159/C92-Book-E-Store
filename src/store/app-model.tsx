@@ -33,8 +33,6 @@ class AppModel {
   }
 
   async appInit() {
-    // this.userStore.setUserProfile(USER);
-
     // set notification handler
     Notifications.setNotificationHandler({
       handleNotification: async () => ({
