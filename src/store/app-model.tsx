@@ -84,13 +84,14 @@ class AppModel {
     await this.authenticationStore.fetchUser();
 
     if (this.userStore.authenticated) {
-      await this.cartStore.fetchCart(this.userStore.userProfile.id);
+      this.userStore.fetchListOrder('created');
+      this.userStore.fetchListOrder('completed');
+      this.userStore.fetchListOrder('processing');
+      this.userStore.fetchListOrder('canceled');
+      this.cartStore.fetchCart(this.userStore.userProfile.id);
+      this.userStore.fetchListInAccountView('favorite');
+      this.userStore.fetchListInAccountView('viewed');
     }
-
-    this.userStore.fetchListOrder('created');
-    this.userStore.fetchListOrder('completed');
-    this.userStore.fetchListOrder('processing');
-    this.userStore.fetchListOrder('canceled');
   }
 }
 

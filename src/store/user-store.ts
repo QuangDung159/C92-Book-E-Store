@@ -6,7 +6,7 @@ import {
   runInAction,
 } from 'mobx';
 import { DataModels } from '@models';
-import { OrderServices, UserServices } from '@services';
+import { BookServices, OrderServices, UserServices } from '@services';
 import { OrderStatus } from '@types';
 import { delay, ListHelpers } from '@utils';
 import { ReferenceOptionsStore } from './reference-options-store';
@@ -18,6 +18,8 @@ class UserStore {
   listProcessingOrder: DataModels.IOrder[] = [];
   listCreatedOrder: DataModels.IOrder[] = [];
   referenceOptionsStore: ReferenceOptionsStore | null = null;
+  listFavorite?: DataModels.IBook[] = [];
+  listViewed?: DataModels.IBook[] = [];
 
   constructor(referenceOptionsStore: ReferenceOptionsStore) {
     makeObservable(this, {
@@ -27,6 +29,10 @@ class UserStore {
       listProcessingOrder: observable,
       listCreatedOrder: observable,
       referenceOptionsStore: observable,
+      listFavorite: observable,
+      listViewed: observable,
+      setListViewed: action,
+      setListFavorite: action,
       setListCreatedOrder: action,
       setListCompletedOrder: action,
       setListCanceledOrder: action,
@@ -38,6 +44,14 @@ class UserStore {
     if (referenceOptionsStore) {
       this.referenceOptionsStore = referenceOptionsStore;
     }
+  }
+
+  setListFavorite(values: DataModels.IBook[]) {
+    this.listFavorite = values;
+  }
+
+  setListViewed(values: DataModels.IBook[]) {
+    this.listViewed = values;
   }
 
   setListCreatedOrder(values: DataModels.IOrder[]) {
@@ -153,6 +167,29 @@ class UserStore {
     const result = await UserServices.deleteShippingAddress(addressId);
 
     return result?.success;
+  };
+
+  fetchListInAccountView = async (type: 'viewed' | 'favorite') => {
+    let result: DataModels.ServiceResult<any> = null;
+
+    if (this.authenticated) {
+      if (type === 'favorite') {
+        result = await BookServices.fetchListByListId({
+          listId: this.userProfile.listBookLiked || [],
+        });
+      } else {
+        result = await BookServices.fetchListByListId({
+          listId: this.userProfile.listBookViewed || [],
+        });
+      }
+
+      if (result?.success && result.data.list?.length > 0) {
+        this.setListFavorite(result.data.list);
+      }
+      return result;
+    }
+
+    return null;
   };
 }
 

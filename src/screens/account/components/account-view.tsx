@@ -15,7 +15,6 @@ import {
 import { Divider } from 'react-native-paper';
 import { Icons, Layouts } from '@components';
 import { useNavigate } from '@hooks';
-import { BookServices } from '@services';
 import { authenticationStore, sharedStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { AppVersionText } from './app-version-text';
@@ -32,35 +31,23 @@ const AccountView: React.FC = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
+    sharedStore.setShowLoading(true);
     onLoadData();
+    sharedStore.setShowLoading(false);
   }, []);
 
   const onLoadData = async () => {
     await authenticationStore.fetchUser();
+    await Promise.all([
+      userStore.fetchListInAccountView('favorite'),
+      userStore.fetchListInAccountView('viewed'),
+    ]);
   };
 
   const onRefresh = async () => {
     setRefreshing(true);
     await onLoadData();
     setRefreshing(false);
-  };
-
-  const loadListFavourite = async () => {
-    sharedStore.setShowLoading(true);
-    const result = await BookServices.loadListFavourite();
-    if (result.success) {
-      openBookListingScreen(result.data?.list || [], 'Favourite');
-    }
-    sharedStore.setShowLoading(false);
-  };
-
-  const loadListViewed = async () => {
-    sharedStore.setShowLoading(true);
-    const result = await BookServices.loadListFavourite();
-    if (result.success) {
-      openBookListingScreen(result.data?.list || [], 'Viewed');
-    }
-    sharedStore.setShowLoading(false);
   };
 
   const renderInfoRow = (label: string, value: string) => {
@@ -117,10 +104,10 @@ const AccountView: React.FC = () => {
           </View>
         </View>
         {renderMenuItem('Favourites', () => {
-          loadListFavourite();
+          openBookListingScreen(userStore.listFavorite || [], 'Favourite');
         })}
         {renderMenuItem('Viewed', () => {
-          loadListViewed();
+          openBookListingScreen(userStore.listViewed || [], 'Viewed');
         })}
         {renderMenuItem('Orders', () => {
           openOrdersScreen();

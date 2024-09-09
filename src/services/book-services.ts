@@ -6,15 +6,15 @@ import { HttpServices } from './http-services';
 const baseUrl = process.env.EXPO_PUBLIC_BASE_URL + '/book';
 
 const loadListFavourite = async () => {
-  await delay(1000);
-  const result = TOP_BOOKS.filter((item) => item.isLiked);
+  const result = await HttpServices.get(baseUrl + '/get-by-list-id');
 
-  return HttpServices.buildAxiosResponse({
-    success: true,
-    data: {
-      list: TOP_BOOKS,
-    },
-  });
+  return result;
+};
+
+const fetchListByListId = async (params: { listId: string[] }) => {
+  const result = await HttpServices.post(baseUrl + '/get-by-list-id', params);
+
+  return result;
 };
 
 const loadListViewed = async () => {
@@ -79,4 +79,5 @@ export const BookServices = {
   queryBook,
   fetchListHomePage,
   fetchBookDetail,
+  fetchListByListId,
 };

@@ -180,6 +180,8 @@ export interface IUser {
   password: string;
   avatarUrl?: string;
   id: string;
+  listBookViewed?: string[];
+  listBookLiked?: string[];
 }
 
 export interface ILocation {
