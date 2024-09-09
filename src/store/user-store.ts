@@ -183,9 +183,14 @@ class UserStore {
         });
       }
 
-      if (result?.success && result.data.list?.length > 0) {
-        this.setListFavorite(result.data.list);
+      if (result?.success && result.data) {
+        if (type === 'favorite') {
+          this.setListFavorite(result.data?.list);
+        } else {
+          this.setListViewed(result.data?.list);
+        }
       }
+
       return result;
     }
 

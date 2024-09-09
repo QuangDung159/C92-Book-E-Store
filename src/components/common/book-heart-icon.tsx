@@ -31,6 +31,8 @@ const BookHeartIcon: React.FC<BookHeartIconProps> = ({
       ...userStore.userProfile,
       listBookLiked,
     });
+
+    userStore.fetchListInAccountView('favorite');
   };
 
   return (
