@@ -141,8 +141,6 @@ class AuthenticationStore {
 
       const result = await AuthenticationServices.signUp({
         email: user.email,
-        password: '',
-        phoneNumber: '',
         signUpMethod: 'google',
         username: user.name,
         avatarUrl: user.photo,
@@ -177,8 +175,6 @@ class AuthenticationStore {
 
       const result = await AuthenticationServices.signUp({
         email: user.email,
-        password: '',
-        phoneNumber: '',
         signUpMethod: 'facebook',
         username: `${user.first_name} ${user.last_name}`,
         avatarUrl: user.picture?.data?.url,
