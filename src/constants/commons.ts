@@ -1,5 +1,27 @@
 import { DataModels } from '@models';
-import { LIST_SORT_OPTION } from './mock';
+
+const LIST_SORT_OPTION: DataModels.ISortOption[] = [
+  {
+    value: 'name_asc',
+    label: 'Name ASC',
+    field: 'name',
+  },
+  {
+    value: 'name_desc',
+    label: 'Name DESC',
+    field: 'name',
+  },
+  {
+    value: 'price_asc',
+    label: 'Price ASC',
+    field: 'price',
+  },
+  {
+    value: 'price_desc',
+    label: 'Price DESC',
+    field: 'price',
+  },
+];
 
 const DEFAULT_SORT: DataModels.ISortOption = LIST_SORT_OPTION[0];
 
@@ -74,6 +96,43 @@ const API_URL = {
   user: process.env.EXPO_PUBLIC_BASE_URL + '/user',
 };
 
+const LIST_ADMINITRATIVE_UNIT = [
+  {
+    value: 'province',
+    label: ADMINISTRATIVE?.province,
+  },
+  {
+    value: 'district',
+    label: ADMINISTRATIVE?.district,
+  },
+  {
+    value: 'ward',
+    label: ADMINISTRATIVE?.ward,
+  },
+];
+
+const TOP_BOOKS_FILTER = [
+  {
+    label: 'This Week',
+    value: 'week',
+  },
+  {
+    label: 'This Month',
+    value: 'month',
+  },
+  {
+    label: 'This Year',
+    value: 'year',
+  },
+];
+
+const LIST_PAYMENT_METHOD = [
+  { id: '1', value: 'cod', label: 'Cash on Delivery' },
+  { id: '2', value: 'momo', label: 'Momo' },
+  { id: '3', value: 'zalo_pay', label: 'Zalo Pay' },
+  { id: '4', value: 'credit_card', label: 'Credit Card' },
+];
+
 export {
   ADMINISTRATIVE,
   API_URL,
@@ -85,11 +144,15 @@ export {
   ERROR_CODES,
   EXPO_PUSH_NOTIFICATION_URL,
   IN_APP_MESSAGE_ACTION_ID,
+  LIST_ADMINITRATIVE_UNIT,
   LIST_HOME_PAGE_TITLE,
+  LIST_PAYMENT_METHOD,
+  LIST_SORT_OPTION,
   MOMO_REQUEST_TYPE,
   PAYMENT_CARD_TYPE,
   PAYMENT_STATUS,
   PAYMENT_TYPE,
   PRICE_STEP,
   SEARCH_VIEW_STYLE,
+  TOP_BOOKS_FILTER,
 };

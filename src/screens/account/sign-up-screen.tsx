@@ -3,14 +3,12 @@ import React, { useRef } from 'react';
 import { Keyboard, StyleSheet, Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Buttons, Inputs, Layouts, ScreenHeader } from '@components';
-import { useNavigate } from '@hooks';
 import { appModel, authenticationStore, sharedStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { SignUpViewModel } from './view-models';
 
 const SignUpScreen = ({ navigation }: any) => {
   const signUpVM = useRef(new SignUpViewModel(appModel.userStore)).current;
-  const { openHomeScreen } = useNavigate(navigation);
 
   const onSubmit = async () => {
     Keyboard.dismiss();
@@ -21,30 +19,19 @@ const SignUpScreen = ({ navigation }: any) => {
     }
 
     sharedStore.setShowLoading(true);
-    await authenticationStore.signUp(signUpVM.toJsonObject);
-    await authenticationStore.signIn(signUpVM.username, signUpVM.password);
+
+    await authenticationStore.signUp(signUpVM.toJsonObject, () => {
+      navigation.goBack();
+    });
+
     sharedStore.setShowLoading(false);
-    openHomeScreen();
   };
 
   return (
     <View style={styles.container}>
       <ScreenHeader title="Sign Up" navigation={navigation} />
-      <KeyboardAwareScrollView
-        contentContainerStyle={{
-          flex: 1,
-          justifyContent: 'center',
-          paddingHorizontal: 24,
-          marginTop: -24,
-        }}
-      >
-        <Text
-          style={{
-            ...FONT_STYLES.SEMIBOLD_14,
-          }}
-        >
-          Please fill your details to signup.
-        </Text>
+      <KeyboardAwareScrollView contentContainerStyle={styles.wrapper}>
+        <Text style={styles.desc}>Please fill your details to signup.</Text>
         <Layouts.VSpace value={24} />
         <Inputs.CTextInput
           value={signUpVM.email}
@@ -116,6 +103,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.primaryWhite,
+  },
+  wrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+    marginTop: -24,
+  },
+  desc: {
+    ...FONT_STYLES.SEMIBOLD_14,
   },
 });
 

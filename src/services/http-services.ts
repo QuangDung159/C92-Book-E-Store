@@ -40,7 +40,8 @@ const post = async (
 
     return buildAxiosResponse({
       success: false,
-      errorMessage: error,
+      error: error?.response?.data,
+      errorCode: error?.response?.status,
     });
   }
 };
@@ -61,7 +62,8 @@ const get = async (
     console.log('Http.get error url :>> ', url);
     return buildAxiosResponse({
       success: false,
-      errorMessage: error,
+      error: error?.response?.data,
+      errorCode: error?.response?.status,
     });
   }
 };

@@ -5,18 +5,13 @@ import {
 } from '@react-native-google-signin/google-signin';
 import axios, { AxiosResponse } from 'axios';
 import { AccessToken, LoginManager } from 'react-native-fbsdk-next';
-import { API_URL, USER } from '@constants';
+import { API_URL } from '@constants';
 import { DataModels } from '@models';
+import { SignUpMethod } from '@types';
 import { delay, ToastHelpers } from '@utils';
 import { HttpServices } from './http-services';
 
 const creditCardUrl = process.env.EXPO_PUBLIC_BASE_URL + '/credit-card';
-
-const signUp = async () => {
-  // await delay(1000);
-
-  return USER;
-};
 
 const sendVerificationCode = async (email: string) => {
   await delay(1000);
@@ -128,6 +123,17 @@ const fetchUser = async (userId: string) => {
 
 const signIn = async (params: { email: string; password: string }) => {
   return await HttpServices.post(API_URL.user + '/sign-in', params);
+};
+
+const signUp = async (params: {
+  email: string;
+  password: string;
+  signUpMethod: SignUpMethod;
+  ssoToken?: string;
+  username: string;
+  phoneNumber: string;
+}) => {
+  return await HttpServices.post(API_URL.user + '/sign-up', params);
 };
 
 export const AuthenticationServices = {

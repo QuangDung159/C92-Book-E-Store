@@ -184,6 +184,7 @@ export interface IUser {
   listBookViewed?: string[];
   listBookLiked?: string[];
   signUpMethod?: SignUpMethod;
+  ssoToken?: string;
 }
 
 export interface ILocation {
