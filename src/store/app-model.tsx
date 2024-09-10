@@ -28,7 +28,7 @@ class AppModel {
     this.categoryStore = new CategoryStore();
     this.searchStore = new SearchStore();
     this.sharedStore = new SharedStore();
-    this.notificationStore = new NotificationStore();
+    this.notificationStore = new NotificationStore(this.userStore);
     this.authenticationStore = new AuthenticationStore(
       this.userStore,
       this.sharedStore,
@@ -88,6 +88,7 @@ class AppModel {
       this.userStore.fetchAllListOrder();
       this.cartStore.fetchCart(this.userStore.userProfile.id);
       this.userStore.fetchAllListInAccount();
+      this.notificationStore.loadNotification();
     }
   }
 }

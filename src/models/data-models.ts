@@ -194,10 +194,12 @@ export interface ILocation {
 }
 
 export interface INotification {
-  id: string;
+  id?: string;
   title: string;
   content: string;
   readed: boolean;
+  url?: string;
+  user?: string;
 }
 
 export interface ServiceResult<T> {

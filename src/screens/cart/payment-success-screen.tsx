@@ -1,9 +1,10 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Linking, StyleSheet, Text, View } from 'react-native';
 import { Buttons, Icons, Layouts } from '@components';
 import { useNavigate } from '@hooks';
 import { NotificationServices } from '@services';
+import { notificationStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 
 const PaymentSuccessScreen = ({ navigation, route }) => {
@@ -12,18 +13,25 @@ const PaymentSuccessScreen = ({ navigation, route }) => {
   const orderId = route.params?.orderId;
   const message = route.params?.message;
 
-  useEffect(() => {
+  const onPushNotification = useCallback(async () => {
     if (orderId) {
-      NotificationServices.sendPushNotification({
+      await NotificationServices.sendPushNotification({
         body: `Your order #${orderId} has been confirmed.`,
         title: 'Order status',
         data: {
           orderId,
           message,
         },
+        user: userStore.userProfile.id,
       });
+
+      notificationStore.loadNotification();
     }
   }, [message, orderId]);
+
+  useEffect(() => {
+    onPushNotification();
+  }, [onPushNotification]);
 
   return (
     <View style={styles.container}>

@@ -94,6 +94,7 @@ const LIST_HOME_PAGE_TITLE = {
 const API_URL = {
   shippingAddress: process.env.EXPO_PUBLIC_BASE_URL + '/shipping-address',
   user: process.env.EXPO_PUBLIC_BASE_URL + '/user',
+  notification: process.env.EXPO_PUBLIC_BASE_URL + '/notification',
 };
 
 const LIST_ADMINITRATIVE_UNIT = [

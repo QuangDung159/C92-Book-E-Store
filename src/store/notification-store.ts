@@ -1,34 +1,34 @@
+/* eslint-disable import/no-named-as-default */
 import Constants from 'expo-constants';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
-import {
-  action,
-  computed,
-  makeObservable,
-  observable,
-  runInAction,
-} from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 import { Platform } from 'react-native';
 import { DataModels } from '@models';
 import { NotificationServices } from '@services';
 import { ToastHelpers } from '@utils';
+import { UserStore } from './user-store';
 
 class NotificationStore {
   categorySelected: DataModels.ICategory | null = null;
   listNotification: DataModels.INotification[] = [];
   expoPushToken: string = '';
   latestNotification: Notifications.Notification | null = null;
+  userStore: UserStore | null = null;
 
-  constructor() {
+  constructor(userStore: UserStore) {
     makeObservable(this, {
       listNotification: observable,
       expoPushToken: observable,
       latestNotification: observable,
+      userStore: observable,
       setLatestNotification: action,
       setExpoPushToken: action,
       setListNotification: action,
       unReadNotification: computed,
     });
+
+    this.userStore = userStore;
   }
 
   setLatestNotification(value: Notifications.Notification) {
@@ -48,11 +48,46 @@ class NotificationStore {
   }
 
   loadNotification = async () => {
-    runInAction(() => {
-      NotificationServices.loadListNotification().then((value) => {
-        this.setListNotification(value);
-      });
-    });
+    const result = await NotificationServices.fetchListNotification(
+      this.userStore.userProfile.id,
+    );
+
+    if (result?.success && result.data?.listNotification) {
+      this.setListNotification(result.data.listNotification);
+    }
+  };
+
+  onReadNotification = async (notificationId: string, readed: boolean) => {
+    const result = await NotificationServices.onReadNotification(
+      this.userStore.userProfile.id,
+      notificationId,
+      readed,
+    );
+
+    if (result?.success && result.data?.listNotification) {
+      this.setListNotification(result.data.listNotification);
+    }
+  };
+
+  onReadAllNotification = async () => {
+    const result = await NotificationServices.onReadAllNotification(
+      this.userStore.userProfile.id,
+    );
+
+    if (result?.success && result.data?.listNotification) {
+      this.setListNotification(result.data.listNotification);
+    }
+  };
+
+  onDeleteNotification = async (notificationId: string) => {
+    const result = await NotificationServices.onDeleteNotification(
+      this.userStore.userProfile.id,
+      notificationId,
+    );
+
+    if (result?.success && result.data?.listNotification) {
+      this.setListNotification(result.data.listNotification);
+    }
   };
 
   handleRegistrationError(errorMessage: string) {

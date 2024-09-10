@@ -41,6 +41,8 @@ type NotificationParam = {
   expoPushToken?: string;
   body?: string;
   data?: any;
+  url?: string;
+  user?: string;
 };
 
 type GoogleUser = {
