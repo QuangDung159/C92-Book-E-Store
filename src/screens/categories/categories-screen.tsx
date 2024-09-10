@@ -21,8 +21,7 @@ const CategoriesScreen = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
       <SearchBar
-        showCartIcon={true}
-        // showCartIcon={userStore.authenticated}
+        showCartIcon={userStore.authenticated}
         navigation={navigation}
         showSearch
       />

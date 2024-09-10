@@ -39,8 +39,8 @@ const AccountView: React.FC = () => {
   const onLoadData = async () => {
     await authenticationStore.fetchUser();
     await Promise.all([
-      userStore.fetchListInAccountView('favorite'),
-      userStore.fetchListInAccountView('viewed'),
+      userStore.fetchAllListInAccount(),
+      userStore.fetchAllListOrder(),
     ]);
   };
 

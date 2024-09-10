@@ -35,6 +35,17 @@ class AuthenticationStore {
     this.googleSigned = value;
   }
 
+  onSignInSuccess = async (user: DataModels.IUser) => {
+    await this.sharedStore.setStorageValue('userId', user.id);
+    await delay(500);
+    this.fetchUser();
+
+    ToastHelpers.showToast({
+      title: 'Success',
+      content: 'Sign in success',
+    });
+  };
+
   signIn = async (email: string, password: string) => {
     const result = await AuthenticationServices.signIn({
       email,
@@ -44,15 +55,7 @@ class AuthenticationStore {
     if (result?.success && result.data) {
       const user = result.data.user as DataModels.IUser;
 
-      await this.sharedStore.setStorageValue('userId', user.id);
-
-      await delay(1000);
-      this.fetchUser();
-
-      ToastHelpers.showToast({
-        title: 'Success',
-        content: 'Sign in success',
-      });
+      await this.onSignInSuccess(user);
     }
   };
 
@@ -135,19 +138,22 @@ class AuthenticationStore {
 
     if (response?.user) {
       const user = response.user;
-      this.userStore.setUserProfile({
-        ...this.userStore.userProfile,
+
+      const result = await AuthenticationServices.signUp({
         email: user.email,
+        signUpMethod: 'google',
         username: user.name,
         avatarUrl: user.photo,
+        ssoToken: response.idToken,
       });
 
-      this.setGoogleSigned(true);
+      if (result?.success) {
+        const user = result.data.user as DataModels.IUser;
 
-      ToastHelpers.showToast({
-        title: 'Account',
-        content: 'Sign in success',
-      });
+        await this.onSignInSuccess(user);
+
+        this.setGoogleSigned(true);
+      }
     }
   };
 
@@ -165,13 +171,23 @@ class AuthenticationStore {
     const response = await AuthenticationServices.facebookSignIn();
 
     if (response?.status === 200) {
-      const data = response.data;
-      this.userStore.setUserProfile({
-        ...this.userStore.userProfile,
-        email: data.email,
-        username: data.first_name,
-        avatarUrl: data.picture?.data?.url,
+      const user = response.data;
+
+      const result = await AuthenticationServices.signUp({
+        email: user.email,
+        signUpMethod: 'facebook',
+        username: `${user.first_name} ${user.last_name}`,
+        avatarUrl: user.picture?.data?.url,
+        ssoToken: user.id,
       });
+
+      if (result?.success) {
+        const user = result.data.user as DataModels.IUser;
+
+        await this.onSignInSuccess(user);
+
+        this.setGoogleSigned(true);
+      }
     }
   };
 
