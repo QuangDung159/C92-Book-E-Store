@@ -109,6 +109,15 @@ class UserStore {
     return Boolean(this.userProfile);
   }
 
+  fetchAllListOrder = async () => {
+    await Promise.all([
+      this.fetchListOrder('canceled'),
+      this.fetchListOrder('completed'),
+      this.fetchListOrder('created'),
+      this.fetchListOrder('processing'),
+    ]);
+  };
+
   fetchListOrder = async (status: OrderStatus) => {
     if (this.authenticated) {
       const result = await OrderServices.fetchListOrder({
@@ -167,6 +176,13 @@ class UserStore {
     const result = await UserServices.deleteShippingAddress(addressId);
 
     return result?.success;
+  };
+
+  fetchAllListInAccount = async () => {
+    await Promise.all([
+      this.fetchListInAccountView('favorite'),
+      this.fetchListInAccountView('viewed'),
+    ]);
   };
 
   fetchListInAccountView = async (type: 'viewed' | 'favorite') => {

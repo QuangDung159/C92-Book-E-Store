@@ -24,7 +24,7 @@ import {
 } from '@constants';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
-import { referenceOptionsStore, searchStore } from '@store';
+import { referenceOptionsStore, searchStore, userStore } from '@store';
 import { COLORS } from '@themes';
 import { StringHelpers } from '@utils';
 import { ListChipByListFilter, SortPopup, SortSection } from './components';
@@ -204,8 +204,7 @@ const SearchScreen = ({ route, navigation }: any) => {
         }}
       />
       <SearchBar
-        showCartIcon={true}
-        // showCartIcon={userStore.authenticated}
+        showCartIcon={userStore.authenticated}
         showBackIcon
         navigation={navigation}
         autoFocus={route?.params?.autoFocus}

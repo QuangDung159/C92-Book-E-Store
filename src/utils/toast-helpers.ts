@@ -23,11 +23,11 @@ export const showToast = ({
       Toast.hide();
     },
     text1Style: {
-      ...FONT_STYLES.SEMIBOLD_14,
+      ...FONT_STYLES.SEMIBOLD_10,
       color: COLORS.primaryBlack,
     },
     text2Style: {
-      ...FONT_STYLES.REGULAR_12,
+      ...FONT_STYLES.REGULAR_10,
       color: COLORS.primaryBlack,
     },
   });

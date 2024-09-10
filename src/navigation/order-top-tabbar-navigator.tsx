@@ -39,18 +39,30 @@ function OrderTopTabbarNavigator() {
         <Tab.Screen
           name={SCREEN_NAME.CREATED_ORDERS_SCREEN}
           component={CreatedOrdersScreen}
+          options={{
+            tabBarLabelStyle: styles.title,
+          }}
         />
         <Tab.Screen
           name={SCREEN_NAME.PROCESSING_ORDERS_SCREEN}
           component={ProcessingOrdersScreen}
+          options={{
+            tabBarLabelStyle: styles.title,
+          }}
         />
         <Tab.Screen
           name={SCREEN_NAME.COMPLETED_ORDERS_SCREEN}
           component={CompletedOrdersScreen}
+          options={{
+            tabBarLabelStyle: styles.title,
+          }}
         />
         <Tab.Screen
           name={SCREEN_NAME.CANCELED_ORDERS_SCREEN}
           component={CanceledOrdersScreen}
+          options={{
+            tabBarLabelStyle: styles.title,
+          }}
         />
       </Tab.Navigator>
     </SafeAreaView>
@@ -61,6 +73,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.primaryWhite,
+  },
+  title: {
+    ...FONT_STYLES.BOLD_8,
+    marginTop: -8,
   },
 });
 

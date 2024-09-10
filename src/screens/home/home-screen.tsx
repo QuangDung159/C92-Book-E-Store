@@ -1,21 +1,38 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import React, { useState } from 'react';
+import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 import { ImageAssets } from '@assets';
 import { Layouts, SearchBar } from '@components';
-import { searchStore, userStore } from '@store';
+import { appModel, searchStore, userStore } from '@store';
 import { COLORS } from '@themes';
 import { BestDealCarousel, HorizontalListCard } from './components';
 
 const HomeScreen = ({ navigation }: any) => {
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onLoadHomeData = async () => {
+    await appModel.loadMasterData();
+  };
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await onLoadHomeData();
+    setRefreshing(false);
+  };
+
   return (
     <View style={styles.container}>
       <SearchBar
-        showCartIcon={true}
-        // showCartIcon={userStore.authenticated}
+        showCartIcon={userStore.authenticated}
         navigation={navigation}
       />
-      <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        scrollEnabled={true}
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <Layouts.VSpace value={12}></Layouts.VSpace>
         <BestDealCarousel
           data={[

@@ -127,11 +127,12 @@ const signIn = async (params: { email: string; password: string }) => {
 
 const signUp = async (params: {
   email: string;
-  password: string;
+  password?: string;
   signUpMethod: SignUpMethod;
   ssoToken?: string;
   username: string;
-  phoneNumber: string;
+  phoneNumber?: string;
+  avatarUrl?: string;
 }) => {
   return await HttpServices.post(API_URL.user + '/sign-up', params);
 };
