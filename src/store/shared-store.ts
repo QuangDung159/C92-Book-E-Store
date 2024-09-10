@@ -26,7 +26,6 @@ class SharedStore {
   getStorageValue = async (key: string) => {
     try {
       const value = await AsyncStorage.getItem(key);
-      console.log('value :>> ', value);
       if (value !== null) {
         return value;
       }
