@@ -257,8 +257,7 @@ const CheckoutScreen = ({ navigation }: any) => {
         onPress={() => {
           if (!cartStore.shippingAddressData) {
             ToastHelpers.showToast({
-              title: 'Error',
-              content: 'Please choose your shipping address',
+              title: 'Please choose your shipping address',
               type: 'error',
             });
           } else {

@@ -58,6 +58,32 @@ const FONT_10: TextStyle = {
   color: '#121212',
 };
 
+const FONT_8: TextStyle = {
+  lineHeight: 12,
+  fontSize: 8,
+  color: '#121212',
+};
+
+const BOLD_8: TextStyle = {
+  ...FONT_8,
+  fontFamily: 'Montserrat-Bold',
+};
+
+const REGULAR_8: TextStyle = {
+  ...FONT_8,
+  fontFamily: 'Montserrat-Regular',
+};
+
+const SEMIBOLD_8: TextStyle = {
+  ...FONT_8,
+  fontFamily: 'Montserrat-SemiBold',
+};
+
+const THIN_8: TextStyle = {
+  ...FONT_8,
+  fontFamily: 'Montserrat-Thin',
+};
+
 const BOLD_10: TextStyle = {
   ...FONT_10,
   fontFamily: 'Montserrat-Bold',
@@ -189,6 +215,7 @@ export {
   BOLD_18,
   BOLD_20,
   BOLD_22,
+  BOLD_8,
   FONT_10,
   FONT_12,
   FONT_14,
@@ -196,6 +223,7 @@ export {
   FONT_18,
   FONT_20,
   FONT_22,
+  FONT_8,
   REGULAR_10,
   REGULAR_12,
   REGULAR_14,
@@ -203,6 +231,7 @@ export {
   REGULAR_18,
   REGULAR_20,
   REGULAR_22,
+  REGULAR_8,
   SEMIBOLD_10,
   SEMIBOLD_12,
   SEMIBOLD_14,
@@ -210,6 +239,7 @@ export {
   SEMIBOLD_18,
   SEMIBOLD_20,
   SEMIBOLD_22,
+  SEMIBOLD_8,
   THIN_10,
   THIN_12,
   THIN_14,
@@ -217,4 +247,5 @@ export {
   THIN_18,
   THIN_20,
   THIN_22,
+  THIN_8,
 };
