@@ -132,6 +132,7 @@ const signUp = async (params: {
   ssoToken?: string;
   username: string;
   phoneNumber: string;
+  avatarUrl?: string;
 }) => {
   return await HttpServices.post(API_URL.user + '/sign-up', params);
 };
