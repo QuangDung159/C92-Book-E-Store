@@ -1,15 +1,28 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { Dimensions, RefreshControl, StyleSheet, View } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { EmptyListComponent, Icons, ScreenHeader } from '@components';
 import { notificationStore } from '@store';
-import { COLORS, FONT_STYLES } from '@themes';
+import { COLORS } from '@themes';
+import { NotificationItem } from './components';
 
 const NotificationsScreen = ({ navigation }: any) => {
+  const [refreshing, setRefreshing] = useState(false);
   const { width } = Dimensions.get('window');
+
   const hiddenItemHeight = 75;
   const hiddenItemWidth = 75;
+
+  const onLoadNotification = async () => {
+    await notificationStore.loadNotification();
+  };
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await onLoadNotification();
+    setRefreshing(false);
+  };
 
   return (
     <View style={styles.container}>
@@ -25,28 +38,14 @@ const NotificationsScreen = ({ navigation }: any) => {
         keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
         data={notificationStore.listNotification}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
         renderItem={({ item }) => (
-          <View
-            style={[
-              styles.itemContainer,
-              {
-                height: hiddenItemHeight,
-              },
-            ]}
-          >
-            <View style={styles.contentWrapper}>
-              <Text style={styles.title}>{item.title}</Text>
-              <Text style={styles.content} numberOfLines={2}>
-                {item.content}
-              </Text>
-            </View>
-            <View style={styles.dot}>
-              <Icons.DotSingleIcon
-                color={item.readed ? COLORS.primaryWhite : COLORS.primaryBlack}
-                size={30}
-              />
-            </View>
-          </View>
+          <NotificationItem
+            hiddenItemHeight={hiddenItemHeight}
+            notificationItem={item}
+          />
         )}
         disableRightSwipe
         renderHiddenItem={({ item }) => {
@@ -101,20 +100,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     flex: 1,
-  },
-  contentWrapper: {
-    flex: 9,
-  },
-  title: {
-    ...FONT_STYLES.SEMIBOLD_14,
-    marginBottom: 4,
-  },
-  content: {
-    ...FONT_STYLES.REGULAR_14,
-  },
-  dot: {
-    flex: 1,
-    alignItems: 'flex-end',
   },
   hiddenWrapper: {
     backgroundColor: COLORS.error50,

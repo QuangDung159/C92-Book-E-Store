@@ -1,4 +1,8 @@
-import { EXPO_PUSH_NOTIFICATION_URL, LIST_NOTIFICATION } from '@constants';
+import {
+  API_URL,
+  EXPO_PUSH_NOTIFICATION_URL,
+  LIST_NOTIFICATION,
+} from '@constants';
 import { notificationStore } from '@store';
 import { NotificationParam } from '@types';
 import { delay } from '@utils';
@@ -27,7 +31,14 @@ const sendPushNotification = async (
   return result;
 };
 
+const fetchListNotification = async (userId: string) => {
+  return await HttpServices.get(
+    API_URL.notification + `/get-by-user?userId=${userId}`,
+  );
+};
+
 export const NotificationServices = {
   loadListNotification,
   sendPushNotification,
+  fetchListNotification,
 };

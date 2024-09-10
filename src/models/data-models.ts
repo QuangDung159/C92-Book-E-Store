@@ -198,6 +198,7 @@ export interface INotification {
   title: string;
   content: string;
   readed: boolean;
+  url?: string;
 }
 
 export interface ServiceResult<T> {

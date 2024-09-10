@@ -10,7 +10,7 @@ import * as Linking from 'expo-linking';
 import * as Notifications from 'expo-notifications';
 import { SplashScreen } from 'expo-router';
 import { observer } from 'mobx-react-lite';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { connectToDevTools } from 'react-devtools-core';
 import React from 'react-native';
 import {
@@ -87,6 +87,19 @@ const App = () => {
     };
   }, []);
 
+  const handleInAppMessageClick = useCallback(
+    (event: InAppMessageClickEvent) => {
+      if (event?.result?.actionId === IN_APP_MESSAGE_ACTION_ID.openStore) {
+        sharedStore.setShowLoading(true);
+        delay(1000).then(() => {
+          sharedStore.setShowLoading(false);
+          openPlayStore();
+        });
+      }
+    },
+    [openPlayStore],
+  );
+
   useEffect(() => {
     OneSignal.InAppMessages.addEventListener('click', handleInAppMessageClick);
 
@@ -96,17 +109,7 @@ const App = () => {
         handleInAppMessageClick,
       );
     };
-  }, []);
-
-  const handleInAppMessageClick = (event: InAppMessageClickEvent) => {
-    if (event?.result?.actionId === IN_APP_MESSAGE_ACTION_ID.openStore) {
-      sharedStore.setShowLoading(true);
-      delay(1000).then(() => {
-        sharedStore.setShowLoading(false);
-        openPlayStore();
-      });
-    }
-  };
+  }, [handleInAppMessageClick]);
 
   const handlePressNotification = async (screenName: string) => {
     await delay(1000);
