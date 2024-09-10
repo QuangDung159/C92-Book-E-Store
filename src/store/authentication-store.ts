@@ -56,13 +56,32 @@ class AuthenticationStore {
     }
   };
 
-  signUp = async (user: DataModels.IUser) => {
-    await delay(1000);
-    this.userStore.setUserProfile({
-      ...this.userStore.userProfile,
-      email: user.email,
-      username: user.username,
+  signUp = async (user: DataModels.IUser, onSuccess?: () => void) => {
+    const { email, password, username, phoneNumber, signUpMethod, ssoToken } =
+      user;
+
+    const result = await AuthenticationServices.signUp({
+      email,
+      password,
+      signUpMethod,
+      ssoToken,
+      phoneNumber,
+      username,
     });
+
+    if (!result?.success && result.error?.error) {
+      const error = result.error.error;
+      ToastHelpers.showToast({
+        title: 'Error',
+        content: error,
+        type: 'error',
+      });
+    }
+
+    if (result.success) {
+      await delay(500);
+      onSuccess?.();
+    }
   };
 
   signOut = async () => {

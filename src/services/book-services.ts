@@ -1,32 +1,12 @@
-import { TOP_BOOKS } from '@constants';
 import { DataModels } from '@models';
-import { delay } from '@utils';
 import { HttpServices } from './http-services';
 
 const baseUrl = process.env.EXPO_PUBLIC_BASE_URL + '/book';
-
-const loadListFavourite = async () => {
-  const result = await HttpServices.get(baseUrl + '/get-by-list-id');
-
-  return result;
-};
 
 const fetchListByListId = async (params: { listId: string[] }) => {
   const result = await HttpServices.post(baseUrl + '/get-by-list-id', params);
 
   return result;
-};
-
-const loadListViewed = async () => {
-  await delay(1000);
-  const result = TOP_BOOKS.filter((item) => item.isLiked);
-
-  return HttpServices.buildAxiosResponse({
-    success: true,
-    data: {
-      list: result,
-    },
-  });
 };
 
 const queryBook = async (
@@ -74,8 +54,6 @@ const fetchBookDetail = async (id: string) => {
 };
 
 export const BookServices = {
-  loadListFavourite,
-  loadListViewed,
   queryBook,
   fetchListHomePage,
   fetchBookDetail,
