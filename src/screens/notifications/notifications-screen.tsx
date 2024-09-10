@@ -31,7 +31,13 @@ const NotificationsScreen = ({ navigation }: any) => {
         navigation={navigation}
         showBackIcon={false}
         rightConponent={() => {
-          return <Icons.ReadAllIcon />;
+          return (
+            <Icons.ReadAllIcon
+              onPress={() => {
+                notificationStore.onReadAllNotification();
+              }}
+            />
+          );
         }}
       />
       <SwipeListView

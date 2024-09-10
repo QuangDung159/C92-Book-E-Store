@@ -69,6 +69,16 @@ class NotificationStore {
     }
   };
 
+  onReadAllNotification = async () => {
+    const result = await NotificationServices.onReadAllNotification(
+      this.userStore.userProfile.id,
+    );
+
+    if (result?.success && result.data?.listNotification) {
+      this.setListNotification(result.data.listNotification);
+    }
+  };
+
   onDeleteNotification = async (notificationId: string) => {
     const result = await NotificationServices.onDeleteNotification(
       this.userStore.userProfile.id,

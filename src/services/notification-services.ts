@@ -1,18 +1,7 @@
-import {
-  API_URL,
-  EXPO_PUSH_NOTIFICATION_URL,
-  LIST_NOTIFICATION,
-} from '@constants';
+import { API_URL, EXPO_PUSH_NOTIFICATION_URL } from '@constants';
 import { notificationStore } from '@store';
 import { NotificationParam } from '@types';
-import { delay } from '@utils';
 import { HttpServices } from './http-services';
-
-const loadListNotification = async () => {
-  await delay(1000);
-
-  return LIST_NOTIFICATION;
-};
 
 const sendPushNotification = async (
   pushNotificationParam: NotificationParam,
@@ -34,6 +23,12 @@ const sendPushNotification = async (
 const fetchListNotification = async (userId: string) => {
   return await HttpServices.get(
     API_URL.notification + `/get-by-user?userId=${userId}`,
+  );
+};
+
+const onReadAllNotification = async (userId: string) => {
+  return await HttpServices.get(
+    API_URL.notification + `/read-all-and-get-by-user?userId=${userId}`,
   );
 };
 
@@ -63,9 +58,9 @@ const onDeleteNotification = async (userId: string, notificationId: string) => {
 };
 
 export const NotificationServices = {
-  loadListNotification,
   sendPushNotification,
   fetchListNotification,
   onReadNotification,
   onDeleteNotification,
+  onReadAllNotification,
 };
