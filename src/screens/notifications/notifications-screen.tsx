@@ -5,7 +5,7 @@ import { SwipeListView } from 'react-native-swipe-list-view';
 import { EmptyListComponent, Icons, ScreenHeader } from '@components';
 import { notificationStore } from '@store';
 import { COLORS } from '@themes';
-import { NotificationItem } from './components';
+import { NotificationHiddenItem, NotificationItem } from './components';
 
 const NotificationsScreen = ({ navigation }: any) => {
   const [refreshing, setRefreshing] = useState(false);
@@ -53,30 +53,14 @@ const NotificationsScreen = ({ navigation }: any) => {
         disableRightSwipe
         renderHiddenItem={({ item }) => {
           return (
-            <View
-              style={[
-                styles.hiddenWrapper,
-                {
-                  height: hiddenItemHeight,
-                  width: width - 5,
-                },
-              ]}
-            >
-              <View
-                style={{
-                  width: width - 5 - hiddenItemWidth,
-                }}
-              />
-              <View style={styles.trashIcon}>
-                <Icons.TrashIcon
-                  color={COLORS.primaryWhite}
-                  size={24}
-                  onPress={() => {
-                    console.log('item :>> ', item);
-                  }}
-                />
-              </View>
-            </View>
+            <NotificationHiddenItem
+              hiddenItemHeight={hiddenItemHeight}
+              hiddenItemWidth={hiddenItemWidth}
+              onPressDeleteNotification={() => {
+                notificationStore.onDeleteNotification(item.id);
+              }}
+              width={width}
+            />
           );
         }}
         leftOpenValue={hiddenItemWidth}
@@ -103,17 +87,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     flex: 1,
-  },
-  hiddenWrapper: {
-    backgroundColor: COLORS.error50,
-    alignSelf: 'flex-end',
-    justifyContent: 'flex-end',
-    flexDirection: 'row',
-  },
-  trashIcon: {
-    width: 75,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
 

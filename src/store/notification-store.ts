@@ -69,6 +69,17 @@ class NotificationStore {
     }
   };
 
+  onDeleteNotification = async (notificationId: string) => {
+    const result = await NotificationServices.onDeleteNotification(
+      this.userStore.userProfile.id,
+      notificationId,
+    );
+
+    if (result?.success && result.data?.listNotification) {
+      this.setListNotification(result.data.listNotification);
+    }
+  };
+
   handleRegistrationError(errorMessage: string) {
     ToastHelpers.showToast({
       content: errorMessage,

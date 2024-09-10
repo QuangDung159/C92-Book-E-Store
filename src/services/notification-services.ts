@@ -52,9 +52,20 @@ const onReadNotification = async (
   );
 };
 
+const onDeleteNotification = async (userId: string, notificationId: string) => {
+  return await HttpServices.post(
+    API_URL.notification + '/delete-and-get-by-user',
+    {
+      user: userId,
+      id: notificationId,
+    },
+  );
+};
+
 export const NotificationServices = {
   loadListNotification,
   sendPushNotification,
   fetchListNotification,
   onReadNotification,
+  onDeleteNotification,
 };
