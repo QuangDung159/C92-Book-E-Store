@@ -1,42 +1,55 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Icons } from '@components';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { DataModels } from '@models';
 import { COLORS, FONT_STYLES } from '@themes';
 
 interface NotificationItemProps {
   hiddenItemHeight: number;
   notificationItem: DataModels.INotification;
+  onPressNotification: () => void;
 }
 
 const NotificationItem: React.FC<NotificationItemProps> = ({
   hiddenItemHeight,
   notificationItem,
+  onPressNotification,
 }) => {
   return (
-    <View
-      style={[
-        styles.itemContainer,
-        {
-          height: hiddenItemHeight,
-        },
-      ]}
+    <TouchableOpacity
+      onPress={() => {
+        onPressNotification();
+      }}
+      activeOpacity={1}
     >
-      <View style={styles.contentWrapper}>
-        <Text style={styles.title}>{notificationItem.title}</Text>
-        <Text style={styles.content} numberOfLines={2}>
-          {notificationItem.content}
-        </Text>
+      <View
+        style={[
+          styles.itemContainer,
+          {
+            height: hiddenItemHeight,
+          },
+          !notificationItem.readed && {
+            backgroundColor: COLORS.gray200,
+          },
+        ]}
+      >
+        <View style={styles.contentWrapper}>
+          <Text
+            style={[
+              styles.title,
+              notificationItem.readed && {
+                ...FONT_STYLES.REGULAR_14,
+              },
+            ]}
+          >
+            {notificationItem.title}
+          </Text>
+          <Text style={styles.content} numberOfLines={2}>
+            {notificationItem.content}
+          </Text>
+        </View>
       </View>
-      <View style={styles.dot}>
-        <Icons.DotSingleIcon
-          color={
-            notificationItem.readed ? COLORS.primaryWhite : COLORS.primaryBlack
-          }
-          size={30}
-        />
-      </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -60,10 +73,6 @@ const styles = StyleSheet.create({
   },
   content: {
     ...FONT_STYLES.REGULAR_12,
-  },
-  dot: {
-    flex: 1,
-    alignItems: 'flex-end',
   },
 });
 

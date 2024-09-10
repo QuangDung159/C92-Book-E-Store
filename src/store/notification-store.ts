@@ -57,6 +57,18 @@ class NotificationStore {
     }
   };
 
+  onReadNotification = async (notificationId: string, readed: boolean) => {
+    const result = await NotificationServices.onReadNotification(
+      this.userStore.userProfile.id,
+      notificationId,
+      readed,
+    );
+
+    if (result?.success && result.data?.listNotification) {
+      this.setListNotification(result.data.listNotification);
+    }
+  };
+
   handleRegistrationError(errorMessage: string) {
     ToastHelpers.showToast({
       content: errorMessage,

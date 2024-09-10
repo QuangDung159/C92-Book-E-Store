@@ -37,8 +37,24 @@ const fetchListNotification = async (userId: string) => {
   );
 };
 
+const onReadNotification = async (
+  userId: string,
+  notificationId: string,
+  readed: boolean,
+) => {
+  return await HttpServices.post(
+    API_URL.notification + '/update-one-and-get-by-user',
+    {
+      user: userId,
+      id: notificationId,
+      readed,
+    },
+  );
+};
+
 export const NotificationServices = {
   loadListNotification,
   sendPushNotification,
   fetchListNotification,
+  onReadNotification,
 };

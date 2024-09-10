@@ -45,6 +45,9 @@ const NotificationsScreen = ({ navigation }: any) => {
           <NotificationItem
             hiddenItemHeight={hiddenItemHeight}
             notificationItem={item}
+            onPressNotification={() => {
+              notificationStore.onReadNotification(item.id, true);
+            }}
           />
         )}
         disableRightSwipe
