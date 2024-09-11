@@ -1,11 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Icons, Inputs, Layouts } from '@components';
 import { useNavigate } from '@hooks';
-import { userStore } from '@store';
+import { sharedStore, userStore } from '@store';
 import { FONT_STYLES } from '@themes';
+import { StringHelpers } from '@utils';
 import { CartIconWithBadge } from './cart-icon-with-badge';
 
 interface SearchBarProps {
@@ -31,6 +32,13 @@ const SearchBar: React.FC<SearchBarProps> = ({
 }) => {
   const { goBack } = useNavigation();
   const { openSearchScreen, openAccountScreen } = useNavigate(navigation);
+
+  const geoText = useMemo(() => {
+    return sharedStore.geoLocation?.city
+      ? `${sharedStore.geoLocation.city}, ${sharedStore.geoLocation.region}`
+      : sharedStore.geoLocation?.region || null;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sharedStore.geoLocation]);
 
   return (
     <View style={styles.container}>
@@ -61,9 +69,15 @@ const SearchBar: React.FC<SearchBarProps> = ({
           <TouchableOpacity onPress={() => openAccountScreen()}>
             <Text
               style={styles.goodText}
-            >{`Good afternoon, ${userStore.userProfile?.username || 'Buddy'}!`}</Text>
+            >{`Good ${StringHelpers.getTimeOfDay()}, ${userStore.userProfile?.username || 'Buddy'}!`}</Text>
           </TouchableOpacity>
-          <Text style={styles.position}>Ho Chi Minh City</Text>
+          <TouchableOpacity
+            onPress={() => {
+              sharedStore.getGeoLocation();
+            }}
+          >
+            <Text style={styles.position}>{geoText}</Text>
+          </TouchableOpacity>
         </View>
       )}
       <Layouts.HSpace value={8} />

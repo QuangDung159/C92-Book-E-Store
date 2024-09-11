@@ -127,6 +127,12 @@ export const useNavigate = (navigation: any) => {
     });
   };
 
+  const openFavoriteScreen = () => {
+    navigation.navigate(SCREEN_NAME.BOOK_LISTING_NAVIGATOR, {
+      screen: SCREEN_NAME.FAVORITE_SCREEN,
+    });
+  };
+
   const openNotificationsScreen = () => {
     navigation.navigate(SCREEN_NAME.BOTTOM_TAB_NAVIGATOR, {
       screen: SCREEN_NAME.NOTIFICATIONS_SCREEN,
@@ -193,5 +199,6 @@ export const useNavigate = (navigation: any) => {
     openPlayStore,
     openOrdersScreen,
     openOrderDetailScreen,
+    openFavoriteScreen,
   };
 };

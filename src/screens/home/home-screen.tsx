@@ -1,14 +1,18 @@
 import { observer } from 'mobx-react-lite';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 import { ImageAssets } from '@assets';
 import { Layouts, SearchBar } from '@components';
-import { appModel, searchStore, userStore } from '@store';
+import { appModel, searchStore, sharedStore, userStore } from '@store';
 import { COLORS } from '@themes';
 import { BestDealCarousel, HorizontalListCard } from './components';
 
 const HomeScreen = ({ navigation }: any) => {
   const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    sharedStore.getGeoLocation();
+  }, []);
 
   const onLoadHomeData = async () => {
     await appModel.loadMasterData();

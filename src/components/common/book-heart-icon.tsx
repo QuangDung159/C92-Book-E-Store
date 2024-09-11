@@ -1,9 +1,12 @@
+import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
 import { Icons } from '@components';
+import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
 import { userStore } from '@store';
+import { ToastHelpers } from '@utils';
 
 interface BookHeartIconProps {
   bookCardItem: DataModels.IBook;
@@ -14,7 +17,23 @@ const BookHeartIcon: React.FC<BookHeartIconProps> = ({
   bookCardItem,
   containerStyle,
 }) => {
+  const navigation = useNavigation();
+
+  const { openSignInScreen } = useNavigate(navigation);
+
   const onPressFavorite = async (isFavorite: boolean) => {
+    if (!userStore.authenticated) {
+      ToastHelpers.showToast({
+        title: 'Please sign in first',
+        type: 'error',
+        onPress: () => {
+          openSignInScreen();
+        },
+      });
+
+      return;
+    }
+
     const listBookLiked = [...userStore.userProfile.listBookLiked];
 
     if (isFavorite) {
@@ -22,12 +41,12 @@ const BookHeartIcon: React.FC<BookHeartIconProps> = ({
     } else {
       const index = listBookLiked.findIndex((item) => item === bookCardItem.id);
 
-      if (index !== 1) {
+      if (index !== -1) {
         listBookLiked.splice(index, 1);
       }
     }
 
-    userStore.updateUser({
+    await userStore.updateUser({
       ...userStore.userProfile,
       listBookLiked,
     });
