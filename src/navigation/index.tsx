@@ -1,7 +1,10 @@
+/* eslint-disable import/no-named-as-default */
 import { NavigationContainerRef } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import Constants from 'expo-constants';
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { AppState } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Layouts } from '@components';
 import { SCREEN_NAME } from '@constants';
@@ -22,16 +25,42 @@ const Stack = createStackNavigator();
 
 const Navigation = () => {
   const navigationRef = useRef<NavigationContainerRef<any>>(null);
+  const appState = useRef(AppState.currentState);
+
+  const version = Constants.expoConfig.version;
 
   const { openPlayStore } = useNavigate(navigationRef.current);
 
   const [showPopup, setShowPopup] = useState(false);
 
-  useEffect(() => {
+  const triggerShowVersionPopup = useCallback(() => {
     delay(1000).then(() => {
-      setShowPopup(sharedStore.getConfig('app_version') === '1.0.6');
+      setShowPopup(sharedStore.getConfig('app_version') !== version);
     });
-  }, []);
+  }, [version]);
+
+  useEffect(() => {
+    triggerShowVersionPopup();
+  }, [triggerShowVersionPopup]);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', (nextAppState) => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === 'active'
+      ) {
+        sharedStore.fetchListConfig().then(() => {
+          triggerShowVersionPopup();
+        });
+      }
+
+      appState.current = nextAppState;
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, [triggerShowVersionPopup]);
 
   return (
     <>
