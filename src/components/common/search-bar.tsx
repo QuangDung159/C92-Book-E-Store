@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Icons, Inputs, Layouts } from '@components';
 import { useNavigate } from '@hooks';
@@ -32,6 +32,13 @@ const SearchBar: React.FC<SearchBarProps> = ({
 }) => {
   const { goBack } = useNavigation();
   const { openSearchScreen, openAccountScreen } = useNavigate(navigation);
+
+  const geoText = useMemo(() => {
+    return sharedStore.geoLocation?.city
+      ? `${sharedStore.geoLocation.city}, ${sharedStore.geoLocation.region}`
+      : sharedStore.geoLocation?.region || null;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sharedStore.geoLocation]);
 
   return (
     <View style={styles.container}>
@@ -69,9 +76,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
               sharedStore.getGeoLocation();
             }}
           >
-            <Text style={styles.position}>
-              {sharedStore.geoLocation?.region || 'N/a'}
-            </Text>
+            <Text style={styles.position}>{geoText}</Text>
           </TouchableOpacity>
         </View>
       )}
