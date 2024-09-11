@@ -22,7 +22,7 @@ import { SignInViewModel } from './view-models';
 
 const SignInScreen = ({ navigation }: any) => {
   const signInVM = useRef(new SignInViewModel(appModel.userStore)).current;
-  const { openHomeScreen, openForgotPasswordScreen } = useNavigate(navigation);
+  const { openForgotPasswordScreen } = useNavigate(navigation);
   const { width, height } = Dimensions.get('window');
 
   const onSubmit = async () => {
@@ -34,13 +34,18 @@ const SignInScreen = ({ navigation }: any) => {
     }
 
     sharedStore.setShowLoading(true);
-    await authenticationStore.signIn(signInVM.username, signInVM.password);
+    await authenticationStore.signIn(
+      signInVM.username,
+      signInVM.password,
+      () => {
+        navigation.goBack();
+      },
+    );
 
     if (userStore.authenticated) {
       await cartStore.fetchCart(userStore.userProfile.id);
     }
     sharedStore.setShowLoading(false);
-    openHomeScreen();
   };
 
   return (

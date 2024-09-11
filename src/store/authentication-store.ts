@@ -46,7 +46,7 @@ class AuthenticationStore {
     });
   };
 
-  signIn = async (email: string, password: string) => {
+  signIn = async (email: string, password: string, onSuccess?: () => void) => {
     const result = await AuthenticationServices.signIn({
       email,
       password,
@@ -56,6 +56,7 @@ class AuthenticationStore {
       const user = result.data.user as DataModels.IUser;
 
       await this.onSignInSuccess(user);
+      onSuccess?.();
     }
   };
 

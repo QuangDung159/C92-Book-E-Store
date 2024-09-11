@@ -26,6 +26,7 @@ const AccountView: React.FC = () => {
     openEditAccountScreen,
     openBookListingScreen,
     openOrdersScreen,
+    openFavoriteScreen,
   } = useNavigate(navigation);
 
   const [refreshing, setRefreshing] = useState(false);
@@ -105,7 +106,7 @@ const AccountView: React.FC = () => {
           </View>
         </View>
         {renderMenuItem('Favourites', () => {
-          openBookListingScreen(userStore.listFavorite || [], 'Favourite');
+          openFavoriteScreen();
         })}
         {renderMenuItem('Viewed', () => {
           openBookListingScreen(userStore.listViewed || [], 'Viewed');

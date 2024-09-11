@@ -91,6 +91,8 @@ const BookDetailScreen = ({ route, navigation }: any) => {
   }, [book, loadDetail]);
 
   const submitViewed = async () => {
+    if (!userStore.authenticated) return;
+
     const listBookViewed = [...userStore.userProfile.listBookViewed];
     const index = listBookViewed.findIndex((item) => item === book.id);
 

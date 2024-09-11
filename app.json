@@ -26,7 +26,11 @@
       },
       "package": "com.dragonc92team.BookEStoreV1",
       "versionCode": 45,
-      "googleServicesFile": "./android/app/google-services.json"
+      "googleServicesFile": "./android/app/google-services.json",
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -48,7 +52,10 @@
         "expo-build-properties",
         {
           "ios": {
-            "useFrameworks": "static"
+            "useFrameworks": "static",
+            "infoPlist": {
+              "NSLocationWhenInUseUsageDescription": "This app uses your location to provide relevant content."
+            }
           }
         }
       ],
