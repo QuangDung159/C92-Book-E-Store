@@ -219,3 +219,9 @@ export interface IOrder {
   paymentStatus: PaymentStatus;
   status: OrderStatus;
 }
+
+export interface IConfig {
+  id: string;
+  key: string;
+  value: string;
+}

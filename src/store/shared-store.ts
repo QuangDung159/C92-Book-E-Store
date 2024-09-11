@@ -1,14 +1,23 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { action, makeObservable, observable } from 'mobx';
+import { DataModels } from '@models';
+import { ConfigServices } from '@services';
 
 class SharedStore {
   showLoading: boolean = false;
+  listConfig: DataModels.IConfig[] = [];
 
   constructor() {
     makeObservable(this, {
       showLoading: observable,
+      listConfig: observable,
+      setListConfig: action,
       setShowLoading: action,
     });
+  }
+
+  setListConfig(values: DataModels.IConfig[]) {
+    this.listConfig = values;
   }
 
   setShowLoading(value: boolean) {
@@ -43,6 +52,20 @@ class SharedStore {
     } catch (e) {
       console.log('e :>> ', e);
     }
+  };
+
+  fetchListConfig = async () => {
+    const result = await ConfigServices.fetchAllConfig();
+
+    if (result?.success && result.data) {
+      this.setListConfig(result.data.listConfig);
+    }
+  };
+
+  getConfig = (key: string) => {
+    const config = this.listConfig.find((item) => item.key === key);
+
+    return config?.value || null;
   };
 }
 

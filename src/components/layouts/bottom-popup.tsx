@@ -38,8 +38,7 @@ const styles = StyleSheet.create({
   },
   popupContainer: {
     backgroundColor: COLORS.primaryWhite,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    borderRadius: 20,
     padding: 24,
   },
 });
