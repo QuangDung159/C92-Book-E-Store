@@ -73,8 +73,7 @@ const styles = StyleSheet.create({
     lineHeight: 32,
   },
   seeMore: {
-    fontSize: 14,
-    lineHeight: 20,
+    ...FONT_STYLES.SEMIBOLD_12,
   },
 });
 
