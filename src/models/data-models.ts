@@ -225,3 +225,11 @@ export interface IConfig {
   key: string;
   value: string;
 }
+
+export interface IReverseGeocode {
+  city: string;
+  region: string;
+  country: string;
+  postalCode: string;
+  street: string;
+}

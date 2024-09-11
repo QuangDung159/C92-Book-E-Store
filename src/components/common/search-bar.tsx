@@ -4,8 +4,9 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Icons, Inputs, Layouts } from '@components';
 import { useNavigate } from '@hooks';
-import { userStore } from '@store';
+import { sharedStore, userStore } from '@store';
 import { FONT_STYLES } from '@themes';
+import { StringHelpers } from '@utils';
 import { CartIconWithBadge } from './cart-icon-with-badge';
 
 interface SearchBarProps {
@@ -61,9 +62,17 @@ const SearchBar: React.FC<SearchBarProps> = ({
           <TouchableOpacity onPress={() => openAccountScreen()}>
             <Text
               style={styles.goodText}
-            >{`Good afternoon, ${userStore.userProfile?.username || 'Buddy'}!`}</Text>
+            >{`Good ${StringHelpers.getTimeOfDay()}, ${userStore.userProfile?.username || 'Buddy'}!`}</Text>
           </TouchableOpacity>
-          <Text style={styles.position}>Ho Chi Minh City</Text>
+          <TouchableOpacity
+            onPress={() => {
+              sharedStore.getGeoLocation();
+            }}
+          >
+            <Text style={styles.position}>
+              {sharedStore.geoLocation?.region || 'N/a'}
+            </Text>
+          </TouchableOpacity>
         </View>
       )}
       <Layouts.HSpace value={8} />
