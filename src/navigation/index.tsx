@@ -1,10 +1,14 @@
+import { NavigationContainerRef } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { Layouts } from '@components';
 import { SCREEN_NAME } from '@constants';
+import { useNavigate } from '@hooks';
 import { sharedStore } from '@store';
 import { COLORS } from '@themes';
+import { delay } from '@utils';
 import { AccountNavigator } from './account-navigator';
 import { BookDetailNavigator } from './book-detail-navigator';
 import { BookingListingNavigator } from './book-listing-navigator';
@@ -17,12 +21,34 @@ import { SearchNavigator } from './search-navigator';
 const Stack = createStackNavigator();
 
 const Navigation = () => {
+  const navigationRef = useRef<NavigationContainerRef<any>>(null);
+
+  const { openPlayStore } = useNavigate(navigationRef.current);
+
+  const [showPopup, setShowPopup] = useState(false);
+
+  useEffect(() => {
+    delay(1000).then(() => {
+      setShowPopup(sharedStore.getConfig('app_version') === '1.0.6');
+    });
+  }, []);
+
   return (
     <>
       <Spinner
         visible={sharedStore.showLoading}
         textStyle={{
           color: COLORS.primaryWhite,
+        }}
+      />
+      <Layouts.ConfirmPopup
+        title="New version was released"
+        content={`Please update to the latest version of Book E-Store to enjoy new features and an enhanced experience!`}
+        visible={showPopup}
+        okTitle="Go to store"
+        hasCancel={false}
+        onOk={() => {
+          openPlayStore();
         }}
       />
       <Stack.Navigator

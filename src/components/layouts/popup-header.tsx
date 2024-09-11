@@ -51,7 +51,7 @@ const PopupHeader: React.FC<PopupHeaderProps> = ({
           {rightComponent?.()}
         </View>
       </View>
-      <Layouts.VSpace value={24} />
+      <Layouts.VSpace value={16} />
     </>
   );
 };
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   popupText: {
-    ...FONT_STYLES.SEMIBOLD_18,
+    ...FONT_STYLES.BOLD_16,
   },
 });
 
