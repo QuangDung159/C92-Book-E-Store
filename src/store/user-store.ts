@@ -222,6 +222,10 @@ class UserStore {
   };
 
   isBookFavorite = (bookId: string) => {
+    if (!this.userProfile) {
+      return false;
+    }
+
     const isFavorited = this.userProfile.listBookLiked.includes(bookId);
     return isFavorited;
   };

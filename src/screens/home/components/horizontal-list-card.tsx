@@ -1,7 +1,9 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Layouts, ListBookCardHorizontal } from '@components';
 import { TOP_BOOKS_FILTER } from '@constants';
+import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
 import { FONT_STYLES } from '@themes';
 import { TopBooksFilter } from './top-books-filter';
@@ -23,6 +25,10 @@ const HorizontalListCard: React.FC<HorizontalListCardProps> = ({
   topBooksSelectedFilter,
   setTopBooksSelectedFilter,
 }) => {
+  const navigation = useNavigation();
+
+  const { openBookListingScreen } = useNavigate(navigation);
+
   return (
     <>
       <View
@@ -33,7 +39,15 @@ const HorizontalListCard: React.FC<HorizontalListCardProps> = ({
       >
         <Text style={styles.categoryTitle}>{title}</Text>
         <Layouts.MaxSpace />
-        {showSeeMore && <Text style={styles.seeMore}>See more</Text>}
+        {showSeeMore && (
+          <TouchableOpacity
+            onPress={() => {
+              openBookListingScreen(listItem, title);
+            }}
+          >
+            <Text style={styles.seeMore}>See more</Text>
+          </TouchableOpacity>
+        )}
       </View>
       <Layouts.VSpace value={12} />
       {showTopFilter && (
