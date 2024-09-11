@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Layouts } from '@components';
-import { BookListingScreen } from '@screens';
+import { BookListingScreen, FavoriteScreen } from '@screens';
 
 import { COLORS } from '@themes';
 import { SCREEN_NAME } from '../constants';
@@ -22,6 +22,10 @@ function BookingListingNavigator() {
         <Stack.Screen
           name={SCREEN_NAME.BOOK_LISTING_SCREEN}
           component={BookListingScreen}
+        />
+        <Stack.Screen
+          name={SCREEN_NAME.FAVORITE_SCREEN}
+          component={FavoriteScreen}
         />
       </Stack.Navigator>
     </SafeAreaView>

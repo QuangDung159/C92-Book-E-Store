@@ -33,6 +33,7 @@ const BookHeartIcon: React.FC<BookHeartIconProps> = ({
 
       return;
     }
+
     const listBookLiked = [...userStore.userProfile.listBookLiked];
 
     if (isFavorite) {
@@ -40,12 +41,12 @@ const BookHeartIcon: React.FC<BookHeartIconProps> = ({
     } else {
       const index = listBookLiked.findIndex((item) => item === bookCardItem.id);
 
-      if (index !== 1) {
+      if (index !== -1) {
         listBookLiked.splice(index, 1);
       }
     }
 
-    userStore.updateUser({
+    await userStore.updateUser({
       ...userStore.userProfile,
       listBookLiked,
     });
