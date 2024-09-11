@@ -133,7 +133,13 @@ const LocationScreen = ({ navigation, route }: any) => {
                   height: 50,
                 }}
               >
-                <Text>{item.label}</Text>
+                <Text
+                  style={{
+                    ...FONT_STYLES.REGULAR_14,
+                  }}
+                >
+                  {item.label}
+                </Text>
                 <RadioButton.IOS value={item.value} />
               </View>
               <Divider />
