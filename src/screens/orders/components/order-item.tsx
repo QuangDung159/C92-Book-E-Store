@@ -56,6 +56,16 @@ const OrderItem: React.FC<OrderItemProps> = ({
     );
   };
 
+  const renderCartInfo = (label: string, value: string) => {
+    return (
+      <View style={styles.totalRow}>
+        <Text style={styles.totalTitle}>{label}</Text>
+        <Layouts.MaxSpace />
+        <Text style={styles.totalValue}>{value}</Text>
+      </View>
+    );
+  };
+
   return (
     <React.Fragment key={orderItem.id}>
       <TouchableOpacity
@@ -74,7 +84,7 @@ const OrderItem: React.FC<OrderItemProps> = ({
                 type="short"
                 containerStyle={styles.cartItem}
               />
-              <Collapsible collapsed={!isShowCartItem}>
+              <Collapsible collapsed={!isShowCartItem} duration={500}>
                 {listCartItem.map((item, index) => {
                   if (index !== 0) {
                     return (
@@ -113,15 +123,20 @@ const OrderItem: React.FC<OrderItemProps> = ({
           )}
 
           <View style={styles.totalSec}>
-            <View style={styles.totalRow}>
-              <Text
-                style={styles.totalTitle}
-              >{`Total (${countProduct()} products):`}</Text>
-              <Layouts.MaxSpace />
-              <Text style={styles.totalValue}>
-                {StringHelpers.formatCurrency(cart.total)}
-              </Text>
-            </View>
+            {renderCartInfo(
+              `Total (${countProduct()} products):`,
+              StringHelpers.formatCurrency(cart.subTotal).toString(),
+            )}
+            <Layouts.VSpace value={4} />
+            {renderCartInfo(
+              'Shipping fee:',
+              StringHelpers.formatCurrency(cart.shipping).toString(),
+            )}
+            <Layouts.VSpace value={4} />
+            {renderCartInfo(
+              'Discount:',
+              `- ${StringHelpers.formatCurrency(cart.discount)}`,
+            )}
           </View>
         </View>
       </TouchableOpacity>

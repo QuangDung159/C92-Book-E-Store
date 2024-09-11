@@ -34,9 +34,11 @@ const Navigation = () => {
   const [showPopup, setShowPopup] = useState(false);
 
   const triggerShowVersionPopup = useCallback(() => {
-    delay(1000).then(() => {
-      setShowPopup(sharedStore.getConfig('app_version') !== version);
-    });
+    if (process.env.EXPO_PUBLIC_ENV === 'PROD') {
+      delay(1000).then(() => {
+        setShowPopup(sharedStore.getConfig('app_version') !== version);
+      });
+    }
   }, [version]);
 
   useEffect(() => {

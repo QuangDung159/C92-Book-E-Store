@@ -106,6 +106,10 @@ const CartItem: React.FC<CartItemProps> = ({
               <BookCardInfo book={bookCartItem.book} />
             ) : (
               <>
+                <Layouts.VSpace value={4} />
+                <Text style={styles.author}>
+                  {bookCartItem.book.author.name}
+                </Text>
                 <Layouts.MaxSpace />
                 <View
                   style={{
@@ -202,6 +206,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: COLORS.primaryBlack,
+  },
+  author: {
+    ...FONT_STYLES.SEMIBOLD_12,
   },
 });
 

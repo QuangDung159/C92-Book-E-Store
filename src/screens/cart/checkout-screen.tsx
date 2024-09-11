@@ -112,32 +112,7 @@ const CheckoutScreen = ({ navigation }: any) => {
 
   const onSubmitCheckout = async () => {
     sharedStore.setShowLoading(true);
-
-    // await cartStore.createOrder();
-
-    // if (cartStore.paymentSelected.paymentType === PAYMENT_TYPE.momo) {
-    //   cartStore.handleMoMoPayment(async (result) => {
-    //     if (await Linking.canOpenURL(result.data.payUrl)) {
-    //       Linking.openURL(result.data.payUrl);
-    //     }
-    //   });
-
-    //   sharedStore.setShowLoading(false);
-    //   cartStore.clearAllCurrentPaymentInfo();
-    //   return;
-    // }
-
-    // if (cartStore.paymentSelected.paymentType === PAYMENT_TYPE.zalo_pay) {
-    //   await cartStore.handleZaloPayPayment();
-    //   return;
-    // }
-
-    // Linking.openURL(
-    //   `${DEEP_LINK_PAYMENT_SUCCESS_URL}orderId=${cartStore.currentOrder.id}&message=Payment success!`,
-    // );
-
     await cartStore.submitOrder();
-
     sharedStore.setShowLoading(false);
   };
 
