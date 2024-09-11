@@ -36,6 +36,8 @@ class AppModel {
   }
 
   async appInit() {
+    await this.sharedStore.fetchListConfig();
+
     // set notification handler
     Notifications.setNotificationHandler({
       handleNotification: async () => ({

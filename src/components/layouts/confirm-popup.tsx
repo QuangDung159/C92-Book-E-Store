@@ -7,11 +7,11 @@ import { FONT_STYLES } from '@themes';
 interface ConfirmPopupProps {
   title: string;
   content: string;
-  hasCancel?: string;
+  hasCancel?: boolean;
   onCancel?: () => void;
   onOk?: () => void;
   visible: boolean;
-  onDismiss: () => void;
+  onDismiss?: () => void;
   cancelTitle?: string;
   okTitle?: string;
 }
@@ -29,11 +29,17 @@ const ConfirmPopup: React.FC<ConfirmPopupProps> = ({
 }) => {
   return (
     <Layouts.BottomPopup visible={visible}>
-      <Layouts.PopupHeader label={title} onDismiss={onDismiss} />
+      <Layouts.PopupHeader
+        label={title}
+        onDismiss={() => {
+          onDismiss?.();
+        }}
+        isShowCloseIcon={false}
+      />
       <View>
         <Text style={styles.content}>{content}</Text>
       </View>
-      <Layouts.VSpace value={12} />
+      <Layouts.VSpace value={24} />
       <View style={styles.buttonWrapper}>
         {hasCancel && (
           <>
@@ -42,7 +48,7 @@ const ConfirmPopup: React.FC<ConfirmPopupProps> = ({
                 label={cancelTitle || 'Cancel'}
                 onPress={() => {
                   onCancel?.();
-                  onDismiss();
+                  onDismiss?.();
                 }}
               />
             </View>
@@ -54,7 +60,7 @@ const ConfirmPopup: React.FC<ConfirmPopupProps> = ({
             label={okTitle || 'Submit'}
             onPress={() => {
               onOk?.();
-              onDismiss();
+              onDismiss?.();
             }}
             buttonType="primary"
           />
@@ -74,6 +80,7 @@ const styles = StyleSheet.create({
   },
   content: {
     ...FONT_STYLES.REGULAR_16,
+    lineHeight: 20,
   },
 });
 
