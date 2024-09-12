@@ -399,7 +399,6 @@ class CartStore {
   };
 
   clearAllCurrentPaymentInfo = () => {
-    this.setCurrentOrder(null);
     this.setZaloAppTransId('');
   };
 
@@ -470,7 +469,7 @@ class CartStore {
         });
       } else {
         if (this.paymentSelected.paymentType === PAYMENT_TYPE.zalo_pay) {
-          this.handleZaloPayPayment();
+          await this.handleZaloPayPayment();
         } else {
           Linking.openURL(
             `${DEEP_LINK_PAYMENT_SUCCESS_URL}orderId=${this.currentOrder.id}&message=Payment success!`,
@@ -478,12 +477,12 @@ class CartStore {
         }
       }
 
-    this.clearAllCurrentPaymentInfo();
-
+    await delay(5000);
     if (this.userStore.authenticated) {
       this.fetchCart(this.userStore.userProfile.id);
       this.userStore.fetchListOrder('created');
     }
+    this.clearAllCurrentPaymentInfo();
   }
 }
 
