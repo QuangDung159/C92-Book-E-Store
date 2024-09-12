@@ -119,8 +119,14 @@ const CartItem: React.FC<CartItemProps> = ({
                   }}
                 >
                   <BookCardPrice
-                    price={bookCartItem.book.price}
-                    priceNotSale={bookCartItem.book.priceNotSale}
+                    price={
+                      bookCartItem.price !== 0
+                        ? bookCartItem.price
+                        : bookCartItem.book.price
+                    }
+                    priceNotSale={
+                      !bookCartItem.price && bookCartItem.book.priceNotSale
+                    }
                   />
                   <Text
                     style={{

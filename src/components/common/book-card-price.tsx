@@ -12,7 +12,7 @@ import { StringHelpers } from '@utils';
 
 interface BookCardPriceProps {
   price: number;
-  priceNotSale: number;
+  priceNotSale?: number;
   style?: StyleProp<TextStyle>;
   containerStyle?: StyleProp<ViewStyle>;
 }

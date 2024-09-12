@@ -50,6 +50,7 @@ export interface ICartItem {
   id?: string;
   book: IBook;
   count: number;
+  price?: number;
 }
 
 export interface IShippingAddress {
