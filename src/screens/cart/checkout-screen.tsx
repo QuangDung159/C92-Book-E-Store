@@ -76,7 +76,6 @@ const CheckoutScreen = ({ navigation }: any) => {
           Linking.openURL(
             `${DEEP_LINK_PAYMENT_SUCCESS_URL}orderId=${cartStore.currentOrder.id}&message=Payment success with Zalo Pay!`,
           );
-          cartStore.clearAllCurrentPaymentInfo();
           sharedStore.setShowLoading(false);
         });
       }
