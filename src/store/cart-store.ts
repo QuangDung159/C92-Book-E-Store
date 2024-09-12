@@ -256,7 +256,7 @@ class CartStore {
     count: number,
   ) => {
     const result = await CartServices.updateCartItem({
-      ...cartItem,
+      id: cartItem.id,
       count: cartItem.count + count,
     });
 
