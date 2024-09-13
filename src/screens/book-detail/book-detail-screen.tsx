@@ -1,6 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { observer } from 'mobx-react-lite';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -44,10 +50,12 @@ const BookDetailScreen = ({ route, navigation }: any) => {
   );
   const [bookInfo, setBookInfo] = useState<DataModels.IBook>();
   const [itemCount, setItemCount] = useState(1);
+  const bookId = useMemo(
+    () => book?.id || bookIdParam,
+    [bookIdParam, book?.id],
+  );
 
   const loadDetail = useCallback(async () => {
-    const bookId = book?.id || bookIdParam;
-
     if (book) {
       setBookInfo(book);
     }
@@ -100,10 +108,11 @@ const BookDetailScreen = ({ route, navigation }: any) => {
     if (!userStore.authenticated) return;
 
     const listBookViewed = [...userStore.userProfile.listBookViewed];
-    const index = listBookViewed.findIndex((item) => item === book.id);
+    console.log('listBookViewed :>> ', listBookViewed);
+    const index = listBookViewed.findIndex((item) => item === bookId);
 
     if (index === -1) {
-      listBookViewed.unshift(book.id);
+      listBookViewed.unshift(bookId);
     }
 
     userStore.updateUser({
