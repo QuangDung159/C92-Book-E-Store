@@ -1,4 +1,4 @@
-import { Linking } from 'react-native';
+import * as Linking from 'expo-linking';
 import { SCREEN_NAME } from '@constants';
 import { DataModels } from '@models';
 import { delay } from '@utils';
@@ -18,10 +18,10 @@ export const useNavigate = (navigation: any) => {
     });
   };
 
-  const openBookDetailScreen = (book: DataModels.IBook) => {
+  const openBookDetailScreen = (book?: DataModels.IBook, bookId?: string) => {
     navigation.navigate(SCREEN_NAME.BOOK_DETAIL_NAVIGATOR, {
       screen: SCREEN_NAME.BOOK_DETAIL_SCREEN,
-      params: { book },
+      params: { book, bookId },
     });
   };
 
@@ -177,6 +177,29 @@ export const useNavigate = (navigation: any) => {
       .catch((err) => console.error('An error occurred', err));
   };
 
+  const handleNavigateFromLinking = async (url: string) => {
+    const { path, queryParams } = Linking.parse(url);
+
+    const screenName = path.replace('app/', '');
+
+    if (screenName === SCREEN_NAME.PAYMENT_SUCCESS_SCREEN) {
+      openPaymentSuccessScreen({
+        orderId: queryParams?.orderId,
+        message: queryParams?.message,
+      });
+    }
+
+    if (screenName === SCREEN_NAME.BOOK_DETAIL_SCREEN) {
+      delay(1000).then(() => {
+        openBookDetailScreen(null, queryParams?.bookId as string);
+      });
+    }
+
+    if (screenName === SCREEN_NAME.HOME_SCREEN) {
+      openHomeScreen();
+    }
+  };
+
   return {
     openSearchScreen,
     openFilterScreen,
@@ -200,5 +223,6 @@ export const useNavigate = (navigation: any) => {
     openOrdersScreen,
     openOrderDetailScreen,
     openFavoriteScreen,
+    handleNavigateFromLinking,
   };
 };

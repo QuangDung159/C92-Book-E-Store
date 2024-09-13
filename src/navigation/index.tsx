@@ -1,7 +1,8 @@
 /* eslint-disable import/no-named-as-default */
-import { NavigationContainerRef } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Constants from 'expo-constants';
+import * as Linking from 'expo-linking';
 import { observer } from 'mobx-react-lite';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AppState } from 'react-native';
@@ -24,12 +25,13 @@ import { SearchNavigator } from './search-navigator';
 const Stack = createStackNavigator();
 
 const Navigation = () => {
-  const navigationRef = useRef<NavigationContainerRef<any>>(null);
   const appState = useRef(AppState.currentState);
 
   const version = Constants.expoConfig.version;
 
-  const { openPlayStore } = useNavigate(navigationRef.current);
+  const navigation = useNavigation();
+
+  const { openPlayStore, handleNavigateFromLinking } = useNavigate(navigation);
 
   const [showPopup, setShowPopup] = useState(false);
 
@@ -63,6 +65,23 @@ const Navigation = () => {
       subscription.remove();
     };
   }, [triggerShowVersionPopup]);
+
+  const handle = useCallback(
+    ({ url }) => {
+      if (url) {
+        handleNavigateFromLinking(url);
+      }
+    },
+    [handleNavigateFromLinking],
+  );
+
+  useEffect(() => {
+    const subsription = Linking.addEventListener('url', handle);
+
+    return () => {
+      subsription.remove();
+    };
+  }, [handle]);
 
   return (
     <>

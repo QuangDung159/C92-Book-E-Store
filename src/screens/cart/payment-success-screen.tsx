@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useCallback, useEffect } from 'react';
 import { Linking, StyleSheet, Text, View } from 'react-native';
 import { Buttons, Icons, Layouts } from '@components';
+import { DEEP_LINK_URL, SCREEN_NAME } from '@constants';
 import { useNavigate } from '@hooks';
 import { NotificationServices } from '@services';
 import { notificationStore, userStore } from '@store';
@@ -46,8 +47,10 @@ const PaymentSuccessScreen = ({ navigation, route }) => {
       <Buttons.CButton
         label="Back to Home"
         onPress={() => {
-          if (Linking.canOpenURL('c92bookestorev1:///home')) {
-            Linking.openURL('c92bookestorev1:///home');
+          if (
+            Linking.canOpenURL(`${DEEP_LINK_URL}${SCREEN_NAME.HOME_SCREEN}`)
+          ) {
+            Linking.openURL(`${DEEP_LINK_URL}${SCREEN_NAME.HOME_SCREEN}`);
           } else {
             openHomeScreen();
           }

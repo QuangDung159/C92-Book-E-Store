@@ -477,7 +477,6 @@ class CartStore {
         }
       }
 
-    await delay(5000);
     if (this.userStore.authenticated) {
       this.fetchCart(this.userStore.userProfile.id);
       this.userStore.fetchListOrder('created');

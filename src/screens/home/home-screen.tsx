@@ -1,18 +1,33 @@
+import * as Linking from 'expo-linking';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 import { ImageAssets } from '@assets';
 import { Layouts, SearchBar } from '@components';
+import { useNavigate } from '@hooks';
 import { appModel, searchStore, sharedStore, userStore } from '@store';
 import { COLORS } from '@themes';
 import { BestDealCarousel, HorizontalListCard } from './components';
 
 const HomeScreen = ({ navigation }: any) => {
+  const { handleNavigateFromLinking } = useNavigate(navigation);
+
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     sharedStore.getGeoLocation();
   }, []);
+
+  useEffect(() => {
+    // handle when launch app by app-link
+    const navigateToInitialUrl = async () => {
+      const initialUrl = await Linking.getInitialURL();
+      if (initialUrl) {
+        handleNavigateFromLinking(initialUrl);
+      }
+    };
+    navigateToInitialUrl();
+  }, [handleNavigateFromLinking]);
 
   const onLoadHomeData = async () => {
     await appModel.loadMasterData();

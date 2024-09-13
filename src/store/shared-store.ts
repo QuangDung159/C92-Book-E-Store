@@ -9,16 +9,23 @@ class SharedStore {
   showLoading: boolean = false;
   listConfig: DataModels.IConfig[] = [];
   geoLocation: DataModels.IReverseGeocode | null = null;
+  appLinkUrl?: string = '';
 
   constructor() {
     makeObservable(this, {
       showLoading: observable,
       listConfig: observable,
       geoLocation: observable,
+      appLinkUrl: observable,
+      setAppLinkUrl: action,
       setGeoLocation: action,
       setListConfig: action,
       setShowLoading: action,
     });
+  }
+
+  setAppLinkUrl(value?: string) {
+    this.appLinkUrl = value;
   }
 
   setGeoLocation(value: DataModels.IReverseGeocode) {

@@ -1,9 +1,9 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome6 } from '@expo/vector-icons';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { COLORS } from '@themes';
 
-interface HeartOutlineIconProps {
+interface ShareIconProps {
   size?: number;
   color?: string;
   onPress?: () => void;
@@ -11,7 +11,7 @@ interface HeartOutlineIconProps {
   disabledColor?: string;
 }
 
-const HeartOutlineIcon: React.FC<HeartOutlineIconProps> = ({
+const ShareIcon: React.FC<ShareIconProps> = ({
   size = 24,
   color = COLORS.primaryBlack,
   onPress,
@@ -27,8 +27,8 @@ const HeartOutlineIcon: React.FC<HeartOutlineIconProps> = ({
         }
       }}
     >
-      <MaterialCommunityIcons
-        name="heart-outline"
+      <FontAwesome6
+        name="share-square"
         size={size}
         color={disabled ? disabledColor : color}
       />
@@ -36,4 +36,4 @@ const HeartOutlineIcon: React.FC<HeartOutlineIconProps> = ({
   );
 };
 
-export { HeartOutlineIcon };
+export { ShareIcon };
