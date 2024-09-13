@@ -83,17 +83,6 @@ const Navigation = () => {
     };
   }, [handle]);
 
-  // useEffect(() => {
-  //   // THIS IS THE MAIN POINT OF THIS ANSWER
-  //   const navigateToInitialUrl = async () => {
-  //     const initialUrl = await Linking.getInitialURL();
-  //     if (initialUrl) {
-  //       handleNavigateFromLinking(initialUrl);
-  //     }
-  //   };
-  //   navigateToInitialUrl();
-  // }, [handleNavigateFromLinking]);
-
   return (
     <>
       <Spinner
