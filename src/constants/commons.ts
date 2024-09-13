@@ -76,7 +76,8 @@ const PAYMENT_STATUS = {
 };
 
 const DEEP_LINK_URL = 'c92bookestorev1:///';
-const DEEP_LINK_PAYMENT_SUCCESS_URL = `${DEEP_LINK_URL}payment-success?`;
+const APP_LINK_URL = 'https://thelqd.online';
+const DEEP_LINK_PAYMENT_SUCCESS_URL = `${DEEP_LINK_URL}/app/payment-success-screen?`;
 
 const EXPO_PUSH_NOTIFICATION_URL = 'https://exp.host/--/api/v2/push/send';
 
@@ -138,6 +139,7 @@ const LIST_PAYMENT_METHOD = [
 export {
   ADMINISTRATIVE,
   API_URL,
+  APP_LINK_URL,
   CODE_PUSH_NUMBER,
   DEEP_LINK_PAYMENT_SUCCESS_URL,
   DEEP_LINK_URL,
