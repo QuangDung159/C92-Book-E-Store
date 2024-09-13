@@ -22,7 +22,7 @@ const BookImage: React.FC<BookImageProps> = ({ navigation, data, book }) => {
         <BookHeartIcon containerStyle={{}} bookCardItem={book} />
         <Layouts.VSpace value={8} />
         <Icons.ShareIcon
-          size={20}
+          size={16}
           onPress={() => {
             BookServices.onShare(book.id);
           }}

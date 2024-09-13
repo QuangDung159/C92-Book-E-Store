@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { COLORS } from '@themes';
@@ -27,7 +27,7 @@ const HeartOutlineIcon: React.FC<HeartOutlineIconProps> = ({
         }
       }}
     >
-      <Ionicons
+      <MaterialCommunityIcons
         name="heart-outline"
         size={size}
         color={disabled ? disabledColor : color}

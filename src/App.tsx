@@ -40,12 +40,9 @@ const App = () => {
   const notificationListener = useRef<Notifications.Subscription>();
   const responseListener = useRef<Notifications.Subscription>();
 
-  const url = Linking.useURL();
   const navigationRef = useRef<NavigationContainerRef<any>>(null);
 
-  const { openPlayStore, handleNavigateFromLinking } = useNavigate(
-    navigationRef.current,
-  );
+  const { openPlayStore } = useNavigate(navigationRef.current);
 
   useEffect(() => {
     SplashScreen.preventAutoHideAsync();
@@ -142,10 +139,6 @@ const App = () => {
     setFontsLoaded(true);
     SplashScreen.hideAsync();
   };
-
-  if (url) {
-    handleNavigateFromLinking(url);
-  }
 
   const prefix = Linking.createURL('/');
 

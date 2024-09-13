@@ -1,4 +1,4 @@
-import { Octicons } from '@expo/vector-icons';
+import { FontAwesome6 } from '@expo/vector-icons';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { COLORS } from '@themes';
@@ -27,8 +27,8 @@ const ShareIcon: React.FC<ShareIconProps> = ({
         }
       }}
     >
-      <Octicons
-        name="share"
+      <FontAwesome6
+        name="share-square"
         size={size}
         color={disabled ? disabledColor : color}
       />
