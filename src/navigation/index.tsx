@@ -68,7 +68,6 @@ const Navigation = () => {
 
   const handle = useCallback(
     ({ url }) => {
-      console.log('url :>> ', url);
       if (url) {
         handleNavigateFromLinking(url);
       }
@@ -83,6 +82,17 @@ const Navigation = () => {
       subsription.remove();
     };
   }, [handle]);
+
+  // useEffect(() => {
+  //   // THIS IS THE MAIN POINT OF THIS ANSWER
+  //   const navigateToInitialUrl = async () => {
+  //     const initialUrl = await Linking.getInitialURL();
+  //     if (initialUrl) {
+  //       handleNavigateFromLinking(initialUrl);
+  //     }
+  //   };
+  //   navigateToInitialUrl();
+  // }, [handleNavigateFromLinking]);
 
   return (
     <>
