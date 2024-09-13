@@ -180,6 +180,8 @@ export const useNavigate = (navigation: any) => {
   const handleNavigateFromLinking = async (url: string) => {
     const { path, queryParams } = Linking.parse(url);
 
+    console.log('url :>> ', url);
+
     const screenName = path.replace('app/', '');
 
     if (screenName === SCREEN_NAME.PAYMENT_SUCCESS_SCREEN) {

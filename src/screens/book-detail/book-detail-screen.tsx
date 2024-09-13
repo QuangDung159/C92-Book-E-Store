@@ -46,7 +46,6 @@ const BookDetailScreen = ({ route, navigation }: any) => {
   const [itemCount, setItemCount] = useState(1);
 
   const loadDetail = useCallback(async () => {
-    console.log('bookIdParam :>> ', bookIdParam);
     const bookId = book?.id || bookIdParam;
 
     if (book) {

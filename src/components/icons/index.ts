@@ -26,5 +26,6 @@ export * from './plus-icon';
 export * from './radio-button-checked-icon';
 export * from './read-all-icon';
 export * from './search-icon';
+export * from './share-icon';
 export * from './trash-icon';
 export * from './visa-icon';
