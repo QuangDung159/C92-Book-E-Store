@@ -39,7 +39,7 @@
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:host="www.thelqd.online" android:scheme="https" android:pathPrefix="/app" />
+        <data android:host="www.thelqd.online" android:scheme="https" android:pathPrefix="/app"/>
       </intent-filter>
     </activity>
     <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" android:exported="false"/>
