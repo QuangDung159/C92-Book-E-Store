@@ -42,9 +42,7 @@ const App = () => {
 
   const navigationRef = useRef<NavigationContainerRef<any>>(null);
 
-  const { openPlayStore, handleNavigateFromLinking } = useNavigate(
-    navigationRef.current,
-  );
+  const { openPlayStore } = useNavigate(navigationRef.current);
 
   useEffect(() => {
     SplashScreen.preventAutoHideAsync();
@@ -100,14 +98,6 @@ const App = () => {
     },
     [openPlayStore],
   );
-
-  const url = Linking.useURL();
-
-  useEffect(() => {
-    if (url) {
-      handleNavigateFromLinking(url);
-    }
-  }, [handleNavigateFromLinking, url]);
 
   useEffect(() => {
     OneSignal.InAppMessages.addEventListener('click', handleInAppMessageClick);

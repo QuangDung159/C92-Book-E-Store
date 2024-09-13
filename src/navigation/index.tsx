@@ -2,6 +2,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Constants from 'expo-constants';
+import * as Linking from 'expo-linking';
 import { observer } from 'mobx-react-lite';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AppState } from 'react-native';
@@ -30,7 +31,7 @@ const Navigation = () => {
 
   const navigation = useNavigation();
 
-  const { openPlayStore } = useNavigate(navigation);
+  const { openPlayStore, handleNavigateFromLinking } = useNavigate(navigation);
 
   const [showPopup, setShowPopup] = useState(false);
 
@@ -65,13 +66,23 @@ const Navigation = () => {
     };
   }, [triggerShowVersionPopup]);
 
-  // const url = Linking.useURL();
+  const handle = useCallback(
+    ({ url }) => {
+      console.log('url :>> ', url);
+      if (url) {
+        handleNavigateFromLinking(url);
+      }
+    },
+    [handleNavigateFromLinking],
+  );
 
-  // useEffect(() => {
-  //   if (url) {
-  //     handleNavigateFromLinking(url);
-  //   }
-  // }, [handleNavigateFromLinking, url]);
+  useEffect(() => {
+    const subsription = Linking.addEventListener('url', handle);
+
+    return () => {
+      subsription.remove();
+    };
+  }, [handle]);
 
   return (
     <>
