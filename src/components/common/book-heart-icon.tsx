@@ -58,14 +58,14 @@ const BookHeartIcon: React.FC<BookHeartIconProps> = ({
     <View style={containerStyle}>
       {userStore.isBookFavorite(bookCardItem.id) ? (
         <Icons.HeartIcon
-          size={20}
+          size={18}
           onPress={() => {
             onPressFavorite(false);
           }}
         />
       ) : (
         <Icons.HeartOutlineIcon
-          size={20}
+          size={18}
           onPress={() => {
             onPressFavorite(true);
           }}

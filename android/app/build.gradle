@@ -125,12 +125,18 @@ android {
         versionName "1.0.9"
     }
     signingConfigs {
+        // keytool -list -v -keystore ./app/debug.keystore -alias androiddebugkey -storepass android -keypass android
         debug {
-            storeFile file('debug.keystore')
-            storePassword 'android'
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
+            // storeFile file('debug.keystore')
+            // storePassword 'android'
+            // keyAlias 'androiddebugkey'
+            // keyPassword 'android'
+            storeFile file('production-keystore.bak.jks')
+            storePassword 'db32b7ab45a3007cf09a09a04a956412'
+            keyAlias 'da9c31afd6d6615093337ac13d810252'
+            keyPassword 'c6efc0ed3b90ed0b78e0f24deb09b254'
         }
+        // keytool -list -v -keystore ./app/debug.keystore -alias androiddebugkey -storepass android -keypass android
         staging {
             // keystore from eas server
             storeFile file('debug.keystore')
@@ -138,6 +144,7 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        // keytool -list -v -keystore ./app/production-keystore.bak.jks -alias da9c31afd6d6615093337ac13d810252 -storepass db32b7ab45a3007cf09a09a04a956412 -keypass c6efc0ed3b90ed0b78e0f24deb09b254
         production {
             // keystore from eas server
             storeFile file('production-keystore.bak.jks')

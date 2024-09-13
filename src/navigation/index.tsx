@@ -1,5 +1,5 @@
 /* eslint-disable import/no-named-as-default */
-import { NavigationContainerRef } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Constants from 'expo-constants';
 import { observer } from 'mobx-react-lite';
@@ -24,12 +24,13 @@ import { SearchNavigator } from './search-navigator';
 const Stack = createStackNavigator();
 
 const Navigation = () => {
-  const navigationRef = useRef<NavigationContainerRef<any>>(null);
   const appState = useRef(AppState.currentState);
 
   const version = Constants.expoConfig.version;
 
-  const { openPlayStore } = useNavigate(navigationRef.current);
+  const navigation = useNavigation();
+
+  const { openPlayStore } = useNavigate(navigation);
 
   const [showPopup, setShowPopup] = useState(false);
 
@@ -63,6 +64,14 @@ const Navigation = () => {
       subscription.remove();
     };
   }, [triggerShowVersionPopup]);
+
+  // const url = Linking.useURL();
+
+  // useEffect(() => {
+  //   if (url) {
+  //     handleNavigateFromLinking(url);
+  //   }
+  // }, [handleNavigateFromLinking, url]);
 
   return (
     <>

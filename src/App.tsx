@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-require-imports */
 import {
@@ -26,7 +27,7 @@ import { delay, StringHelpers } from '@utils';
 import { Navigation } from 'navigation';
 
 // deeplink
-// npx uri-scheme open "c92bookestorev1:///payment-success?orderId=123123123" --ios
+// npx uri-scheme open "c92bookestorev1:///payment-success-screen?orderId=123123123" --ios
 
 if (__DEV__) {
   connectToDevTools({
@@ -39,11 +40,11 @@ const App = () => {
   const notificationListener = useRef<Notifications.Subscription>();
   const responseListener = useRef<Notifications.Subscription>();
 
-  const url = Linking.useURL();
   const navigationRef = useRef<NavigationContainerRef<any>>(null);
 
-  const { openPaymentSuccessScreen, openHomeScreen, openPlayStore } =
-    useNavigate(navigationRef.current);
+  const { openPlayStore, handleNavigateFromLinking } = useNavigate(
+    navigationRef.current,
+  );
 
   useEffect(() => {
     SplashScreen.preventAutoHideAsync();
@@ -100,6 +101,14 @@ const App = () => {
     [openPlayStore],
   );
 
+  const url = Linking.useURL();
+
+  useEffect(() => {
+    if (url) {
+      handleNavigateFromLinking(url);
+    }
+  }, [handleNavigateFromLinking, url]);
+
   useEffect(() => {
     OneSignal.InAppMessages.addEventListener('click', handleInAppMessageClick);
 
@@ -140,20 +149,6 @@ const App = () => {
     setFontsLoaded(true);
     SplashScreen.hideAsync();
   };
-
-  if (url) {
-    const { path, queryParams } = Linking.parse(url);
-
-    if (path === 'payment-success') {
-      openPaymentSuccessScreen({
-        orderId: queryParams?.orderId,
-        message: queryParams?.message,
-      });
-    }
-    if (path === 'home') {
-      openHomeScreen();
-    }
-  }
 
   const prefix = Linking.createURL('/');
 

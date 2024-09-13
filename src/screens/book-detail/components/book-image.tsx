@@ -1,7 +1,8 @@
 import React from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
-import { BookCardCarousel, BookHeartIcon, Icons } from '@components';
+import { BookCardCarousel, BookHeartIcon, Icons, Layouts } from '@components';
 import { DataModels } from '@models';
+import { BookServices } from '@services';
 
 interface BookImageProps {
   navigation: any;
@@ -17,10 +18,16 @@ const BookImage: React.FC<BookImageProps> = ({ navigation, data, book }) => {
 
   return (
     <View style={styles.imageWrapper}>
-      <BookHeartIcon
-        containerStyle={styles.heartIconWrapper}
-        bookCardItem={book}
-      />
+      <View style={styles.heartIconWrapper}>
+        <BookHeartIcon containerStyle={{}} bookCardItem={book} />
+        <Layouts.VSpace value={8} />
+        <Icons.ShareIcon
+          size={16}
+          onPress={() => {
+            BookServices.onShare(book.id);
+          }}
+        />
+      </View>
       <View style={styles.backIcon}>
         <Icons.ChevronLeftIcon
           onPress={() => {

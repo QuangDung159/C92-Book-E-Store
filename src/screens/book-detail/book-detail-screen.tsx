@@ -1,6 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { observer } from 'mobx-react-lite';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -30,6 +36,7 @@ import {
 
 const BookDetailScreen = ({ route, navigation }: any) => {
   const book = route.params?.book as DataModels.IBook;
+  const bookIdParam = route.params?.bookId as string;
 
   const { openSearchScreen } = useNavigate(navigation);
 
@@ -43,11 +50,18 @@ const BookDetailScreen = ({ route, navigation }: any) => {
   );
   const [bookInfo, setBookInfo] = useState<DataModels.IBook>();
   const [itemCount, setItemCount] = useState(1);
+  const bookId = useMemo(
+    () => book?.id || bookIdParam,
+    [bookIdParam, book?.id],
+  );
 
   const loadDetail = useCallback(async () => {
-    setBookInfo(book);
-    if (book?.id) {
-      const result = await BookServices.fetchBookDetail(book?.id);
+    if (book) {
+      setBookInfo(book);
+    }
+
+    if (bookId) {
+      const result = await BookServices.fetchBookDetail(bookId);
 
       if (result?.data?.book) {
         const bookData = result.data.book as DataModels.IBook;
@@ -71,7 +85,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
         setBookInfo(bookDetail);
       }
     }
-  }, [book]);
+  }, [book, bookIdParam]);
 
   useEffect(() => {
     submitViewed();
@@ -85,19 +99,20 @@ const BookDetailScreen = ({ route, navigation }: any) => {
       setIsCollapseDescription(false);
     });
 
-    if (book) {
+    if (book || bookIdParam) {
       loadDetail();
     }
-  }, [book, loadDetail]);
+  }, [book, loadDetail, bookIdParam]);
 
   const submitViewed = async () => {
     if (!userStore.authenticated) return;
 
     const listBookViewed = [...userStore.userProfile.listBookViewed];
-    const index = listBookViewed.findIndex((item) => item === book.id);
+    console.log('listBookViewed :>> ', listBookViewed);
+    const index = listBookViewed.findIndex((item) => item === bookId);
 
     if (index === -1) {
-      listBookViewed.unshift(book.id);
+      listBookViewed.unshift(bookId);
     }
 
     userStore.updateUser({
@@ -274,7 +289,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
             />
             <InfoRow
               title="Form"
-              value={book.form.name}
+              value={bookInfo.form.name}
               hasCheckBox
               onCheck={(value) => {
                 const item = StringHelpers.getItemFromDataSource(
