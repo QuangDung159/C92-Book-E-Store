@@ -1,12 +1,13 @@
 import { Share } from 'react-native';
-import { APP_LINK_URL, SCREEN_NAME } from '@constants';
+import { API_URL, APP_LINK_URL, SCREEN_NAME } from '@constants';
 import { DataModels } from '@models';
 import { HttpServices } from './http-services';
 
-const baseUrl = process.env.EXPO_PUBLIC_BASE_URL + '/book';
-
 const fetchListByListId = async (params: { listId: string[] }) => {
-  const result = await HttpServices.post(baseUrl + '/get-by-list-id', params);
+  const result = await HttpServices.post(
+    API_URL.book + '/get-by-list-id',
+    params,
+  );
 
   return result;
 };
@@ -34,7 +35,7 @@ const queryBook = async (
     sort: sortOption,
   };
 
-  const result = await HttpServices.post(baseUrl, body);
+  const result = await HttpServices.post(API_URL.book, body);
 
   return result;
 };
@@ -43,14 +44,14 @@ const fetchListHomePage = async (title: string, filter?: string) => {
   const filterQuery = filter ? `&filter=${filter}` : '';
 
   const result = await HttpServices.get(
-    baseUrl + `/query?title=${title}` + filterQuery,
+    API_URL.book + `/query?title=${title}` + filterQuery,
   );
 
   return result;
 };
 
 const fetchBookDetail = async (id: string) => {
-  const result = await HttpServices.get(baseUrl + '/get-one/' + id);
+  const result = await HttpServices.get(API_URL.book + '/get-one/' + id);
 
   return result;
 };
