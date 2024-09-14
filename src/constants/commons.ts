@@ -75,9 +75,9 @@ const PAYMENT_STATUS = {
   waitingForPay: 'waiting-for-pay',
 };
 
-const SHCEME = 'BookEStoreV1';
-const DEEP_LINK_URL = `c92bookestorev1://app/${SHCEME}/`;
-const APP_LINK_URL = `https://388d-14-186-9-155.ngrok-free.app/app/${SHCEME}/`;
+const SHCEME = 'app/BookEStoreV1/';
+const DEEP_LINK_URL = `c92bookestorev1://${SHCEME}`;
+const APP_LINK_URL = `${process.env.EXPO_PUBLIC_APP_LINK_SERVER}${SHCEME}`;
 // const APP_LINK_URL = 'https://thelqd.online/app/BookEStoreV1';
 const DEEP_LINK_PAYMENT_SUCCESS_URL = `${DEEP_LINK_URL}payment-success-screen?`;
 

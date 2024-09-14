@@ -184,7 +184,7 @@ export const useNavigate = (navigation: any) => {
   const handleNavigateFromLinking = async (url: string) => {
     const { path, queryParams } = Linking.parse(url);
 
-    const screenName = path.replace(`app/${SHCEME}/`, '');
+    const screenName = path.replace(SHCEME, '');
 
     if (screenName === SCREEN_NAME.PAYMENT_SUCCESS_SCREEN) {
       openPaymentSuccessScreen({
