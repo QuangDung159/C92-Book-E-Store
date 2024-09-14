@@ -1,12 +1,10 @@
+import { API_URL } from '@constants';
 import { DataModels } from '@models';
 import { HttpServices } from './http-services';
 
-const cartBaseUrl = process.env.EXPO_PUBLIC_BASE_URL + '/cart';
-const cartItemBaseUrl = process.env.EXPO_PUBLIC_BASE_URL + '/cart-item';
-
 const createCart = async (cartInput: DataModels.ICartParams) => {
   const result = await HttpServices.post(
-    cartBaseUrl + '/create-one',
+    API_URL.cart + '/create-one',
     cartInput,
   );
 
@@ -14,15 +12,15 @@ const createCart = async (cartInput: DataModels.ICartParams) => {
 };
 
 const fetchCart = async (userId: string) => {
-  return await HttpServices.get(cartBaseUrl + `/get?userId=${userId}`);
+  return await HttpServices.get(API_URL.cart + `/get?userId=${userId}`);
 };
 
 const updateCart = async (cartParams: DataModels.ICartParams) => {
-  return await HttpServices.post(cartBaseUrl + '/update-one', cartParams);
+  return await HttpServices.post(API_URL.cart + '/update-one', cartParams);
 };
 
 const updateCartItem = async (params: any) => {
-  return await HttpServices.post(cartItemBaseUrl + '/update-one', params);
+  return await HttpServices.post(API_URL.cartItem + '/update-one', params);
 };
 
 const createCartItem = async (params: {
@@ -30,11 +28,11 @@ const createCartItem = async (params: {
   cart: string;
   book: string;
 }) => {
-  return await HttpServices.post(cartItemBaseUrl + '/create-one', params);
+  return await HttpServices.post(API_URL.cartItem + '/create-one', params);
 };
 
 const deleteCartItem = async (id: string) => {
-  return await HttpServices.post(cartItemBaseUrl + '/delete-one', { id });
+  return await HttpServices.post(API_URL.cartItem + '/delete-one', { id });
 };
 
 export const CartServices = {

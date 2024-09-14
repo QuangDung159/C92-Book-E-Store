@@ -77,7 +77,7 @@ const PAYMENT_STATUS = {
 
 const SHCEME = 'app/BookEStoreV1/';
 const DEEP_LINK_URL = `c92bookestorev1://${SHCEME}`;
-const APP_LINK_URL = `${process.env.EXPO_PUBLIC_APP_LINK_SERVER}${SHCEME}`;
+const APP_LINK_URL = `${process.env.EXPO_PUBLIC_BASE_URL}${SHCEME}`;
 // const APP_LINK_URL = 'https://thelqd.online/app/BookEStoreV1';
 const DEEP_LINK_PAYMENT_SUCCESS_URL = `${DEEP_LINK_URL}payment-success-screen?`;
 
@@ -85,6 +85,8 @@ const EXPO_PUSH_NOTIFICATION_URL = 'https://exp.host/--/api/v2/push/send';
 
 const GOOGLE_PLAY_STORE_URL =
   'https://play.google.com/store/apps/details?id=com.dragonc92team.BookEStoreV1';
+
+const API_PREFIX = 'api/v1/book-store';
 
 const IN_APP_MESSAGE_ACTION_ID = {
   openStore: 'OPEN_STORE',
@@ -97,11 +99,23 @@ const LIST_HOME_PAGE_TITLE = {
   upcomming: 'upcomming',
 };
 
+const API_BASE_URL = process.env.EXPO_PUBLIC_BASE_URL + API_PREFIX;
+
 const API_URL = {
-  shippingAddress: process.env.EXPO_PUBLIC_BASE_URL + '/shipping-address',
-  user: process.env.EXPO_PUBLIC_BASE_URL + '/user',
-  notification: process.env.EXPO_PUBLIC_BASE_URL + '/notification',
-  config: process.env.EXPO_PUBLIC_BASE_URL + '/config',
+  shippingAddress: API_BASE_URL + '/shipping-address',
+  user: API_BASE_URL + '/user',
+  notification: API_BASE_URL + '/notification',
+  config: API_BASE_URL + '/config',
+  creditCard: API_BASE_URL + '/credit-card',
+  book: API_BASE_URL + '/book',
+  cart: API_BASE_URL + '/cart',
+  cartItem: API_BASE_URL + '/cart-item',
+  category: API_BASE_URL + '/category',
+  order: API_BASE_URL + '/order',
+  author: API_BASE_URL + '/author',
+  publisher: API_BASE_URL + '/publisher',
+  form: API_BASE_URL + '/form',
+  review: API_BASE_URL + '/review',
 };
 
 const LIST_ADMINITRATIVE_UNIT = [
@@ -143,6 +157,7 @@ const LIST_PAYMENT_METHOD = [
 
 export {
   ADMINISTRATIVE,
+  API_PREFIX,
   API_URL,
   APP_LINK_URL,
   CODE_PUSH_NUMBER,
