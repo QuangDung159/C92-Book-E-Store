@@ -3,33 +3,25 @@ import { AdministrativeUnitEnum } from '@types';
 import { HttpServices } from './http-services';
 
 const fetchListCategory = async () => {
-  const result = await HttpServices.get(
-    process.env.EXPO_PUBLIC_BASE_URL + '/category',
-  );
+  const result = await HttpServices.get(API_URL.category);
 
   return result;
 };
 
 const fetchListAuthor = async () => {
-  const result = await HttpServices.get(
-    process.env.EXPO_PUBLIC_BASE_URL + '/author',
-  );
+  const result = await HttpServices.get(API_URL.author);
 
   return result;
 };
 
 const fetchListPublisher = async () => {
-  const result = await HttpServices.get(
-    process.env.EXPO_PUBLIC_BASE_URL + '/publisher',
-  );
+  const result = await HttpServices.get(API_URL.publisher);
 
   return result;
 };
 
 const fetchListForm = async () => {
-  const result = await HttpServices.get(
-    process.env.EXPO_PUBLIC_BASE_URL + '/form',
-  );
+  const result = await HttpServices.get(API_URL.form);
 
   return result;
 };

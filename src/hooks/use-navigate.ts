@@ -1,5 +1,6 @@
 import * as Linking from 'expo-linking';
-import { SCREEN_NAME } from '@constants';
+import { Platform } from 'react-native';
+import { GOOGLE_PLAY_STORE_URL, SCREEN_NAME, SHCEME } from '@constants';
 import { DataModels } from '@models';
 import { delay } from '@utils';
 
@@ -164,9 +165,12 @@ export const useNavigate = (navigation: any) => {
   };
 
   const openPlayStore = () => {
-    const url = `https://play.google.com/store/apps/details?id=com.dragonc92team.BookEStoreV1`;
+    const url = Platform.select({
+      android: GOOGLE_PLAY_STORE_URL,
+      ios: GOOGLE_PLAY_STORE_URL,
+    });
 
-    Linking.canOpenURL(url)
+    Linking.canOpenURL(GOOGLE_PLAY_STORE_URL)
       .then((supported) => {
         if (supported) {
           Linking.openURL(url);
@@ -180,7 +184,7 @@ export const useNavigate = (navigation: any) => {
   const handleNavigateFromLinking = async (url: string) => {
     const { path, queryParams } = Linking.parse(url);
 
-    const screenName = path.replace('app/', '');
+    const screenName = path.replace(SHCEME, '');
 
     if (screenName === SCREEN_NAME.PAYMENT_SUCCESS_SCREEN) {
       openPaymentSuccessScreen({
