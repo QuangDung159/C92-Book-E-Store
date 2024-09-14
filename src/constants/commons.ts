@@ -75,11 +75,16 @@ const PAYMENT_STATUS = {
   waitingForPay: 'waiting-for-pay',
 };
 
-const DEEP_LINK_URL = 'c92bookestorev1://app/';
-const APP_LINK_URL = 'https://thelqd.online/app/';
+const SHCEME = 'BookEStoreV1';
+const DEEP_LINK_URL = `c92bookestorev1://app/${SHCEME}/`;
+const APP_LINK_URL = `https://388d-14-186-9-155.ngrok-free.app/app/${SHCEME}/`;
+// const APP_LINK_URL = 'https://thelqd.online/app/BookEStoreV1';
 const DEEP_LINK_PAYMENT_SUCCESS_URL = `${DEEP_LINK_URL}payment-success-screen?`;
 
 const EXPO_PUSH_NOTIFICATION_URL = 'https://exp.host/--/api/v2/push/send';
+
+const GOOGLE_PLAY_STORE_URL =
+  'https://play.google.com/store/apps/details?id=com.dragonc92team.BookEStoreV1';
 
 const IN_APP_MESSAGE_ACTION_ID = {
   openStore: 'OPEN_STORE',
@@ -147,6 +152,7 @@ export {
   DEFAULT_SORT,
   ERROR_CODES,
   EXPO_PUSH_NOTIFICATION_URL,
+  GOOGLE_PLAY_STORE_URL,
   IN_APP_MESSAGE_ACTION_ID,
   LIST_ADMINITRATIVE_UNIT,
   LIST_HOME_PAGE_TITLE,
@@ -158,5 +164,6 @@ export {
   PAYMENT_TYPE,
   PRICE_STEP,
   SEARCH_VIEW_STYLE,
+  SHCEME,
   TOP_BOOKS_FILTER,
 };
