@@ -10,11 +10,13 @@ import { OrderItem } from './order-item';
 interface ListOrderProps {
   listOrder: DataModels.IOrder[];
   isShowFullListCart?: boolean;
+  showCancelButton?: boolean;
 }
 
 const ListOrder: React.FC<ListOrderProps> = ({
   listOrder,
   isShowFullListCart,
+  showCancelButton,
 }) => {
   return (
     <View style={styles.container}>
@@ -27,6 +29,7 @@ const ListOrder: React.FC<ListOrderProps> = ({
             <OrderItem
               orderItem={item}
               isShowFullListCart={isShowFullListCart}
+              showCancelButton={showCancelButton}
             />
           );
         }}

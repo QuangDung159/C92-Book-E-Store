@@ -26,11 +26,6 @@ function OrderTopTabbarNavigator() {
       <Tab.Navigator
         initialRouteName={SCREEN_NAME.CREATED_ORDERS_SCREEN}
         screenOptions={{
-          tabBarLabelStyle: {
-            textTransform: 'none',
-            ...FONT_STYLES.SEMIBOLD_12,
-            marginTop: -10,
-          },
           tabBarStyle: {
             height: 40,
           },
@@ -79,8 +74,9 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primaryWhite,
   },
   title: {
-    ...FONT_STYLES.BOLD_12,
+    ...FONT_STYLES.SEMIBOLD_12,
     marginTop: -6,
+    textTransform: 'none',
   },
   itemStyle: {
     padding: 0,
