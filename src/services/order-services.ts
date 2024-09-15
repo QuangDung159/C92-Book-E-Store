@@ -13,6 +13,10 @@ const updateOrder = async (params: any) => {
   return await HttpServices.post(API_URL.order + '/update-one', params);
 };
 
+const fetchOrderById = async (orderId: string) => {
+  return await HttpServices.get(API_URL.order + '/get-one/' + orderId);
+};
+
 const fetchListOrder = async (params: {
   userId: string;
   orderStatus: OrderStatus;
@@ -24,4 +28,9 @@ const fetchListOrder = async (params: {
   );
 };
 
-export const OrderServices = { createOrder, updateOrder, fetchListOrder };
+export const OrderServices = {
+  createOrder,
+  updateOrder,
+  fetchListOrder,
+  fetchOrderById,
+};

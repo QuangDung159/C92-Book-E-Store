@@ -125,123 +125,144 @@ const CheckoutScreen = ({ navigation }: any) => {
         onDoneDismiss={() => {}}
       />
       <ScreenHeader title="Checkout" navigation={navigation} />
-      <ScrollView
-        scrollEnabled={true}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.wrapper}
-      >
-        <Layouts.VSpace value={24} />
-        <SectionTitle title="Shipping Address" />
-        <Layouts.VSpace value={12} />
-        <ShippingAddress
-          onPressChange={() => openAddressScreen()}
-          shippingAddress={cartStore.shippingAddressData}
-        />
-        <ListCartItem
-          listItem={cartStore.listCartItem}
-          type="short"
-          allowSwipe={false}
-        />
-        <Divider />
-        <Layouts.VSpace value={16} />
-        <SectionTitle title="Payment Method" />
-        <Layouts.VSpace value={12} />
-        <RadioButton.Group
-          onValueChange={(value) => {
-            cartStore.setPaymentSelected({
-              paymentType: value as PaymentType,
-              paymentInfo: {},
-              id: value,
-            });
-          }}
-          value={cartStore.paymentSelected.paymentType}
-        >
-          {LIST_PAYMENT_METHOD.map((item) => {
-            return (
-              <View
-                key={item.value}
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  marginLeft: -8,
-                }}
-              >
-                <RadioButton.Android value={item.value} />
-                <Text
-                  style={{
-                    ...FONT_STYLES.REGULAR_16,
-                  }}
-                >
-                  {item.label}
-                </Text>
-                {item.value === 'credit_card' && (
-                  <>
-                    <Layouts.MaxSpace />
-                    {isShowListCreditCart ? (
-                      <Icons.ChevronUpIcon
-                        onPress={() => toggleListCreditCart()}
-                      />
-                    ) : (
-                      <Icons.ChevronDownIcon
-                        onPress={() => toggleListCreditCart()}
-                      />
+      {cartStore.cart ? (
+        <>
+          <ScrollView
+            scrollEnabled={true}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.wrapper}
+          >
+            <Layouts.VSpace value={24} />
+            <SectionTitle title="Shipping Address" />
+            <Layouts.VSpace value={12} />
+            <ShippingAddress
+              onPressChange={() => openAddressScreen()}
+              shippingAddress={cartStore.shippingAddressData}
+            />
+            <ListCartItem
+              listItem={cartStore.listCartItem}
+              type="short"
+              allowSwipe={false}
+            />
+            <Divider />
+            <Layouts.VSpace value={16} />
+            <SectionTitle title="Payment Method" />
+            <Layouts.VSpace value={12} />
+            <RadioButton.Group
+              onValueChange={(value) => {
+                cartStore.setPaymentSelected({
+                  paymentType: value as PaymentType,
+                  paymentInfo: {},
+                  id: value,
+                });
+              }}
+              value={cartStore.paymentSelected.paymentType}
+            >
+              {LIST_PAYMENT_METHOD.map((item) => {
+                return (
+                  <View
+                    key={item.value}
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      marginLeft: -8,
+                    }}
+                  >
+                    <RadioButton.Android value={item.value} />
+                    <Text
+                      style={{
+                        ...FONT_STYLES.REGULAR_16,
+                      }}
+                    >
+                      {item.label}
+                    </Text>
+                    {item.value === 'credit_card' && (
+                      <>
+                        <Layouts.MaxSpace />
+                        {isShowListCreditCart ? (
+                          <Icons.ChevronUpIcon
+                            onPress={() => toggleListCreditCart()}
+                          />
+                        ) : (
+                          <Icons.ChevronDownIcon
+                            onPress={() => toggleListCreditCart()}
+                          />
+                        )}
+                      </>
                     )}
-                  </>
-                )}
-                <Layouts.VSpace value={12} />
-              </View>
-            );
-          })}
-        </RadioButton.Group>
-        <Collapsible collapsed={!isShowListCreditCart}>
-          <ListCreditCard
-            listCreditCard={listCreditCard}
-            onValueChange={(value) => {
-              cartStore.setPaymentSelected({
-                paymentType: PAYMENT_TYPE.creditCard as PaymentType,
-                paymentInfo: {},
-                id: value,
-              });
+                    <Layouts.VSpace value={12} />
+                  </View>
+                );
+              })}
+            </RadioButton.Group>
+            <Collapsible collapsed={!isShowListCreditCart}>
+              <ListCreditCard
+                listCreditCard={listCreditCard}
+                onValueChange={(value) => {
+                  cartStore.setPaymentSelected({
+                    paymentType: PAYMENT_TYPE.creditCard as PaymentType,
+                    paymentInfo: {},
+                    id: value,
+                  });
 
-              cartStore.setCreditCardSelected(value);
+                  cartStore.setCreditCardSelected(value);
+                }}
+                selectedValue={cartStore.creditCardSelected?.id}
+                onPressAddCreditCard={() => {
+                  setShowAddCreditCardPopup(true);
+                }}
+              />
+            </Collapsible>
+            <Layouts.VSpace value={12} />
+            {cartStore.cartCount !== 0 && (
+              <View>
+                <Divider />
+                <Layouts.VSpace value={12} />
+                <SectionTitle title="Summary" />
+                <CartInfoRow title="Subtotal" value={cartStore.subTotal} />
+                <CartInfoRow title="Shipping" value={cartStore.shipping} />
+                <CartInfoRow title="Discount" value={-cartStore.discount} />
+                <Layouts.VSpace value={12} />
+                <Divider />
+                <CartInfoRow title="Total" value={cartStore.total} isTotal />
+              </View>
+            )}
+            <Layouts.VSpace value={24} />
+          </ScrollView>
+          <BottomCheckoutSection
+            onPress={() => {
+              if (!cartStore.shippingAddressData) {
+                ToastHelpers.showToast({
+                  title: 'Please choose your shipping address',
+                  type: 'error',
+                });
+              } else {
+                onSubmitCheckout();
+              }
             }}
-            selectedValue={cartStore.creditCardSelected?.id}
-            onPressAddCreditCard={() => {
-              setShowAddCreditCardPopup(true);
-            }}
+            priceDisplay={cartStore.total}
+            disabled={cartStore.cartCount === 0}
+            buttonTitle="Submit"
           />
-        </Collapsible>
-        <Layouts.VSpace value={12} />
-        {cartStore.cartCount !== 0 && (
-          <View>
-            <Divider />
-            <Layouts.VSpace value={12} />
-            <SectionTitle title="Summary" />
-            <CartInfoRow title="Subtotal" value={cartStore.subTotal} />
-            <CartInfoRow title="Shipping" value={cartStore.shipping} />
-            <CartInfoRow title="Discount" value={-cartStore.discount} />
-            <Layouts.VSpace value={12} />
-            <Divider />
-            <CartInfoRow title="Total" value={cartStore.total} isTotal />
-          </View>
-        )}
-        <Layouts.VSpace value={24} />
-      </ScrollView>
-      <BottomCheckoutSection
-        onPress={() => {
-          if (!cartStore.shippingAddressData) {
-            ToastHelpers.showToast({
-              title: 'Please choose your shipping address',
-              type: 'error',
-            });
-          } else {
-            onSubmitCheckout();
-          }
-        }}
-        priceDisplay={cartStore.total}
-        disabled={cartStore.cartCount === 0}
-        buttonTitle="Submit"
-      />
+        </>
+      ) : (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Text
+            style={{
+              ...FONT_STYLES.SEMIBOLD_12,
+              color: COLORS.gray60,
+            }}
+          >
+            Processing....
+          </Text>
+        </View>
+      )}
     </View>
   );
 };
