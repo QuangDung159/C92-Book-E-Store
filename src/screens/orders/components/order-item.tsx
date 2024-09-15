@@ -3,14 +3,11 @@ import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Collapsible from 'react-native-collapsible';
-import { Buttons, Icons, Layouts } from '@components';
+import { CancelOrderButton, Icons, Layouts } from '@components';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
-import { OrderServices } from '@services';
-import { sharedStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
-import { OrderStatus } from '@types';
-import { StringHelpers, ToastHelpers } from '@utils';
+import { StringHelpers } from '@utils';
 import { CartItem } from 'screens/cart';
 
 interface OrderItemProps {
@@ -44,24 +41,6 @@ const OrderItem: React.FC<OrderItemProps> = ({
     });
 
     return count;
-  };
-
-  const onCancelOrder = async () => {
-    sharedStore.setShowLoading(true);
-    const result = await OrderServices.updateOrder({
-      id: orderItem.id,
-      status: 'canceled' as OrderStatus,
-    });
-
-    if (result?.success) {
-      await userStore.fetchAllListOrder();
-
-      ToastHelpers.showToast({
-        title: 'Order cancel success',
-      });
-    }
-
-    sharedStore.setShowLoading(false);
   };
 
   const renderListCartItem = () => {
@@ -160,20 +139,7 @@ const OrderItem: React.FC<OrderItemProps> = ({
               'Discount:',
               `- ${StringHelpers.formatCurrency(cart.discount)}`,
             )}
-            {showCancelButton && (
-              <>
-                <Layouts.VSpace value={16} />
-                <Buttons.CButton
-                  buttonType="secondary"
-                  label="Cancel order"
-                  style={styles.cancelButton}
-                  onPress={() => {
-                    onCancelOrder();
-                  }}
-                  labelStyle={styles.cancelLabel}
-                />
-              </>
-            )}
+            {showCancelButton && <CancelOrderButton order={orderItem} />}
           </View>
         </View>
       </TouchableOpacity>

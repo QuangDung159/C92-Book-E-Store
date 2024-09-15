@@ -18,8 +18,14 @@ import {
   OrderServices,
   ZaloPayServices,
 } from '@services';
-import { PaymentData, PaymentStatus, PaymentType, ZaloPayOrder } from '@types';
-import { DatetimeHelpers, delay, StringHelpers } from '@utils';
+import {
+  OrderStatus,
+  PaymentData,
+  PaymentStatus,
+  PaymentType,
+  ZaloPayOrder,
+} from '@types';
+import { DatetimeHelpers, delay, StringHelpers, ToastHelpers } from '@utils';
 import { ReferenceOptionsStore } from './reference-options-store';
 import { UserStore } from './user-store';
 
@@ -483,6 +489,23 @@ class CartStore {
     }
     this.clearAllCurrentPaymentInfo();
   }
+
+  cancelOrder = async (orderId: string) => {
+    const result = await OrderServices.updateOrder({
+      id: orderId,
+      status: 'canceled' as OrderStatus,
+    });
+
+    if (result?.success) {
+      await this.userStore.fetchAllListOrder();
+
+      ToastHelpers.showToast({
+        title: 'Order cancel success',
+      });
+    }
+
+    return result;
+  };
 }
 
 export { CartStore };
