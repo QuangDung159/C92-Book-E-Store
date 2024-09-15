@@ -22,7 +22,12 @@ import { CATEGORY } from '@constants';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
 import { BookServices } from '@services';
-import { referenceOptionsStore, searchStore, userStore } from '@store';
+import {
+  referenceOptionsStore,
+  searchStore,
+  sharedStore,
+  userStore,
+} from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { delay, StringHelpers } from '@utils';
 import { HorizontalListCard } from 'screens/home/components';
@@ -38,7 +43,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
   const book = route.params?.book as DataModels.IBook;
   const bookIdParam = route.params?.bookId as string;
 
-  const { openSearchScreen } = useNavigate(navigation);
+  const { openSearchScreen, openHomeScreen } = useNavigate(navigation);
 
   const [isCollapseDescription, setIsCollapseDescription] = useState(true);
   const [isCollapseInformation, setIsCollapseInformation] = useState(true);
@@ -56,6 +61,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
   );
 
   const loadDetail = useCallback(async () => {
+    sharedStore.setShowLoading(true);
     if (book) {
       setBookInfo(book);
     }
@@ -85,6 +91,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
         setBookInfo(bookDetail);
       }
     }
+    sharedStore.setShowLoading(false);
   }, [book, bookIdParam]);
 
   useEffect(() => {
@@ -152,7 +159,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
           loadDetail();
         }}
       />
-      {bookInfo && (
+      {bookInfo ? (
         <ScrollView
           showsVerticalScrollIndicator={false}
           ref={scrollRef}
@@ -393,6 +400,29 @@ const BookDetailScreen = ({ route, navigation }: any) => {
           />
           <Layouts.VSpace value={24} />
         </ScrollView>
+      ) : (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Text
+            style={{
+              ...FONT_STYLES.SEMIBOLD_16,
+            }}
+          >
+            Book not found!
+          </Text>
+          <Layouts.VSpace value={12} />
+          <Buttons.CButton
+            label="Go back"
+            onPress={() => {
+              openHomeScreen();
+            }}
+          />
+        </View>
       )}
     </View>
   );
