@@ -21,7 +21,7 @@ import {
 } from '@components';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
-import { cartStore } from '@store';
+import { cartStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { ToastHelpers } from '@utils';
 
@@ -38,7 +38,7 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
 }) => {
   const { width } = Dimensions.get('window');
   const navigation = useNavigation();
-  const { openCartScreen } = useNavigate(navigation);
+  const { openCartScreen, openSignInScreen } = useNavigate(navigation);
 
   const carouselWidth = (width - 48 - 12) / 2;
   const carouselHeight = carouselWidth * 1.3;
@@ -51,6 +51,30 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
     ImageAssets.bookImage1,
     ImageAssets.bookImage1,
   ];
+
+  const onPressAddToCart = async () => {
+    if (!userStore.authenticated) {
+      ToastHelpers.showToast({
+        title: 'Please sign in first',
+        type: 'error',
+        onPress: () => {
+          openSignInScreen();
+        },
+      });
+      return;
+    }
+
+    await cartStore.addToCart({
+      book: bookCardItem,
+      count: 1,
+    });
+
+    ToastHelpers.showToast({
+      title: 'Add to cart success',
+      content: 'View cart',
+      onPress: () => openCartScreen(),
+    });
+  };
 
   return (
     <React.Fragment key={bookCardItem.id}>
@@ -103,16 +127,7 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
           <Layouts.VSpace value={6} />
           <TouchableOpacity
             onPress={() => {
-              cartStore.addToCart({
-                book: bookCardItem,
-                count: 1,
-              });
-
-              ToastHelpers.showToast({
-                title: 'Add to cart success',
-                content: 'View cart',
-                onPress: () => openCartScreen(),
-              });
+              onPressAddToCart();
             }}
             style={{
               borderRadius: 50,

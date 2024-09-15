@@ -4,7 +4,7 @@ import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { Buttons, Icons, Layouts } from '@components';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
-import { cartStore } from '@store';
+import { cartStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { ToastHelpers } from '@utils';
 
@@ -24,9 +24,20 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   bookCardItem,
 }) => {
   const navigation = useNavigation();
-  const { openCartScreen } = useNavigate(navigation);
+  const { openCartScreen, openSignInScreen } = useNavigate(navigation);
 
   const onAddToCart = () => {
+    if (!userStore.authenticated) {
+      ToastHelpers.showToast({
+        title: 'Please sign in first',
+        type: 'error',
+        onPress: () => {
+          openSignInScreen();
+        },
+      });
+      return;
+    }
+
     cartStore.addToCart({
       book: bookCardItem,
       count: itemCount,
