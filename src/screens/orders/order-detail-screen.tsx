@@ -1,15 +1,37 @@
 import { observer } from 'mobx-react-lite';
-import React, { useMemo } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import {
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { Divider } from 'react-native-paper';
-import { Layouts, ScreenHeader } from '@components';
-import { searchStore } from '@store';
+import { CancelOrderButton, Layouts, ScreenHeader } from '@components';
+import { DataModels } from '@models';
+import { OrderServices } from '@services';
+import { searchStore, sharedStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { HorizontalListCard } from 'screens/home/components';
 import { ListOrder } from './components';
 
 const OrderDetailScreen = ({ navigation, route }: any) => {
-  const order = route.params?.order;
+  const [order, setOrder] = useState<DataModels.IOrder>(route.params?.order);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onFetchOrderDetail = async () => {
+    const result = await OrderServices.fetchOrderById(order.id);
+    if (result?.success && result.data?.order) {
+      setOrder(result.data.order);
+    }
+  };
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await onFetchOrderDetail();
+    setRefreshing(false);
+  };
 
   const renderOrderInfoItem = (title: string, value: string) => {
     return (
@@ -38,13 +60,18 @@ const OrderDetailScreen = ({ navigation, route }: any) => {
       return 'Credit Card - ' + order.cart.paymentInfo.cardNumber;
     }
 
-    return order.cart.paymentType.toUpperCase();
+    return order?.cart.paymentType.toUpperCase();
   }, [order]);
 
   return (
     <View style={styles.container}>
       <ScreenHeader title="Order Detail" navigation={navigation} />
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <ListOrder listOrder={[order]} isShowFullListCart />
         <View style={styles.wrapper}>
           {renderOrderInfoItem('Status:', order.status?.toUpperCase())}
@@ -58,6 +85,16 @@ const OrderDetailScreen = ({ navigation, route }: any) => {
           >{`${order.cart.shippingAddress}`}</Text>
           <Layouts.VSpace value={12} />
           {renderOrderInfoItem('Payment method:', paymentTypeText)}
+          {order.status === 'created' && (
+            <CancelOrderButton
+              order={order}
+              onSuccess={async () => {
+                sharedStore.setShowLoading(true);
+                await onFetchOrderDetail();
+                sharedStore.setShowLoading(false);
+              }}
+            />
+          )}
         </View>
         <Divider />
         <View style={styles.wrapper}>

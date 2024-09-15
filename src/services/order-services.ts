@@ -1,5 +1,4 @@
 import { API_URL } from '@constants';
-import { DataModels } from '@models';
 import { OrderStatus } from '@types';
 import { HttpServices } from './http-services';
 
@@ -10,8 +9,12 @@ const createOrder = async (params: { cartId: string; userId: string }) => {
   });
 };
 
-const updateOrder = async (params: DataModels.IOrder) => {
+const updateOrder = async (params: any) => {
   return await HttpServices.post(API_URL.order + '/update-one', params);
+};
+
+const fetchOrderById = async (orderId: string) => {
+  return await HttpServices.get(API_URL.order + '/get-one/' + orderId);
 };
 
 const fetchListOrder = async (params: {
@@ -25,4 +28,9 @@ const fetchListOrder = async (params: {
   );
 };
 
-export const OrderServices = { createOrder, updateOrder, fetchListOrder };
+export const OrderServices = {
+  createOrder,
+  updateOrder,
+  fetchListOrder,
+  fetchOrderById,
+};

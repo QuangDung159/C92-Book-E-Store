@@ -101,7 +101,7 @@ export interface ICart {
   shippingAddress: string;
   paymentMethod?: IPaymentMethod;
   paymentType?: string;
-  paymentInfo?: string;
+  paymentInfo?: any;
   total?: number;
   status?: CartStatus;
   user?: string;

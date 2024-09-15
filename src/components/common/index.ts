@@ -10,6 +10,7 @@ export * from './book-heart-icon';
 export * from './book-title';
 export * from './bottom-button-section';
 export * from './bottom-checkout-section';
+export * from './cancel-order-button';
 export * from './cart-icon-with-badge';
 export * from './cart-update-number';
 export * from './chip';

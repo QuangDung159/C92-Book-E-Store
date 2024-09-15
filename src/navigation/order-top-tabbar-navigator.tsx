@@ -26,11 +26,6 @@ function OrderTopTabbarNavigator() {
       <Tab.Navigator
         initialRouteName={SCREEN_NAME.CREATED_ORDERS_SCREEN}
         screenOptions={{
-          tabBarLabelStyle: {
-            textTransform: 'none',
-            ...FONT_STYLES.SEMIBOLD_12,
-            marginTop: -10,
-          },
           tabBarStyle: {
             height: 40,
           },
@@ -41,6 +36,7 @@ function OrderTopTabbarNavigator() {
           component={CreatedOrdersScreen}
           options={{
             tabBarLabelStyle: styles.title,
+            tabBarItemStyle: styles.itemStyle,
           }}
         />
         <Tab.Screen
@@ -48,6 +44,7 @@ function OrderTopTabbarNavigator() {
           component={ProcessingOrdersScreen}
           options={{
             tabBarLabelStyle: styles.title,
+            tabBarItemStyle: styles.itemStyle,
           }}
         />
         <Tab.Screen
@@ -55,6 +52,7 @@ function OrderTopTabbarNavigator() {
           component={CompletedOrdersScreen}
           options={{
             tabBarLabelStyle: styles.title,
+            tabBarItemStyle: styles.itemStyle,
           }}
         />
         <Tab.Screen
@@ -62,6 +60,7 @@ function OrderTopTabbarNavigator() {
           component={CanceledOrdersScreen}
           options={{
             tabBarLabelStyle: styles.title,
+            tabBarItemStyle: styles.itemStyle,
           }}
         />
       </Tab.Navigator>
@@ -75,8 +74,12 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primaryWhite,
   },
   title: {
-    ...FONT_STYLES.BOLD_8,
-    marginTop: -8,
+    ...FONT_STYLES.SEMIBOLD_12,
+    marginTop: -6,
+    textTransform: 'none',
+  },
+  itemStyle: {
+    padding: 0,
   },
 });
 

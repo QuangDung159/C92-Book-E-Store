@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Collapsible from 'react-native-collapsible';
-import { Icons, Layouts } from '@components';
+import { CancelOrderButton, Icons, Layouts } from '@components';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
 import { COLORS, FONT_STYLES } from '@themes';
@@ -13,11 +13,13 @@ import { CartItem } from 'screens/cart';
 interface OrderItemProps {
   orderItem: DataModels.IOrder;
   isShowFullListCart?: boolean;
+  showCancelButton?: boolean;
 }
 
 const OrderItem: React.FC<OrderItemProps> = ({
   orderItem,
   isShowFullListCart = false,
+  showCancelButton,
 }) => {
   const cart = orderItem.cart;
   const listCartItem = cart.listCartItem;
@@ -137,6 +139,7 @@ const OrderItem: React.FC<OrderItemProps> = ({
               'Discount:',
               `- ${StringHelpers.formatCurrency(cart.discount)}`,
             )}
+            {showCancelButton && <CancelOrderButton order={orderItem} />}
           </View>
         </View>
       </TouchableOpacity>
@@ -174,6 +177,13 @@ const styles = StyleSheet.create({
   },
   totalValue: {
     ...FONT_STYLES.SEMIBOLD_14,
+  },
+  cancelButton: {
+    backgroundColor: COLORS.gray200,
+    borderColor: COLORS.error50,
+  },
+  cancelLabel: {
+    color: COLORS.error50,
   },
 });
 

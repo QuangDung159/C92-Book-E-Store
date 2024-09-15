@@ -8,7 +8,7 @@ import { ListOrder } from './components';
 const CreatedOrdersScreen = () => {
   return (
     <View style={styles.container}>
-      <ListOrder listOrder={userStore.listCreatedOrder} />
+      <ListOrder listOrder={userStore.listCreatedOrder} showCancelButton />
     </View>
   );
 };
