@@ -32,7 +32,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
           onPress={() => {
             onPressNotification();
           }}
-          activeOpacity={1}
+          activeOpacity={0.6}
         >
           <Text
             style={[
