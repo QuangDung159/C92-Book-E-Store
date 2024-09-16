@@ -20,10 +20,10 @@ import {
   OneSignal,
 } from 'react-native-onesignal';
 
-import { IN_APP_MESSAGE_ACTION_ID, SCREEN_NAME } from '@constants';
+import { IN_APP_MESSAGE_ACTION_ID } from '@constants';
 import { useNavigate } from '@hooks';
 import { appModel, notificationStore, sharedStore } from '@store';
-import { delay, StringHelpers } from '@utils';
+import { delay } from '@utils';
 import { Navigation } from 'navigation';
 
 // deeplink
@@ -42,7 +42,9 @@ const App = () => {
 
   const navigationRef = useRef<NavigationContainerRef<any>>(null);
 
-  const { openPlayStore } = useNavigate(navigationRef.current);
+  const { openPlayStore, handleNavigateFromLinking } = useNavigate(
+    navigationRef.current,
+  );
 
   useEffect(() => {
     SplashScreen.preventAutoHideAsync();
@@ -65,15 +67,9 @@ const App = () => {
 
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
-        if (response?.notification?.request?.content?.data?.url) {
-          const dataFromUrl = StringHelpers.parseUrl(
-            response.notification.request.content.data.url,
-          );
-
-          if (dataFromUrl?.screen) {
-            handlePressNotification(dataFromUrl.screen);
-          }
-        }
+        handleNavigateFromLinking(
+          response?.notification?.request?.content?.data?.url,
+        );
       });
 
     return () => {
@@ -84,7 +80,7 @@ const App = () => {
       responseListener.current &&
         Notifications.removeNotificationSubscription(responseListener.current);
     };
-  }, []);
+  }, [handleNavigateFromLinking]);
 
   const handleInAppMessageClick = useCallback(
     (event: InAppMessageClickEvent) => {
@@ -109,19 +105,6 @@ const App = () => {
       );
     };
   }, [handleInAppMessageClick]);
-
-  const handlePressNotification = async (screenName: string) => {
-    await delay(1000);
-    switch (screenName.toUpperCase()) {
-      case SCREEN_NAME.NOTIFICATIONS_SCREEN:
-        navigationRef.current.navigate(SCREEN_NAME.BOTTOM_TAB_NAVIGATOR, {
-          screen: SCREEN_NAME.NOTIFICATIONS_SCREEN,
-        });
-        break;
-      default:
-        break;
-    }
-  };
 
   const [fontsLoaded, setFontsLoaded] = useState(false);
 

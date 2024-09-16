@@ -14,13 +14,17 @@ const sendPushNotification = async (
     title: title || 'Original Title',
     body: body || 'And here is the body!',
     data,
+    url,
   };
 
   await createNotification({
     content: body,
     title,
     readed: false,
-    url,
+    data: {
+      ...data,
+      url,
+    },
     user,
   });
 
