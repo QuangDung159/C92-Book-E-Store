@@ -16,6 +16,7 @@ function CartNavigator() {
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
+          gestureEnabled: false,
         }}
       >
         <Stack.Screen name={SCREEN_NAME.CART_SCREEN} component={CartScreen} />
@@ -26,6 +27,9 @@ function CartNavigator() {
         <Stack.Screen
           name={SCREEN_NAME.PAYMENT_SUCCESS_SCREEN}
           component={PaymentSuccessScreen}
+          options={{
+            gestureEnabled: false,
+          }}
         />
       </Stack.Navigator>
     </SafeAreaView>

@@ -86,7 +86,7 @@ export interface ICartParams {
   paymentType?: string;
   paymentInfo?: string;
   total?: number;
-  status: string;
+  status?: string;
   user?: string;
   id?: string;
   shippingInfo?: string;
