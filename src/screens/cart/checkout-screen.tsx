@@ -65,7 +65,7 @@ const CheckoutScreen = ({ navigation }: any) => {
     );
   }, [cartStore.paymentSelected.paymentType]);
 
-  const onFetchPaymentInfo = useCallback(async (appTransId: string) => {
+  const fetchZaloPaymentInfo = useCallback(async (appTransId: string) => {
     const response = await cartStore.onFetchZaloPaymentInfo(appTransId);
 
     if (response.status === 200 && response.data) {
@@ -97,7 +97,7 @@ const CheckoutScreen = ({ navigation }: any) => {
         !fetchZaloPayOrderDone
       ) {
         if (cartStore.zaloAppTransId) {
-          onFetchPaymentInfo(cartStore.zaloAppTransId);
+          fetchZaloPaymentInfo(cartStore.zaloAppTransId);
         }
       }
 
@@ -107,7 +107,7 @@ const CheckoutScreen = ({ navigation }: any) => {
     return () => {
       subscription.remove();
     };
-  }, [cartStore?.zaloAppTransId, fetchZaloPayOrderDone, onFetchPaymentInfo]);
+  }, [cartStore?.zaloAppTransId, fetchZaloPayOrderDone, fetchZaloPaymentInfo]);
 
   const onSubmitCheckout = async () => {
     sharedStore.setShowLoading(true);
