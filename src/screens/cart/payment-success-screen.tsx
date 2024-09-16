@@ -24,6 +24,7 @@ const PaymentSuccessScreen = ({ navigation, route }) => {
           message,
         },
         user: userStore.userProfile.id,
+        url: `${DEEP_LINK_URL}${SCREEN_NAME.ORDER_DETAIL_SCREEN}?orderId=${orderId}`,
       });
 
       notificationStore.loadNotification();

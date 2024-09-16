@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Dimensions, RefreshControl, StyleSheet, View } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { EmptyListComponent, Icons, ScreenHeader } from '@components';
+import { useNavigate } from '@hooks';
 import { notificationStore, sharedStore } from '@store';
 import { COLORS } from '@themes';
 import { NotificationHiddenItem, NotificationItem } from './components';
@@ -10,6 +11,8 @@ import { NotificationHiddenItem, NotificationItem } from './components';
 const NotificationsScreen = ({ navigation }: any) => {
   const [refreshing, setRefreshing] = useState(false);
   const { width } = Dimensions.get('window');
+
+  const { handleNavigateFromLinking } = useNavigate(navigation);
 
   const hiddenItemHeight = 75;
   const hiddenItemWidth = 75;
@@ -59,6 +62,7 @@ const NotificationsScreen = ({ navigation }: any) => {
             notificationItem={item}
             onPressNotification={() => {
               notificationStore.onReadNotification(item.id, true);
+              handleNavigateFromLinking(item.url);
             }}
           />
         )}
