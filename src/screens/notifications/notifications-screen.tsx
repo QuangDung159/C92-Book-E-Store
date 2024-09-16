@@ -1,9 +1,9 @@
 import { observer } from 'mobx-react-lite';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, RefreshControl, StyleSheet, View } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { EmptyListComponent, Icons, ScreenHeader } from '@components';
-import { notificationStore } from '@store';
+import { notificationStore, sharedStore } from '@store';
 import { COLORS } from '@themes';
 import { NotificationHiddenItem, NotificationItem } from './components';
 
@@ -24,6 +24,10 @@ const NotificationsScreen = ({ navigation }: any) => {
     setRefreshing(false);
   };
 
+  useEffect(() => {
+    onLoadNotification();
+  }, []);
+
   return (
     <View style={styles.container}>
       <ScreenHeader
@@ -33,8 +37,10 @@ const NotificationsScreen = ({ navigation }: any) => {
         rightConponent={() => {
           return (
             <Icons.ReadAllIcon
-              onPress={() => {
-                notificationStore.onReadAllNotification();
+              onPress={async () => {
+                sharedStore.setShowLoading(true);
+                await notificationStore.onReadAllNotification();
+                sharedStore.setShowLoading(false);
               }}
             />
           );

@@ -5,7 +5,7 @@ import { Buttons, Icons, Layouts } from '@components';
 import { DEEP_LINK_URL, SCREEN_NAME } from '@constants';
 import { useNavigate } from '@hooks';
 import { NotificationServices } from '@services';
-import { notificationStore, userStore } from '@store';
+import { cartStore, notificationStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 
 const PaymentSuccessScreen = ({ navigation, route }) => {
@@ -32,6 +32,10 @@ const PaymentSuccessScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     onPushNotification();
+
+    cartStore.fetchCart(userStore.userProfile.id);
+    userStore.fetchListOrder('created');
+    cartStore.clearAllCurrentPaymentInfo();
   }, [onPushNotification]);
 
   return (
