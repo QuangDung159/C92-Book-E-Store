@@ -1,20 +1,25 @@
 import { action, makeObservable, observable } from 'mobx';
 import { AuthenticationServices } from '@services';
+import { AuthenticationStore } from '@store';
 
 class AddCreditCardViewModel {
   cardNumber: string = '';
   cardHolder: string = '';
   expirationDate: string = '';
+  authenticationStore: AuthenticationStore | null = null;
 
-  constructor() {
+  constructor(authenticationStore: AuthenticationStore) {
     makeObservable(this, {
       expirationDate: observable,
+      authenticationStore: observable,
       cardHolder: observable,
       cardNumber: observable,
       setExpirationDate: action,
       setCardHolder: action,
       setCardNumber: action,
     });
+
+    this.authenticationStore = authenticationStore;
   }
 
   setExpirationDate(value: string) {
@@ -39,8 +44,7 @@ class AddCreditCardViewModel {
     });
 
     if (result?.success) {
-      // fetch user info
-      console.log('result :>> ', result);
+      await this.authenticationStore.fetchUser();
     }
   }
 }
