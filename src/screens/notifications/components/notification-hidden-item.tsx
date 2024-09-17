@@ -39,13 +39,7 @@ const NotificationHiddenItem: React.FC<NotificationHiddenItemProps> = ({
           }}
         />
         <View style={styles.trashIcon}>
-          <Icons.TrashIcon
-            color={COLORS.primaryWhite}
-            size={24}
-            onPress={() => {
-              onPressDeleteNotification();
-            }}
-          />
+          <Icons.TrashIcon color={COLORS.primaryWhite} size={24} />
         </View>
       </View>
     </TouchableOpacity>

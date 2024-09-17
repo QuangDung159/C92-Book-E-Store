@@ -4,7 +4,12 @@ import { Linking, StyleSheet, Text, View } from 'react-native';
 import { Buttons, Icons, Layouts } from '@components';
 import { DEEP_LINK_URL, SCREEN_NAME } from '@constants';
 import { useNavigate } from '@hooks';
-import { cartStore, userStore } from '@store';
+import {
+  authenticationStore,
+  cartStore,
+  notificationStore,
+  userStore,
+} from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 
 const PaymentSuccessScreen = ({ navigation, route }) => {
@@ -16,7 +21,9 @@ const PaymentSuccessScreen = ({ navigation, route }) => {
   useEffect(() => {
     cartStore.fetchCart(userStore.userProfile.id);
     userStore.fetchListOrder('created');
+    authenticationStore.fetchUser();
     cartStore.clearAllCurrentPaymentInfo();
+    notificationStore.loadNotification();
   }, []);
 
   return (

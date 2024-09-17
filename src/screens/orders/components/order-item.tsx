@@ -6,6 +6,7 @@ import Collapsible from 'react-native-collapsible';
 import { CancelOrderButton, Icons, Layouts } from '@components';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
+import { notificationStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { StringHelpers } from '@utils';
 import { CartItem } from 'screens/cart';
@@ -139,7 +140,14 @@ const OrderItem: React.FC<OrderItemProps> = ({
               'Discount:',
               `- ${StringHelpers.formatCurrency(cart.discount)}`,
             )}
-            {showCancelButton && <CancelOrderButton order={orderItem} />}
+            {showCancelButton && (
+              <CancelOrderButton
+                order={orderItem}
+                onSuccess={() => {
+                  notificationStore.loadNotification();
+                }}
+              />
+            )}
           </View>
         </View>
       </TouchableOpacity>
