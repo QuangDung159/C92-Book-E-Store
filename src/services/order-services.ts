@@ -18,7 +18,7 @@ const updateOrderStatus = async (orderId: string, status: OrderStatus) => {
   return await HttpServices.post(API_URL.order + '/update-order-status', {
     id: orderId,
     status,
-    userId: userStore.userProfile.id,
+    user: userStore.userProfile.id,
   });
 };
 
