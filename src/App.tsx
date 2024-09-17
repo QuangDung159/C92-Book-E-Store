@@ -1,5 +1,4 @@
 /* eslint-disable import/no-named-as-default */
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-require-imports */
 import {
   NavigationContainer,
@@ -8,7 +7,6 @@ import {
 import Constants from 'expo-constants';
 import * as Font from 'expo-font';
 import * as Linking from 'expo-linking';
-import * as Notifications from 'expo-notifications';
 import { SplashScreen } from 'expo-router';
 import { observer } from 'mobx-react-lite';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -20,10 +18,10 @@ import {
   OneSignal,
 } from 'react-native-onesignal';
 
-import { IN_APP_MESSAGE_ACTION_ID, SCREEN_NAME } from '@constants';
+import { IN_APP_MESSAGE_ACTION_ID } from '@constants';
 import { useNavigate } from '@hooks';
-import { appModel, notificationStore, sharedStore } from '@store';
-import { delay, StringHelpers } from '@utils';
+import { appModel, sharedStore } from '@store';
+import { delay } from '@utils';
 import { Navigation } from 'navigation';
 
 // deeplink
@@ -37,9 +35,6 @@ if (__DEV__) {
 }
 
 const App = () => {
-  const notificationListener = useRef<Notifications.Subscription>();
-  const responseListener = useRef<Notifications.Subscription>();
-
   const navigationRef = useRef<NavigationContainerRef<any>>(null);
 
   const { openPlayStore } = useNavigate(navigationRef.current);
@@ -55,35 +50,6 @@ const App = () => {
     OneSignal.initialize(Constants.expoConfig.extra.oneSignalAppId);
     // Also need enable notifications to complete OneSignal setup
     OneSignal.Notifications.requestPermission(true);
-  }, []);
-
-  useEffect(() => {
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-        notificationStore.setLatestNotification(notification);
-      });
-
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        if (response?.notification?.request?.content?.data?.url) {
-          const dataFromUrl = StringHelpers.parseUrl(
-            response.notification.request.content.data.url,
-          );
-
-          if (dataFromUrl?.screen) {
-            handlePressNotification(dataFromUrl.screen);
-          }
-        }
-      });
-
-    return () => {
-      notificationListener.current &&
-        Notifications.removeNotificationSubscription(
-          notificationListener.current,
-        );
-      responseListener.current &&
-        Notifications.removeNotificationSubscription(responseListener.current);
-    };
   }, []);
 
   const handleInAppMessageClick = useCallback(
@@ -109,19 +75,6 @@ const App = () => {
       );
     };
   }, [handleInAppMessageClick]);
-
-  const handlePressNotification = async (screenName: string) => {
-    await delay(1000);
-    switch (screenName.toUpperCase()) {
-      case SCREEN_NAME.NOTIFICATIONS_SCREEN:
-        navigationRef.current.navigate(SCREEN_NAME.BOTTOM_TAB_NAVIGATOR, {
-          screen: SCREEN_NAME.NOTIFICATIONS_SCREEN,
-        });
-        break;
-      default:
-        break;
-    }
-  };
 
   const [fontsLoaded, setFontsLoaded] = useState(false);
 

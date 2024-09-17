@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Buttons, Inputs, Layouts } from '@components';
-import { userStore } from '@store';
+import { authenticationStore, userStore } from '@store';
 import { FONT_STYLES } from '@themes';
 import { PopupHeader } from 'components/layouts';
 import { AddCreditCardViewModel } from '../view-models';
@@ -18,7 +18,9 @@ const AddCreditCardPopup: React.FC<AddCreditCardPopupProps> = ({
   onDismiss,
   onDoneDismiss,
 }) => {
-  const addCreditCardVM = useRef(new AddCreditCardViewModel()).current;
+  const addCreditCardVM = useRef(
+    new AddCreditCardViewModel(authenticationStore),
+  ).current;
 
   return (
     <Layouts.BottomPopup visible={visible} onDismiss={onDoneDismiss}>

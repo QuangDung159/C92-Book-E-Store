@@ -144,11 +144,15 @@ export const useNavigate = (navigation: any) => {
     navigation.navigate(SCREEN_NAME.ORDER_TOP_TABBAR_NAVIGATOR);
   };
 
-  const openOrderDetailScreen = (order: DataModels.IOrder) => {
+  const openOrderDetailScreen = (
+    order?: DataModels.IOrder,
+    orderId?: string,
+  ) => {
     navigation.navigate(SCREEN_NAME.ORDER_NAVIGATOR, {
       screen: SCREEN_NAME.ORDER_DETAIL_SCREEN,
       params: {
         order,
+        orderId,
       },
     });
   };
@@ -196,6 +200,12 @@ export const useNavigate = (navigation: any) => {
     if (screenName === SCREEN_NAME.BOOK_DETAIL_SCREEN) {
       delay(1000).then(() => {
         openBookDetailScreen(null, queryParams?.bookId as string);
+      });
+    }
+
+    if (screenName === SCREEN_NAME.ORDER_DETAIL_SCREEN) {
+      delay(1000).then(() => {
+        openOrderDetailScreen(null, queryParams?.orderId as string);
       });
     }
 

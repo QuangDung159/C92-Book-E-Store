@@ -1,8 +1,11 @@
 /* eslint-disable import/no-named-as-default */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-require-imports */
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Constants from 'expo-constants';
 import * as Linking from 'expo-linking';
+import * as Notifications from 'expo-notifications';
 import { observer } from 'mobx-react-lite';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AppState } from 'react-native';
@@ -10,7 +13,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { Layouts } from '@components';
 import { SCREEN_NAME } from '@constants';
 import { useNavigate } from '@hooks';
-import { sharedStore } from '@store';
+import { notificationStore, sharedStore } from '@store';
 import { COLORS } from '@themes';
 import { delay } from '@utils';
 import { AccountNavigator } from './account-navigator';
@@ -26,6 +29,8 @@ const Stack = createStackNavigator();
 
 const Navigation = () => {
   const appState = useRef(AppState.currentState);
+  const notificationListener = useRef<Notifications.Subscription>();
+  const responseListener = useRef<Notifications.Subscription>();
 
   const version = Constants.expoConfig.version;
 
@@ -82,6 +87,30 @@ const Navigation = () => {
       subsription.remove();
     };
   }, [handle]);
+
+  // handle when launch app by notification/app-link when app active
+  useEffect(() => {
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        notificationStore.setLatestNotification(notification);
+      });
+
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        handleNavigateFromLinking(
+          response?.notification?.request?.content?.data?.url,
+        );
+      });
+
+    return () => {
+      notificationListener.current &&
+        Notifications.removeNotificationSubscription(
+          notificationListener.current,
+        );
+      responseListener.current &&
+        Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, [handleNavigateFromLinking]);
 
   return (
     <>
