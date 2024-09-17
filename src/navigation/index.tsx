@@ -88,11 +88,14 @@ const Navigation = () => {
     };
   }, [handle]);
 
-  // handle when launch app by notification/app-link when app active
+  // handle notification/app-link when app active
   useEffect(() => {
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
-        notificationStore.setLatestNotification(notification);
+        if (notification) {
+          notificationStore.setLatestNotification(notification);
+          notificationStore.loadNotification();
+        }
       });
 
     responseListener.current =
