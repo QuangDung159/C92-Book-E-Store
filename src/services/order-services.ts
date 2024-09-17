@@ -1,4 +1,5 @@
 import { API_URL } from '@constants';
+import { userStore } from '@store';
 import { OrderStatus } from '@types';
 import { HttpServices } from './http-services';
 
@@ -11,6 +12,14 @@ const createOrder = async (params: { cartId: string; userId: string }) => {
 
 const updateOrder = async (params: any) => {
   return await HttpServices.post(API_URL.order + '/update-one', params);
+};
+
+const updateOrderStatus = async (orderId: string, status: OrderStatus) => {
+  return await HttpServices.post(API_URL.order + '/update-order-status', {
+    id: orderId,
+    status,
+    userId: userStore.userProfile.id,
+  });
 };
 
 const fetchOrderById = async (orderId: string) => {
@@ -33,4 +42,5 @@ export const OrderServices = {
   updateOrder,
   fetchListOrder,
   fetchOrderById,
+  updateOrderStatus,
 };

@@ -46,10 +46,16 @@ class AuthenticationStore {
     });
   };
 
-  signIn = async (email: string, password: string, onSuccess?: () => void) => {
+  signIn = async (
+    email: string,
+    password: string,
+    notificationToken: string,
+    onSuccess?: () => void,
+  ) => {
     const result = await AuthenticationServices.signIn({
       email,
       password,
+      notificationToken,
     });
 
     if (result?.success && result.data) {

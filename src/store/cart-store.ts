@@ -18,13 +18,7 @@ import {
   OrderServices,
   ZaloPayServices,
 } from '@services';
-import {
-  OrderStatus,
-  PaymentData,
-  PaymentStatus,
-  PaymentType,
-  ZaloPayOrder,
-} from '@types';
+import { PaymentData, PaymentStatus, PaymentType, ZaloPayOrder } from '@types';
 import { DatetimeHelpers, delay, StringHelpers, ToastHelpers } from '@utils';
 import { ReferenceOptionsStore } from './reference-options-store';
 import { UserStore } from './user-store';
@@ -298,7 +292,7 @@ class CartStore {
     return (result?.data?.order || null) as DataModels.IOrder;
   };
 
-  updateOrderStatus = async (status: PaymentStatus) => {
+  updateOrderPaymentStatus = async (status: PaymentStatus) => {
     const result = await OrderServices.updateOrder({
       ...this.currentOrder,
       paymentStatus: status,
@@ -351,7 +345,7 @@ class CartStore {
       StringHelpers.genLocalId(),
       this.total,
       async (result) => {
-        this.updateOrderStatus('success');
+        this.updateOrderPaymentStatus('success');
         onSuccess?.(result);
       },
     );
@@ -485,10 +479,7 @@ class CartStore {
   }
 
   cancelOrder = async (orderId: string) => {
-    const result = await OrderServices.updateOrder({
-      id: orderId,
-      status: 'canceled' as OrderStatus,
-    });
+    const result = await OrderServices.updateOrderStatus(orderId, 'canceled');
 
     if (result?.success) {
       await this.userStore.fetchAllListOrder();

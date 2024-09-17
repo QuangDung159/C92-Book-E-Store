@@ -14,6 +14,7 @@ import {
   appModel,
   authenticationStore,
   cartStore,
+  notificationStore,
   sharedStore,
   userStore,
 } from '@store';
@@ -37,6 +38,7 @@ const SignInScreen = ({ navigation }: any) => {
     await authenticationStore.signIn(
       signInVM.username,
       signInVM.password,
+      notificationStore.expoPushToken,
       () => {
         navigation.goBack();
       },

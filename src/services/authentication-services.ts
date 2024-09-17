@@ -119,7 +119,11 @@ const fetchUser = async (userId: string) => {
   return await HttpServices.get(API_URL.user + '/get-one/' + userId);
 };
 
-const signIn = async (params: { email: string; password: string }) => {
+const signIn = async (params: {
+  email: string;
+  password: string;
+  notificationToken: string;
+}) => {
   return await HttpServices.post(API_URL.user + '/sign-in', params);
 };
 
