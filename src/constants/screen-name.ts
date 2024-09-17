@@ -31,7 +31,7 @@ const SCREEN_NAME = {
   COMPLETED_ORDERS_SCREEN: 'Completed',
   CANCELED_ORDERS_SCREEN: 'Canceled',
   PROCESSING_ORDERS_SCREEN: 'Processing',
-  ORDER_DETAIL_SCREEN: 'ORDER_DETAIL_SCREEN',
+  ORDER_DETAIL_SCREEN: 'order-detail-screen',
 };
 
 export { SCREEN_NAME };

@@ -115,7 +115,6 @@ const BookDetailScreen = ({ route, navigation }: any) => {
     if (!userStore.authenticated) return;
 
     const listBookViewed = [...userStore.userProfile.listBookViewed];
-    console.log('listBookViewed :>> ', listBookViewed);
     const index = listBookViewed.findIndex((item) => item === bookId);
 
     if (index === -1) {

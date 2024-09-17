@@ -16,24 +16,24 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   onPressNotification,
 }) => {
   return (
-    <TouchableOpacity
-      onPress={() => {
-        onPressNotification();
-      }}
-      activeOpacity={1}
+    <View
+      style={[
+        styles.itemContainer,
+        {
+          height: hiddenItemHeight,
+        },
+        !notificationItem.readed && {
+          backgroundColor: COLORS.gray200,
+        },
+      ]}
     >
-      <View
-        style={[
-          styles.itemContainer,
-          {
-            height: hiddenItemHeight,
-          },
-          !notificationItem.readed && {
-            backgroundColor: COLORS.gray200,
-          },
-        ]}
-      >
-        <View style={styles.contentWrapper}>
+      <View style={styles.contentWrapper}>
+        <TouchableOpacity
+          onPress={() => {
+            onPressNotification();
+          }}
+          activeOpacity={0.6}
+        >
           <Text
             style={[
               styles.title,
@@ -44,12 +44,12 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
           >
             {notificationItem.title}
           </Text>
-          <Text style={styles.content} numberOfLines={2}>
-            {notificationItem.content}
-          </Text>
-        </View>
+        </TouchableOpacity>
+        <Text style={styles.content} numberOfLines={2}>
+          {notificationItem.content}
+        </Text>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 

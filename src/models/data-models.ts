@@ -201,6 +201,7 @@ export interface INotification {
   readed: boolean;
   url?: string;
   user?: string;
+  data?: any;
 }
 
 export interface ServiceResult<T> {

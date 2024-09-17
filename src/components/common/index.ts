@@ -21,6 +21,7 @@ export * from './list-book-card-horizontal';
 export * from './list-book-card-vertical';
 export * from './list-book-card-vertical-row';
 export * from './list-book-search';
+export * from './loading-text';
 export * from './screen-header';
 export * from './search-bar';
 export * from './section-title';

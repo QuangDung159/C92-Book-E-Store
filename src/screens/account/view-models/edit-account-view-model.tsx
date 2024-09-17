@@ -62,7 +62,6 @@ class EditAccountViewModel {
   }
 
   get toJsonObject(): DataModels.IUser {
-    console.log('this.phoneNumber :>> ', this.phoneNumber);
     return {
       ...this.userStore.userProfile,
       password: this.password,

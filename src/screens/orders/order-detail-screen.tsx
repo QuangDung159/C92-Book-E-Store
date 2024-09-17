@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { observer } from 'mobx-react-lite';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   RefreshControl,
   ScrollView,
@@ -7,8 +8,14 @@ import {
   Text,
   View,
 } from 'react-native';
+import Collapsible from 'react-native-collapsible';
 import { Divider } from 'react-native-paper';
-import { CancelOrderButton, Layouts, ScreenHeader } from '@components';
+import {
+  CancelOrderButton,
+  Layouts,
+  LoadingText,
+  ScreenHeader,
+} from '@components';
 import { DataModels } from '@models';
 import { OrderServices } from '@services';
 import { searchStore, sharedStore } from '@store';
@@ -17,13 +24,27 @@ import { HorizontalListCard } from 'screens/home/components';
 import { ListOrder } from './components';
 
 const OrderDetailScreen = ({ navigation, route }: any) => {
+  const orderId = route.params?.orderId;
   const [order, setOrder] = useState<DataModels.IOrder>(route.params?.order);
   const [refreshing, setRefreshing] = useState(false);
+  const [loadingText, setLoadingText] = useState('Loading...');
+
+  useEffect(() => {
+    onLoad();
+  }, []);
+
+  const onLoad = async () => {
+    sharedStore.setShowLoading(true);
+    await onFetchOrderDetail();
+    sharedStore.setShowLoading(false);
+  };
 
   const onFetchOrderDetail = async () => {
-    const result = await OrderServices.fetchOrderById(order.id);
+    const result = await OrderServices.fetchOrderById(order?.id || orderId);
     if (result?.success && result.data?.order) {
       setOrder(result.data.order);
+    } else {
+      setLoadingText('Not found');
     }
   };
 
@@ -56,7 +77,7 @@ const OrderDetailScreen = ({ navigation, route }: any) => {
   };
 
   const paymentTypeText = useMemo(() => {
-    if (order.cart.paymentType === 'credit_card') {
+    if (order?.cart.paymentType === 'credit_card') {
       return 'Credit Card - ' + order.cart.paymentInfo.cardNumber;
     }
 
@@ -72,30 +93,40 @@ const OrderDetailScreen = ({ navigation, route }: any) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        <ListOrder listOrder={[order]} isShowFullListCart />
-        <View style={styles.wrapper}>
-          {renderOrderInfoItem('Status:', order.status?.toUpperCase())}
-          <Layouts.VSpace value={12} />
-          {renderOrderInfoItem('Shipping address:', order.cart.shippingInfo)}
-          <Text
-            style={{
-              ...FONT_STYLES.REGULAR_14,
-              marginTop: 4,
-            }}
-          >{`${order.cart.shippingAddress}`}</Text>
-          <Layouts.VSpace value={12} />
-          {renderOrderInfoItem('Payment method:', paymentTypeText)}
-          {order.status === 'created' && (
-            <CancelOrderButton
-              order={order}
-              onSuccess={async () => {
-                sharedStore.setShowLoading(true);
-                await onFetchOrderDetail();
-                sharedStore.setShowLoading(false);
-              }}
-            />
-          )}
-        </View>
+        {order ? (
+          <Collapsible collapsed={!order} duration={2000}>
+            <ListOrder listOrder={[order]} isShowFullListCart />
+            <View style={styles.wrapper}>
+              {renderOrderInfoItem('Status:', order.status?.toUpperCase())}
+              <Layouts.VSpace value={12} />
+              {renderOrderInfoItem(
+                'Shipping address:',
+                order.cart.shippingInfo,
+              )}
+              <Text
+                style={{
+                  ...FONT_STYLES.REGULAR_14,
+                  marginTop: 4,
+                }}
+              >{`${order.cart.shippingAddress}`}</Text>
+              <Layouts.VSpace value={12} />
+              {renderOrderInfoItem('Payment method:', paymentTypeText)}
+              {order.status === 'created' && (
+                <CancelOrderButton
+                  order={order}
+                  onSuccess={async () => {
+                    sharedStore.setShowLoading(true);
+                    await onFetchOrderDetail();
+                    sharedStore.setShowLoading(false);
+                  }}
+                />
+              )}
+            </View>
+          </Collapsible>
+        ) : (
+          <LoadingText text={loadingText} />
+        )}
+
         <Divider />
         <View style={styles.wrapper}>
           <Layouts.VSpace value={12} />

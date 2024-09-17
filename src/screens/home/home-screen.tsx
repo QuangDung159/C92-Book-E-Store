@@ -1,4 +1,5 @@
 import * as Linking from 'expo-linking';
+import * as Notifications from 'expo-notifications';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
@@ -11,6 +12,7 @@ import { BestDealCarousel, HorizontalListCard } from './components';
 
 const HomeScreen = ({ navigation }: any) => {
   const { handleNavigateFromLinking } = useNavigate(navigation);
+  const lastNotification = Notifications.useLastNotificationResponse();
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -28,6 +30,15 @@ const HomeScreen = ({ navigation }: any) => {
     };
     navigateToInitialUrl();
   }, [handleNavigateFromLinking]);
+
+  useEffect(() => {
+    // handle when launch app by notification
+    if (lastNotification) {
+      handleNavigateFromLinking(
+        lastNotification.notification.request.content?.data?.url,
+      );
+    }
+  }, [handleNavigateFromLinking, lastNotification]);
 
   const onLoadHomeData = async () => {
     await appModel.loadMasterData();
