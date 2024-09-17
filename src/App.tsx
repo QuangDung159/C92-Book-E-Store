@@ -1,5 +1,4 @@
 /* eslint-disable import/no-named-as-default */
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-require-imports */
 import {
   NavigationContainer,
@@ -8,7 +7,6 @@ import {
 import Constants from 'expo-constants';
 import * as Font from 'expo-font';
 import * as Linking from 'expo-linking';
-import * as Notifications from 'expo-notifications';
 import { SplashScreen } from 'expo-router';
 import { observer } from 'mobx-react-lite';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -22,7 +20,7 @@ import {
 
 import { IN_APP_MESSAGE_ACTION_ID } from '@constants';
 import { useNavigate } from '@hooks';
-import { appModel, notificationStore, sharedStore } from '@store';
+import { appModel, sharedStore } from '@store';
 import { delay } from '@utils';
 import { Navigation } from 'navigation';
 
@@ -37,14 +35,9 @@ if (__DEV__) {
 }
 
 const App = () => {
-  const notificationListener = useRef<Notifications.Subscription>();
-  const responseListener = useRef<Notifications.Subscription>();
-
   const navigationRef = useRef<NavigationContainerRef<any>>(null);
 
-  const { openPlayStore, handleNavigateFromLinking } = useNavigate(
-    navigationRef.current,
-  );
+  const { openPlayStore } = useNavigate(navigationRef.current);
 
   useEffect(() => {
     SplashScreen.preventAutoHideAsync();
@@ -58,29 +51,6 @@ const App = () => {
     // Also need enable notifications to complete OneSignal setup
     OneSignal.Notifications.requestPermission(true);
   }, []);
-
-  useEffect(() => {
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-        notificationStore.setLatestNotification(notification);
-      });
-
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        handleNavigateFromLinking(
-          response?.notification?.request?.content?.data?.url,
-        );
-      });
-
-    return () => {
-      notificationListener.current &&
-        Notifications.removeNotificationSubscription(
-          notificationListener.current,
-        );
-      responseListener.current &&
-        Notifications.removeNotificationSubscription(responseListener.current);
-    };
-  }, [handleNavigateFromLinking]);
 
   const handleInAppMessageClick = useCallback(
     (event: InAppMessageClickEvent) => {
