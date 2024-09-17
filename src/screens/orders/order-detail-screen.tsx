@@ -18,7 +18,7 @@ import {
 } from '@components';
 import { DataModels } from '@models';
 import { OrderServices } from '@services';
-import { notificationStore, searchStore, sharedStore } from '@store';
+import { searchStore, sharedStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { HorizontalListCard } from 'screens/home/components';
 import { ListOrder } from './components';
@@ -115,7 +115,6 @@ const OrderDetailScreen = ({ navigation, route }: any) => {
                 <CancelOrderButton
                   order={order}
                   onSuccess={async () => {
-                    notificationStore.loadNotification();
                     sharedStore.setShowLoading(true);
                     await onFetchOrderDetail();
                     sharedStore.setShowLoading(false);
