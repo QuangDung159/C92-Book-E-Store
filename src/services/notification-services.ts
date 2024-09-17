@@ -1,37 +1,6 @@
-import { API_URL, EXPO_PUSH_NOTIFICATION_URL } from '@constants';
+import { API_URL } from '@constants';
 import { DataModels } from '@models';
-import { notificationStore } from '@store';
-import { NotificationParam } from '@types';
 import { HttpServices } from './http-services';
-
-const sendPushNotification = async (
-  pushNotificationParam: NotificationParam,
-) => {
-  const { sound, title, body, data, url, user } = pushNotificationParam;
-  const message = {
-    to: notificationStore.expoPushToken,
-    sound: sound || 'default',
-    title: title || 'Original Title',
-    body: body || 'And here is the body!',
-    data,
-    url,
-  };
-
-  await createNotification({
-    content: body,
-    title,
-    readed: false,
-    data: {
-      ...data,
-      url,
-    },
-    user,
-  });
-
-  const result = await HttpServices.post(EXPO_PUSH_NOTIFICATION_URL, message);
-
-  return result;
-};
 
 const fetchListNotification = async (userId: string) => {
   return await HttpServices.get(
@@ -78,7 +47,6 @@ const createNotification = async (params: DataModels.INotification) => {
 };
 
 export const NotificationServices = {
-  sendPushNotification,
   fetchListNotification,
   onReadNotification,
   onDeleteNotification,

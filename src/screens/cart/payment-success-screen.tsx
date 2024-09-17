@@ -1,11 +1,10 @@
 import { observer } from 'mobx-react-lite';
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Linking, StyleSheet, Text, View } from 'react-native';
 import { Buttons, Icons, Layouts } from '@components';
 import { DEEP_LINK_URL, SCREEN_NAME } from '@constants';
 import { useNavigate } from '@hooks';
-import { NotificationServices } from '@services';
-import { cartStore, notificationStore, userStore } from '@store';
+import { cartStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 
 const PaymentSuccessScreen = ({ navigation, route }) => {
@@ -14,30 +13,11 @@ const PaymentSuccessScreen = ({ navigation, route }) => {
   const orderId = route.params?.orderId;
   const message = route.params?.message;
 
-  const onPushNotification = useCallback(async () => {
-    if (orderId) {
-      await NotificationServices.sendPushNotification({
-        body: `Your order #${orderId} has been confirmed.`,
-        title: 'Order status',
-        data: {
-          orderId,
-          message,
-        },
-        user: userStore.userProfile.id,
-        url: `${DEEP_LINK_URL}${SCREEN_NAME.ORDER_DETAIL_SCREEN}?orderId=${orderId}`,
-      });
-
-      notificationStore.loadNotification();
-    }
-  }, [message, orderId]);
-
   useEffect(() => {
-    onPushNotification();
-
     cartStore.fetchCart(userStore.userProfile.id);
     userStore.fetchListOrder('created');
     cartStore.clearAllCurrentPaymentInfo();
-  }, [onPushNotification]);
+  }, []);
 
   return (
     <View style={styles.container}>
