@@ -171,6 +171,7 @@ export interface ICreditCard {
   cardHolder: string;
   cardType: PaymentCardType;
   expirationDate: string;
+  default?: boolean;
 }
 
 export interface IUser {

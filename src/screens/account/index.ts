@@ -4,5 +4,6 @@ export * from './address-screen';
 export * from './components';
 export * from './edit-account-screen';
 export * from './location-screen';
+export * from './payment-card-screen';
 export * from './sign-in-screen';
 export * from './sign-up-screen';

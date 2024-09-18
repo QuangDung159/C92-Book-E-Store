@@ -9,6 +9,7 @@ import {
   EditAccountScreen,
   ForgotPasswordScreen,
   LocationScreen,
+  PaymentCardScreen,
   SignInScreen,
   SignUpScreen,
 } from '@screens';
@@ -54,6 +55,10 @@ function AccountNavigator() {
         <Stack.Screen
           name={SCREEN_NAME.FORGOT_PASSWORD_SCREEN}
           component={ForgotPasswordScreen}
+        />
+        <Stack.Screen
+          name={SCREEN_NAME.PAYMENT_CARD_SCREEN}
+          component={PaymentCardScreen}
         />
       </Stack.Navigator>
     </SafeAreaView>

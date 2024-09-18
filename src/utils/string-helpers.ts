@@ -157,3 +157,12 @@ export const getTimeOfDay = () => {
     return 'evening';
   }
 };
+
+export const formatCardNumber = (cardNumber: string) => {
+  return `*${cardNumber.slice(-4)}`;
+};
+
+export const formatCardHolder = (cardHolder: string) => {
+  const a = cardHolder.split(' ');
+  return `*${a[a.length - 1]}`;
+};
