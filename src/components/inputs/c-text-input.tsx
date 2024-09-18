@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   label: {
-    ...FONT_STYLES.BOLD_14,
+    ...FONT_STYLES.SEMIBOLD_14,
     marginBottom: 4,
   },
   optional: {

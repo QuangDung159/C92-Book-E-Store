@@ -1,7 +1,14 @@
 import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
-import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
+import {
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { BottomButtonSection, Layouts, ScreenHeader } from '@components';
+import { useNavigate } from '@hooks';
 import { authenticationStore, userStore } from '@store';
 import { COLORS } from '@themes';
 import { AddCreditCardPopup, CreditCardItem } from 'screens/cart';
@@ -9,6 +16,8 @@ import { AddCreditCardPopup, CreditCardItem } from 'screens/cart';
 const PaymentCardScreen = ({ navigation }: any) => {
   const [refreshing, setRefreshing] = useState(false);
   const [showAddCreditCardPopup, setShowAddCreditCardPopup] = useState(false);
+
+  const { openAddEditPaymentCardScreen } = useNavigate(navigation);
 
   const onLoadData = async () => {
     await authenticationStore.fetchUser();
@@ -39,7 +48,17 @@ const PaymentCardScreen = ({ navigation }: any) => {
       >
         <Layouts.VSpace value={24} />
         {(userStore.userProfile.listCreditCard || []).map((item) => {
-          return <CreditCardItem key={item.id} cardItem={item} />;
+          return (
+            <React.Fragment key={item.id}>
+              <TouchableOpacity
+                onPress={() => {
+                  openAddEditPaymentCardScreen(item);
+                }}
+              >
+                <CreditCardItem key={item.id} cardItem={item} />
+              </TouchableOpacity>
+            </React.Fragment>
+          );
         })}
         <Layouts.VSpace value={24} />
       </ScrollView>

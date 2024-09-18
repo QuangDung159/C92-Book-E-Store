@@ -74,6 +74,17 @@ export const useNavigate = (navigation: any) => {
     });
   };
 
+  const openAddEditPaymentCardScreen = (
+    paymentCard?: DataModels.ICreditCard,
+  ) => {
+    navigation.navigate(SCREEN_NAME.ACCOUNT_NAVIGATOR, {
+      screen: SCREEN_NAME.ADD_EDIT_PAYMENT_CARD_SCREEN,
+      params: {
+        paymentCard,
+      },
+    });
+  };
+
   const openLocationScreen = (
     shippingAddress?: DataModels.IShippingAddress,
     onSubmitAdministrative?: (
@@ -245,5 +256,6 @@ export const useNavigate = (navigation: any) => {
     openFavoriteScreen,
     handleNavigateFromLinking,
     openPaymentCardScreen,
+    openAddEditPaymentCardScreen,
   };
 };
