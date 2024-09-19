@@ -5,10 +5,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Layouts } from '@components';
 import {
   AddEditAddressScreen,
+  AddEditPaymentCardScreen,
   AddressScreen,
   EditAccountScreen,
   ForgotPasswordScreen,
   LocationScreen,
+  PaymentCardScreen,
   SignInScreen,
   SignUpScreen,
 } from '@screens';
@@ -54,6 +56,14 @@ function AccountNavigator() {
         <Stack.Screen
           name={SCREEN_NAME.FORGOT_PASSWORD_SCREEN}
           component={ForgotPasswordScreen}
+        />
+        <Stack.Screen
+          name={SCREEN_NAME.PAYMENT_CARD_SCREEN}
+          component={PaymentCardScreen}
+        />
+        <Stack.Screen
+          name={SCREEN_NAME.ADD_EDIT_PAYMENT_CARD_SCREEN}
+          component={AddEditPaymentCardScreen}
         />
       </Stack.Navigator>
     </SafeAreaView>

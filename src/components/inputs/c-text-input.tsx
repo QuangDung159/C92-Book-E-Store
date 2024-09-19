@@ -36,6 +36,7 @@ interface CTextInputProps {
   secureTextEntry?: boolean;
   optional?: boolean;
   clearButtonMode?: TextInputIOSProps['clearButtonMode'];
+  maxLength?: number;
 }
 
 const CTextInput: FC<CTextInputProps> = ({
@@ -57,6 +58,7 @@ const CTextInput: FC<CTextInputProps> = ({
   secureTextEntry,
   optional,
   clearButtonMode = 'while-editing',
+  maxLength,
 }) => {
   const showValidationError = shouldShowErrorTitle && errorMessage;
   const [hidePassword, setHidePassword] = useState(secureTextEntry);
@@ -89,6 +91,7 @@ const CTextInput: FC<CTextInputProps> = ({
       )}
       <View>
         <TextInput
+          maxLength={maxLength}
           textContentType="oneTimeCode"
           clearButtonMode={clearButtonMode}
           multiline={multiline}
@@ -185,7 +188,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   label: {
-    ...FONT_STYLES.BOLD_14,
+    ...FONT_STYLES.SEMIBOLD_14,
     marginBottom: 4,
   },
   optional: {

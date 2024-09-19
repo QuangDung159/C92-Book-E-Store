@@ -1,3 +1,4 @@
+export * from './add-credit-card-view-model';
 export * from './add-edit-address-view-model';
 export * from './edit-account-view-model';
 export * from './location-view-model';
