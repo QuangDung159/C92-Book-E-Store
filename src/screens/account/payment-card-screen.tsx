@@ -11,11 +11,10 @@ import { BottomButtonSection, Layouts, ScreenHeader } from '@components';
 import { useNavigate } from '@hooks';
 import { authenticationStore, userStore } from '@store';
 import { COLORS } from '@themes';
-import { AddCreditCardPopup, CreditCardItem } from 'screens/cart';
+import { CreditCardItem } from 'screens/cart';
 
 const PaymentCardScreen = ({ navigation }: any) => {
   const [refreshing, setRefreshing] = useState(false);
-  const [showAddCreditCardPopup, setShowAddCreditCardPopup] = useState(false);
 
   const { openAddEditPaymentCardScreen } = useNavigate(navigation);
 
@@ -31,12 +30,6 @@ const PaymentCardScreen = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
-      <AddCreditCardPopup
-        visible={showAddCreditCardPopup}
-        onDismiss={() => {
-          setShowAddCreditCardPopup(false);
-        }}
-      />
       <ScreenHeader title="Payment Cards" navigation={navigation} />
       <ScrollView
         scrollEnabled={true}

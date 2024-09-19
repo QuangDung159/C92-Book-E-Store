@@ -119,6 +119,10 @@ const updateCreditCard = async (params: DataModels.ICreditCardParams) => {
   return await HttpServices.post(API_URL.creditCard + '/update-one', params);
 };
 
+const deleteCreditCard = async (cardId: string) => {
+  return await HttpServices.get(API_URL.creditCard + `/delete-one/${cardId}`);
+};
+
 const fetchUser = async (userId: string) => {
   return await HttpServices.get(API_URL.user + '/get-one/' + userId);
 };
@@ -155,4 +159,5 @@ export const AuthenticationServices = {
   fetchUser,
   signIn,
   updateCreditCard,
+  deleteCreditCard,
 };

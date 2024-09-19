@@ -12,6 +12,7 @@ import {
 import { DataModels } from '@models';
 import { authenticationStore, sharedStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
+import { ToastHelpers } from '@utils';
 import { AddCreditCardViewModel } from './view-models';
 
 const AddEditPaymentCardScreen = ({ navigation, route }: any) => {
@@ -30,6 +31,10 @@ const AddEditPaymentCardScreen = ({ navigation, route }: any) => {
   const onAddEditSuccess = async () => {
     await loadData();
     navigation.goBack();
+    ToastHelpers.showToast({
+      title: 'Payment Cards',
+      content: 'Success',
+    });
   };
 
   const onSubmit = () => {
@@ -39,9 +44,13 @@ const AddEditPaymentCardScreen = ({ navigation, route }: any) => {
     }
 
     if (paymentCard) {
-      addCreditCardVM.updateCreditCard(onAddEditSuccess);
+      addCreditCardVM.updateCreditCard(async () => {
+        await onAddEditSuccess();
+      });
     } else {
-      addCreditCardVM.addCreditCard(onAddEditSuccess);
+      addCreditCardVM.addCreditCard(async () => {
+        await onAddEditSuccess();
+      });
     }
   };
 
@@ -101,7 +110,9 @@ const AddEditPaymentCardScreen = ({ navigation, route }: any) => {
             <Layouts.VSpace value={24} />
             <Buttons.CButton
               label="Delete this card"
-              onPress={() => {}}
+              onPress={() => {
+                addCreditCardVM.deleteCard(onAddEditSuccess);
+              }}
               labelStyle={{
                 color: COLORS.error50,
               }}

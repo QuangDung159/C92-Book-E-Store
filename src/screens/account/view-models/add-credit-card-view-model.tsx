@@ -129,6 +129,14 @@ class AddCreditCardViewModel {
       onSuccess?.();
     }
   }
+
+  async deleteCard(onSuccess?: () => void) {
+    const result = await AuthenticationServices.deleteCreditCard(this.id);
+
+    if (result?.success) {
+      onSuccess?.();
+    }
+  }
 }
 
 export { AddCreditCardViewModel };
