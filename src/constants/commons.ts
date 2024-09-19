@@ -67,7 +67,7 @@ const enum ERROR_CODES {
 
 const MOMO_REQUEST_TYPE = 'captureWallet';
 
-const CODE_PUSH_NUMBER = '1726586566';
+const CODE_PUSH_NUMBER = '1726738133';
 
 const PAYMENT_STATUS = {
   success: 'success',

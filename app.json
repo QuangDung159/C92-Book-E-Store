@@ -2,8 +2,8 @@
   "expo": {
     "name": "Book E-Store",
     "slug": "c92-book-e-store-v1",
-    "version": "1.0.12",
-    "runtimeVersion": "1.0.12",
+    "version": "1.0.13",
+    "runtimeVersion": "1.0.13",
     "orientation": "portrait",
     "icon": "./src/assets/images/e-book-logo.png",
     "scheme": "c92bookestorev1",
@@ -25,7 +25,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.dragonc92team.BookEStoreV1",
-      "versionCode": 50,
+      "versionCode": 52,
       "googleServicesFile": "./android/app/google-services.json",
       "permissions": [
         "ACCESS_FINE_LOCATION",
