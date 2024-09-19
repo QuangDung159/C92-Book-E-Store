@@ -36,7 +36,7 @@ const CreditCardItem: React.FC<CreditCardItemProps> = ({ cardItem }) => {
           {StringHelpers.formatCardHolder(cardItem.cardHolder)}
         </Text>
         <Layouts.MaxSpace />
-        {cardItem.default && (
+        {cardItem.primary && (
           <View style={styles.defaultTag}>
             <Text style={[styles.textStyle, styles.tagText]}>Default</Text>
           </View>

@@ -7,8 +7,9 @@ class AddCreditCardViewModel {
   cardNumber: string = '';
   cardHolder: string = '';
   expirationDate: string = '';
-  default: boolean = false;
+  primary: boolean = false;
   authenticationStore: AuthenticationStore | null = null;
+  id: string = '';
 
   constructor(
     authenticationStore: AuthenticationStore,
@@ -19,8 +20,9 @@ class AddCreditCardViewModel {
       authenticationStore: observable,
       cardHolder: observable,
       cardNumber: observable,
-      default: observable,
-      setDefault: action,
+      primary: observable,
+      id: observable,
+      setPrimary: action,
       setExpirationDate: action,
       setCardHolder: action,
       setCardNumber: action,
@@ -32,7 +34,8 @@ class AddCreditCardViewModel {
       this.expirationDate = creditCard.expirationDate;
       this.cardHolder = creditCard.cardHolder;
       this.cardNumber = creditCard.cardNumber;
-      this.default = creditCard.default;
+      this.primary = creditCard.primary;
+      this.id = creditCard.id;
     }
   }
 
@@ -48,21 +51,40 @@ class AddCreditCardViewModel {
     this.cardNumber = value;
   }
 
-  setDefault(value: boolean) {
-    this.default = value;
+  setPrimary(value: boolean) {
+    this.primary = value;
   }
 
-  async addCreditCard(userId: string) {
-    const result = await AuthenticationServices.createCreditCard({
+  toJsonObject = () => {
+    return {
       cardHolder: this.cardHolder,
       cardNumber: this.cardNumber,
       cardType: 'master-card',
       expirationDate: this.expirationDate,
-      user: userId,
-    });
+      primary: this.primary,
+      id: this.id,
+      user: this.authenticationStore.userStore.userProfile.id,
+    } as DataModels.ICreditCardParams;
+  };
+
+  async addCreditCard(onSuccess?: () => void) {
+    const result = await AuthenticationServices.createCreditCard(
+      this.toJsonObject(),
+    );
 
     if (result?.success) {
-      await this.authenticationStore.fetchUser();
+      onSuccess?.();
+    }
+  }
+
+  async updateCreditCard(onSuccess?: () => void) {
+    const result = await AuthenticationServices.updateCreditCard(
+      this.toJsonObject(),
+    );
+
+    if (result?.success) {
+      // await this.authenticationStore.fetchUser();
+      onSuccess?.();
     }
   }
 }
