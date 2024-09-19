@@ -9,9 +9,13 @@ import { StringHelpers } from '@utils';
 
 interface CreditCardItemProps {
   cardItem: DataModels.ICreditCard;
+  isLast?: boolean;
 }
 
-const CreditCardItem: React.FC<CreditCardItemProps> = ({ cardItem }) => {
+const CreditCardItem: React.FC<CreditCardItemProps> = ({
+  cardItem,
+  isLast,
+}) => {
   const getCardTypeIcon = () => {
     switch (cardItem.cardType) {
       case PAYMENT_CARD_TYPE.masterCard:
@@ -42,7 +46,7 @@ const CreditCardItem: React.FC<CreditCardItemProps> = ({ cardItem }) => {
           </View>
         )}
       </View>
-      <Divider />
+      {isLast && <Divider />}
     </>
   );
 };

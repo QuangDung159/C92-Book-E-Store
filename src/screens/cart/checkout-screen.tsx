@@ -13,13 +13,13 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import { Divider, RadioButton } from 'react-native-paper';
 import {
   BottomCheckoutSection,
-  Icons,
   Layouts,
   ScreenHeader,
   SectionTitle,
@@ -35,22 +35,19 @@ import { cartStore, sharedStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { PaymentType } from '@types';
 import { delay, ToastHelpers } from '@utils';
-import { CartInfoRow, ListCreditCard, ShippingAddress } from './components';
+import { CartInfoRow, CreditCardItem, ShippingAddress } from './components';
 import { ListCartItem } from './components/list-cart-item';
 
 const CheckoutScreen = ({ navigation }: any) => {
-  const { openAddressScreen } = useNavigate(navigation);
+  const { openAddressScreen, openPaymentCardScreen } = useNavigate(navigation);
   const [isShowListCreditCart, setIsShowListCreditCart] = useState(false);
   const [fetchZaloPayOrderDone, setFetchZaloPayOrderDone] = useState(false);
 
   const appState = useRef(AppState.currentState);
 
-  const toggleListCreditCart = () =>
-    setIsShowListCreditCart(!isShowListCreditCart);
-
-  const listCreditCard = useMemo(
-    () => userStore.userProfile?.listCreditCard || [],
-    [],
+  const primaryCreditCard = useMemo(
+    () => userStore.userProfile?.listCreditCard.find((item) => item.primary),
+    [userStore.userProfile?.listCreditCard],
   );
 
   useEffect(() => {
@@ -151,9 +148,14 @@ const CheckoutScreen = ({ navigation }: any) => {
               onValueChange={(value) => {
                 cartStore.setPaymentSelected({
                   paymentType: value as PaymentType,
-                  paymentInfo: {},
                   id: value,
                 });
+
+                if (value === 'credit_card') {
+                  cartStore.setCreditCardSelected(primaryCreditCard.id);
+                } else {
+                  cartStore.setCreditCardSelected(null);
+                }
               }}
               value={cartStore.paymentSelected.paymentType}
             >
@@ -175,42 +177,22 @@ const CheckoutScreen = ({ navigation }: any) => {
                     >
                       {item.label}
                     </Text>
-                    {item.value === 'credit_card' && (
-                      <>
-                        <Layouts.MaxSpace />
-                        {isShowListCreditCart ? (
-                          <Icons.ChevronUpIcon
-                            onPress={() => toggleListCreditCart()}
-                          />
-                        ) : (
-                          <Icons.ChevronDownIcon
-                            onPress={() => toggleListCreditCart()}
-                          />
-                        )}
-                      </>
-                    )}
                     <Layouts.VSpace value={12} />
                   </View>
                 );
               })}
             </RadioButton.Group>
             <Collapsible collapsed={!isShowListCreditCart}>
-              <ListCreditCard
-                listCreditCard={listCreditCard}
-                onValueChange={(value) => {
-                  cartStore.setPaymentSelected({
-                    paymentType: PAYMENT_TYPE.creditCard as PaymentType,
-                    paymentInfo: {},
-                    id: value,
-                  });
-
-                  cartStore.setCreditCardSelected(value);
+              <TouchableOpacity
+                style={{
+                  paddingLeft: 24,
                 }}
-                selectedValue={cartStore.creditCardSelected?.id}
-                onPressAddCreditCard={() => {
-                  openAddressScreen();
+                onPress={() => {
+                  openPaymentCardScreen();
                 }}
-              />
+              >
+                <CreditCardItem cardItem={primaryCreditCard} />
+              </TouchableOpacity>
             </Collapsible>
             <Layouts.VSpace value={12} />
             {cartStore.cartCount !== 0 && (

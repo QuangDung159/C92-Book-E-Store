@@ -83,8 +83,6 @@ class AddCreditCardViewModel {
       errorMap.set('expirationDate', 'Please enter expiration date');
     }
 
-    console.log('errorMap :>> ', errorMap.get('cardNumber'));
-
     return errorMap;
   }
 
