@@ -12,7 +12,7 @@ import {
 import { DataModels } from '@models';
 import { authenticationStore, sharedStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
-import { ToastHelpers } from '@utils';
+import { StringHelpers, ToastHelpers } from '@utils';
 import { AddCreditCardViewModel } from './view-models';
 
 const AddEditPaymentCardScreen = ({ navigation, route }: any) => {
@@ -95,11 +95,15 @@ const AddEditPaymentCardScreen = ({ navigation, route }: any) => {
         <Inputs.CTextInput
           placeholder="Expiration date"
           label="Expiration date"
-          onChangeText={(value) => addCreditCardVM.setExpirationDate(value)}
+          onChangeText={(value) => {
+            addCreditCardVM.setExpirationDate(
+              StringHelpers.convertNumberToMonthYear(value),
+            );
+          }}
           disabled={Boolean(paymentCard)}
           value={addCreditCardVM.expirationDate}
           keyboardType="number-pad"
-          maxLength={4}
+          maxLength={5}
           errorMessage={addCreditCardVM.validationErrors.get('expirationDate')}
           shouldShowErrorTitle={addCreditCardVM.shouldShowValidationErrors}
         />

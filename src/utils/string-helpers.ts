@@ -166,3 +166,18 @@ export const formatCardHolder = (cardHolder: string) => {
   const a = cardHolder.split(' ');
   return `*${a[a.length - 1]}`;
 };
+
+export const convertNumberToMonthYear = (text: string) => {
+  // Remove non-numeric characters
+  const numericText = text.replace(/[^0-9]/g, '');
+
+  // Split into two parts and format as xx/xx
+  if (numericText.length > 2) {
+    const part1 = numericText.slice(0, 2);
+    const part2 = numericText.slice(2, 4);
+    return `${part1}/${part2}`;
+  } else {
+    // If less than 2 characters, just display the text as it is
+    return numericText;
+  }
+};
