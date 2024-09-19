@@ -32,6 +32,19 @@ const AddEditPaymentCardScreen = ({ navigation, route }: any) => {
     navigation.goBack();
   };
 
+  const onSubmit = () => {
+    if (addCreditCardVM.hasAnyValidationError) {
+      addCreditCardVM.showValidationErrors(true);
+      return;
+    }
+
+    if (paymentCard) {
+      addCreditCardVM.updateCreditCard(onAddEditSuccess);
+    } else {
+      addCreditCardVM.addCreditCard(onAddEditSuccess);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ScreenHeader title="Payment Card Detail" navigation={navigation} />
@@ -55,6 +68,9 @@ const AddEditPaymentCardScreen = ({ navigation, route }: any) => {
           onChangeText={(value) => addCreditCardVM.setCardNumber(value)}
           value={addCreditCardVM.cardNumber}
           disabled={Boolean(paymentCard)}
+          keyboardType="number-pad"
+          errorMessage={addCreditCardVM.validationErrors.get('cardNumber')}
+          shouldShowErrorTitle={addCreditCardVM.shouldShowValidationErrors}
         />
         <Layouts.VSpace value={24} />
         <Inputs.CTextInput
@@ -63,6 +79,8 @@ const AddEditPaymentCardScreen = ({ navigation, route }: any) => {
           onChangeText={(value) => addCreditCardVM.setCardHolder(value)}
           disabled={Boolean(paymentCard)}
           value={addCreditCardVM.cardHolder}
+          errorMessage={addCreditCardVM.validationErrors.get('cardHolder')}
+          shouldShowErrorTitle={addCreditCardVM.shouldShowValidationErrors}
         />
         <Layouts.VSpace value={24} />
         <Inputs.CTextInput
@@ -71,11 +89,15 @@ const AddEditPaymentCardScreen = ({ navigation, route }: any) => {
           onChangeText={(value) => addCreditCardVM.setExpirationDate(value)}
           disabled={Boolean(paymentCard)}
           value={addCreditCardVM.expirationDate}
+          keyboardType="number-pad"
+          maxLength={4}
+          errorMessage={addCreditCardVM.validationErrors.get('expirationDate')}
+          shouldShowErrorTitle={addCreditCardVM.shouldShowValidationErrors}
         />
         <Layouts.VSpace value={24} />
-        <Divider />
         {paymentCard && (
           <>
+            <Divider />
             <Layouts.VSpace value={24} />
             <Buttons.CButton
               label="Delete this card"
@@ -94,13 +116,7 @@ const AddEditPaymentCardScreen = ({ navigation, route }: any) => {
       </View>
       <Layouts.MaxSpace />
       <BottomButtonSection
-        onPress={async () => {
-          if (paymentCard) {
-            await addCreditCardVM.updateCreditCard(onAddEditSuccess);
-          } else {
-            addCreditCardVM.addCreditCard(onAddEditSuccess);
-          }
-        }}
+        onPress={async () => onSubmit()}
         buttonTitle="Submit"
       />
     </View>

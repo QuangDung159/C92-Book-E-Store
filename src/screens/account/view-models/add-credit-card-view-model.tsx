@@ -1,4 +1,10 @@
-import { action, makeObservable, observable } from 'mobx';
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+  runInAction,
+} from 'mobx';
 import { DataModels } from '@models';
 import { AuthenticationServices } from '@services';
 import { AuthenticationStore } from '@store';
@@ -10,6 +16,7 @@ class AddCreditCardViewModel {
   primary: boolean = false;
   authenticationStore: AuthenticationStore | null = null;
   id: string = '';
+  shouldShowValidationErrors: boolean = false;
 
   constructor(
     authenticationStore: AuthenticationStore,
@@ -26,6 +33,11 @@ class AddCreditCardViewModel {
       setExpirationDate: action,
       setCardHolder: action,
       setCardNumber: action,
+
+      // validation
+      validationErrors: computed,
+      hasAnyValidationError: computed,
+      shouldShowValidationErrors: observable,
     });
 
     this.authenticationStore = authenticationStore;
@@ -53,6 +65,37 @@ class AddCreditCardViewModel {
 
   setPrimary(value: boolean) {
     this.primary = value;
+  }
+
+  // validation
+  get validationErrors() {
+    const errorMap: Map<string, string> = new Map();
+
+    if (!this.cardNumber) {
+      errorMap.set('cardNumber', 'Please enter card number');
+    }
+
+    if (!this.cardHolder) {
+      errorMap.set('cardHolder', 'Please enter card holder');
+    }
+
+    if (!this.expirationDate) {
+      errorMap.set('expirationDate', 'Please enter expiration date');
+    }
+
+    console.log('errorMap :>> ', errorMap.get('cardNumber'));
+
+    return errorMap;
+  }
+
+  showValidationErrors(value: boolean) {
+    runInAction(() => {
+      this.shouldShowValidationErrors = value;
+    });
+  }
+
+  get hasAnyValidationError() {
+    return this.validationErrors.size > 0;
   }
 
   toJsonObject = () => {
@@ -83,7 +126,6 @@ class AddCreditCardViewModel {
     );
 
     if (result?.success) {
-      // await this.authenticationStore.fetchUser();
       onSuccess?.();
     }
   }

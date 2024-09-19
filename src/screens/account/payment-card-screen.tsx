@@ -64,7 +64,7 @@ const PaymentCardScreen = ({ navigation }: any) => {
       </ScrollView>
       <BottomButtonSection
         onPress={() => {
-          setShowAddCreditCardPopup(true);
+          openAddEditPaymentCardScreen();
         }}
         buttonTitle="Add new Payment Card"
       />
