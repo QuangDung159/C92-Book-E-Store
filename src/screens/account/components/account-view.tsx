@@ -27,6 +27,7 @@ const AccountView: React.FC = () => {
     openBookListingScreen,
     openOrdersScreen,
     openFavoriteScreen,
+    openPaymentCardScreen,
   } = useNavigate(navigation);
 
   const [refreshing, setRefreshing] = useState(false);
@@ -116,6 +117,9 @@ const AccountView: React.FC = () => {
         })}
         {renderMenuItem('Shipping Address', () => {
           openAddressScreen();
+        })}
+        {renderMenuItem('Payment Cards', () => {
+          openPaymentCardScreen();
         })}
         {renderMenuItem(
           'Sign Out',

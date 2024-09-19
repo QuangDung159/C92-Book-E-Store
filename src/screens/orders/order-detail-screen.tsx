@@ -20,6 +20,7 @@ import { DataModels } from '@models';
 import { OrderServices } from '@services';
 import { searchStore, sharedStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
+import { StringHelpers } from '@utils';
 import { HorizontalListCard } from 'screens/home/components';
 import { ListOrder } from './components';
 
@@ -78,7 +79,10 @@ const OrderDetailScreen = ({ navigation, route }: any) => {
 
   const paymentTypeText = useMemo(() => {
     if (order?.cart.paymentType === 'credit_card') {
-      return 'Credit Card - ' + order.cart.paymentInfo.cardNumber;
+      return (
+        'Credit Card - ' +
+        StringHelpers.formatCardNumber(order.cart.paymentInfo.cardNumber)
+      );
     }
 
     return order?.cart.paymentType.toUpperCase();

@@ -32,6 +32,8 @@ const SCREEN_NAME = {
   CANCELED_ORDERS_SCREEN: 'Canceled',
   PROCESSING_ORDERS_SCREEN: 'Processing',
   ORDER_DETAIL_SCREEN: 'order-detail-screen',
+  PAYMENT_CARD_SCREEN: 'payment-card-screen',
+  ADD_EDIT_PAYMENT_CARD_SCREEN: 'add-edit-payment-card-screen',
 };
 
 export { SCREEN_NAME };

@@ -1,16 +1,22 @@
 import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
-import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
+import {
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { BottomButtonSection, Layouts, ScreenHeader } from '@components';
 import { useNavigate } from '@hooks';
 import { authenticationStore, userStore } from '@store';
 import { COLORS } from '@themes';
-import { ListAddressItem } from './components';
+import { CreditCardItem } from 'screens/cart';
 
-const AddressScreen = ({ navigation }: any) => {
-  const { openAddEditAddressScreen } = useNavigate(navigation);
-
+const PaymentCardScreen = ({ navigation }: any) => {
   const [refreshing, setRefreshing] = useState(false);
+
+  const { openAddEditPaymentCardScreen } = useNavigate(navigation);
 
   const onLoadData = async () => {
     await authenticationStore.fetchUser();
@@ -24,7 +30,7 @@ const AddressScreen = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
-      <ScreenHeader title="Shipping Address" navigation={navigation} />
+      <ScreenHeader title="Payment Cards" navigation={navigation} />
       <ScrollView
         scrollEnabled={true}
         showsVerticalScrollIndicator={false}
@@ -34,14 +40,26 @@ const AddressScreen = ({ navigation }: any) => {
         }
       >
         <Layouts.VSpace value={24} />
-        <ListAddressItem
-          listAddress={userStore.userProfile?.listShippingAddress || []}
-        />
+        {(userStore.userProfile.listCreditCard || []).map((item) => {
+          return (
+            <React.Fragment key={item.id}>
+              <TouchableOpacity
+                onPress={() => {
+                  openAddEditPaymentCardScreen(item);
+                }}
+              >
+                <CreditCardItem key={item.id} cardItem={item} />
+              </TouchableOpacity>
+            </React.Fragment>
+          );
+        })}
         <Layouts.VSpace value={24} />
       </ScrollView>
       <BottomButtonSection
-        onPress={() => openAddEditAddressScreen()}
-        buttonTitle="Add new Shipping Address"
+        onPress={() => {
+          openAddEditPaymentCardScreen();
+        }}
+        buttonTitle="Add new Payment Card"
       />
     </View>
   );
@@ -57,5 +75,5 @@ const styles = StyleSheet.create({
   },
 });
 
-const observable = observer(AddressScreen);
-export { observable as AddressScreen };
+const observable = observer(PaymentCardScreen);
+export { observable as PaymentCardScreen };
