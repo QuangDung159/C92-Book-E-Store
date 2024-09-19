@@ -39,7 +39,6 @@ const PaymentCardScreen = ({ navigation }: any) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        <Layouts.VSpace value={24} />
         {(userStore.userProfile.listCreditCard || []).map((item) => {
           return (
             <React.Fragment key={item.id}>

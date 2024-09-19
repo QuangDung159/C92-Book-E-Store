@@ -191,7 +191,7 @@ const CheckoutScreen = ({ navigation }: any) => {
                   openPaymentCardScreen();
                 }}
               >
-                <CreditCardItem cardItem={primaryCreditCard} />
+                <CreditCardItem cardItem={primaryCreditCard} isLast />
               </TouchableOpacity>
             </Collapsible>
             <Layouts.VSpace value={12} />

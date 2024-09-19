@@ -46,7 +46,7 @@ const CreditCardItem: React.FC<CreditCardItemProps> = ({
           </View>
         )}
       </View>
-      {isLast && <Divider />}
+      {!isLast && <Divider />}
     </>
   );
 };
