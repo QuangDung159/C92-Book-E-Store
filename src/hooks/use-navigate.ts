@@ -235,6 +235,12 @@ export const useNavigate = (navigation: any) => {
       });
     }
 
+    if (screenName === SCREEN_NAME.VOUCHER_SCREEN) {
+      delay(1000).then(() => {
+        openVoucherScreen();
+      });
+    }
+
     if (screenName === SCREEN_NAME.HOME_SCREEN) {
       openHomeScreen();
     }

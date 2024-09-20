@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { observer } from 'mobx-react-lite';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 import { Layouts, ScreenHeader } from '@components';
 import { SCREEN_NAME } from '@constants';
@@ -11,6 +11,10 @@ import { VoucherItem } from './components/voucher-item';
 const VoucherScreen = ({ navigation, route }: any) => {
   const { from } = route.params;
   const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    onLoadData();
+  }, []);
 
   const onLoadData = async () => {
     await authenticationStore.fetchUser();
