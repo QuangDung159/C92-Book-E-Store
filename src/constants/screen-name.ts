@@ -34,6 +34,7 @@ const SCREEN_NAME = {
   ORDER_DETAIL_SCREEN: 'order-detail-screen',
   PAYMENT_CARD_SCREEN: 'payment-card-screen',
   ADD_EDIT_PAYMENT_CARD_SCREEN: 'add-edit-payment-card-screen',
+  VOUCHER_SCREEN: 'voucher-screen',
 };
 
 export { SCREEN_NAME };

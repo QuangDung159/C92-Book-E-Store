@@ -18,11 +18,11 @@ import Collapsible from 'react-native-collapsible';
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
 import { ImageAssets } from '@assets';
 import { AddToCartButton, Buttons, Layouts } from '@components';
-import { CATEGORY } from '@constants';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
 import { BookServices } from '@services';
 import {
+  categoryStore,
   referenceOptionsStore,
   searchStore,
   sharedStore,
@@ -286,7 +286,9 @@ const BookDetailScreen = ({ route, navigation }: any) => {
               value={bookInfo.category.name}
               hasCheckBox
               onCheck={(value) => {
-                const item = CATEGORY.find((item) => item.name === value);
+                const item = categoryStore.listCategory.find(
+                  (item) => item.name === value,
+                );
                 setSearchFilter({
                   ...searchFilter,
                   category: item?.id || '',

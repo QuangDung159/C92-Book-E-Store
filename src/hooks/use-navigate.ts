@@ -63,6 +63,15 @@ export const useNavigate = (navigation: any) => {
     });
   };
 
+  const openVoucherScreen = (from?: string) => {
+    navigation.navigate(SCREEN_NAME.ACCOUNT_NAVIGATOR, {
+      screen: SCREEN_NAME.VOUCHER_SCREEN,
+      params: {
+        from,
+      },
+    });
+  };
+
   const openAddEditAddressScreen = (
     shippingAddress?: DataModels.IShippingAddress,
   ) => {
@@ -226,6 +235,12 @@ export const useNavigate = (navigation: any) => {
       });
     }
 
+    if (screenName === SCREEN_NAME.VOUCHER_SCREEN) {
+      delay(1000).then(() => {
+        openVoucherScreen();
+      });
+    }
+
     if (screenName === SCREEN_NAME.HOME_SCREEN) {
       openHomeScreen();
     }
@@ -257,5 +272,6 @@ export const useNavigate = (navigation: any) => {
     handleNavigateFromLinking,
     openPaymentCardScreen,
     openAddEditPaymentCardScreen,
+    openVoucherScreen,
   };
 };

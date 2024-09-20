@@ -1,3 +1,4 @@
+import { toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
 import { Linking, StyleSheet, Text, View } from 'react-native';
@@ -16,9 +17,28 @@ const PaymentSuccessScreen = ({ navigation, route }) => {
   useEffect(() => {
     cartStore.fetchCart(userStore.userProfile.id);
     userStore.fetchListOrder('created');
-    authenticationStore.fetchUser();
     cartStore.clearAllCurrentPaymentInfo();
+    unassignVoucher();
   }, []);
+
+  const unassignVoucher = async () => {
+    const listVoucher = toJS([...userStore.userProfile.listVoucher]);
+
+    const index = listVoucher.findIndex(
+      (item) => item.id === cartStore.voucherSelected.id,
+    );
+
+    if (index !== -1) {
+      listVoucher.splice(index, 1);
+
+      userStore.updateUser({
+        ...userStore.userProfile,
+        listVoucher,
+      });
+    } else {
+      authenticationStore.fetchUser();
+    }
+  };
 
   return (
     <View style={styles.container}>

@@ -28,6 +28,7 @@ const AccountView: React.FC = () => {
     openOrdersScreen,
     openFavoriteScreen,
     openPaymentCardScreen,
+    openVoucherScreen,
   } = useNavigate(navigation);
 
   const [refreshing, setRefreshing] = useState(false);
@@ -114,6 +115,9 @@ const AccountView: React.FC = () => {
         })}
         {renderMenuItem('Orders', () => {
           openOrdersScreen();
+        })}
+        {renderMenuItem('Vouchers', () => {
+          openVoucherScreen();
         })}
         {renderMenuItem('Shipping Address', () => {
           openAddressScreen();

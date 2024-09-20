@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Collapsible from 'react-native-collapsible';
+import { Divider } from 'react-native-paper';
 import { CancelOrderButton, Icons, Layouts } from '@components';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
@@ -138,6 +139,13 @@ const OrderItem: React.FC<OrderItemProps> = ({
             {renderCartInfo(
               'Discount:',
               `- ${StringHelpers.formatCurrency(cart.discount)}`,
+            )}
+            <Layouts.VSpace value={12} />
+            <Divider />
+            <Layouts.VSpace value={12} />
+            {renderCartInfo(
+              `Total:`,
+              StringHelpers.formatCurrency(cart.total).toString(),
             )}
             {showCancelButton && <CancelOrderButton order={orderItem} />}
           </View>
