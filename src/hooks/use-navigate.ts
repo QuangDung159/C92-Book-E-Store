@@ -63,9 +63,12 @@ export const useNavigate = (navigation: any) => {
     });
   };
 
-  const openVoucherScreen = () => {
+  const openVoucherScreen = (from?: string) => {
     navigation.navigate(SCREEN_NAME.ACCOUNT_NAVIGATOR, {
       screen: SCREEN_NAME.VOUCHER_SCREEN,
+      params: {
+        from,
+      },
     });
   };
 

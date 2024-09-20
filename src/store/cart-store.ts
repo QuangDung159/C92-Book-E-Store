@@ -27,7 +27,7 @@ class CartStore {
   listCartItem: DataModels.ICartItem[] = [];
   listVoucher: DataModels.IVoucher[] = [];
   listPaymentMethod: DataModels.IPaymentMethod[] = [];
-  listVoucherIdSelected: string[] = [];
+  voucherSelected: DataModels.IVoucher | null = null;
   referenceOptionsStore: ReferenceOptionsStore | null = null;
   userStore: UserStore | null = null;
   paymentSelected: DataModels.IPaymentMethod | null = null;
@@ -44,7 +44,7 @@ class CartStore {
       listCartItem: observable,
       listVoucher: observable,
       listPaymentMethod: observable,
-      listVoucherIdSelected: observable,
+      voucherSelected: observable,
       userStore: observable,
       referenceOptionsStore: observable,
       paymentSelected: observable,
@@ -56,7 +56,7 @@ class CartStore {
       setCreditCardSelected: action,
       setZaloAppTransId: action,
       setPaymentSelected: action,
-      setListVoucherIdSelected: action,
+      setVoucherSelected: action,
       setListCartItem: action,
       setListVoucher: action,
       setListPaymentMethod: action,
@@ -118,8 +118,8 @@ class CartStore {
     this.listPaymentMethod = values;
   }
 
-  setListVoucherIdSelected(values: string[]) {
-    this.listVoucherIdSelected = values;
+  setVoucherSelected(value: DataModels.IVoucher) {
+    this.voucherSelected = value;
   }
 
   get shipping() {
@@ -127,16 +127,21 @@ class CartStore {
   }
 
   get discount() {
-    let discountValue = 0;
-    const listVoucher = this.listVoucher.filter((item) =>
-      this.listVoucherIdSelected.includes(item.id),
-    );
+    if (!this.voucherSelected) {
+      return 0;
+    }
 
-    listVoucher.forEach((item) => {
-      discountValue += item.discountValue;
-    });
+    if (this.voucherSelected.type === 'fix') {
+      return this.voucherSelected.discountValue;
+    }
 
-    return discountValue;
+    const discount = (this.voucherSelected.discountValue / 100) * this.subTotal;
+
+    if (discount > this.voucherSelected.maxDiscount) {
+      return this.voucherSelected.maxDiscount;
+    }
+
+    return discount;
   }
 
   get subTotal() {

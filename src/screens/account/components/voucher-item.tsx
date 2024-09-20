@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/native';
 import React, { useMemo } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Divider } from 'react-native-paper';
@@ -9,11 +8,15 @@ import { StringHelpers } from '@utils';
 
 interface VoucherItemProps {
   voucher: DataModels.IVoucher;
+  onPress?: () => void;
+  isActive?: boolean;
 }
 
-const VoucherItem: React.FC<VoucherItemProps> = ({ voucher }) => {
-  const navigation = useNavigation();
-
+const VoucherItem: React.FC<VoucherItemProps> = ({
+  voucher,
+  onPress,
+  isActive,
+}) => {
   const discountValue = useMemo(() => {
     if (voucher.type === 'fix') {
       return '-' + StringHelpers.formatCurrency(voucher.discountValue);
@@ -24,20 +27,29 @@ const VoucherItem: React.FC<VoucherItemProps> = ({ voucher }) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        // select this voucher
-        navigation.goBack();
+        onPress?.();
       }}
+      disabled={!isActive}
+      activeOpacity={0.5}
     >
-      <View style={styles.container}>
-        <View style={styles.nameWrapper}>
-          <Text style={styles.name} numberOfLines={1}>
-            {voucher.code}
-          </Text>
+      <View
+        style={[
+          !isActive && {
+            opacity: 0.5,
+          },
+        ]}
+      >
+        <View style={[styles.container]}>
+          <View style={styles.nameWrapper}>
+            <Text style={styles.name} numberOfLines={1}>
+              {voucher.code}
+            </Text>
+          </View>
+          <Text style={styles.name}>{discountValue}</Text>
         </View>
-        <Text style={styles.name}>{discountValue}</Text>
+        <Layouts.VSpace value={8} />
+        <Text style={styles.textStyle}>{voucher.description}</Text>
       </View>
-      <Layouts.VSpace value={4} />
-      <Text style={styles.textStyle}>{voucher.description}</Text>
       <Layouts.VSpace value={24} />
       <Divider />
       <Layouts.VSpace value={24} />

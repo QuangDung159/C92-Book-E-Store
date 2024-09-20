@@ -3,11 +3,13 @@ import { observer } from 'mobx-react-lite';
 import React, { useMemo, useState } from 'react';
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 import { Layouts, ScreenHeader } from '@components';
-import { authenticationStore, userStore } from '@store';
+import { SCREEN_NAME } from '@constants';
+import { authenticationStore, cartStore, userStore } from '@store';
 import { COLORS } from '@themes';
 import { VoucherItem } from './components/voucher-item';
 
-const VoucherScreen = ({ navigation }: any) => {
+const VoucherScreen = ({ navigation, route }: any) => {
+  const { from } = route.params;
   const [refreshing, setRefreshing] = useState(false);
 
   const onLoadData = async () => {
@@ -40,7 +42,20 @@ const VoucherScreen = ({ navigation }: any) => {
         {listVoucher.map((item) => {
           return (
             <React.Fragment key={item.id}>
-              <VoucherItem voucher={item} />
+              <VoucherItem
+                voucher={item}
+                onPress={() => {
+                  if (from === SCREEN_NAME.CHECKOUT_SCREEN) {
+                    navigation.goBack();
+                    cartStore.setVoucherSelected(item);
+                  }
+                }}
+                isActive={
+                  from === SCREEN_NAME.CHECKOUT_SCREEN
+                    ? cartStore.subTotal >= item.min
+                    : true
+                }
+              />
             </React.Fragment>
           );
         })}
