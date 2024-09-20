@@ -192,6 +192,7 @@ export interface IUser {
   listBookLiked?: string[];
   signUpMethod?: SignUpMethod;
   ssoToken?: string;
+  listVoucher?: IVoucher[];
 }
 
 export interface ILocation {

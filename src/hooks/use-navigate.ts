@@ -63,6 +63,12 @@ export const useNavigate = (navigation: any) => {
     });
   };
 
+  const openVoucherScreen = () => {
+    navigation.navigate(SCREEN_NAME.ACCOUNT_NAVIGATOR, {
+      screen: SCREEN_NAME.VOUCHER_SCREEN,
+    });
+  };
+
   const openAddEditAddressScreen = (
     shippingAddress?: DataModels.IShippingAddress,
   ) => {
@@ -257,5 +263,6 @@ export const useNavigate = (navigation: any) => {
     handleNavigateFromLinking,
     openPaymentCardScreen,
     openAddEditPaymentCardScreen,
+    openVoucherScreen,
   };
 };
