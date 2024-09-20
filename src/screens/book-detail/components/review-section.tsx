@@ -226,7 +226,7 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
       <View style={styles.container}>
         <View>
           <View style={styles.ratingContainer}>
-            <Text style={styles.ratingText}>{book.rating}</Text>
+            <Text style={styles.ratingText}>{book.rating || 0}</Text>
           </View>
           <View style={styles.ratingStar}>
             <StarRatingDisplay

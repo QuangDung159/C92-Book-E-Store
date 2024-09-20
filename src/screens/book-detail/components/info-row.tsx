@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Buttons } from '@components';
 import { FONT_STYLES } from '@themes';
@@ -22,14 +22,16 @@ const InfoRow: React.FC<InfoRowProps> = ({
     'checked' | 'unchecked' | 'indeterminate'
   >(checked);
 
-  useEffect(() => {}, []);
-
   return (
     <View style={styles.container}>
       <View style={styles.row}>
         <Text style={styles.title}>{title}</Text>
       </View>
-      <View style={styles.row}>
+      <View
+        style={{
+          flex: 75,
+        }}
+      >
         {hasCheckBox ? (
           <Buttons.CCheckBox
             checked={checkStatus}
@@ -65,10 +67,12 @@ const InfoRow: React.FC<InfoRowProps> = ({
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    marginBottom: 12,
+    alignItems: 'center',
   },
   row: {
-    flex: 1,
+    flex: 25,
+    height: 40,
+    justifyContent: 'center',
   },
   title: {
     ...FONT_STYLES.REGULAR_14,
