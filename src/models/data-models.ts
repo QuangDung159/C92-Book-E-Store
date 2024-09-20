@@ -6,6 +6,7 @@ import {
   PaymentStatus,
   PaymentType,
   SignUpMethod,
+  VoucherType,
 } from '@types';
 
 export interface IReviewInput {
@@ -76,6 +77,9 @@ export interface IVoucher {
   code: string;
   description: string;
   discountValue: number;
+  min?: number;
+  max?: number;
+  type?: VoucherType;
 }
 
 export interface ICartParams {

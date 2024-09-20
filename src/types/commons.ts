@@ -68,6 +68,8 @@ type GoogleUser = {
 
 type PaymentType = 'cod' | 'credit_card' | 'momo' | 'zalo_pay';
 
+type VoucherType = 'fix' | 'percent';
+
 type PaymentCardType = 'master-card' | 'jcb' | 'visa';
 
 type SignUpMethod = 'in-app' | 'google' | 'facebook';
@@ -85,4 +87,5 @@ export {
   ServiceResultHandler,
   ZaloPayOrder,
   SignUpMethod,
+  VoucherType,
 };

@@ -14,24 +14,23 @@ const InformationTitle: React.FC<InformationTitleProps> = ({
   isCollapse,
   setIsCollapse,
 }) => {
-  return (
-    <TouchableOpacity
-      activeOpacity={isCollapse ? 0.6 : 1}
-      onPress={() => {
-        if (!isCollapse) {
-          return;
-        }
+  const onPress = () => {
+    if (!isCollapse) {
+      return;
+    }
 
-        setIsCollapse(!isCollapse);
-      }}
-    >
+    setIsCollapse(!isCollapse);
+  };
+
+  return (
+    <TouchableOpacity activeOpacity={isCollapse ? 0.6 : 1} onPress={onPress}>
       <View style={styles.container}>
         <Text style={styles.title}>{title}</Text>
         <Layouts.MaxSpace />
         {isCollapse ? (
-          <Icons.ChevronDownIcon size={20} />
+          <Icons.ChevronDownIcon size={20} onPress={onPress} />
         ) : (
-          <Icons.ChevronUpIcon size={20} disabled />
+          <Icons.ChevronUpIcon size={20} disabled onPress={onPress} />
         )}
       </View>
     </TouchableOpacity>
