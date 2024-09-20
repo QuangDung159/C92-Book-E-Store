@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as Linking from 'expo-linking';
 import * as Notifications from 'expo-notifications';
 import { observer } from 'mobx-react-lite';
@@ -29,7 +30,7 @@ const HomeScreen = ({ navigation }: any) => {
       }
     };
     navigateToInitialUrl();
-  }, [handleNavigateFromLinking]);
+  }, []);
 
   useEffect(() => {
     // handle when launch app by notification
@@ -38,7 +39,7 @@ const HomeScreen = ({ navigation }: any) => {
         lastNotification.notification.request.content?.data?.url,
       );
     }
-  }, [handleNavigateFromLinking, lastNotification]);
+  }, [lastNotification]);
 
   const onLoadHomeData = async () => {
     await appModel.loadMasterData();

@@ -28,6 +28,7 @@ import {
   DEEP_LINK_PAYMENT_SUCCESS_URL,
   LIST_PAYMENT_METHOD,
   PAYMENT_TYPE,
+  SCREEN_NAME,
 } from '@constants';
 import { useNavigate } from '@hooks';
 import { CartServices } from '@services';
@@ -39,7 +40,8 @@ import { CartInfoRow, CreditCardItem, ShippingAddress } from './components';
 import { ListCartItem } from './components/list-cart-item';
 
 const CheckoutScreen = ({ navigation }: any) => {
-  const { openAddressScreen, openPaymentCardScreen } = useNavigate(navigation);
+  const { openAddressScreen, openPaymentCardScreen, openVoucherScreen } =
+    useNavigate(navigation);
   const [isShowListCreditCart, setIsShowListCreditCart] = useState(false);
   const [fetchZaloPayOrderDone, setFetchZaloPayOrderDone] = useState(false);
 
@@ -49,6 +51,10 @@ const CheckoutScreen = ({ navigation }: any) => {
     () => userStore.userProfile?.listCreditCard.find((item) => item.primary),
     [userStore.userProfile?.listCreditCard],
   );
+
+  useEffect(() => {
+    cartStore.setVoucherSelected(null);
+  }, []);
 
   useEffect(() => {
     setIsShowListCreditCart(
@@ -161,22 +167,9 @@ const CheckoutScreen = ({ navigation }: any) => {
             >
               {LIST_PAYMENT_METHOD.map((item) => {
                 return (
-                  <View
-                    key={item.value}
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      marginLeft: -8,
-                    }}
-                  >
+                  <View key={item.value} style={styles.paymentItem}>
                     <RadioButton.Android value={item.value} />
-                    <Text
-                      style={{
-                        ...FONT_STYLES.REGULAR_16,
-                      }}
-                    >
-                      {item.label}
-                    </Text>
+                    <Text style={styles.payemntLabel}>{item.label}</Text>
                     <Layouts.VSpace value={12} />
                   </View>
                 );
@@ -184,9 +177,7 @@ const CheckoutScreen = ({ navigation }: any) => {
             </RadioButton.Group>
             <Collapsible collapsed={!isShowListCreditCart}>
               <TouchableOpacity
-                style={{
-                  paddingLeft: 24,
-                }}
+                style={styles.creditCard}
                 onPress={() => {
                   openPaymentCardScreen();
                 }}
@@ -194,6 +185,26 @@ const CheckoutScreen = ({ navigation }: any) => {
                 <CreditCardItem cardItem={primaryCreditCard} isLast />
               </TouchableOpacity>
             </Collapsible>
+            <Layouts.VSpace value={12} />
+            <Divider />
+            <Layouts.VSpace value={12} />
+            <View style={styles.voucherSection}>
+              <Text style={styles.voucher}>Voucher:</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  openVoucherScreen(SCREEN_NAME.CHECKOUT_SCREEN);
+                }}
+              >
+                <Text
+                  style={[
+                    styles.voucher,
+                    !cartStore.voucherSelected && styles.voucherCode,
+                  ]}
+                >
+                  {cartStore.voucherSelected?.code || 'Select voucher'}
+                </Text>
+              </TouchableOpacity>
+            </View>
             <Layouts.VSpace value={12} />
             {cartStore.cartCount !== 0 && (
               <View>
@@ -261,6 +272,29 @@ const styles = StyleSheet.create({
     borderTopColor: COLORS.gray200,
     borderTopWidth: 1,
     height: 64,
+  },
+  voucher: {
+    ...FONT_STYLES.BOLD_16,
+  },
+  voucherSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  voucherCode: {
+    ...FONT_STYLES.REGULAR_16,
+    color: COLORS.gray70,
+  },
+  paymentItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: -8,
+  },
+  payemntLabel: {
+    ...FONT_STYLES.REGULAR_16,
+  },
+  creditCard: {
+    paddingLeft: 24,
   },
 });
 

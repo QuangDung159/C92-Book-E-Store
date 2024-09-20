@@ -8,3 +8,4 @@ export * from './location-screen';
 export * from './payment-card-screen';
 export * from './sign-in-screen';
 export * from './sign-up-screen';
+export * from './voucher-screen';

@@ -6,6 +6,7 @@ import {
   PaymentStatus,
   PaymentType,
   SignUpMethod,
+  VoucherType,
 } from '@types';
 
 export interface IReviewInput {
@@ -76,6 +77,9 @@ export interface IVoucher {
   code: string;
   description: string;
   discountValue: number;
+  min?: number;
+  maxDiscount?: number;
+  type?: VoucherType;
 }
 
 export interface ICartParams {
@@ -188,6 +192,7 @@ export interface IUser {
   listBookLiked?: string[];
   signUpMethod?: SignUpMethod;
   ssoToken?: string;
+  listVoucher?: IVoucher[];
 }
 
 export interface ILocation {

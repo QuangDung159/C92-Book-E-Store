@@ -13,6 +13,7 @@ import {
   PaymentCardScreen,
   SignInScreen,
   SignUpScreen,
+  VoucherScreen,
 } from '@screens';
 
 import { COLORS } from '@themes';
@@ -64,6 +65,10 @@ function AccountNavigator() {
         <Stack.Screen
           name={SCREEN_NAME.ADD_EDIT_PAYMENT_CARD_SCREEN}
           component={AddEditPaymentCardScreen}
+        />
+        <Stack.Screen
+          name={SCREEN_NAME.VOUCHER_SCREEN}
+          component={VoucherScreen}
         />
       </Stack.Navigator>
     </SafeAreaView>

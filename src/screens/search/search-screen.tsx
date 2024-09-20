@@ -16,15 +16,15 @@ import {
   ListBookSearch,
   SearchBar,
 } from '@components';
-import {
-  CATEGORY,
-  DEFAULT_PRICE_RANGE,
-  LIST_SORT_OPTION,
-  SCREEN_NAME,
-} from '@constants';
+import { DEFAULT_PRICE_RANGE, LIST_SORT_OPTION, SCREEN_NAME } from '@constants';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
-import { referenceOptionsStore, searchStore, userStore } from '@store';
+import {
+  categoryStore,
+  referenceOptionsStore,
+  searchStore,
+  userStore,
+} from '@store';
 import { COLORS } from '@themes';
 import { StringHelpers } from '@utils';
 import { ListChipByListFilter, SortPopup, SortSection } from './components';
@@ -95,7 +95,7 @@ const SearchScreen = ({ route, navigation }: any) => {
           {searchStore.searchFilter.category && (
             <Chip
               label={
-                CATEGORY.find(
+                categoryStore.listCategory.find(
                   (item) => item.id === searchStore.searchFilter.category,
                 )?.name
               }
