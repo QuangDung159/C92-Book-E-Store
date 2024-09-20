@@ -10,12 +10,14 @@ interface VoucherItemProps {
   voucher: DataModels.IVoucher;
   onPress?: () => void;
   isActive?: boolean;
+  isSelected?: boolean;
 }
 
 const VoucherItem: React.FC<VoucherItemProps> = ({
   voucher,
   onPress,
   isActive,
+  isSelected,
 }) => {
   const discountValue = useMemo(() => {
     if (voucher.type === 'fix') {
@@ -50,6 +52,14 @@ const VoucherItem: React.FC<VoucherItemProps> = ({
         <Layouts.VSpace value={8} />
         <Text style={styles.textStyle}>{voucher.description}</Text>
       </View>
+      {isSelected && (
+        <>
+          <Layouts.VSpace value={8} />
+          <View style={styles.defaultTag}>
+            <Text style={[styles.textStyle, styles.tagText]}>Selected</Text>
+          </View>
+        </>
+      )}
       <Layouts.VSpace value={24} />
       <Divider />
       <Layouts.VSpace value={24} />
@@ -74,9 +84,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.error50,
     padding: 4,
-    width: 70,
+    width: 80,
     alignItems: 'center',
-    marginBottom: 12,
   },
   textStyle: {
     ...FONT_STYLES.REGULAR_14,

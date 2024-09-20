@@ -27,6 +27,8 @@ const VoucherScreen = ({ navigation, route }: any) => {
     [userStore.userProfile],
   );
 
+  const isFromCheckout = from === SCREEN_NAME.CHECKOUT_SCREEN;
+
   return (
     <View style={styles.container}>
       <ScreenHeader title="Vouchers" navigation={navigation} />
@@ -45,15 +47,18 @@ const VoucherScreen = ({ navigation, route }: any) => {
               <VoucherItem
                 voucher={item}
                 onPress={() => {
-                  if (from === SCREEN_NAME.CHECKOUT_SCREEN) {
+                  if (isFromCheckout) {
                     navigation.goBack();
                     cartStore.setVoucherSelected(item);
                   }
                 }}
                 isActive={
-                  from === SCREEN_NAME.CHECKOUT_SCREEN
-                    ? cartStore.subTotal >= item.min
-                    : true
+                  isFromCheckout ? cartStore.subTotal >= item.min : true
+                }
+                isSelected={
+                  isFromCheckout
+                    ? cartStore.voucherSelected?.id === item.id
+                    : false
                 }
               />
             </React.Fragment>
