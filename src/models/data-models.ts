@@ -78,7 +78,7 @@ export interface IVoucher {
   description: string;
   discountValue: number;
   min?: number;
-  max?: number;
+  maxDiscount?: number;
   type?: VoucherType;
 }
 
