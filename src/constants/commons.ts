@@ -79,7 +79,10 @@ const SHCEME = 'app/BookEStoreV1/';
 
 const DEEP_LINK_URL = `c92bookestorev1:///${SHCEME}`;
 
-const APP_LINK_URL = `${process.env.EXPO_PUBLIC_BASE_URL}${SHCEME}`;
+// const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
+const BASE_URL = 'https://e4ca-222-253-89-231.ngrok-free.app/';
+
+const APP_LINK_URL = `${BASE_URL}${SHCEME}`;
 
 const DEEP_LINK_PAYMENT_SUCCESS_URL = `${DEEP_LINK_URL}payment-success-screen?`;
 
@@ -101,7 +104,7 @@ const LIST_HOME_PAGE_TITLE = {
   upcomming: 'upcomming',
 };
 
-const API_BASE_URL = process.env.EXPO_PUBLIC_BASE_URL + API_PREFIX;
+const API_BASE_URL = BASE_URL + API_PREFIX;
 
 const API_URL = {
   shippingAddress: API_BASE_URL + '/shipping-address',
