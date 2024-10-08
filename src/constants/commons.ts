@@ -67,7 +67,7 @@ const enum ERROR_CODES {
 
 const MOMO_REQUEST_TYPE = 'captureWallet';
 
-const CODE_PUSH_NUMBER = '1726822826';
+const CODE_PUSH_NUMBER = '1728379130';
 
 const PAYMENT_STATUS = {
   success: 'success',
@@ -79,8 +79,8 @@ const SHCEME = 'app/BookEStoreV1/';
 
 const DEEP_LINK_URL = `c92bookestorev1:///${SHCEME}`;
 
-// const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
-const BASE_URL = 'https://e4ca-222-253-89-231.ngrok-free.app/';
+const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
+// const BASE_URL = 'https://e4ca-222-253-89-231.ngrok-free.app/';
 
 const APP_LINK_URL = `${BASE_URL}${SHCEME}`;
 
