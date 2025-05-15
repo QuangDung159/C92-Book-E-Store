@@ -4,7 +4,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Constants from 'expo-constants';
-import * as Linking from 'expo-linking';
 import * as Notifications from 'expo-notifications';
 import { observer } from 'mobx-react-lite';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -71,22 +70,20 @@ const Navigation = () => {
     };
   }, [triggerShowVersionPopup]);
 
-  const handle = useCallback(
-    ({ url }) => {
-      if (url) {
-        handleNavigateFromLinking(url);
-      }
-    },
-    [handleNavigateFromLinking],
-  );
-
+  // handle notification/app-link when launch app
   useEffect(() => {
-    const subsription = Linking.addEventListener('url', handle);
-
-    return () => {
-      subsription.remove();
+    const checkInitialNotification = async () => {
+      const response = await Notifications.getLastNotificationResponseAsync();
+      if (response) {
+        const url = response?.notification?.request?.content?.data?.url;
+        if (url) {
+          handleNavigateFromLinking(url); // Navigate based on the URL
+        }
+      }
     };
-  }, [handle]);
+
+    checkInitialNotification();
+  }, [handleNavigateFromLinking]);
 
   // handle notification/app-link when app active
   useEffect(() => {

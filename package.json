@@ -35,7 +35,9 @@
     "eas:update:stg": "npm run set:env:stg:build && eas update --branch preview.stg --message \"$npm_config_message\" && npm run set:env:revert",
     "eas:update:prod": "npm run set:env:prod:build && eas update --branch production --message \"$npm_config_message\" && npm run set:env:revert",
     "prebuild": "expo prebuild",
-    "build:android:qa:local:test": "npm run set:env:qa:build && npm run set:env:revert"
+    "build:android:qa:local:test": "npm run set:env:qa:build && npm run set:env:revert",
+    "android": "expo run:android",
+    "ios": "expo run:ios"
   },
   "jest": {
     "preset": "jest-expo"
@@ -100,6 +102,7 @@
     "react-native-star-rating-widget": "^1.8.0",
     "react-native-svg": "15.2.0",
     "react-native-swipe-list-view": "^3.2.9",
+    "react-native-tab-view": "^4.1.0",
     "react-native-toast-message": "^2.2.0",
     "react-native-web": "~0.19.10",
     "react-redux": "^9.1.2",

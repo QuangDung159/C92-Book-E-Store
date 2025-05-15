@@ -48,12 +48,14 @@ class NotificationStore {
   }
 
   loadNotification = async () => {
-    const result = await NotificationServices.fetchListNotification(
-      this.userStore.userProfile.id,
-    );
+    if (this.userStore.userProfile?.id) {
+      const result = await NotificationServices.fetchListNotification(
+        this.userStore.userProfile?.id,
+      );
 
-    if (result?.success && result.data?.listNotification) {
-      this.setListNotification(result.data.listNotification);
+      if (result?.success && result.data?.listNotification) {
+        this.setListNotification(result.data.listNotification);
+      }
     }
   };
 
