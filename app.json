@@ -2,8 +2,8 @@
   "expo": {
     "name": "Book E-Store",
     "slug": "c92-book-e-store-v1",
-    "version": "1.0.14",
-    "runtimeVersion": "1.0.14",
+    "version": "1.0.15",
+    "runtimeVersion": "1.0.15",
     "orientation": "portrait",
     "icon": "./src/assets/images/e-book-logo.png",
     "scheme": "c92bookestorev1",

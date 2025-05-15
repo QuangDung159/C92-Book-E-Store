@@ -122,7 +122,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 53
-        versionName "1.0.14"
+        versionName "1.0.15"
     }
     signingConfigs {
         // keytool -list -v -keystore ./app/debug.keystore -alias androiddebugkey -storepass android -keypass android
