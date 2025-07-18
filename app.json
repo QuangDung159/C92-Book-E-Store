@@ -25,7 +25,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.dragonc92team.BookEStoreV1",
-      "versionCode": 57,
+      "versionCode": 58,
       "googleServicesFile": "./android/app/google-services.json",
       "permissions": [
         "ACCESS_FINE_LOCATION",
