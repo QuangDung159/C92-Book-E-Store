@@ -41,14 +41,20 @@
       "channel": "development"
     },
     "production": {
-      "autoIncrement": true,
       "distribution": "store",
+      "channel": "production",
+      "env": {
+        "ENV_FILE": ".env.prod",
+        "EXPO_PUBLIC_ENV": "PROD",
+        "EXPO_PUBLIC_BASE_URL": "http://103.121.89.190:27894/"
+      },
       "android": {
         "buildType": "app-bundle",
         "credentialsSource": "local"
       },
-      "ios": {},
-      "channel": "production"
+      "ios": {
+        "image": "macos-sequoia-15.3-xcode-16.2"
+      }
     }
   },
   "submit": {
