@@ -37,33 +37,28 @@ export default {
       favicon: './src/assets/images/e-book-logo.png',
     },
     plugins: [
-      'expo-router',
-
-      // ✅ Fix lỗi OneSignal bằng cách chỉ định rõ useFrameworks: "static"
       [
         'onesignal-expo-plugin',
         {
           mode: 'development',
         },
       ],
-
+      'expo-router',
       ['@react-native-google-signin/google-signin'],
-
-      // ✅ Đảm bảo useFrameworks: "static" khi dùng OneSignal
       [
         'expo-build-properties',
         {
           ios: {
-            useFrameworks: 'static',
+            useFrameworks: 'dynamic',
+            jsEngine: 'jsc',
             infoPlist: {
               NSLocationWhenInUseUsageDescription:
                 'This app uses your location to provide relevant content.',
             },
-            deploymentTarget: '13.0',
+            deploymentTarget: '13.4',
           },
         },
       ],
-
       [
         'react-native-fbsdk-next',
         {
@@ -76,6 +71,7 @@ export default {
       typedRoutes: true,
     },
     extra: {
+      hermesEnabled: false,
       router: {
         origin: false,
       },

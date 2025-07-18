@@ -29,6 +29,8 @@ self.define_singleton_method(use_autolinking_method_symbol) do |*args|
 end
 
 platform :ios, podfile_properties['ios.deploymentTarget'] || '13.4'
+use_frameworks! :linkage => :dynamic
+
 install! 'cocoapods',
   :deterministic_uuids => false
 
@@ -41,8 +43,6 @@ target 'BookEStore' do
   use_frameworks! :linkage => podfile_properties['ios.useFrameworks'].to_sym if podfile_properties['ios.useFrameworks']
   use_frameworks! :linkage => ENV['USE_FRAMEWORKS'].to_sym if ENV['USE_FRAMEWORKS']
 
-  use_frameworks! :linkage => :static
-
   use_react_native!(
     :path => config[:reactNativePath],
     :hermes_enabled => podfile_properties['expo.jsEngine'] == nil || podfile_properties['expo.jsEngine'] == 'hermes',
@@ -52,11 +52,6 @@ target 'BookEStore' do
   )
 
   post_install do |installer|
-    installer.pods_project.targets.each do |target|
-      if target.name == "React-Core-RCTI18nStrings"
-        target.remove_from_project
-      end
-    end
     react_native_post_install(
       installer,
       config[:reactNativePath],
@@ -87,5 +82,4 @@ end
 
 target 'OneSignalNotificationServiceExtension' do
   pod 'OneSignalXCFramework', '>= 5.0', '< 6.0'
-  use_frameworks!
 end
