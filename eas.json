@@ -1,54 +1,84 @@
 {
   "cli": {
-    "version": ">= 10.2.3",
+    "version": ">= 12.5.1",
     "appVersionSource": "local"
   },
   "build": {
     "preview.qa": {
       "distribution": "internal",
+      "channel": "preview.qa",
+      "env": {
+        "ENV_FILE": ".env.qa",
+        "EXPO_PUBLIC_ENV": "QA",
+        "EXPO_PUBLIC_BASE_URL": "https://nodejs-e-commerce.onrender.com/"
+      },
       "android": {
         "buildType": "apk"
       },
-      "ios": {},
-      "channel": "preview.qa"
+      "ios": {
+        "image": "macos-sequoia-15.3-xcode-16.2"
+      }
     },
     "preview.stg": {
       "distribution": "internal",
+      "channel": "preview.stg",
+      "env": {
+        "ENV_FILE": ".env.stg",
+        "EXPO_PUBLIC_ENV": "STG",
+        "EXPO_PUBLIC_BASE_URL": "https://nodejs-e-commerce.onrender.com/"
+      },
       "android": {
         "buildType": "apk"
       },
-      "ios": {},
-      "channel": "preview.stg"
+      "ios": {
+        "image": "macos-sequoia-15.3-xcode-16.2"
+      }
     },
     "preview.prod": {
       "distribution": "internal",
-      "android": {
-        "buildType": "apk",
-        "credentialsSource": "local"
+      "channel": "production",
+      "env": {
+        "ENV_FILE": ".env.prod",
+        "EXPO_PUBLIC_ENV": "PROD",
+        "EXPO_PUBLIC_BASE_URL": "https://nodejs-e-commerce.onrender.com/"
       },
-      "ios": {},
-      "channel": "preview.prod"
+      "android": {
+        "buildType": "apk"
+      },
+      "ios": {
+        "image": "macos-sequoia-15.3-xcode-16.2"
+      }
     },
     "development": {
-      "distribution": "internal",
       "developmentClient": true,
+      "distribution": "internal",
+      "channel": "development",
+      "env": {
+        "ENV_FILE": ".env.dev",
+        "EXPO_PUBLIC_ENV": "DEV",
+        "EXPO_PUBLIC_BASE_URL": "https://nodejs-e-commerce.onrender.com/"
+      },
       "android": {
         "buildType": "apk"
       },
       "ios": {
         "simulator": true
-      },
-      "channel": "development"
+      }
     },
     "production": {
-      "autoIncrement": true,
       "distribution": "store",
-      "android": {
-        "buildType": "app-bundle",
-        "credentialsSource": "local"
+      "channel": "production",
+      "env": {
+        "ENV_FILE": ".env.prod",
+        "EXPO_PUBLIC_ENV": "PROD",
+        "EXPO_PUBLIC_BASE_URL": "https://nodejs-e-commerce.onrender.com/"
       },
-      "ios": {},
-      "channel": "production"
+      "android": {
+        "buildType": "app-bundle"
+      },
+      "ios": {
+        "image": "macos-sequoia-15.3-xcode-16.2"
+      }
     }
   },
   "submit": {
