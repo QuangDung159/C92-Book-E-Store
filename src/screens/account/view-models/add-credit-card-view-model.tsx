@@ -108,13 +108,13 @@ class AddCreditCardViewModel {
     } as DataModels.ICreditCardParams;
   };
 
-  async addCreditCard(onSuccess?: () => void) {
+  async addCreditCard(onSuccess?: (data: any) => void) {
     const result = await AuthenticationServices.createCreditCard(
       this.toJsonObject(),
     );
 
     if (result?.success) {
-      onSuccess?.();
+      onSuccess?.(result.data?.creditCard);
     }
   }
 

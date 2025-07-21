@@ -37,17 +37,17 @@
         <data android:scheme="com.dragonc92team.BookEStoreV1"/>
         <data android:scheme="exp+c92-book-e-store-v1"/>
       </intent-filter>
-      <intent-filter android:autoVerify="true">
+      <!-- <intent-filter android:autoVerify="true">
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:host="www.thelqd.online" android:scheme="https" android:pathPrefix="/app"/>
-      </intent-filter>
+      </intent-filter> -->
       <intent-filter android:autoVerify="true">
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:host="01be-14-169-221-86.ngrok-free.app" android:scheme="https" android:pathPrefix="/app/BookEStoreV1"/>
+        <data android:host="478e705d3e34.ngrok-free.app" android:scheme="https" android:pathPrefix="/app/BookEStoreV1"/>
       </intent-filter>
       <intent-filter android:autoVerify="true">
         <action android:name="android.intent.action.VIEW"/>

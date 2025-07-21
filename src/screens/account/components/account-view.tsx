@@ -3,6 +3,7 @@ import { Image } from 'expo-image';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
 import {
+  Platform,
   RefreshControl,
   ScrollView,
   StyleProp,
@@ -122,9 +123,13 @@ const AccountView: React.FC = () => {
         {renderMenuItem('Shipping Address', () => {
           openAddressScreen();
         })}
-        {renderMenuItem('Payment Cards', () => {
-          openPaymentCardScreen();
-        })}
+        {Platform.OS !== 'ios' && (
+          <>
+            {renderMenuItem('Payment Cards', () => {
+              openPaymentCardScreen();
+            })}
+          </>
+        )}
         {renderMenuItem(
           'Sign Out',
           async () => {

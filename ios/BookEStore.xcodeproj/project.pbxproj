@@ -20,6 +20,7 @@
 		2E5EA3A92E2A95800060B816 /* OneSignalOutcomes.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E5EA3A22E2A95800060B816 /* OneSignalOutcomes.xcframework */; };
 		2E5EA3AA2E2A95800060B816 /* OneSignalOutcomes.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2E5EA3A22E2A95800060B816 /* OneSignalOutcomes.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
+		587C5ABC6E66FD442FA9C726 /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FD9D1248B8CE96B79F68C77 /* Pods_OneSignalNotificationServiceExtension.framework */; };
 		683E70A9D1BA41309D6F24B4 /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F95968F72C488AA54AA9FE /* NotificationService.m */; };
 		6A66E029F8804D0591FAC038 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4D18FC1EB6034EDABC938D03 /* GoogleService-Info.plist */; };
 		A4B9713884C98A5956214324 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A666A0564219D3D38054F839 /* PrivacyInfo.xcprivacy */; };
@@ -116,6 +117,7 @@
 				2E5EA3A72E2A95800060B816 /* OneSignalOSCore.xcframework in Frameworks */,
 				2E5EA3A32E2A95800060B816 /* OneSignalCore.xcframework in Frameworks */,
 				2E5EA3A92E2A95800060B816 /* OneSignalOutcomes.xcframework in Frameworks */,
+				587C5ABC6E66FD442FA9C726 /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -605,7 +607,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dragonc92team.BookEStoreV1;
-				PRODUCT_NAME = "BookEStore";
+				PRODUCT_NAME = BookEStore;
 				SWIFT_OBJC_BRIDGING_HEADER = "BookEStore/BookEStore-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -637,7 +639,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dragonc92team.BookEStoreV1;
-				PRODUCT_NAME = "BookEStore";
+				PRODUCT_NAME = BookEStore;
 				SWIFT_OBJC_BRIDGING_HEADER = "BookEStore/BookEStore-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -741,7 +743,10 @@
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -810,7 +815,10 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
