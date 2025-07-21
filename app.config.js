@@ -2,8 +2,8 @@ export default {
   expo: {
     name: 'Book E-Store',
     slug: 'c92-book-e-store-v1',
-    version: '1.0.19',
-    runtimeVersion: '1.0.19',
+    version: '1.0.21',
+    runtimeVersion: '1.0.21',
     orientation: 'portrait',
     icon: './src/assets/images/e-book-logo.png',
     scheme: 'c92bookestorev1',
