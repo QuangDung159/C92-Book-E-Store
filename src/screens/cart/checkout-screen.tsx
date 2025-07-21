@@ -38,7 +38,8 @@ import { CartInfoRow, ShippingAddress } from './components';
 import { ListCartItem } from './components/list-cart-item';
 
 const CheckoutScreen = ({ navigation }: any) => {
-  const { openAddressScreen, openVoucherScreen } = useNavigate(navigation);
+  const { openAddressScreen, openVoucherScreen, openHomeScreen } =
+    useNavigate(navigation);
   // const [isShowListCreditCart, setIsShowListCreditCart] = useState(false);
   const [fetchZaloPayOrderDone, setFetchZaloPayOrderDone] = useState(false);
 
@@ -117,7 +118,19 @@ const CheckoutScreen = ({ navigation }: any) => {
 
   const onSubmitCheckout = async () => {
     sharedStore.setShowLoading(true);
-    await cartStore.submitOrder();
+    await cartStore.submitOrder(
+      cartStore.paymentSelected.paymentType === 'cod'
+        ? async () => {
+            await cartStore.fetchCart(userStore.userProfile.id);
+            openHomeScreen();
+            await delay(500);
+            ToastHelpers.showToast({
+              title: 'Order created successfully',
+              type: 'success',
+            });
+          }
+        : null,
+    );
     sharedStore.setShowLoading(false);
   };
 

@@ -457,7 +457,7 @@ class CartStore {
     }
   }
 
-  async submitOrder() {
+  async submitOrder(onSubmitCODSuccess?: () => void) {
     const result = await this.updateCart();
 
     let createOrderResult = null;
@@ -476,9 +476,13 @@ class CartStore {
         if (this.paymentSelected.paymentType === PAYMENT_TYPE.zalo_pay) {
           await this.handleZaloPayPayment();
         } else {
-          Linking.openURL(
-            `${DEEP_LINK_PAYMENT_SUCCESS_URL}orderId=${this.currentOrder.id}&message=Payment success!`,
-          );
+          if (onSubmitCODSuccess) {
+            onSubmitCODSuccess();
+          } else {
+            Linking.openURL(
+              `${DEEP_LINK_PAYMENT_SUCCESS_URL}orderId=${this.currentOrder.id}&message=Payment success!`,
+            );
+          }
         }
       }
   }
