@@ -21,6 +21,7 @@ import Collapsible from 'react-native-collapsible';
 import { Divider, RadioButton } from 'react-native-paper';
 import {
   BottomCheckoutSection,
+  Icons,
   Layouts,
   ScreenHeader,
   SectionTitle,
@@ -133,7 +134,8 @@ const CheckoutScreen = ({ navigation }: any) => {
   const onSubmitCheckout = async () => {
     sharedStore.setShowLoading(true);
     await cartStore.submitOrder(
-      cartStore.paymentSelected.paymentType === 'cod'
+      cartStore.paymentSelected.paymentType === 'cod' ||
+        cartStore.paymentSelected.paymentType === 'credit_card'
         ? async () => {
             await Promise.all([
               cartStore.fetchCart(userStore.userProfile.id),
@@ -186,7 +188,7 @@ const CheckoutScreen = ({ navigation }: any) => {
                   id: value,
                 });
 
-                if (value === 'credit_card') {
+                if (value === 'credit_card' && primaryCreditCard) {
                   cartStore.setCreditCardSelected(primaryCreditCard.id);
                 } else {
                   cartStore.setCreditCardSelected(null);
@@ -198,7 +200,23 @@ const CheckoutScreen = ({ navigation }: any) => {
                 return (
                   <View key={item.value} style={styles.paymentItem}>
                     <RadioButton.Android value={item.value} />
-                    <Text style={styles.payemntLabel}>{item.label}</Text>
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                      }}
+                    >
+                      <Text style={styles.paymentLabel}>{item.label}</Text>
+                      {item.showIcon && (
+                        <Icons.EditIcon
+                          size={20}
+                          onPress={() => {
+                            openPaymentCardScreen();
+                          }}
+                        />
+                      )}
+                    </View>
                     <Layouts.VSpace value={12} />
                   </View>
                 );
@@ -206,14 +224,21 @@ const CheckoutScreen = ({ navigation }: any) => {
             </RadioButton.Group>
             {Platform.OS !== 'ios' && (
               <Collapsible collapsed={!isShowListCreditCart}>
-                <TouchableOpacity
-                  style={styles.creditCard}
-                  onPress={() => {
-                    openPaymentCardScreen();
-                  }}
-                >
-                  <CreditCardItem cardItem={primaryCreditCard} isLast />
-                </TouchableOpacity>
+                <View style={styles.creditCard}>
+                  {primaryCreditCard ? (
+                    <CreditCardItem cardItem={primaryCreditCard} isLast />
+                  ) : (
+                    <Text
+                      style={{
+                        ...FONT_STYLES.BOLD_14,
+                        color: COLORS.gray60,
+                        paddingHorizontal: 4,
+                      }}
+                    >
+                      No payment card available
+                    </Text>
+                  )}
+                </View>
               </Collapsible>
             )}
             <Layouts.VSpace value={12} />
@@ -254,14 +279,24 @@ const CheckoutScreen = ({ navigation }: any) => {
           </ScrollView>
           <BottomCheckoutSection
             onPress={() => {
+              if (!primaryCreditCard) {
+                ToastHelpers.showToast({
+                  title: 'Please choose your payment card',
+                  type: 'error',
+                });
+                return;
+              }
+
               if (!cartStore.shippingAddressData) {
                 ToastHelpers.showToast({
                   title: 'Please choose your shipping address',
                   type: 'error',
                 });
-              } else {
-                onSubmitCheckout();
+
+                return;
               }
+
+              onSubmitCheckout();
             }}
             priceDisplay={cartStore.total}
             disabled={cartStore.cartCount === 0}
@@ -321,7 +356,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: -8,
   },
-  payemntLabel: {
+  paymentLabel: {
     ...FONT_STYLES.REGULAR_16,
   },
   creditCard: {
