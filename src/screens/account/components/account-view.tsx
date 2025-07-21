@@ -27,7 +27,6 @@ const AccountView: React.FC = () => {
     openBookListingScreen,
     openOrdersScreen,
     openFavoriteScreen,
-    openPaymentCardScreen,
     openVoucherScreen,
   } = useNavigate(navigation);
 
@@ -122,9 +121,9 @@ const AccountView: React.FC = () => {
         {renderMenuItem('Shipping Address', () => {
           openAddressScreen();
         })}
-        {renderMenuItem('Payment Cards', () => {
+        {/* {renderMenuItem('Payment Cards', () => {
           openPaymentCardScreen();
-        })}
+        })} */}
         {renderMenuItem(
           'Sign Out',
           async () => {

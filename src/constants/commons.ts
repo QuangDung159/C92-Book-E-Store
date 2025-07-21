@@ -156,7 +156,7 @@ const LIST_PAYMENT_METHOD = [
   { id: '1', value: 'cod', label: 'Cash on Delivery' },
   { id: '2', value: 'momo', label: 'Momo' },
   { id: '3', value: 'zalo_pay', label: 'Zalo Pay' },
-  { id: '4', value: 'credit_card', label: 'Credit Card' },
+  // { id: '4', value: 'credit_card', label: 'Credit Card' },
 ];
 
 export {

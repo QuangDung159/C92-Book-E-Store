@@ -16,7 +16,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Collapsible from 'react-native-collapsible';
 import { Divider, RadioButton } from 'react-native-paper';
 import {
   BottomCheckoutSection,
@@ -27,7 +26,6 @@ import {
 import {
   DEEP_LINK_PAYMENT_SUCCESS_URL,
   LIST_PAYMENT_METHOD,
-  PAYMENT_TYPE,
   SCREEN_NAME,
 } from '@constants';
 import { useNavigate } from '@hooks';
@@ -36,13 +34,12 @@ import { cartStore, sharedStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { PaymentType } from '@types';
 import { delay, ToastHelpers } from '@utils';
-import { CartInfoRow, CreditCardItem, ShippingAddress } from './components';
+import { CartInfoRow, ShippingAddress } from './components';
 import { ListCartItem } from './components/list-cart-item';
 
 const CheckoutScreen = ({ navigation }: any) => {
-  const { openAddressScreen, openPaymentCardScreen, openVoucherScreen } =
-    useNavigate(navigation);
-  const [isShowListCreditCart, setIsShowListCreditCart] = useState(false);
+  const { openAddressScreen, openVoucherScreen } = useNavigate(navigation);
+  // const [isShowListCreditCart, setIsShowListCreditCart] = useState(false);
   const [fetchZaloPayOrderDone, setFetchZaloPayOrderDone] = useState(false);
 
   const appState = useRef(AppState.currentState);
@@ -56,11 +53,11 @@ const CheckoutScreen = ({ navigation }: any) => {
     cartStore.setVoucherSelected(null);
   }, []);
 
-  useEffect(() => {
-    setIsShowListCreditCart(
-      cartStore.paymentSelected.paymentType === PAYMENT_TYPE.creditCard,
-    );
-  }, [cartStore.paymentSelected.paymentType]);
+  // useEffect(() => {
+  //   setIsShowListCreditCart(
+  //     cartStore.paymentSelected.paymentType === PAYMENT_TYPE.creditCard,
+  //   );
+  // }, [cartStore.paymentSelected.paymentType]);
 
   const fetchZaloPaymentInfo = useCallback(async (appTransId: string) => {
     sharedStore.setShowLoading(true);
@@ -175,7 +172,7 @@ const CheckoutScreen = ({ navigation }: any) => {
                 );
               })}
             </RadioButton.Group>
-            <Collapsible collapsed={!isShowListCreditCart}>
+            {/* <Collapsible collapsed={!isShowListCreditCart}>
               <TouchableOpacity
                 style={styles.creditCard}
                 onPress={() => {
@@ -184,7 +181,7 @@ const CheckoutScreen = ({ navigation }: any) => {
               >
                 <CreditCardItem cardItem={primaryCreditCard} isLast />
               </TouchableOpacity>
-            </Collapsible>
+            </Collapsible> */}
             <Layouts.VSpace value={12} />
             <Divider />
             <Layouts.VSpace value={12} />
