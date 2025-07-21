@@ -1,9 +1,8 @@
 import { toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
-import { Linking, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Buttons, Icons, Layouts } from '@components';
-import { DEEP_LINK_URL, SCREEN_NAME } from '@constants';
 import { useNavigate } from '@hooks';
 import { authenticationStore, cartStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
@@ -53,13 +52,7 @@ const PaymentSuccessScreen = ({ navigation, route }) => {
       <Buttons.CButton
         label="Back to Home"
         onPress={() => {
-          if (
-            Linking.canOpenURL(`${DEEP_LINK_URL}${SCREEN_NAME.HOME_SCREEN}`)
-          ) {
-            Linking.openURL(`${DEEP_LINK_URL}${SCREEN_NAME.HOME_SCREEN}`);
-          } else {
-            openHomeScreen();
-          }
+          openHomeScreen();
         }}
       />
     </View>

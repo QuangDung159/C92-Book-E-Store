@@ -153,10 +153,14 @@ const TOP_BOOKS_FILTER = [
 ];
 
 const LIST_PAYMENT_METHOD = [
-  { id: '1', value: 'cod', label: 'Cash on Delivery' },
-  { id: '2', value: 'momo', label: 'Momo' },
-  { id: '3', value: 'zalo_pay', label: 'Zalo Pay' },
-  { id: '4', value: 'credit_card', label: 'Credit Card' },
+  { id: '1', value: 'cod', label: 'Cash on Delivery', showIcon: false },
+  { id: '2', value: 'momo', label: 'Momo', showIcon: false },
+  { id: '3', value: 'zalo_pay', label: 'Zalo Pay', showIcon: false },
+  { id: '4', value: 'credit_card', label: 'Credit Card', showIcon: true },
+];
+
+const LIST_PAYMENT_METHOD_IOS = [
+  { id: '1', value: 'cod', label: 'Cash on Delivery', showIcon: false },
 ];
 
 export {
@@ -176,6 +180,7 @@ export {
   LIST_ADMINITRATIVE_UNIT,
   LIST_HOME_PAGE_TITLE,
   LIST_PAYMENT_METHOD,
+  LIST_PAYMENT_METHOD_IOS,
   LIST_SORT_OPTION,
   MOMO_REQUEST_TYPE,
   PAYMENT_CARD_TYPE,
