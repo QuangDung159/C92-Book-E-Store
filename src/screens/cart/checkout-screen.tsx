@@ -279,7 +279,7 @@ const CheckoutScreen = ({ navigation }: any) => {
           </ScrollView>
           <BottomCheckoutSection
             onPress={() => {
-              if (!primaryCreditCard) {
+              if (Platform.OS !== 'ios' && !primaryCreditCard) {
                 ToastHelpers.showToast({
                   title: 'Please choose your payment card',
                   type: 'error',
