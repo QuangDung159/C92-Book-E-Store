@@ -121,8 +121,8 @@ android {
         applicationId 'com.dragonc92team.BookEStoreV1'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 69
-        versionName "1.0.21"
+        versionCode 70
+        versionName "1.0.22"
     }
     signingConfigs {
         // keytool -list -v -keystore ./app/debug.keystore -alias androiddebugkey -storepass android -keypass android
