@@ -67,7 +67,7 @@ const enum ERROR_CODES {
 
 const MOMO_REQUEST_TYPE = 'captureWallet';
 
-const CODE_PUSH_NUMBER = '1753106449';
+const CODE_PUSH_NUMBER = '1753148000';
 
 const PAYMENT_STATUS = {
   success: 'success',
@@ -154,8 +154,8 @@ const TOP_BOOKS_FILTER = [
 
 const LIST_PAYMENT_METHOD = [
   { id: '1', value: 'cod', label: 'Cash on Delivery', showIcon: false },
-  { id: '2', value: 'momo', label: 'Momo', showIcon: false },
-  { id: '3', value: 'zalo_pay', label: 'Zalo Pay', showIcon: false },
+  // { id: '2', value: 'momo', label: 'Momo', showIcon: false },
+  // { id: '3', value: 'zalo_pay', label: 'Zalo Pay', showIcon: false },
   { id: '4', value: 'credit_card', label: 'Credit Card', showIcon: true },
 ];
 
