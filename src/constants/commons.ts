@@ -90,6 +90,8 @@ const EXPO_PUSH_NOTIFICATION_URL = 'https://exp.host/--/api/v2/push/send';
 const GOOGLE_PLAY_STORE_URL =
   'https://play.google.com/store/apps/details?id=com.dragonc92team.BookEStoreV1';
 
+const SUPPORT_LINK = 'https://sites.google.com/view/c92-book-e-store/home';
+
 const API_PREFIX = 'api/v1/book-store';
 
 const IN_APP_MESSAGE_ACTION_ID = {
@@ -189,5 +191,6 @@ export {
   PRICE_STEP,
   SEARCH_VIEW_STYLE,
   SHCEME,
+  SUPPORT_LINK,
   TOP_BOOKS_FILTER,
 };

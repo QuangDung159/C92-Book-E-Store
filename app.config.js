@@ -49,10 +49,6 @@ export default {
         {
           ios: {
             useFrameworks: 'static',
-            infoPlist: {
-              NSLocationWhenInUseUsageDescription:
-                'This app uses your location to provide relevant content.',
-            },
           },
           android: {
             targetSdkVersion: 35,

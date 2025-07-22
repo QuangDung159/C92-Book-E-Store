@@ -1,6 +1,6 @@
 import * as Linking from 'expo-linking';
 import { Platform } from 'react-native';
-import { GOOGLE_PLAY_STORE_URL, SCREEN_NAME, SHCEME } from '@constants';
+import { SCREEN_NAME, SHCEME, SUPPORT_LINK } from '@constants';
 import { DataModels } from '@models';
 import { delay } from '@utils';
 
@@ -196,11 +196,11 @@ export const useNavigate = (navigation: any) => {
 
   const openPlayStore = () => {
     const url = Platform.select({
-      android: GOOGLE_PLAY_STORE_URL,
-      ios: GOOGLE_PLAY_STORE_URL,
+      android: SUPPORT_LINK,
+      ios: SUPPORT_LINK,
     });
 
-    Linking.canOpenURL(GOOGLE_PLAY_STORE_URL)
+    Linking.canOpenURL(url)
       .then((supported) => {
         if (supported) {
           Linking.openURL(url);
