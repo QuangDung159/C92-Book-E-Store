@@ -106,7 +106,7 @@ const LocationScreen = ({ navigation, route }: any) => {
         >
           <Text
             style={{
-              ...FONT_STYLES.SEMIBOLD_12,
+              ...FONT_STYLES.SEMIBOLD_14,
             }}
           >
             Empty
@@ -135,12 +135,12 @@ const LocationScreen = ({ navigation, route }: any) => {
               >
                 <Text
                   style={{
-                    ...FONT_STYLES.REGULAR_14,
+                    ...FONT_STYLES.SEMIBOLD_14,
                   }}
                 >
                   {item.label}
                 </Text>
-                <RadioButton.IOS value={item.value} />
+                <RadioButton.Android value={item.value} />
               </View>
               <Divider />
             </React.Fragment>

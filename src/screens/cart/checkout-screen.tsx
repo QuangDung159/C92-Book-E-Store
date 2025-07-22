@@ -279,20 +279,23 @@ const CheckoutScreen = ({ navigation }: any) => {
           </ScrollView>
           <BottomCheckoutSection
             onPress={() => {
-              if (Platform.OS !== 'ios' && !primaryCreditCard) {
-                ToastHelpers.showToast({
-                  title: 'Please choose your payment card',
-                  type: 'error',
-                });
-                return;
-              }
-
               if (!cartStore.shippingAddressData) {
                 ToastHelpers.showToast({
                   title: 'Please choose your shipping address',
                   type: 'error',
                 });
 
+                return;
+              }
+
+              if (
+                cartStore.paymentSelected.paymentType === 'credit_card' &&
+                !primaryCreditCard
+              ) {
+                ToastHelpers.showToast({
+                  title: 'Please choose your payment card',
+                  type: 'error',
+                });
                 return;
               }
 
