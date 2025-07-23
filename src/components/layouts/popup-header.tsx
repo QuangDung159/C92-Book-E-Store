@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   popupText: {
-    ...FONT_STYLES.BOLD_16,
+    ...FONT_STYLES.EXTRA_BOLD_16,
   },
 });
 

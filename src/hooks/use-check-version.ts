@@ -27,7 +27,6 @@ export const useCheckVersion = () => {
 
   const triggerShowVersionPopup = useCallback(async () => {
     if (process.env.EXPO_PUBLIC_ENV === 'PROD') {
-      console.log('triggerShowVersionPopup');
       const latestAndroidVersion =
         Platform.OS === 'android'
           ? await AppVersionServices.getLatestVersionAndroid()
