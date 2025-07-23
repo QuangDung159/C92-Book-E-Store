@@ -165,7 +165,7 @@ class AuthenticationStore {
         signUpMethod: 'google',
         username: user.name,
         avatarUrl: user.photo,
-        ssoToken: response.idToken,
+        ssoToken: response.user.id,
       });
 
       if (result?.success) {
