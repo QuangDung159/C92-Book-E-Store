@@ -1,4 +1,5 @@
 export * from './account-circle-icon';
+export * from './apple-icon';
 export * from './book-icon';
 export * from './cart-heart-icon';
 export * from './cart-icon';

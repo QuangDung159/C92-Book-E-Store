@@ -2,7 +2,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Platform, StyleSheet, Text, View } from 'react-native';
 import { Buttons, Icons, Layouts } from '@components';
 import { useNavigate } from '@hooks';
 import { authenticationStore, sharedStore } from '@store';
@@ -61,6 +61,19 @@ const AuthenView: React.FC = () => {
                   onPress={async () => {
                     sharedStore.setShowLoading(true);
                     await authenticationStore.facebookSignIn();
+                    sharedStore.setShowLoading(false);
+                  }}
+                />
+              </>
+            )}
+            {Platform.OS === 'ios' && (
+              <>
+                <Layouts.HSpace value={16} />
+                <Icons.AppleIcon
+                  size={30}
+                  onPress={async () => {
+                    sharedStore.setShowLoading(true);
+                    await authenticationStore.appleSignIn();
                     sharedStore.setShowLoading(false);
                   }}
                 />

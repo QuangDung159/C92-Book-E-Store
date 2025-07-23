@@ -121,6 +121,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingTop: 12,
   },
+  container1: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  button: {
+    width: 200,
+    height: 44,
+  },
 });
 
 const observable = observer(HomeScreen);
