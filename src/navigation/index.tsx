@@ -7,7 +7,7 @@ import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import { observer } from 'mobx-react-lite';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { AppState } from 'react-native';
+import { AppState, Platform } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Layouts } from '@components';
 import { SCREEN_NAME } from '@constants';
@@ -120,16 +120,18 @@ const Navigation = () => {
           color: COLORS.primaryWhite,
         }}
       />
-      <Layouts.ConfirmPopup
-        title="New version was released"
-        content={`Please update to the latest version of Book E-Store to enjoy new features and an enhanced experience!`}
-        visible={showPopup}
-        okTitle="Go to store"
-        hasCancel={false}
-        onOk={() => {
-          openPlayStore();
-        }}
-      />
+      {Platform.OS === 'android' && (
+        <Layouts.ConfirmPopup
+          title="New version was released"
+          content={`Please update to the latest version of Book E-Store to enjoy new features and an enhanced experience!`}
+          visible={showPopup}
+          okTitle="Go to store"
+          hasCancel={false}
+          onOk={() => {
+            openPlayStore();
+          }}
+        />
+      )}
       <Stack.Navigator
         screenOptions={{
           headerShown: false,

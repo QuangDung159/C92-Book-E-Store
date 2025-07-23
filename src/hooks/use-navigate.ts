@@ -1,6 +1,11 @@
 import * as Linking from 'expo-linking';
 import { Platform } from 'react-native';
-import { SCREEN_NAME, SHCEME, SUPPORT_LINK } from '@constants';
+import {
+  GOOGLE_PLAY_STORE_URL,
+  SCREEN_NAME,
+  SHCEME,
+  SUPPORT_LINK,
+} from '@constants';
 import { DataModels } from '@models';
 import { delay } from '@utils';
 
@@ -196,8 +201,8 @@ export const useNavigate = (navigation: any) => {
 
   const openPlayStore = () => {
     const url = Platform.select({
-      android: SUPPORT_LINK,
-      ios: SUPPORT_LINK,
+      android: GOOGLE_PLAY_STORE_URL,
+      ios: GOOGLE_PLAY_STORE_URL,
     });
 
     Linking.canOpenURL(url)
@@ -209,6 +214,10 @@ export const useNavigate = (navigation: any) => {
         }
       })
       .catch((err) => console.error('An error occurred', err));
+  };
+
+  const openSupportPage = () => {
+    Linking.openURL(SUPPORT_LINK);
   };
 
   const handleNavigateFromLinking = async (url: string) => {
@@ -273,5 +282,6 @@ export const useNavigate = (navigation: any) => {
     openPaymentCardScreen,
     openAddEditPaymentCardScreen,
     openVoucherScreen,
+    openSupportPage,
   };
 };
