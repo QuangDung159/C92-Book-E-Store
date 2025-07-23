@@ -73,18 +73,24 @@ class AuthenticationStore {
     }
   };
 
-  signUp = async (user: DataModels.IUser, onSuccess?: () => void) => {
+  signUp = async (
+    user: DataModels.IUser,
+    onSuccess?: () => void,
+    onFail?: () => void,
+  ) => {
     const { email, password, username, phoneNumber, signUpMethod, ssoToken } =
       user;
 
-    const result = await AuthenticationServices.signUp({
+    const signUpParams: DataModels.ISignUpParams = {
       email,
       password,
       signUpMethod,
       ssoToken,
       phoneNumber,
       username,
-    });
+    };
+
+    const result = await AuthenticationServices.signUp(signUpParams);
 
     if (!result?.success && result.error?.error) {
       const error = result.error.error;
@@ -96,8 +102,9 @@ class AuthenticationStore {
     }
 
     if (result.success) {
-      await delay(500);
       onSuccess?.();
+    } else {
+      onFail?.();
     }
   };
 
