@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/native';
-import { Image } from 'expo-image';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
 import {
@@ -112,7 +111,7 @@ const AccountView: React.FC = () => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        <Layouts.VSpace value={24} />
+        {/* <Layouts.VSpace value={24} />
         <View style={styles.avatarIcon}>
           {userStore.userProfile?.avatarUrl ? (
             <Image
@@ -123,7 +122,7 @@ const AccountView: React.FC = () => {
           ) : (
             <Icons.AccountCircle size={100} />
           )}
-        </View>
+        </View> */}
         <Layouts.VSpace value={24} />
         <View style={styles.profileInfoSection}>
           {renderInfoRow('Email:', userStore.userProfile.email)}
