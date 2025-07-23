@@ -35,6 +35,7 @@ function BottomTabNavigator() {
       <Tab.Navigator
         screenOptions={{
           headerShown: false,
+          tabBarShowLabel: false,
         }}
       >
         <Tab.Screen
@@ -42,14 +43,11 @@ function BottomTabNavigator() {
             tabBarIcon: (focus) => {
               return renderTabBarIcon(
                 (color) => (
-                  <Entypo name="home" size={24} color={color}></Entypo>
+                  <Entypo name="home" size={28} color={color}></Entypo>
                 ),
                 focus.focused,
               );
             },
-            tabBarLabelStyle: styles.tabBarLabelStyle,
-            // tabBarLabel: 'Trang chủ',
-            tabBarLabel: 'Home',
             tabBarStyle: styles.tabBarStyle,
           }}
           name={SCREEN_NAME.HOME_SCREEN}
@@ -62,16 +60,13 @@ function BottomTabNavigator() {
                 (color) => (
                   <MaterialIcons
                     name="category"
-                    size={24}
+                    size={28}
                     color={color}
                   ></MaterialIcons>
                 ),
                 focus.focused,
               );
             },
-            tabBarLabelStyle: styles.tabBarLabelStyle,
-            tabBarLabel: 'Category',
-            // tabBarLabel: 'Danh mục',
             tabBarStyle: styles.tabBarStyle,
           }}
           name={SCREEN_NAME.CATEGORIES}
@@ -97,7 +92,7 @@ function BottomTabNavigator() {
                     )}
                     <MaterialIcons
                       name="notifications"
-                      size={24}
+                      size={28}
                       color={color}
                     />
                   </View>
@@ -105,8 +100,6 @@ function BottomTabNavigator() {
                 focus.focused,
               );
             },
-            tabBarLabelStyle: styles.tabBarLabelStyle,
-            tabBarLabel: 'Notifications',
             tabBarStyle: styles.tabBarStyle,
           }}
           name={SCREEN_NAME.NOTIFICATIONS_SCREEN}
@@ -119,16 +112,13 @@ function BottomTabNavigator() {
                 (color) => (
                   <MaterialIcons
                     name="account-box"
-                    size={24}
+                    size={28}
                     color={color}
                   ></MaterialIcons>
                 ),
                 focus.focused,
               );
             },
-            tabBarLabelStyle: styles.tabBarLabelStyle,
-            tabBarLabel: 'Profile',
-            // tabBarLabel: 'Tài khoản',
             tabBarStyle: styles.tabBarStyle,
           }}
           name={SCREEN_NAME.ACCOUNT_SCREEN}
