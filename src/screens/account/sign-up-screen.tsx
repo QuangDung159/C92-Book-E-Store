@@ -5,6 +5,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { Buttons, Inputs, Layouts, ScreenHeader } from '@components';
 import { appModel, authenticationStore, sharedStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
+import { delay, ToastHelpers } from '@utils';
 import { SignUpViewModel } from './view-models';
 
 const SignUpScreen = ({ navigation }: any) => {
@@ -20,8 +21,13 @@ const SignUpScreen = ({ navigation }: any) => {
 
     sharedStore.setShowLoading(true);
 
-    await authenticationStore.signUp(signUpVM.toJsonObject, () => {
+    await authenticationStore.signUp(signUpVM.toJsonObject, async () => {
       navigation.goBack();
+      await delay(1000);
+      ToastHelpers.showToast({
+        title: 'Sign up successfully',
+        type: 'success',
+      });
     });
 
     sharedStore.setShowLoading(false);
@@ -89,9 +95,7 @@ const SignUpScreen = ({ navigation }: any) => {
         <Buttons.CButton
           label="Sign Up"
           buttonType="primary"
-          onPress={() => {
-            onSubmit();
-          }}
+          onPress={onSubmit}
         />
         <Layouts.VSpace value={24} />
       </KeyboardAwareScrollView>

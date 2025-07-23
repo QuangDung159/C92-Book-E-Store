@@ -242,3 +242,13 @@ export interface IReverseGeocode {
   postalCode: string;
   street: string;
 }
+
+export interface ISignUpParams {
+  email: string;
+  password?: string;
+  signUpMethod: SignUpMethod;
+  ssoToken?: string;
+  username?: string;
+  phoneNumber?: string;
+  avatarUrl?: string;
+}

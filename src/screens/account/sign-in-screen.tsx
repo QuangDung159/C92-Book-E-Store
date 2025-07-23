@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     ...FONT_STYLES.SEMIBOLD_14,
   },
   forgotPassword: {
-    ...FONT_STYLES.REGULAR_14,
+    ...FONT_STYLES.SEMIBOLD_14,
     textAlign: 'center',
   },
 });

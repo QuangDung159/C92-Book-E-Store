@@ -72,7 +72,7 @@ type VoucherType = 'fix' | 'percent';
 
 type PaymentCardType = 'master-card' | 'jcb' | 'visa';
 
-type SignUpMethod = 'in-app' | 'google' | 'facebook';
+type SignUpMethod = 'in-app' | 'google' | 'facebook' | 'apple';
 
 export {
   AdministrativeUnitEnum,
