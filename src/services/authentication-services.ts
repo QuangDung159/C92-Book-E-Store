@@ -128,6 +128,12 @@ const fetchUser = async (userId: string) => {
   return await HttpServices.get(API_URL.user + '/get-one/' + userId);
 };
 
+const requestDeleteUser = async (userId: string) => {
+  return await HttpServices.get(
+    API_URL.user + '/request-delete-user/' + userId,
+  );
+};
+
 const signIn = async (params: {
   email: string;
   password: string;
@@ -182,4 +188,5 @@ export const AuthenticationServices = {
   updateCreditCard,
   deleteCreditCard,
   appleSignin,
+  requestDeleteUser,
 };

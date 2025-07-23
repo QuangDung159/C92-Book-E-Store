@@ -16,8 +16,10 @@ import {
 import { Divider } from 'react-native-paper';
 import { Icons, Layouts } from '@components';
 import { useNavigate } from '@hooks';
+import { AuthenticationServices } from '@services';
 import { authenticationStore, sharedStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
+import { delay } from '@utils';
 import { AppVersionText } from './app-version-text';
 
 const AccountView: React.FC = () => {
@@ -33,6 +35,8 @@ const AccountView: React.FC = () => {
   } = useNavigate(navigation);
 
   const [refreshing, setRefreshing] = useState(false);
+  const [showConfirmDeleteAccount, setShowConfirmDeleteAccount] =
+    useState(false);
 
   useEffect(() => {
     sharedStore.setShowLoading(true);
@@ -81,6 +85,27 @@ const AccountView: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      <Layouts.ConfirmPopup
+        title="Confirm delete your account"
+        content={`This action cannot be undone. All your data will be permanently deleted.\nYour account will be removed from our system after 7 days. Log in again within 7 days to restore your account.`}
+        visible={showConfirmDeleteAccount}
+        cancelTitle="Confirm delete"
+        okTitle="Cancel"
+        onCancel={async () => {
+          setShowConfirmDeleteAccount(false);
+          await delay(1000);
+          sharedStore.setShowLoading(true);
+          await AuthenticationServices.requestDeleteUser(
+            userStore.userProfile.id,
+          );
+          await delay(2000);
+          sharedStore.setShowLoading(false);
+          authenticationStore.signOut();
+        }}
+        onOk={() => {
+          setShowConfirmDeleteAccount(false);
+        }}
+      />
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={
@@ -129,6 +154,13 @@ const AccountView: React.FC = () => {
               openPaymentCardScreen();
             })}
           </>
+        )}
+        {renderMenuItem(
+          'Delete account',
+          () => {
+            setShowConfirmDeleteAccount(true);
+          },
+          styles.signOut,
         )}
         {renderMenuItem(
           'Sign Out',

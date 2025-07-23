@@ -68,7 +68,7 @@ const SignInScreen = ({ navigation }: any) => {
         <Layouts.VSpace value={12} />
         <Inputs.CTextInput
           value={signInVM.username}
-          placeholder="Enter username"
+          placeholder="Enter email"
           onChangeText={(value) => {
             signInVM.setUsername(value);
           }}
