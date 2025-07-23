@@ -1,6 +1,7 @@
 import * as Linking from 'expo-linking';
 import { Platform } from 'react-native';
 import {
+  APP_STORE_URL,
   GOOGLE_PLAY_STORE_URL,
   SCREEN_NAME,
   SHCEME,
@@ -199,10 +200,10 @@ export const useNavigate = (navigation: any) => {
     }
   };
 
-  const openPlayStore = () => {
+  const openAplicationStore = () => {
     const url = Platform.select({
       android: GOOGLE_PLAY_STORE_URL,
-      ios: GOOGLE_PLAY_STORE_URL,
+      ios: APP_STORE_URL,
     });
 
     Linking.canOpenURL(url)
@@ -274,7 +275,7 @@ export const useNavigate = (navigation: any) => {
     openBookListingScreen,
     openNotificationsScreen,
     handleNotificationNavigate,
-    openPlayStore,
+    openAplicationStore,
     openOrdersScreen,
     openOrderDetailScreen,
     openFavoriteScreen,
