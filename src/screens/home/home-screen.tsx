@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Linking from 'expo-linking';
 import * as Notifications from 'expo-notifications';
 import { observer } from 'mobx-react-lite';
@@ -57,32 +56,6 @@ const HomeScreen = ({ navigation }: any) => {
       <SearchBar
         showCartIcon={userStore.authenticated}
         navigation={navigation}
-      />
-      <AppleAuthentication.AppleAuthenticationButton
-        buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
-        buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
-        cornerRadius={5}
-        style={styles.button}
-        onPress={async () => {
-          try {
-            const credential = await AppleAuthentication.signInAsync({
-              requestedScopes: [
-                AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
-                AppleAuthentication.AppleAuthenticationScope.EMAIL,
-              ],
-            });
-
-            console.log('credential :>> ', credential);
-            // signed in
-          } catch (e) {
-            console.log('e :>> ', e);
-            if (e.code === 'ERR_REQUEST_CANCELED') {
-              // handle that the user canceled the sign-in flow
-            } else {
-              // handle other errors
-            }
-          }
-        }}
       />
       <ScrollView
         scrollEnabled={true}
