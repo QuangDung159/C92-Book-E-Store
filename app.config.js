@@ -18,6 +18,7 @@ export default {
       bundleIdentifier: 'com.dragonc92team.BookEStoreV1',
       buildNumber: '1',
       googleServicesFile: './ios/BookEStore/GoogleService-Info.plist',
+      usesAppleSignIn: true,
     },
     android: {
       adaptiveIcon: {
@@ -36,6 +37,7 @@ export default {
       favicon: './src/assets/images/e-book-logo.png',
     },
     plugins: [
+      'expo-apple-authentication',
       [
         'onesignal-expo-plugin',
         {
