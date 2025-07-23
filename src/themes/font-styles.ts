@@ -207,6 +207,21 @@ const THIN_12: TextStyle = {
   fontFamily: 'Montserrat-Thin',
 };
 
+const EXTRA_BOLD_14: TextStyle = {
+  ...FONT_14,
+  fontFamily: 'Montserrat-ExtraBold',
+};
+
+const EXTRA_BOLD_16: TextStyle = {
+  ...FONT_16,
+  fontFamily: 'Montserrat-ExtraBold',
+};
+
+const EXTRA_BOLD_12: TextStyle = {
+  ...FONT_12,
+  fontFamily: 'Montserrat-ExtraBold',
+};
+
 export {
   BOLD_10,
   BOLD_12,
@@ -216,6 +231,9 @@ export {
   BOLD_20,
   BOLD_22,
   BOLD_8,
+  EXTRA_BOLD_12,
+  EXTRA_BOLD_14,
+  EXTRA_BOLD_16,
   FONT_10,
   FONT_12,
   FONT_14,

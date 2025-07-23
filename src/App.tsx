@@ -82,12 +82,12 @@ const App = () => {
     await Font.loadAsync({
       'Montserrat-Regular': require('./assets/fonts/Montserrat-Regular.ttf'),
       'Montserrat-Bold': require('./assets/fonts/Montserrat-Bold.ttf'),
+      'Montserrat-ExtraBold': require('./assets/fonts/Montserrat-ExtraBold.ttf'),
       'Montserrat-SemiBold': require('./assets/fonts/Montserrat-SemiBold.ttf'),
       'Montserrat-Thin': require('./assets/fonts/Montserrat-Thin.ttf'),
       'Montserrat-Black': require('./assets/fonts/Montserrat-Black.ttf'),
       'Montserrat-Light': require('./assets/fonts/Montserrat-Light.ttf'),
       'Montserrat-Medium': require('./assets/fonts/Montserrat-Medium.ttf'),
-      // Thêm các biến thể khác nếu cần
     });
     setFontsLoaded(true);
     SplashScreen.hideAsync();

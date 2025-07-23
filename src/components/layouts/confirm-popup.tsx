@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    ...FONT_STYLES.REGULAR_16,
+    ...FONT_STYLES.SEMIBOLD_14,
     lineHeight: 20,
   },
 });
