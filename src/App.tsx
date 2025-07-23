@@ -37,7 +37,7 @@ if (__DEV__) {
 const App = () => {
   const navigationRef = useRef<NavigationContainerRef<any>>(null);
 
-  const { openPlayStore } = useNavigate(navigationRef.current);
+  const { openSupportPage } = useNavigate(navigationRef.current);
 
   useEffect(() => {
     SplashScreen.preventAutoHideAsync();
@@ -58,11 +58,11 @@ const App = () => {
         sharedStore.setShowLoading(true);
         delay(1000).then(() => {
           sharedStore.setShowLoading(false);
-          openPlayStore();
+          openSupportPage();
         });
       }
     },
-    [openPlayStore],
+    [openSupportPage],
   );
 
   useEffect(() => {
