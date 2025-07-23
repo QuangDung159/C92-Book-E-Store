@@ -2,8 +2,8 @@ export default {
   expo: {
     name: 'Book E-Store',
     slug: 'c92-book-e-store-v1',
-    version: '1.0.22',
-    runtimeVersion: '1.0.22',
+    version: '1.0.23',
+    runtimeVersion: '1.0.23',
     orientation: 'portrait',
     icon: './src/assets/images/e-book-logo.png',
     scheme: 'c92bookestorev1',
@@ -16,7 +16,7 @@ export default {
     ios: {
       supportsTablet: true,
       bundleIdentifier: 'com.dragonc92team.BookEStoreV1',
-      buildNumber: '13',
+      buildNumber: '1',
       googleServicesFile: './ios/BookEStore/GoogleService-Info.plist',
     },
     android: {
@@ -25,7 +25,7 @@ export default {
         backgroundColor: '#ffffff',
       },
       package: 'com.dragonc92team.BookEStoreV1',
-      versionCode: 70,
+      versionCode: 66,
       googleServicesFile: './android/app/google-services.json',
       permissions: ['ACCESS_FINE_LOCATION', 'ACCESS_COARSE_LOCATION'],
       targetSdkVersion: 35,

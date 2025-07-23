@@ -90,6 +90,9 @@ const EXPO_PUSH_NOTIFICATION_URL = 'https://exp.host/--/api/v2/push/send';
 const GOOGLE_PLAY_STORE_URL =
   'https://play.google.com/store/apps/details?id=com.dragonc92team.BookEStoreV1';
 
+const APP_STORE_URL =
+  'https://play.google.com/store/apps/details?id=com.dragonc92team.BookEStoreV1';
+
 const SUPPORT_LINK = 'https://sites.google.com/view/c92-book-e-store/home';
 
 const API_PREFIX = 'api/v1/book-store';
@@ -165,11 +168,14 @@ const LIST_PAYMENT_METHOD_IOS = [
   { id: '1', value: 'cod', label: 'Cash on Delivery', showIcon: false },
 ];
 
+const PACKAGE_NAME = 'com.dragonc92team.BookEStoreV1';
+
 export {
   ADMINISTRATIVE,
   API_PREFIX,
   API_URL,
   APP_LINK_URL,
+  APP_STORE_URL,
   CODE_PUSH_NUMBER,
   DEEP_LINK_PAYMENT_SUCCESS_URL,
   DEEP_LINK_URL,
@@ -185,6 +191,7 @@ export {
   LIST_PAYMENT_METHOD_IOS,
   LIST_SORT_OPTION,
   MOMO_REQUEST_TYPE,
+  PACKAGE_NAME,
   PAYMENT_CARD_TYPE,
   PAYMENT_STATUS,
   PAYMENT_TYPE,
