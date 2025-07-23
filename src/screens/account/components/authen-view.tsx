@@ -53,15 +53,19 @@ const AuthenView: React.FC = () => {
                 sharedStore.setShowLoading(false);
               }}
             />
-            <Layouts.HSpace value={16} />
-            <Icons.FacebookIcon
-              size={30}
-              onPress={async () => {
-                sharedStore.setShowLoading(true);
-                await authenticationStore.facebookSignIn();
-                sharedStore.setShowLoading(false);
-              }}
-            />
+            {process.env.EXPO_PUBLIC_ENV !== 'PROD' && (
+              <>
+                <Layouts.HSpace value={16} />
+                <Icons.FacebookIcon
+                  size={30}
+                  onPress={async () => {
+                    sharedStore.setShowLoading(true);
+                    await authenticationStore.facebookSignIn();
+                    sharedStore.setShowLoading(false);
+                  }}
+                />
+              </>
+            )}
           </View>
         </View>
       </View>
