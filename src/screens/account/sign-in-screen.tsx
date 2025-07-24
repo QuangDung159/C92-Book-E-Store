@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   Dimensions,
   Keyboard,
@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import { Buttons, Inputs, Layouts, ScreenHeader } from '@components';
+import { UNKNOWN_ERROR_MESSAGE } from '@constants';
 import { useNavigate } from '@hooks';
 import {
   appModel,
@@ -25,6 +26,7 @@ const SignInScreen = ({ navigation }: any) => {
   const signInVM = useRef(new SignInViewModel(appModel.userStore)).current;
   const { openForgotPasswordScreen } = useNavigate(navigation);
   const { width, height } = Dimensions.get('window');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const onSubmit = async () => {
     Keyboard.dismiss();
@@ -41,6 +43,9 @@ const SignInScreen = ({ navigation }: any) => {
       notificationStore.expoPushToken,
       () => {
         navigation.goBack();
+      },
+      (error) => {
+        setErrorMessage(error?.errorMessage || UNKNOWN_ERROR_MESSAGE);
       },
     );
 
@@ -71,9 +76,11 @@ const SignInScreen = ({ navigation }: any) => {
           placeholder="Enter email"
           onChangeText={(value) => {
             signInVM.setUsername(value);
+            setErrorMessage('');
           }}
           errorMessage={signInVM.validationErrors.get('username')}
           shouldShowErrorTitle={signInVM.shouldShowValidationErrors}
+          keyboardType="email-address"
         />
         <Layouts.VSpace value={12} />
         <Inputs.CTextInput
@@ -91,9 +98,7 @@ const SignInScreen = ({ navigation }: any) => {
         <Buttons.CButton
           label="Sign In"
           buttonType="primary"
-          onPress={async () => {
-            onSubmit();
-          }}
+          onPress={onSubmit}
         />
         <Layouts.VSpace value={12} />
         <TouchableOpacity
@@ -103,6 +108,19 @@ const SignInScreen = ({ navigation }: any) => {
         >
           <Text style={styles.forgotPassword}>Forgot password</Text>
         </TouchableOpacity>
+        <Layouts.VSpace value={24} />
+        <View>
+          <Text
+            style={[
+              styles.forgotPassword,
+              {
+                color: COLORS.error50,
+              },
+            ]}
+          >
+            {errorMessage}
+          </Text>
+        </View>
       </View>
     </View>
   );

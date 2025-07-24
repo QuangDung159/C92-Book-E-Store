@@ -6,6 +6,7 @@ import {
   SCREEN_NAME,
   SHCEME,
   SUPPORT_LINK,
+  UNKNOWN_ERROR_MESSAGE,
 } from '@constants';
 import { DataModels } from '@models';
 import { delay } from '@utils';
@@ -214,7 +215,7 @@ export const useNavigate = (navigation: any) => {
           console.log("Don't know how to open URI: " + url);
         }
       })
-      .catch((err) => console.error('An error occurred', err));
+      .catch((err) => console.error(UNKNOWN_ERROR_MESSAGE, err));
   };
 
   const openSupportPage = () => {
