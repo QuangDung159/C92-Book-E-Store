@@ -107,7 +107,7 @@ const IN_APP_MESSAGE_ACTION_ID = {
 const LIST_HOME_PAGE_TITLE = {
   topBook: 'top',
   latest: 'latest',
-  upcomming: 'upcomming',
+  upcoming: 'upcoming',
 };
 
 const API_BASE_URL = BASE_URL + API_PREFIX;

@@ -36,14 +36,7 @@ const BookCardItemComplex: React.FC<BookCardItemComplexProps> = ({
   const carouselHeight = carouselWidth * 0.65;
   const navigation = useNavigation();
 
-  const data = [
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-  ];
+  const data = [bookCardItem.image, ImageAssets.bookImage1];
 
   return (
     <React.Fragment key={bookCardItem.id}>

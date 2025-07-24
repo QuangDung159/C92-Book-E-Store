@@ -16,7 +16,6 @@ import {
 } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
-import { ImageAssets } from '@assets';
 import { AddToCartButton, Buttons, Layouts } from '@components';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
@@ -129,14 +128,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
     userStore.fetchListInAccountView('viewed');
   };
 
-  const data = [
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-  ];
+  const data = [bookInfo?.image, bookInfo?.image, bookInfo?.image];
 
   const scrollRef = useRef<ScrollView>();
 

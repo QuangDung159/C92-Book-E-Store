@@ -11,7 +11,6 @@ import {
   ViewStyle,
 } from 'react-native';
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
-import { ImageAssets } from '@assets';
 import {
   BookCardCarousel,
   BookCardPrice,
@@ -43,14 +42,7 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
   const carouselWidth = (width - 48 - 12) / 2;
   const carouselHeight = carouselWidth * 1.3;
 
-  const data = [
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-  ];
+  const data = [bookCardItem.image];
 
   const onPressAddToCart = async () => {
     if (!userStore.authenticated) {

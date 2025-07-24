@@ -34,7 +34,7 @@ const ListOrder: React.FC<ListOrderProps> = ({
           );
         }}
         contentContainerStyle={{
-          paddingBottom: 24,
+          paddingBottom: 12,
         }}
         ListEmptyComponent={() => {
           return (

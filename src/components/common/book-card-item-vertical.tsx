@@ -42,7 +42,7 @@ const BookCardItemVertical: React.FC<BookCardItemVerticalProps> = ({
           <Image
             style={styles.image}
             contentFit="contain"
-            source={ImageAssets.bookImage1}
+            source={bookCardItem.image || ImageAssets.bookImage1}
             transition={500}
           />
           <View
@@ -92,9 +92,10 @@ const BookCardItemVertical: React.FC<BookCardItemVerticalProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: COLORS.gray200,
     height: 185,
     borderRadius: 8,
+    borderWidth: 1,
+    borderColor: COLORS.gray200,
   },
   info: {
     flexDirection: 'row',

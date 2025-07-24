@@ -57,10 +57,15 @@ const OrderDetailScreen = ({ navigation, route }: any) => {
 
   const renderOrderInfoItem = (title: string, value: string) => {
     return (
-      <>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        }}
+      >
         <Text
           style={{
-            ...FONT_STYLES.BOLD_14,
+            ...FONT_STYLES.SEMIBOLD_14,
             marginBottom: 4,
           }}
         >
@@ -68,12 +73,12 @@ const OrderDetailScreen = ({ navigation, route }: any) => {
         </Text>
         <Text
           style={{
-            ...FONT_STYLES.REGULAR_14,
+            ...FONT_STYLES.BOLD_14,
           }}
         >
           {value}
         </Text>
-      </>
+      </View>
     );
   };
 
@@ -101,20 +106,31 @@ const OrderDetailScreen = ({ navigation, route }: any) => {
           <Collapsible collapsed={!order} duration={2000}>
             <ListOrder listOrder={[order]} isShowFullListCart />
             <View style={styles.wrapper}>
+              <Layouts.Divider />
+              <Layouts.VSpace value={12} />
               {renderOrderInfoItem('Status:', order.status?.toUpperCase())}
+              <Layouts.VSpace value={12} />
+              {renderOrderInfoItem('Payment method:', paymentTypeText)}
               <Layouts.VSpace value={12} />
               {renderOrderInfoItem(
                 'Shipping address:',
                 order.cart.shippingInfo,
               )}
-              <Text
+              <View
                 style={{
-                  ...FONT_STYLES.REGULAR_14,
-                  marginTop: 4,
+                  width: '60%',
+                  alignSelf: 'flex-end',
                 }}
-              >{`${order.cart.shippingAddress}`}</Text>
-              <Layouts.VSpace value={12} />
-              {renderOrderInfoItem('Payment method:', paymentTypeText)}
+              >
+                <Text
+                  style={{
+                    ...FONT_STYLES.BOLD_14,
+                    marginTop: 4,
+                    textAlign: 'right',
+                    lineHeight: 20,
+                  }}
+                >{`${order.cart.shippingAddress}`}</Text>
+              </View>
               {order.status === 'created' && (
                 <CancelOrderButton
                   order={order}
