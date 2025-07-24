@@ -67,8 +67,8 @@ const styles = StyleSheet.create({
     zIndex: 99,
   },
   image: {
-    width: 200 * 0.64,
-    height: 200,
+    width: 200,
+    height: 250,
   },
 });
 

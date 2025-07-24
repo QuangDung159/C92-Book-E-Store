@@ -4,12 +4,11 @@ import * as Notifications from 'expo-notifications';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
-import { ImageAssets } from '@assets';
 import { Layouts, SearchBar } from '@components';
 import { useNavigate } from '@hooks';
 import { appModel, searchStore, sharedStore, userStore } from '@store';
 import { COLORS } from '@themes';
-import { BestDealCarousel, HorizontalListCard } from './components';
+import { HorizontalListCard } from './components';
 
 const HomeScreen = ({ navigation }: any) => {
   const { handleNavigateFromLinking } = useNavigate(navigation);
@@ -65,7 +64,7 @@ const HomeScreen = ({ navigation }: any) => {
         }
       >
         <Layouts.VSpace value={12}></Layouts.VSpace>
-        <BestDealCarousel
+        {/* <BestDealCarousel
           data={[
             ImageAssets.slide,
             ImageAssets.slide,
@@ -75,7 +74,7 @@ const HomeScreen = ({ navigation }: any) => {
             ImageAssets.slide,
           ]}
         />
-        <Layouts.VSpace value={24} />
+        <Layouts.VSpace value={24} /> */}
         {searchStore.listTopBook.length > 0 && (
           <>
             <HorizontalListCard
@@ -91,19 +90,19 @@ const HomeScreen = ({ navigation }: any) => {
             <Layouts.VSpace value={48} />
           </>
         )}
-        {searchStore.listTopBook.length > 0 && (
+        {searchStore.listLatest.length > 0 && (
           <>
             <HorizontalListCard
-              listItem={searchStore.listTopBook}
+              listItem={searchStore.listLatest}
               title="Latest Books"
               showSeeMore
             />
             <Layouts.VSpace value={48} />
           </>
         )}
-        {searchStore.listTopBook.length > 0 && (
+        {searchStore.listUpcoming.length > 0 && (
           <HorizontalListCard
-            listItem={searchStore.listTopBook}
+            listItem={searchStore.listUpcoming}
             title="Upcoming Books"
             showSeeMore
           />

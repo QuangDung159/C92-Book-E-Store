@@ -91,12 +91,14 @@ const OrderItem: React.FC<OrderItemProps> = ({
                 {listCartItem.map((item, index) => {
                   if (index !== 0) {
                     return (
-                      <CartItem
-                        key={item.id}
-                        bookCartItem={item}
-                        type="short"
-                        containerStyle={styles.cartItem}
-                      />
+                      <>
+                        <CartItem
+                          key={item.id}
+                          bookCartItem={item}
+                          type="short"
+                          containerStyle={styles.cartItem}
+                        />
+                      </>
                     );
                   }
                   return null;
@@ -159,12 +161,9 @@ const styles = StyleSheet.create({
   container: {
     alignSelf: 'center',
     marginTop: 24,
-    backgroundColor: COLORS.gray200,
     borderRadius: 8,
   },
-  cartItem: {
-    marginBottom: -12,
-  },
+  cartItem: {},
   seeMore: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -175,16 +174,16 @@ const styles = StyleSheet.create({
     ...FONT_STYLES.REGULAR_14,
   },
   totalSec: {
-    padding: 8,
+    // padding: 8,
   },
   totalRow: {
     flexDirection: 'row',
   },
   totalTitle: {
-    ...FONT_STYLES.REGULAR_14,
+    ...FONT_STYLES.SEMIBOLD_14,
   },
   totalValue: {
-    ...FONT_STYLES.SEMIBOLD_14,
+    ...FONT_STYLES.BOLD_14,
   },
   cancelButton: {
     backgroundColor: COLORS.gray200,

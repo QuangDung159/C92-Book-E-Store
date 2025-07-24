@@ -45,6 +45,7 @@ export interface IBook {
   publisher?: IPublisher;
   priceNotSale?: number;
   count?: number;
+  image?: string;
 }
 
 export interface ICartItem {

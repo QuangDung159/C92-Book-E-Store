@@ -80,7 +80,7 @@ class AppModel {
 
     this.searchStore.fetchListBookHomePage(LIST_HOME_PAGE_TITLE.latest);
     this.searchStore.fetchListBookHomePage(LIST_HOME_PAGE_TITLE.topBook);
-    this.searchStore.fetchListBookHomePage(LIST_HOME_PAGE_TITLE.upcomming);
+    this.searchStore.fetchListBookHomePage(LIST_HOME_PAGE_TITLE.upcoming);
 
     this.categoryStore.fetchListCategory();
 
