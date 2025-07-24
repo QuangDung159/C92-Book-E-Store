@@ -63,6 +63,8 @@ const enum ERROR_CODES {
   INVALID_AUTHORIZATION = 403,
   NETWORK_ERROR = 500,
   MAINTENANCE_ERROR = 503,
+  NOT_FOUND_ERROR = 404,
+  BAD_REQUEST = 400,
 }
 
 const MOMO_REQUEST_TYPE = 'captureWallet';
@@ -170,6 +172,8 @@ const LIST_PAYMENT_METHOD_IOS = [
 
 const PACKAGE_NAME = 'com.dragonc92team.BookEStoreV1';
 
+const UNKNOWN_ERROR_MESSAGE = 'An unknown error occurred.';
+
 export {
   ADMINISTRATIVE,
   API_PREFIX,
@@ -200,4 +204,5 @@ export {
   SHCEME,
   SUPPORT_LINK,
   TOP_BOOKS_FILTER,
+  UNKNOWN_ERROR_MESSAGE,
 };

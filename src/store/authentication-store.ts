@@ -58,6 +58,7 @@ class AuthenticationStore {
     password: string,
     notificationToken: string,
     onSuccess?: () => void,
+    onFail?: (result?: DataModels.ServiceResult<any>) => void,
   ) => {
     const result = await AuthenticationServices.signIn({
       email,
@@ -70,13 +71,15 @@ class AuthenticationStore {
 
       await this.onSignInSuccess(user);
       onSuccess?.();
+    } else {
+      onFail?.(result);
     }
   };
 
   signUp = async (
     user: DataModels.IUser,
     onSuccess?: () => void,
-    onFail?: () => void,
+    onFail?: (result?: DataModels.ServiceResult<any>) => void,
   ) => {
     const { email, password, username, phoneNumber, signUpMethod, ssoToken } =
       user;
@@ -104,7 +107,7 @@ class AuthenticationStore {
     if (result.success) {
       onSuccess?.();
     } else {
-      onFail?.();
+      onFail?.(result);
     }
   };
 
