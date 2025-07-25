@@ -26,7 +26,7 @@ const ListOrder: React.FC<ListOrderProps> = ({
         data={listOrder}
         renderItem={({ item }) => {
           return (
-            <>
+            <React.Fragment key={item.id}>
               <OrderItem
                 orderItem={item}
                 isShowFullListCart={isShowFullListCart}
@@ -34,7 +34,7 @@ const ListOrder: React.FC<ListOrderProps> = ({
               />
               <Layouts.VSpace value={24} />
               <Layouts.Divider />
-            </>
+            </React.Fragment>
           );
         }}
         contentContainerStyle={{
