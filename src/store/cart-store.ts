@@ -4,6 +4,7 @@ import {
   makeObservable,
   observable,
   runInAction,
+  toJS,
 } from 'mobx';
 import { Linking } from 'react-native';
 import {
@@ -503,6 +504,29 @@ class CartStore {
     }
 
     return result;
+  };
+
+  markVoucherWasUsed = async () => {
+    if (!this.voucherSelected) {
+      return;
+    }
+
+    const listVoucher = toJS([...this.userStore.userProfile.listVoucher]);
+
+    const index = listVoucher.findIndex(
+      (item) => item.id === this.voucherSelected.id,
+    );
+
+    if (index !== -1) {
+      listVoucher.splice(index, 1);
+
+      this.userStore.updateUser({
+        ...this.userStore.userProfile,
+        listVoucher,
+      });
+    } else {
+      // authenticationStore.fetchUser();
+    }
   };
 }
 

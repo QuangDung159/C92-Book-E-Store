@@ -28,7 +28,7 @@ const defaultFilter: DataModels.ISearchFilter = {
 
 class SearchStore {
   sortOption: DataModels.ISortOption | null = DEFAULT_SORT;
-  viewStyle: string = 'grid';
+  viewStyle: string = 'list';
   searchFilter: DataModels.ISearchFilter | null = defaultFilter;
   searchFilterPreviuos: DataModels.ISearchFilter = defaultFilter;
   listBook: IBook[] = [];
