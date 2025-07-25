@@ -10,6 +10,7 @@ class SharedStore {
   listConfig: DataModels.IConfig[] = [];
   geoLocation: DataModels.IReverseGeocode | null = null;
   appLinkUrl?: string = '';
+  buttonLoading: boolean = false;
 
   constructor() {
     makeObservable(this, {
@@ -17,10 +18,12 @@ class SharedStore {
       listConfig: observable,
       geoLocation: observable,
       appLinkUrl: observable,
+      buttonLoading: observable,
       setAppLinkUrl: action,
       setGeoLocation: action,
       setListConfig: action,
       setShowLoading: action,
+      setButtonLoading: action,
     });
   }
 
@@ -47,6 +50,10 @@ class SharedStore {
       console.log('e :>> ', e);
     }
   };
+
+  setButtonLoading(value: boolean) {
+    this.buttonLoading = value;
+  }
 
   getStorageValue = async (key: string) => {
     try {

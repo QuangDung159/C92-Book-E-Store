@@ -14,6 +14,7 @@ interface AddToCartButtonProps {
   buttonType?: 'icon' | 'text-icon';
   onUpdateCount?: (countNumber: number) => void;
   bookCardItem: DataModels.IBook;
+  showCount?: boolean;
 }
 
 const AddToCartButton: React.FC<AddToCartButtonProps> = ({
@@ -22,6 +23,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   buttonType = 'icon',
   onUpdateCount,
   bookCardItem,
+  showCount = true,
 }) => {
   const navigation = useNavigation();
   const { openCartScreen, openSignInScreen } = useNavigate(navigation);
@@ -52,22 +54,26 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
 
   return (
     <View style={[styles.addToCartWrapper, containerStyle]}>
-      <View style={styles.addToCartWrapper}>
-        <View style={styles.addToCart}>
-          <Icons.MinusIcon
-            disabled={itemCount === 1}
-            onPress={() => onUpdateCount?.(itemCount - 1)}
-            color={COLORS.primaryWhite}
-          />
-          <Text style={styles.cartNumber}>{itemCount}</Text>
-          <Icons.PlusIcon
-            onPress={() => onUpdateCount?.(itemCount + 1)}
-            disabled={itemCount >= bookCardItem.stock}
-            color={COLORS.primaryWhite}
-          />
-        </View>
-      </View>
-      <Layouts.HSpace value={8} />
+      {showCount && (
+        <>
+          <View style={styles.addToCart}>
+            <Icons.MinusIcon
+              disabled={itemCount === 1}
+              onPress={() => onUpdateCount?.(itemCount - 1)}
+              color={COLORS.primaryWhite}
+            />
+            <Text style={styles.cartNumber}>{itemCount}</Text>
+            <Icons.PlusIcon
+              onPress={() => {
+                onUpdateCount?.(itemCount + 1);
+              }}
+              disabled={itemCount >= bookCardItem.stock}
+              color={COLORS.primaryWhite}
+            />
+          </View>
+          <Layouts.HSpace value={8} />
+        </>
+      )}
       {buttonType === 'icon' ? (
         <View style={styles.cartIconWrapper}>
           <Icons.CartIcon color={COLORS.primaryWhite} onPress={onAddToCart} />
@@ -78,7 +84,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
           buttonType="primary"
           label="Add to cart"
           style={{
-            borderRadius: 50,
+            borderRadius: 8,
           }}
           iconLeft={() => <Icons.CartIcon color={COLORS.primaryWhite} />}
         />
