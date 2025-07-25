@@ -91,14 +91,12 @@ const OrderItem: React.FC<OrderItemProps> = ({
                 {listCartItem.map((item, index) => {
                   if (index !== 0) {
                     return (
-                      <>
-                        <CartItem
-                          key={item.id}
-                          bookCartItem={item}
-                          type="short"
-                          containerStyle={styles.cartItem}
-                        />
-                      </>
+                      <CartItem
+                        key={item.id}
+                        bookCartItem={item}
+                        type="short"
+                        containerStyle={styles.cartItem}
+                      />
                     );
                   }
                   return null;
