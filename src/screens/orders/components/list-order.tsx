@@ -26,11 +26,15 @@ const ListOrder: React.FC<ListOrderProps> = ({
         data={listOrder}
         renderItem={({ item }) => {
           return (
-            <OrderItem
-              orderItem={item}
-              isShowFullListCart={isShowFullListCart}
-              showCancelButton={showCancelButton}
-            />
+            <>
+              <OrderItem
+                orderItem={item}
+                isShowFullListCart={isShowFullListCart}
+                showCancelButton={showCancelButton}
+              />
+              <Layouts.VSpace value={24} />
+              <Layouts.Divider />
+            </>
           );
         }}
         contentContainerStyle={{

@@ -35,7 +35,7 @@ import {
 } from '@constants';
 import { useNavigate } from '@hooks';
 import { CartServices } from '@services';
-import { cartStore, notificationStore, sharedStore, userStore } from '@store';
+import { cartStore, sharedStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { PaymentType } from '@types';
 import { delay, ToastHelpers } from '@utils';
@@ -46,8 +46,8 @@ const CheckoutScreen = ({ navigation }: any) => {
   const {
     openAddressScreen,
     openVoucherScreen,
-    openHomeScreen,
     openPaymentCardScreen,
+    openPaymentSuccessScreen,
   } = useNavigate(navigation);
   const [isShowListCreditCart, setIsShowListCreditCart] = useState(false);
   const [fetchZaloPayOrderDone, setFetchZaloPayOrderDone] = useState(false);
@@ -137,18 +137,7 @@ const CheckoutScreen = ({ navigation }: any) => {
       cartStore.paymentSelected.paymentType === 'cod' ||
         cartStore.paymentSelected.paymentType === 'credit_card'
         ? async () => {
-            await Promise.all([
-              cartStore.fetchCart(userStore.userProfile.id),
-              userStore.fetchListOrder('created'),
-              notificationStore.loadNotification(),
-            ]);
-
-            openHomeScreen();
-            await delay(500);
-            ToastHelpers.showToast({
-              title: 'Order created successfully',
-              type: 'success',
-            });
+            openPaymentSuccessScreen();
           }
         : null,
     );
@@ -320,7 +309,7 @@ const CheckoutScreen = ({ navigation }: any) => {
               color: COLORS.gray60,
             }}
           >
-            Processing....
+            Processing...
           </Text>
         </View>
       )}
