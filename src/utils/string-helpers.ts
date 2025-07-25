@@ -39,10 +39,13 @@ export const getItemFromDataSource = (
 };
 
 export const formatCurrency = (amount: number) => {
-  return amount.toLocaleString('vi-VN', {
-    style: 'currency',
-    currency: 'VND',
-  });
+  if (amount) {
+    return amount.toLocaleString('vi-VN', {
+      style: 'currency',
+      currency: 'VND',
+    });
+  }
+  return '0';
 };
 
 export const buildDataForSignature = (params: PaymentData) => {

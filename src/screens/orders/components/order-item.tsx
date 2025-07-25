@@ -168,6 +168,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     alignSelf: 'center',
+    marginBottom: 8,
   },
   seeMoreText: {
     textAlign: 'center',

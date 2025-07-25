@@ -41,7 +41,6 @@ const BookCardItemVertical: React.FC<BookCardItemVerticalProps> = ({
         <View style={styles.info}>
           <Image
             style={styles.image}
-            contentFit="contain"
             source={bookCardItem.image || ImageAssets.bookImage1}
             transition={500}
           />
@@ -82,6 +81,8 @@ const BookCardItemVertical: React.FC<BookCardItemVerticalProps> = ({
             itemCount={bookCardItem.count}
             onUpdateCount={onUpdateCount}
             bookCardItem={bookCardItem}
+            showCount={false}
+            buttonType="text-icon"
           />
         </View>
       </View>

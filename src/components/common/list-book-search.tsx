@@ -47,7 +47,14 @@ const ListBookSearch: React.FC<ListBookSearchProps> = ({
     } else if (viewStyle === SEARCH_VIEW_STYLE.grid) {
       return <BookCardItem bookCardItem={item} index={index} />;
     }
-    return <BookCardItemComplex bookCardItem={item} />;
+    return (
+      <BookCardItemComplex
+        bookCardItem={{ ...item, count: 1 }}
+        onUpdateCount={(count) => {
+          onUpdateCount(count, item);
+        }}
+      />
+    );
   };
 
   return (

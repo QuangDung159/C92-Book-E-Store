@@ -54,7 +54,6 @@ const CartItem: React.FC<CartItemProps> = ({
         <View style={styles.info}>
           <Image
             style={styles.image}
-            contentFit="contain"
             source={bookCartItem.book.image || ImageAssets.bookImage1}
             transition={500}
           />

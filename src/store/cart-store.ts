@@ -18,6 +18,7 @@ import {
   OrderServices,
   ZaloPayServices,
 } from '@services';
+import { sharedStore } from '@store';
 import { PaymentData, PaymentStatus, PaymentType, ZaloPayOrder } from '@types';
 import { DatetimeHelpers, delay, StringHelpers, ToastHelpers } from '@utils';
 import { ReferenceOptionsStore } from './reference-options-store';
@@ -260,10 +261,13 @@ class CartStore {
     cartItem: DataModels.ICartItem,
     count: number,
   ) => {
+    sharedStore.setButtonLoading(true);
     const result = await CartServices.updateCartItem({
       id: cartItem.id,
       count: cartItem.count + count,
     });
+
+    sharedStore.setButtonLoading(false);
 
     if (result?.success) {
       if (this.userStore.authenticated) {
