@@ -29,7 +29,7 @@
     "build:android:development": "npm run set:env:qa && dotenv -- eas build -p android --profile development",
     "build:android:development:local": "npm run set:env:qa && dotenv -- eas build -p android --profile development --local && npm run set:env:revert",
     "build:aab": "eas build -p android --profile production",
-    "build:aab:local": "npm run set:env:prod:build && dotenv -- eas build -p android --profile production --local && npm run set:env:revert",
+    "build:aab:local": "npm run set:env:prod:build && npm run prebuild && dotenv -- eas build -p android --profile production --local && npm run set:env:revert",
     "build:ios:dev": "eas build -p ios --profile development",
     "build:ios:qa": "npm run set:env:qa:build && dotenv -- eas build -p ios --profile preview.qa && npm run set:env:revert",
     "build:ios:qa:local": "npm run set:env:qa:build && dotenv -- eas build -p ios --profile preview.qa --local && npm run set:env:revert",
