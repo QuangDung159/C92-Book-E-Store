@@ -2,7 +2,7 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Icons, Layouts } from '@components';
-import { COLORS } from '@themes';
+import { COLORS, FONT_STYLES } from '@themes';
 
 interface SSOButtonProps {
   signInType: 'google' | 'facebook';
@@ -38,8 +38,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   buttonText: {
-    fontFamily: 'SF-Pro-Rounded-Medium',
-    fontSize: 17,
+    ...FONT_STYLES.SEMIBOLD_14,
   },
 });
 

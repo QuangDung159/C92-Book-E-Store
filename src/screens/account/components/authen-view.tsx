@@ -39,7 +39,7 @@ const AuthenView: React.FC = () => {
         <View style={styles.SSO}>
           <Text style={styles.continue}>------ or ------</Text>
           <Layouts.VSpace value={24} />
-          {Platform.OS === 'ios' && (
+          {Platform.OS === 'ios' ? (
             <>
               <AppleAuthentication.AppleAuthenticationButton
                 buttonType={
@@ -59,25 +59,28 @@ const AuthenView: React.FC = () => {
               />
               <Layouts.VSpace value={12} />
             </>
-          )}
-          <SSOButton
-            onPress={async () => {
-              sharedStore.setShowLoading(true);
-              await authenticationStore.googleSignIn();
-              sharedStore.setShowLoading(false);
-            }}
-            signInType="google"
-          />
-          <Layouts.VSpace value={12} />
-          {process.env.EXPO_PUBLIC_ENV !== 'PROD' && (
-            <SSOButton
-              onPress={async () => {
-                sharedStore.setShowLoading(true);
-                await authenticationStore.facebookSignIn();
-                sharedStore.setShowLoading(false);
-              }}
-              signInType="facebook"
-            />
+          ) : (
+            <>
+              <SSOButton
+                onPress={async () => {
+                  sharedStore.setShowLoading(true);
+                  await authenticationStore.googleSignIn();
+                  sharedStore.setShowLoading(false);
+                }}
+                signInType="google"
+              />
+              <Layouts.VSpace value={12} />
+              {process.env.EXPO_PUBLIC_ENV !== 'PROD' && (
+                <SSOButton
+                  onPress={async () => {
+                    sharedStore.setShowLoading(true);
+                    await authenticationStore.facebookSignIn();
+                    sharedStore.setShowLoading(false);
+                  }}
+                  signInType="facebook"
+                />
+              )}
+            </>
           )}
         </View>
       </View>
