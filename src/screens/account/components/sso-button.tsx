@@ -21,7 +21,9 @@ const SSOButton: React.FC<SSOButtonProps> = ({ signInType, onPress }) => {
       </TouchableOpacity>
 
       <Layouts.HSpace value={4} />
-      <Text style={styles.buttonText}>Sign in with Google</Text>
+      <Text
+        style={styles.buttonText}
+      >{`Sign in with ${signInType === 'google' ? 'Google' : 'Facebook'}`}</Text>
     </View>
   );
 };
@@ -29,7 +31,7 @@ const SSOButton: React.FC<SSOButtonProps> = ({ signInType, onPress }) => {
 const styles = StyleSheet.create({
   container: {
     height: 45,
-    width: 200,
+    width: 220,
     borderRadius: 5,
     borderWidth: 0.5,
     borderColor: COLORS.primaryBlack,
