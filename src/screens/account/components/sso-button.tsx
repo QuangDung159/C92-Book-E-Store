@@ -11,20 +11,19 @@ interface SSOButtonProps {
 
 const SSOButton: React.FC<SSOButtonProps> = ({ signInType, onPress }) => {
   return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress}>
+      <View style={styles.container}>
         {signInType === 'google' ? (
           <Icons.GoogleIcon size={12} />
         ) : (
           <Icons.FacebookIcon size={12} />
         )}
-      </TouchableOpacity>
-
-      <Layouts.HSpace value={4} />
-      <Text
-        style={styles.buttonText}
-      >{`Sign in with ${signInType === 'google' ? 'Google' : 'Facebook'}`}</Text>
-    </View>
+        <Layouts.HSpace value={4} />
+        <Text
+          style={styles.buttonText}
+        >{`Sign in with ${signInType === 'google' ? 'Google' : 'Facebook'}`}</Text>
+      </View>
+    </TouchableOpacity>
   );
 };
 
