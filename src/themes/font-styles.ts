@@ -8,22 +8,26 @@ const FONT_16: TextStyle = {
 
 const BOLD_16: TextStyle = {
   ...FONT_16,
-  fontFamily: 'Montserrat-Bold',
+  fontFamily: 'SF-Pro-Rounded-Bold',
+  letterSpacing: 0.6,
 };
 
 const REGULAR_16: TextStyle = {
   ...FONT_16,
-  fontFamily: 'Montserrat-Regular',
+  fontFamily: 'SF-Pro-Rounded-Regular',
+  letterSpacing: 0.6,
 };
 
 const SEMIBOLD_16: TextStyle = {
   ...FONT_16,
-  fontFamily: 'Montserrat-SemiBold',
+  fontFamily: 'SF-Pro-Rounded-Semibold',
+  letterSpacing: 0.6,
 };
 
 const THIN_16: TextStyle = {
   ...FONT_16,
-  fontFamily: 'Montserrat-Thin',
+  fontFamily: 'SF-Pro-Rounded-Thin',
+  letterSpacing: 0.6,
 };
 
 const FONT_14: TextStyle = {
@@ -34,22 +38,26 @@ const FONT_14: TextStyle = {
 
 const BOLD_14: TextStyle = {
   ...FONT_14,
-  fontFamily: 'Montserrat-Bold',
+  fontFamily: 'SF-Pro-Rounded-Bold',
+  letterSpacing: 0.6,
 };
 
 const REGULAR_14: TextStyle = {
   ...FONT_14,
-  fontFamily: 'Montserrat-Regular',
+  fontFamily: 'SF-Pro-Rounded-Regular',
+  letterSpacing: 0.6,
 };
 
 const SEMIBOLD_14: TextStyle = {
   ...FONT_14,
-  fontFamily: 'Montserrat-SemiBold',
+  fontFamily: 'SF-Pro-Rounded-Semibold',
+  letterSpacing: 0.6,
 };
 
 const THIN_14: TextStyle = {
   ...FONT_14,
-  fontFamily: 'Montserrat-Thin',
+  fontFamily: 'SF-Pro-Rounded-Thin',
+  letterSpacing: 0.6,
 };
 
 const FONT_10: TextStyle = {
@@ -66,42 +74,50 @@ const FONT_8: TextStyle = {
 
 const BOLD_8: TextStyle = {
   ...FONT_8,
-  fontFamily: 'Montserrat-Bold',
+  fontFamily: 'SF-Pro-Rounded-Bold',
+  letterSpacing: 0.6,
 };
 
 const REGULAR_8: TextStyle = {
   ...FONT_8,
-  fontFamily: 'Montserrat-Regular',
+  fontFamily: 'SF-Pro-Rounded-Regular',
+  letterSpacing: 0.6,
 };
 
 const SEMIBOLD_8: TextStyle = {
   ...FONT_8,
-  fontFamily: 'Montserrat-SemiBold',
+  fontFamily: 'SF-Pro-Rounded-Semibold',
+  letterSpacing: 0.6,
 };
 
 const THIN_8: TextStyle = {
   ...FONT_8,
-  fontFamily: 'Montserrat-Thin',
+  fontFamily: 'SF-Pro-Rounded-Thin',
+  letterSpacing: 0.6,
 };
 
 const BOLD_10: TextStyle = {
   ...FONT_10,
-  fontFamily: 'Montserrat-Bold',
+  fontFamily: 'SF-Pro-Rounded-Bold',
+  letterSpacing: 0.6,
 };
 
 const REGULAR_10: TextStyle = {
   ...FONT_10,
-  fontFamily: 'Montserrat-Regular',
+  fontFamily: 'SF-Pro-Rounded-Regular',
+  letterSpacing: 0.6,
 };
 
 const SEMIBOLD_10: TextStyle = {
   ...FONT_10,
-  fontFamily: 'Montserrat-SemiBold',
+  fontFamily: 'SF-Pro-Rounded-Semibold',
+  letterSpacing: 0.6,
 };
 
 const THIN_10: TextStyle = {
   ...FONT_10,
-  fontFamily: 'Montserrat-Thin',
+  fontFamily: 'SF-Pro-Rounded-Thin',
+  letterSpacing: 0.6,
 };
 
 const FONT_22: TextStyle = {
@@ -112,22 +128,26 @@ const FONT_22: TextStyle = {
 
 const BOLD_22: TextStyle = {
   ...FONT_22,
-  fontFamily: 'Montserrat-Bold',
+  fontFamily: 'SF-Pro-Rounded-Bold',
+  letterSpacing: 0.6,
 };
 
 const REGULAR_22: TextStyle = {
   ...FONT_22,
-  fontFamily: 'Montserrat-Regular',
+  fontFamily: 'SF-Pro-Rounded-Regular',
+  letterSpacing: 0.6,
 };
 
 const SEMIBOLD_22: TextStyle = {
   ...FONT_22,
-  fontFamily: 'Montserrat-SemiBold',
+  fontFamily: 'SF-Pro-Rounded-Semibold',
+  letterSpacing: 0.6,
 };
 
 const THIN_22: TextStyle = {
   ...FONT_22,
-  fontFamily: 'Montserrat-Thin',
+  fontFamily: 'SF-Pro-Rounded-Thin',
+  letterSpacing: 0.6,
 };
 
 const FONT_18: TextStyle = {
@@ -138,22 +158,26 @@ const FONT_18: TextStyle = {
 
 const BOLD_18: TextStyle = {
   ...FONT_18,
-  fontFamily: 'Montserrat-Bold',
+  fontFamily: 'SF-Pro-Rounded-Bold',
+  letterSpacing: 0.6,
 };
 
 const REGULAR_18: TextStyle = {
   ...FONT_18,
-  fontFamily: 'Montserrat-Regular',
+  fontFamily: 'SF-Pro-Rounded-Regular',
+  letterSpacing: 0.6,
 };
 
 const SEMIBOLD_18: TextStyle = {
   ...FONT_18,
-  fontFamily: 'Montserrat-SemiBold',
+  fontFamily: 'SF-Pro-Rounded-Semibold',
+  letterSpacing: 0.6,
 };
 
 const THIN_18: TextStyle = {
   ...FONT_18,
-  fontFamily: 'Montserrat-Thin',
+  fontFamily: 'SF-Pro-Rounded-Thin',
+  letterSpacing: 0.6,
 };
 
 const FONT_20: TextStyle = {
@@ -164,22 +188,26 @@ const FONT_20: TextStyle = {
 
 const BOLD_20: TextStyle = {
   ...FONT_20,
-  fontFamily: 'Montserrat-Bold',
+  fontFamily: 'SF-Pro-Rounded-Bold',
+  letterSpacing: 0.6,
 };
 
 const REGULAR_20: TextStyle = {
   ...FONT_20,
-  fontFamily: 'Montserrat-Regular',
+  fontFamily: 'SF-Pro-Rounded-Regular',
+  letterSpacing: 0.6,
 };
 
 const SEMIBOLD_20: TextStyle = {
   ...FONT_20,
-  fontFamily: 'Montserrat-SemiBold',
+  fontFamily: 'SF-Pro-Rounded-Semibold',
+  letterSpacing: 0.6,
 };
 
 const THIN_20: TextStyle = {
   ...FONT_20,
-  fontFamily: 'Montserrat-Thin',
+  fontFamily: 'SF-Pro-Rounded-Thin',
+  letterSpacing: 0.6,
 };
 
 const FONT_12: TextStyle = {
@@ -189,37 +217,44 @@ const FONT_12: TextStyle = {
 
 const BOLD_12: TextStyle = {
   ...FONT_12,
-  fontFamily: 'Montserrat-Bold',
+  fontFamily: 'SF-Pro-Rounded-Bold',
+  letterSpacing: 0.6,
 };
 
 const REGULAR_12: TextStyle = {
   ...FONT_12,
-  fontFamily: 'Montserrat-Regular',
+  fontFamily: 'SF-Pro-Rounded-Regular',
+  letterSpacing: 0.6,
 };
 
 const SEMIBOLD_12: TextStyle = {
   ...FONT_12,
-  fontFamily: 'Montserrat-SemiBold',
+  fontFamily: 'SF-Pro-Rounded-Semibold',
+  letterSpacing: 0.6,
 };
 
 const THIN_12: TextStyle = {
   ...FONT_12,
-  fontFamily: 'Montserrat-Thin',
+  fontFamily: 'SF-Pro-Rounded-Thin',
+  letterSpacing: 0.6,
 };
 
 const EXTRA_BOLD_14: TextStyle = {
   ...FONT_14,
-  fontFamily: 'Montserrat-ExtraBold',
+  fontFamily: 'SF-Pro-Rounded-Black',
+  letterSpacing: 0.6,
 };
 
 const EXTRA_BOLD_16: TextStyle = {
   ...FONT_16,
-  fontFamily: 'Montserrat-ExtraBold',
+  fontFamily: 'SF-Pro-Rounded-Black',
+  letterSpacing: 0.6,
 };
 
 const EXTRA_BOLD_12: TextStyle = {
   ...FONT_12,
-  fontFamily: 'Montserrat-ExtraBold',
+  fontFamily: 'SF-Pro-Rounded-Black',
+  letterSpacing: 0.6,
 };
 
 export {

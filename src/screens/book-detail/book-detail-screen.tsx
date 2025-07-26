@@ -203,7 +203,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
               ...FONT_STYLES.REGULAR_14,
             }}
           >
-            {`Stock: ${bookInfo.stock} pcs`}
+            {`Stock: ${bookInfo.stock > 99 ? '99+' : bookInfo.stock}`}
           </Text>
           <Layouts.VSpace value={12} />
           <View

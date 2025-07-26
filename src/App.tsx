@@ -88,6 +88,12 @@ const App = () => {
       'Montserrat-Black': require('./assets/fonts/Montserrat-Black.ttf'),
       'Montserrat-Light': require('./assets/fonts/Montserrat-Light.ttf'),
       'Montserrat-Medium': require('./assets/fonts/Montserrat-Medium.ttf'),
+      'SF-Pro-Rounded-Medium': require('./assets/fonts/SF-Pro-Rounded-Medium.otf'),
+      'SF-Pro-Rounded-Semibold': require('./assets/fonts/SF-Pro-Rounded-Semibold.otf'),
+      'SF-Pro-Rounded-Black': require('./assets/fonts/SF-Pro-Rounded-Black.otf'),
+      'SF-Pro-Rounded-Bold': require('./assets/fonts/SF-Pro-Rounded-Bold.otf'),
+      'SF-Pro-Rounded-Regular': require('./assets/fonts/SF-Pro-Rounded-Regular.otf'),
+      'SF-Pro-Rounded-Thin': require('./assets/fonts/SF-Pro-Rounded-Thin.otf'),
     });
     setFontsLoaded(true);
     SplashScreen.hideAsync();

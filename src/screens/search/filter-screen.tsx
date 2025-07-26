@@ -57,7 +57,12 @@ const FilterScreen = ({ route, navigation }: any) => {
         title="Filter"
         navigation={navigation}
         rightConponent={() => (
-          <TouchableOpacity onPress={() => searchStore.resetSeachFilter()}>
+          <TouchableOpacity
+            onPress={() => searchStore.resetSeachFilter()}
+            style={{
+              marginTop: 2,
+            }}
+          >
             <Text style={styles.reset}>Reset</Text>
           </TouchableOpacity>
         )}
@@ -243,10 +248,10 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primaryWhite,
   },
   reset: {
-    ...FONT_STYLES.SEMIBOLD_12,
+    ...FONT_STYLES.SEMIBOLD_14,
   },
   label: {
-    ...FONT_STYLES.SEMIBOLD_16,
+    ...FONT_STYLES.BOLD_16,
   },
   priceInputWrapper: {
     flexDirection: 'row',
@@ -261,7 +266,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
   },
   currency: {
-    ...FONT_STYLES.REGULAR_16,
+    ...FONT_STYLES.SEMIBOLD_16,
   },
   maxInputWrapper: {
     flexDirection: 'row',

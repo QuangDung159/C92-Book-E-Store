@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   price: {
-    ...FONT_STYLES.REGULAR_16,
+    ...FONT_STYLES.SEMIBOLD_16,
   },
 });
 

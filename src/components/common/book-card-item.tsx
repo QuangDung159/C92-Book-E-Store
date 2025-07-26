@@ -77,7 +77,7 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
           />
           <Text
             style={styles.stock}
-          >{`In stock: ${bookCardItem.stock} pcs`}</Text>
+          >{`Stock: ${bookCardItem.stock > 99 ? '99+' : bookCardItem.stock}`}</Text>
           <BookCardPrice
             price={bookCardItem.price}
             priceNotSale={bookCardItem.priceNotSale}
