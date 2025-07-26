@@ -209,17 +209,17 @@ const THIN_12: TextStyle = {
 
 const EXTRA_BOLD_14: TextStyle = {
   ...FONT_14,
-  fontFamily: 'Montserrat-ExtraBold',
+  fontFamily: 'Montserrat-Black',
 };
 
 const EXTRA_BOLD_16: TextStyle = {
   ...FONT_16,
-  fontFamily: 'Montserrat-ExtraBold',
+  fontFamily: 'Montserrat-Black',
 };
 
 const EXTRA_BOLD_12: TextStyle = {
   ...FONT_12,
-  fontFamily: 'Montserrat-ExtraBold',
+  fontFamily: 'Montserrat-Black',
 };
 
 export {
