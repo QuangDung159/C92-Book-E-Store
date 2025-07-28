@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { PACKAGE_NAME } from '@constants';
+import { APP_ID, PACKAGE_NAME } from '@constants';
 
 const getLatestVersionAndroid = async () => {
   try {
@@ -22,9 +22,8 @@ const getLatestVersionAndroid = async () => {
 
 const getLatestVersionIOS = async () => {
   try {
-    const bundleId = 'com.c92dragonteam.renalcarehubv1'; // Thay bằng bundle ID của app
     const response = await axios.get(
-      `https://itunes.apple.com/lookup?bundleId=${bundleId}`,
+      `https://itunes.apple.com/lookup?id=${APP_ID}`,
     );
 
     const latest = response.data.results[0]?.version || null;
