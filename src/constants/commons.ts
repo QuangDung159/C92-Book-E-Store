@@ -174,10 +174,13 @@ const PACKAGE_NAME = 'com.dragonc92team.BookEStoreV1';
 
 const UNKNOWN_ERROR_MESSAGE = 'An unknown error occurred.';
 
+const APP_ID = '6748847426';
+
 export {
   ADMINISTRATIVE,
   API_PREFIX,
   API_URL,
+  APP_ID,
   APP_LINK_URL,
   APP_STORE_URL,
   CODE_PUSH_NUMBER,

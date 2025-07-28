@@ -6,7 +6,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import * as Notifications from 'expo-notifications';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useRef } from 'react';
-import { Platform } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Layouts } from '@components';
 import { SCREEN_NAME } from '@constants';
@@ -85,16 +84,14 @@ const Navigation = () => {
           color: COLORS.primaryWhite,
         }}
       />
-      {Platform.OS === 'android' && (
-        <Layouts.ConfirmPopup
-          title="New version was released"
-          content={`Please update to the latest version of C92 Book E-Store to enjoy new features and an enhanced experience!`}
-          visible={showPopup}
-          okTitle="Go to store"
-          hasCancel={false}
-          onOk={openAplicationStore}
-        />
-      )}
+      <Layouts.ConfirmPopup
+        title="New version was released"
+        content={`Please update to the latest version of C92 Book E-Store to enjoy new features and an enhanced experience!`}
+        visible={showPopup}
+        okTitle="Go to store"
+        hasCancel={false}
+        onOk={openAplicationStore}
+      />
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
