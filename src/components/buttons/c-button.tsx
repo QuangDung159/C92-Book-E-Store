@@ -19,6 +19,7 @@ interface CButtonProps {
   labelStyle?: StyleProp<TextStyle>;
   style?: StyleProp<ViewStyle>;
   onPress: () => void;
+  onLongPress?: () => void;
   iconLeft?: () => React.ReactNode;
   iconRight?: () => React.ReactNode;
 }
@@ -32,6 +33,7 @@ const CButton: FC<CButtonProps> = ({
   onPress,
   iconLeft,
   iconRight,
+  onLongPress,
 }) => {
   const getColor = () => {
     return {
@@ -57,6 +59,9 @@ const CButton: FC<CButtonProps> = ({
       mode="outlined"
       disabled={disabled}
       onPress={onPress}
+      onLongPress={() => {
+        onLongPress?.();
+      }}
     >
       <View style={styles.container}>
         {iconLeft?.()}

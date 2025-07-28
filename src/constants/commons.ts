@@ -69,7 +69,7 @@ const enum ERROR_CODES {
 
 const MOMO_REQUEST_TYPE = 'captureWallet';
 
-const CODE_PUSH_NUMBER = '1753412948';
+const CODE_PUSH_NUMBER = '1753716359';
 
 const PAYMENT_STATUS = {
   success: 'success',
@@ -93,7 +93,7 @@ const GOOGLE_PLAY_STORE_URL =
   'https://play.google.com/store/apps/details?id=com.dragonc92team.BookEStoreV1';
 
 const APP_STORE_URL =
-  'https://play.google.com/store/apps/details?id=com.dragonc92team.BookEStoreV1';
+  'https://apps.apple.com/us/app/c92-book-e-store/id6748847426';
 
 const SUPPORT_LINK = 'https://sites.google.com/view/c92-book-e-store/home';
 
