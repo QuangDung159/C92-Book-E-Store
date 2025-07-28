@@ -16,7 +16,7 @@ export default {
     ios: {
       supportsTablet: true,
       bundleIdentifier: 'com.dragonc92team.BookEStoreV1',
-      buildNumber: '2',
+      buildNumber: '3',
       googleServicesFile: './ios/BookEStore/GoogleService-Info.plist',
       usesAppleSignIn: true,
     },
