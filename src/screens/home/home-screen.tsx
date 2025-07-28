@@ -18,6 +18,7 @@ const HomeScreen = ({ navigation }: any) => {
 
   useEffect(() => {
     sharedStore.getGeoLocation();
+    getIsDevModeFromLocalStorage();
   }, []);
 
   useEffect(() => {
@@ -39,6 +40,11 @@ const HomeScreen = ({ navigation }: any) => {
       );
     }
   }, [lastNotification]);
+
+  const getIsDevModeFromLocalStorage = async () => {
+    const isDevMode = await sharedStore.getStorageValue('isDevMode');
+    sharedStore.setIsDevMode(isDevMode === '1');
+  };
 
   const onLoadHomeData = async () => {
     await appModel.loadMasterData();

@@ -93,7 +93,7 @@ const GOOGLE_PLAY_STORE_URL =
   'https://play.google.com/store/apps/details?id=com.dragonc92team.BookEStoreV1';
 
 const APP_STORE_URL =
-  'https://play.google.com/store/apps/details?id=com.dragonc92team.BookEStoreV1';
+  'https://apps.apple.com/us/app/c92-book-e-store/id6748847426';
 
 const SUPPORT_LINK = 'https://sites.google.com/view/c92-book-e-store/home';
 

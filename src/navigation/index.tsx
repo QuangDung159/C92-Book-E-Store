@@ -84,14 +84,17 @@ const Navigation = () => {
           color: COLORS.primaryWhite,
         }}
       />
-      <Layouts.ConfirmPopup
-        title="New version was released"
-        content={`Please update to the latest version of C92 Book E-Store to enjoy new features and an enhanced experience!`}
-        visible={showPopup}
-        okTitle="Go to store"
-        hasCancel={false}
-        onOk={openAplicationStore}
-      />
+      {!sharedStore.isDevMode && (
+        <Layouts.ConfirmPopup
+          title="New version was released"
+          content={`Please update to the latest version of C92 Book E-Store to enjoy new features and an enhanced experience!`}
+          visible={showPopup}
+          okTitle="Go to store"
+          hasCancel={false}
+          onOk={openAplicationStore}
+          onLongPressOk={sharedStore.toggleDevMode}
+        />
+      )}
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
