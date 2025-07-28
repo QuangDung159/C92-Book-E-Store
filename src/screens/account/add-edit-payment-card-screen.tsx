@@ -10,7 +10,7 @@ import {
   ScreenHeader,
 } from '@components';
 import { DataModels } from '@models';
-import { authenticationStore, sharedStore } from '@store';
+import { authenticationStore, cartStore, sharedStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 import { StringHelpers, ToastHelpers } from '@utils';
 import { AddCreditCardViewModel } from './view-models';
@@ -48,8 +48,13 @@ const AddEditPaymentCardScreen = ({ navigation, route }: any) => {
         await onAddEditSuccess();
       });
     } else {
-      addCreditCardVM.addCreditCard(async () => {
+      addCreditCardVM.addCreditCard(async (card: DataModels.ICreditCard) => {
         await onAddEditSuccess();
+
+        // If a new card is added, set it as the selected card in the cart store
+        if (card) {
+          cartStore.setCreditCardSelected(card?.id);
+        }
       });
     }
   };

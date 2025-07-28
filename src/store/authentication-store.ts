@@ -1,7 +1,7 @@
 import { action, makeObservable, observable } from 'mobx';
 import { DataModels } from '@models';
 import { AuthenticationServices } from '@services';
-import { ServiceResultHandler } from '@types';
+import { ServiceResultHandler, SignUpMethod } from '@types';
 import { delay, ToastHelpers } from '@utils';
 import { SharedStore } from './shared-store';
 import { UserStore } from './user-store';
@@ -11,6 +11,7 @@ class AuthenticationStore {
   sharedStore: SharedStore | null = null;
   googleSigned: boolean = false;
   facebookSigned: boolean = false;
+  appleSigned: boolean = false;
 
   constructor(userStore: UserStore, sharedStore: SharedStore) {
     makeObservable(this, {
@@ -18,8 +19,10 @@ class AuthenticationStore {
       sharedStore: observable,
       googleSigned: observable,
       facebookSigned: observable,
+      appleSigned: observable,
       setFacebookSigned: action,
       setGoogleSigned: action,
+      setAppleSigned: action,
     });
 
     this.userStore = userStore;
@@ -33,6 +36,10 @@ class AuthenticationStore {
 
   setGoogleSigned(value: boolean) {
     this.googleSigned = value;
+  }
+
+  setAppleSigned(value: boolean) {
+    this.appleSigned = value;
   }
 
   onSignInSuccess = async (user: DataModels.IUser) => {
@@ -51,6 +58,7 @@ class AuthenticationStore {
     password: string,
     notificationToken: string,
     onSuccess?: () => void,
+    onFail?: (result?: DataModels.ServiceResult<any>) => void,
   ) => {
     const result = await AuthenticationServices.signIn({
       email,
@@ -63,21 +71,29 @@ class AuthenticationStore {
 
       await this.onSignInSuccess(user);
       onSuccess?.();
+    } else {
+      onFail?.(result);
     }
   };
 
-  signUp = async (user: DataModels.IUser, onSuccess?: () => void) => {
+  signUp = async (
+    user: DataModels.IUser,
+    onSuccess?: () => void,
+    onFail?: (result?: DataModels.ServiceResult<any>) => void,
+  ) => {
     const { email, password, username, phoneNumber, signUpMethod, ssoToken } =
       user;
 
-    const result = await AuthenticationServices.signUp({
+    const signUpParams: DataModels.ISignUpParams = {
       email,
       password,
       signUpMethod,
       ssoToken,
       phoneNumber,
       username,
-    });
+    };
+
+    const result = await AuthenticationServices.signUp(signUpParams);
 
     if (!result?.success && result.error?.error) {
       const error = result.error.error;
@@ -89,8 +105,9 @@ class AuthenticationStore {
     }
 
     if (result.success) {
-      await delay(500);
       onSuccess?.();
+    } else {
+      onFail?.(result);
     }
   };
 
@@ -151,8 +168,35 @@ class AuthenticationStore {
         signUpMethod: 'google',
         username: user.name,
         avatarUrl: user.photo,
-        ssoToken: response.idToken,
+        ssoToken: response.user.id,
       });
+
+      if (result?.success) {
+        const user = result.data.user as DataModels.IUser;
+
+        await this.onSignInSuccess(user);
+
+        this.setGoogleSigned(true);
+      }
+    }
+  };
+
+  appleSignIn = async () => {
+    const response = await AuthenticationServices.appleSignin();
+
+    if (response) {
+      const body: DataModels.ISignUpParams = {
+        email: response.email,
+        signUpMethod: 'apple' as SignUpMethod,
+        avatarUrl: null,
+        ssoToken: response.user,
+      };
+
+      if (response.fullName?.givenName && response.fullName?.familyName) {
+        body.username = `${response.fullName.givenName} ${response.fullName.familyName}`;
+      }
+
+      const result = await AuthenticationServices.signUp(body);
 
       if (result?.success) {
         const user = result.data.user as DataModels.IUser;
@@ -167,6 +211,11 @@ class AuthenticationStore {
   googleSignOut = async () => {
     await AuthenticationServices.googleSignOut();
     this.setGoogleSigned(false);
+  };
+
+  appleSignOut = async () => {
+    this.setAppleSigned(false);
+    this.signOut();
   };
 
   facebookSignOut = async () => {

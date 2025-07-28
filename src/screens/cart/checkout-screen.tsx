@@ -10,6 +10,7 @@ import React, {
 import {
   AppState,
   Linking,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -20,6 +21,7 @@ import Collapsible from 'react-native-collapsible';
 import { Divider, RadioButton } from 'react-native-paper';
 import {
   BottomCheckoutSection,
+  Icons,
   Layouts,
   ScreenHeader,
   SectionTitle,
@@ -27,6 +29,7 @@ import {
 import {
   DEEP_LINK_PAYMENT_SUCCESS_URL,
   LIST_PAYMENT_METHOD,
+  LIST_PAYMENT_METHOD_IOS,
   PAYMENT_TYPE,
   SCREEN_NAME,
 } from '@constants';
@@ -40,8 +43,12 @@ import { CartInfoRow, CreditCardItem, ShippingAddress } from './components';
 import { ListCartItem } from './components/list-cart-item';
 
 const CheckoutScreen = ({ navigation }: any) => {
-  const { openAddressScreen, openPaymentCardScreen, openVoucherScreen } =
-    useNavigate(navigation);
+  const {
+    openAddressScreen,
+    openVoucherScreen,
+    openPaymentCardScreen,
+    openPaymentSuccessScreen,
+  } = useNavigate(navigation);
   const [isShowListCreditCart, setIsShowListCreditCart] = useState(false);
   const [fetchZaloPayOrderDone, setFetchZaloPayOrderDone] = useState(false);
 
@@ -51,6 +58,12 @@ const CheckoutScreen = ({ navigation }: any) => {
     () => userStore.userProfile?.listCreditCard.find((item) => item.primary),
     [userStore.userProfile?.listCreditCard],
   );
+
+  const listPaymentMethods = useMemo(() => {
+    return Platform.OS === 'ios'
+      ? LIST_PAYMENT_METHOD_IOS
+      : LIST_PAYMENT_METHOD;
+  }, []);
 
   useEffect(() => {
     cartStore.setVoucherSelected(null);
@@ -120,7 +133,14 @@ const CheckoutScreen = ({ navigation }: any) => {
 
   const onSubmitCheckout = async () => {
     sharedStore.setShowLoading(true);
-    await cartStore.submitOrder();
+    await cartStore.submitOrder(
+      cartStore.paymentSelected.paymentType === 'cod' ||
+        cartStore.paymentSelected.paymentType === 'credit_card'
+        ? async () => {
+            openPaymentSuccessScreen();
+          }
+        : null,
+    );
     sharedStore.setShowLoading(false);
   };
 
@@ -157,7 +177,7 @@ const CheckoutScreen = ({ navigation }: any) => {
                   id: value,
                 });
 
-                if (value === 'credit_card') {
+                if (value === 'credit_card' && primaryCreditCard) {
                   cartStore.setCreditCardSelected(primaryCreditCard.id);
                 } else {
                   cartStore.setCreditCardSelected(null);
@@ -165,26 +185,51 @@ const CheckoutScreen = ({ navigation }: any) => {
               }}
               value={cartStore.paymentSelected.paymentType}
             >
-              {LIST_PAYMENT_METHOD.map((item) => {
+              {listPaymentMethods.map((item) => {
                 return (
                   <View key={item.value} style={styles.paymentItem}>
                     <RadioButton.Android value={item.value} />
-                    <Text style={styles.payemntLabel}>{item.label}</Text>
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                      }}
+                    >
+                      <Text style={styles.paymentLabel}>{item.label}</Text>
+                      {item.showIcon && (
+                        <Icons.EditIcon
+                          size={20}
+                          onPress={() => {
+                            openPaymentCardScreen();
+                          }}
+                        />
+                      )}
+                    </View>
                     <Layouts.VSpace value={12} />
                   </View>
                 );
               })}
             </RadioButton.Group>
-            <Collapsible collapsed={!isShowListCreditCart}>
-              <TouchableOpacity
-                style={styles.creditCard}
-                onPress={() => {
-                  openPaymentCardScreen();
-                }}
-              >
-                <CreditCardItem cardItem={primaryCreditCard} isLast />
-              </TouchableOpacity>
-            </Collapsible>
+            {Platform.OS !== 'ios' && (
+              <Collapsible collapsed={!isShowListCreditCart}>
+                <View style={styles.creditCard}>
+                  {primaryCreditCard ? (
+                    <CreditCardItem cardItem={primaryCreditCard} isLast />
+                  ) : (
+                    <Text
+                      style={{
+                        ...FONT_STYLES.BOLD_14,
+                        color: COLORS.gray60,
+                        paddingHorizontal: 4,
+                      }}
+                    >
+                      No payment card available
+                    </Text>
+                  )}
+                </View>
+              </Collapsible>
+            )}
             <Layouts.VSpace value={12} />
             <Divider />
             <Layouts.VSpace value={12} />
@@ -228,9 +273,22 @@ const CheckoutScreen = ({ navigation }: any) => {
                   title: 'Please choose your shipping address',
                   type: 'error',
                 });
-              } else {
-                onSubmitCheckout();
+
+                return;
               }
+
+              if (
+                cartStore.paymentSelected.paymentType === 'credit_card' &&
+                !primaryCreditCard
+              ) {
+                ToastHelpers.showToast({
+                  title: 'Please choose your payment card',
+                  type: 'error',
+                });
+                return;
+              }
+
+              onSubmitCheckout();
             }}
             priceDisplay={cartStore.total}
             disabled={cartStore.cartCount === 0}
@@ -251,7 +309,7 @@ const CheckoutScreen = ({ navigation }: any) => {
               color: COLORS.gray60,
             }}
           >
-            Processing....
+            Processing...
           </Text>
         </View>
       )}
@@ -290,7 +348,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: -8,
   },
-  payemntLabel: {
+  paymentLabel: {
     ...FONT_STYLES.REGULAR_16,
   },
   creditCard: {

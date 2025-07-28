@@ -45,6 +45,7 @@ export interface IBook {
   publisher?: IPublisher;
   priceNotSale?: number;
   count?: number;
+  image?: string;
 }
 
 export interface ICartItem {
@@ -241,4 +242,14 @@ export interface IReverseGeocode {
   country: string;
   postalCode: string;
   street: string;
+}
+
+export interface ISignUpParams {
+  email: string;
+  password?: string;
+  signUpMethod: SignUpMethod;
+  ssoToken?: string;
+  username?: string;
+  phoneNumber?: string;
+  avatarUrl?: string;
 }

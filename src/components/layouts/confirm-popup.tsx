@@ -14,6 +14,7 @@ interface ConfirmPopupProps {
   onDismiss?: () => void;
   cancelTitle?: string;
   okTitle?: string;
+  onLongPressOk?: () => void;
 }
 
 const ConfirmPopup: React.FC<ConfirmPopupProps> = ({
@@ -26,6 +27,7 @@ const ConfirmPopup: React.FC<ConfirmPopupProps> = ({
   onDismiss,
   okTitle,
   cancelTitle,
+  onLongPressOk,
 }) => {
   return (
     <Layouts.BottomPopup visible={visible}>
@@ -63,6 +65,9 @@ const ConfirmPopup: React.FC<ConfirmPopupProps> = ({
               onDismiss?.();
             }}
             buttonType="primary"
+            onLongPress={() => {
+              onLongPressOk?.();
+            }}
           />
         </View>
       </View>
@@ -79,7 +84,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    ...FONT_STYLES.REGULAR_16,
+    ...FONT_STYLES.SEMIBOLD_14,
     lineHeight: 20,
   },
 });

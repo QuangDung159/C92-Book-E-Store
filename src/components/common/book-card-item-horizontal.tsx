@@ -31,7 +31,7 @@ const BookCardItemHorizontal: React.FC<BookCardItemHorizontalProps> = ({
         <View style={styles.imageWrapper}>
           <Image
             style={styles.image}
-            source={ImageAssets.bookImage1}
+            source={bookCardItem.image || ImageAssets.bookImage1}
             contentFit="contain"
           />
         </View>
@@ -73,13 +73,14 @@ const styles = StyleSheet.create({
   imageWrapper: {
     height: 300,
     alignItems: 'center',
-    backgroundColor: COLORS.gray200,
     borderRadius: 8,
+    borderColor: COLORS.gray200,
+    borderWidth: 1,
   },
   image: {
-    width: '60%',
+    width: '80%',
     flex: 1,
-    marginTop: -120,
+    marginTop: -140,
   },
   info: {
     backgroundColor: COLORS.primaryBlack,

@@ -94,7 +94,7 @@ const CategoriesScreen = ({ navigation }: any) => {
         />
         <Layouts.VSpace value={24} />
         <HorizontalListCard
-          listItem={searchStore.listUpcomming}
+          listItem={searchStore.listUpcoming}
           title="New Arrivals"
           showSeeMore
         />

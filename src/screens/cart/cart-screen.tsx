@@ -52,7 +52,7 @@ const CartScreen = ({ navigation }: any) => {
         />
         <Layouts.VSpace value={24} />
         <HorizontalListCard
-          listItem={searchStore.listUpcomming}
+          listItem={searchStore.listUpcoming}
           title="Viewed"
           showSeeMore={true}
         />

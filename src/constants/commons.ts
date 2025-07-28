@@ -63,11 +63,13 @@ const enum ERROR_CODES {
   INVALID_AUTHORIZATION = 403,
   NETWORK_ERROR = 500,
   MAINTENANCE_ERROR = 503,
+  NOT_FOUND_ERROR = 404,
+  BAD_REQUEST = 400,
 }
 
 const MOMO_REQUEST_TYPE = 'captureWallet';
 
-const CODE_PUSH_NUMBER = '1733307064';
+const CODE_PUSH_NUMBER = '1753716359';
 
 const PAYMENT_STATUS = {
   success: 'success',
@@ -90,6 +92,11 @@ const EXPO_PUSH_NOTIFICATION_URL = 'https://exp.host/--/api/v2/push/send';
 const GOOGLE_PLAY_STORE_URL =
   'https://play.google.com/store/apps/details?id=com.dragonc92team.BookEStoreV1';
 
+const APP_STORE_URL =
+  'https://apps.apple.com/us/app/c92-book-e-store/id6748847426';
+
+const SUPPORT_LINK = 'https://sites.google.com/view/c92-book-e-store/home';
+
 const API_PREFIX = 'api/v1/book-store';
 
 const IN_APP_MESSAGE_ACTION_ID = {
@@ -100,7 +107,7 @@ const IN_APP_MESSAGE_ACTION_ID = {
 const LIST_HOME_PAGE_TITLE = {
   topBook: 'top',
   latest: 'latest',
-  upcomming: 'upcomming',
+  upcoming: 'upcoming',
 };
 
 const API_BASE_URL = BASE_URL + API_PREFIX;
@@ -153,17 +160,29 @@ const TOP_BOOKS_FILTER = [
 ];
 
 const LIST_PAYMENT_METHOD = [
-  { id: '1', value: 'cod', label: 'Cash on Delivery' },
-  { id: '2', value: 'momo', label: 'Momo' },
-  { id: '3', value: 'zalo_pay', label: 'Zalo Pay' },
-  { id: '4', value: 'credit_card', label: 'Credit Card' },
+  { id: '1', value: 'cod', label: 'Cash on Delivery', showIcon: false },
+  { id: '2', value: 'momo', label: 'Momo', showIcon: false },
+  { id: '3', value: 'zalo_pay', label: 'Zalo Pay', showIcon: false },
+  { id: '4', value: 'credit_card', label: 'Credit Card', showIcon: true },
 ];
+
+const LIST_PAYMENT_METHOD_IOS = [
+  { id: '1', value: 'cod', label: 'Cash on Delivery', showIcon: false },
+];
+
+const PACKAGE_NAME = 'com.dragonc92team.BookEStoreV1';
+
+const UNKNOWN_ERROR_MESSAGE = 'An unknown error occurred.';
+
+const APP_ID = '6748847426';
 
 export {
   ADMINISTRATIVE,
   API_PREFIX,
   API_URL,
+  APP_ID,
   APP_LINK_URL,
+  APP_STORE_URL,
   CODE_PUSH_NUMBER,
   DEEP_LINK_PAYMENT_SUCCESS_URL,
   DEEP_LINK_URL,
@@ -176,13 +195,17 @@ export {
   LIST_ADMINITRATIVE_UNIT,
   LIST_HOME_PAGE_TITLE,
   LIST_PAYMENT_METHOD,
+  LIST_PAYMENT_METHOD_IOS,
   LIST_SORT_OPTION,
   MOMO_REQUEST_TYPE,
+  PACKAGE_NAME,
   PAYMENT_CARD_TYPE,
   PAYMENT_STATUS,
   PAYMENT_TYPE,
   PRICE_STEP,
   SEARCH_VIEW_STYLE,
   SHCEME,
+  SUPPORT_LINK,
   TOP_BOOKS_FILTER,
+  UNKNOWN_ERROR_MESSAGE,
 };

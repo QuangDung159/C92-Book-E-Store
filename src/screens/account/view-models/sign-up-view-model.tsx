@@ -64,8 +64,10 @@ class SignUpViewModel {
       ...this.userStore.userProfile,
       username: this.username,
       password: this.password,
-      phoneNumber: this.password,
+      phoneNumber: this.phoneNumber,
       email: this.email,
+      signUpMethod: 'in-app',
+      ssoToken: 'in-app',
     };
   }
 

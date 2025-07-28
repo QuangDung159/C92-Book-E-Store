@@ -28,12 +28,12 @@ const defaultFilter: DataModels.ISearchFilter = {
 
 class SearchStore {
   sortOption: DataModels.ISortOption | null = DEFAULT_SORT;
-  viewStyle: string = 'grid';
+  viewStyle: string = 'list';
   searchFilter: DataModels.ISearchFilter | null = defaultFilter;
   searchFilterPreviuos: DataModels.ISearchFilter = defaultFilter;
   listBook: IBook[] = [];
   listTopBook: IBook[] = [];
-  listUpcomming: IBook[] = [];
+  listUpcoming: IBook[] = [];
   listLatest: IBook[] = [];
   topBookFilterSelected: string = TOP_BOOKS_FILTER[0].value;
 
@@ -45,12 +45,12 @@ class SearchStore {
       searchFilterPreviuos: observable,
       listBook: observable,
       listTopBook: observable,
-      listUpcomming: observable,
+      listUpcoming: observable,
       listLatest: observable,
       topBookFilterSelected: observable,
       setTopBookFilterSelected: action,
       setListLatest: action,
-      setListUpcomming: action,
+      setListUpcoming: action,
       setListTopBook: action,
       setListBook: action,
       setSortOption: action,
@@ -86,8 +86,8 @@ class SearchStore {
     this.listLatest = values;
   }
 
-  setListUpcomming(values: DataModels.IBook[]) {
-    this.listUpcomming = values;
+  setListUpcoming(values: DataModels.IBook[]) {
+    this.listUpcoming = values;
   }
 
   setListTopBook(values: DataModels.IBook[]) {
@@ -191,8 +191,8 @@ class SearchStore {
         this.setListLatest(list);
       }
 
-      if (title === LIST_HOME_PAGE_TITLE.upcomming) {
-        this.setListUpcomming(list);
+      if (title === LIST_HOME_PAGE_TITLE.upcoming) {
+        this.setListUpcoming(list);
       }
 
       if (title === LIST_HOME_PAGE_TITLE.topBook) {

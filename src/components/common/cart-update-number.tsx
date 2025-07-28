@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { Icons } from '@components';
 import { DataModels } from '@models';
-import { cartStore } from '@store';
+import { cartStore, sharedStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 
 interface CartUpdateNumberProps {
@@ -25,11 +25,13 @@ const CartUpdateNumber: React.FC<CartUpdateNumberProps> = ({
             onPress={() => {
               cartStore.adjustCartItemCount(bookCartItem, -1);
             }}
-            disabled={itemCount <= 1}
+            disabled={itemCount <= 1 || sharedStore.buttonLoading}
           />
           <Text style={styles.cartNumber}>{itemCount}</Text>
           <Icons.PlusIcon
-            disabled={itemCount >= bookCartItem.book.stock}
+            disabled={
+              itemCount >= bookCartItem.book.stock || sharedStore.buttonLoading
+            }
             color={COLORS.primaryWhite}
             onPress={() => {
               cartStore.adjustCartItemCount(bookCartItem, 1);

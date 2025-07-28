@@ -1,65 +1,32 @@
-import { toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
-import { Linking, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Buttons, Icons, Layouts } from '@components';
-import { DEEP_LINK_URL, SCREEN_NAME } from '@constants';
 import { useNavigate } from '@hooks';
-import { authenticationStore, cartStore, userStore } from '@store';
+import { cartStore, notificationStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
 
-const PaymentSuccessScreen = ({ navigation, route }) => {
+const PaymentSuccessScreen = ({ navigation }) => {
   const { openHomeScreen } = useNavigate(navigation);
-
-  const orderId = route.params?.orderId;
-  const message = route.params?.message;
 
   useEffect(() => {
     cartStore.fetchCart(userStore.userProfile.id);
     userStore.fetchListOrder('created');
+    notificationStore.loadNotification();
     cartStore.clearAllCurrentPaymentInfo();
-    unassignVoucher();
+    cartStore.markVoucherWasUsed();
   }, []);
-
-  const unassignVoucher = async () => {
-    const listVoucher = toJS([...userStore.userProfile.listVoucher]);
-
-    const index = listVoucher.findIndex(
-      (item) => item.id === cartStore.voucherSelected.id,
-    );
-
-    if (index !== -1) {
-      listVoucher.splice(index, 1);
-
-      userStore.updateUser({
-        ...userStore.userProfile,
-        listVoucher,
-      });
-    } else {
-      authenticationStore.fetchUser();
-    }
-  };
 
   return (
     <View style={styles.container}>
-      <Icons.CheckSquareIcon size={150} />
+      <Icons.CheckSquareIcon size={100} />
       <Layouts.VSpace value={12} />
-      <Text style={styles.success}>{`${message}`}</Text>
-      <Layouts.VSpace value={8} />
-      <Text
-        style={styles.desc}
-      >{`Your order \n${orderId}\nhas been confirmed.`}</Text>
+      <Text style={styles.desc}>{`Your order has been created.`}</Text>
       <Layouts.VSpace value={12} />
       <Buttons.CButton
         label="Back to Home"
         onPress={() => {
-          if (
-            Linking.canOpenURL(`${DEEP_LINK_URL}${SCREEN_NAME.HOME_SCREEN}`)
-          ) {
-            Linking.openURL(`${DEEP_LINK_URL}${SCREEN_NAME.HOME_SCREEN}`);
-          } else {
-            openHomeScreen();
-          }
+          openHomeScreen();
         }}
       />
     </View>
@@ -78,7 +45,7 @@ const styles = StyleSheet.create({
     ...FONT_STYLES.BOLD_18,
   },
   desc: {
-    ...FONT_STYLES.SEMIBOLD_14,
+    ...FONT_STYLES.SEMIBOLD_16,
     textAlign: 'center',
   },
 });

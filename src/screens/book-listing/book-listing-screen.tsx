@@ -19,9 +19,7 @@ const BookListingScreen = ({ navigation, route }: any) => {
     <BookListing
       listBook={listBook || []}
       title={title}
-      loadData={() => {
-        loadData();
-      }}
+      loadData={loadData}
       navigation={navigation}
     />
   );

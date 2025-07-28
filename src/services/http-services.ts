@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
+import { ERROR_CODES } from '@constants';
 import { DataModels } from '@models';
 import { ToastHelpers } from '@utils';
 
@@ -19,8 +20,19 @@ const post = async (
       url,
       JSON.stringify(data),
     );
+
     console.log('POST :>> ', url);
-    console.log('data :>> ', data);
+
+    if (response?.data?.error) {
+      const error = response.data.error;
+
+      return buildAxiosResponse({
+        success: false,
+        errorMessage: error,
+        errorCode: ERROR_CODES.BAD_REQUEST,
+      });
+    }
+
     return buildAxiosResponse({
       success: true,
       data: response.data.data,

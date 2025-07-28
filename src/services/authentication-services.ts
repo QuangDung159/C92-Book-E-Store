@@ -4,10 +4,11 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import axios, { AxiosResponse } from 'axios';
+import * as AppleAuthentication from 'expo-apple-authentication';
+import * as Crypto from 'expo-crypto';
 import { AccessToken, LoginManager } from 'react-native-fbsdk-next';
 import { API_URL } from '@constants';
 import { DataModels } from '@models';
-import { SignUpMethod } from '@types';
 import { delay, ToastHelpers } from '@utils';
 import { HttpServices } from './http-services';
 
@@ -127,6 +128,12 @@ const fetchUser = async (userId: string) => {
   return await HttpServices.get(API_URL.user + '/get-one/' + userId);
 };
 
+const requestDeleteUser = async (userId: string) => {
+  return await HttpServices.get(
+    API_URL.user + '/request-delete-user/' + userId,
+  );
+};
+
 const signIn = async (params: {
   email: string;
   password: string;
@@ -135,16 +142,36 @@ const signIn = async (params: {
   return await HttpServices.post(API_URL.user + '/sign-in', params);
 };
 
-const signUp = async (params: {
-  email: string;
-  password?: string;
-  signUpMethod: SignUpMethod;
-  ssoToken?: string;
-  username: string;
-  phoneNumber?: string;
-  avatarUrl?: string;
-}) => {
+const signUp = async (params: DataModels.ISignUpParams) => {
   return await HttpServices.post(API_URL.user + '/sign-up', params);
+};
+
+const appleSignin = async () => {
+  const nonce = Math.random().toString(36).substring(2, 10);
+  const hashedNonce = await Crypto.digestStringAsync(
+    Crypto.CryptoDigestAlgorithm.SHA256,
+    nonce,
+  );
+
+  try {
+    const credential = await AppleAuthentication.signInAsync({
+      requestedScopes: [
+        AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+        AppleAuthentication.AppleAuthenticationScope.EMAIL,
+      ],
+      nonce: hashedNonce,
+    });
+
+    return credential;
+    // send credential.identityToken to server to verify with Apple
+  } catch (e) {
+    if (e.code === 'ERR_CANCELED') {
+      // user cancel
+    } else {
+      //
+    }
+    return null;
+  }
 };
 
 export const AuthenticationServices = {
@@ -160,4 +187,6 @@ export const AuthenticationServices = {
   signIn,
   updateCreditCard,
   deleteCreditCard,
+  appleSignin,
+  requestDeleteUser,
 };

@@ -54,8 +54,7 @@ const CartItem: React.FC<CartItemProps> = ({
         <View style={styles.info}>
           <Image
             style={styles.image}
-            contentFit="contain"
-            source={ImageAssets.bookImage1}
+            source={bookCartItem.book.image || ImageAssets.bookImage1}
             transition={500}
           />
           <View
@@ -160,9 +159,11 @@ const CartItem: React.FC<CartItemProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: COLORS.gray200,
+    backgroundColor: COLORS.primaryWhite,
     height: 178,
     borderRadius: 8,
+    borderColor: COLORS.gray200,
+    borderWidth: 1,
   },
   info: {
     flexDirection: 'row',

@@ -2,7 +2,7 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useMemo, useState } from 'react';
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
-import { Layouts, ScreenHeader } from '@components';
+import { EmptyListComponent, Layouts, ScreenHeader } from '@components';
 import { SCREEN_NAME } from '@constants';
 import { authenticationStore, cartStore, userStore } from '@store';
 import { COLORS } from '@themes';
@@ -45,29 +45,35 @@ const VoucherScreen = ({ navigation, route }: any) => {
         }
       >
         <Layouts.VSpace value={24} />
-        {listVoucher.map((item) => {
-          return (
-            <React.Fragment key={item.id}>
-              <VoucherItem
-                voucher={item}
-                onPress={() => {
-                  if (isFromCheckout) {
-                    navigation.goBack();
-                    cartStore.setVoucherSelected(item);
-                  }
-                }}
-                isActive={
-                  isFromCheckout ? cartStore.subTotal >= item.min : true
-                }
-                isSelected={
-                  isFromCheckout
-                    ? cartStore.voucherSelected?.id === item.id
-                    : false
-                }
-              />
-            </React.Fragment>
-          );
-        })}
+        {listVoucher?.length ? (
+          <>
+            {listVoucher.map((item) => {
+              return (
+                <React.Fragment key={item.id}>
+                  <VoucherItem
+                    voucher={item}
+                    onPress={() => {
+                      if (isFromCheckout) {
+                        navigation.goBack();
+                        cartStore.setVoucherSelected(item);
+                      }
+                    }}
+                    isActive={
+                      isFromCheckout ? cartStore.subTotal >= item.min : true
+                    }
+                    isSelected={
+                      isFromCheckout
+                        ? cartStore.voucherSelected?.id === item.id
+                        : false
+                    }
+                  />
+                </React.Fragment>
+              );
+            })}
+          </>
+        ) : (
+          <EmptyListComponent />
+        )}
         <Layouts.VSpace value={24} />
       </ScrollView>
     </View>

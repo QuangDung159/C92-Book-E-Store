@@ -1,29 +1,24 @@
 import { useNavigation } from '@react-navigation/native';
+import { Image } from 'expo-image';
 import React from 'react';
 import {
-  Dimensions,
   Platform,
   StyleProp,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
   ViewStyle,
 } from 'react-native';
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
-import { ImageAssets } from '@assets';
 import {
-  BookCardCarousel,
+  AddToCartButton,
   BookCardPrice,
   BookHeartIcon,
   BookTitle,
   Layouts,
 } from '@components';
-import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
-import { cartStore, userStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
-import { ToastHelpers } from '@utils';
 
 interface BookCardItemProps {
   bookCardItem: DataModels.IBook;
@@ -36,45 +31,7 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
   containerStyle,
   index,
 }) => {
-  const { width } = Dimensions.get('window');
   const navigation = useNavigation();
-  const { openCartScreen, openSignInScreen } = useNavigate(navigation);
-
-  const carouselWidth = (width - 48 - 12) / 2;
-  const carouselHeight = carouselWidth * 1.3;
-
-  const data = [
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-  ];
-
-  const onPressAddToCart = async () => {
-    if (!userStore.authenticated) {
-      ToastHelpers.showToast({
-        title: 'Please sign in first',
-        type: 'error',
-        onPress: () => {
-          openSignInScreen();
-        },
-      });
-      return;
-    }
-
-    await cartStore.addToCart({
-      book: bookCardItem,
-      count: 1,
-    });
-
-    ToastHelpers.showToast({
-      title: 'Add to cart success',
-      content: 'View cart',
-      onPress: () => openCartScreen(),
-    });
-  };
 
   return (
     <React.Fragment key={bookCardItem.id}>
@@ -89,12 +46,14 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
           bookCardItem={bookCardItem}
           containerStyle={styles.heartIconWrapper}
         />
-        <BookCardCarousel
-          carouselHeight={carouselHeight}
-          carouselWidth={carouselWidth}
-          data={data}
-          imageStyle={styles.image}
-          dotStyle={styles.dot}
+        <Image
+          style={{
+            width: 150,
+            height: 200,
+            alignSelf: 'center',
+          }}
+          source={bookCardItem.image}
+          contentFit="contain"
         />
         <Layouts.VSpace value={12} />
         <View style={styles.info}>
@@ -118,35 +77,25 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
           />
           <Text
             style={styles.stock}
-          >{`In stock: ${bookCardItem.stock} pcs`}</Text>
+          >{`Stock: ${bookCardItem.stock > 99 ? '99+' : bookCardItem.stock}`}</Text>
           <BookCardPrice
             price={bookCardItem.price}
             priceNotSale={bookCardItem.priceNotSale}
             containerStyle={styles.priceContainer}
           />
           <Layouts.VSpace value={6} />
-          <TouchableOpacity
-            onPress={() => {
-              onPressAddToCart();
-            }}
+          <View
             style={{
-              borderRadius: 50,
-              backgroundColor: COLORS.primaryBlack,
-              justifyContent: 'center',
-              alignItems: 'center',
-              padding: 8,
-              height: 40,
+              alignSelf: 'center',
             }}
           >
-            <Text
-              style={{
-                ...FONT_STYLES.BOLD_14,
-                color: COLORS.primaryWhite,
-              }}
-            >
-              Add to cart
-            </Text>
-          </TouchableOpacity>
+            <AddToCartButton
+              itemCount={bookCardItem.count || 1}
+              bookCardItem={bookCardItem}
+              showCount={false}
+              buttonType="text-icon"
+            />
+          </View>
         </View>
       </View>
     </React.Fragment>
@@ -158,7 +107,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     flex: 1,
     marginBottom: 12,
-    backgroundColor: COLORS.gray200,
+    borderColor: COLORS.gray200,
+    borderWidth: 1,
   },
   image: {
     width: Platform.select({

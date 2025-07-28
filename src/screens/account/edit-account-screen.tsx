@@ -124,20 +124,6 @@ const EditAccountScreen = ({ navigation }: any) => {
           />
           <Layouts.VSpace value={12} />
         </Collapsible>
-        <Layouts.MaxSpace />
-        <Buttons.CButton
-          label="Delete account"
-          onPress={() => {
-            setShowConfirm(true);
-          }}
-          style={{
-            borderColor: COLORS.error50,
-          }}
-          labelStyle={{
-            color: COLORS.error50,
-          }}
-        />
-        <Layouts.VSpace value={12} />
       </KeyboardAwareScrollView>
       <BottomButtonSection
         onPress={() => {

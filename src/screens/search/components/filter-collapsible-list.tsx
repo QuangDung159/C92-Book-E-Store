@@ -77,7 +77,7 @@ const FilterCollapsibleList: React.FC<FilterCollapsibleListProps> = ({
 
 const styles = StyleSheet.create({
   label: {
-    ...FONT_STYLES.SEMIBOLD_16,
+    ...FONT_STYLES.BOLD_16,
   },
   titleContainer: {
     flexDirection: 'row',

@@ -4,6 +4,7 @@ import {
   makeObservable,
   observable,
   runInAction,
+  toJS,
 } from 'mobx';
 import { Linking } from 'react-native';
 import {
@@ -18,6 +19,7 @@ import {
   OrderServices,
   ZaloPayServices,
 } from '@services';
+import { sharedStore } from '@store';
 import { PaymentData, PaymentStatus, PaymentType, ZaloPayOrder } from '@types';
 import { DatetimeHelpers, delay, StringHelpers, ToastHelpers } from '@utils';
 import { ReferenceOptionsStore } from './reference-options-store';
@@ -260,10 +262,13 @@ class CartStore {
     cartItem: DataModels.ICartItem,
     count: number,
   ) => {
+    sharedStore.setButtonLoading(true);
     const result = await CartServices.updateCartItem({
       id: cartItem.id,
       count: cartItem.count + count,
     });
+
+    sharedStore.setButtonLoading(false);
 
     if (result?.success) {
       if (this.userStore.authenticated) {
@@ -457,7 +462,7 @@ class CartStore {
     }
   }
 
-  async submitOrder() {
+  async submitOrder(onSubmitCODSuccess?: () => void) {
     const result = await this.updateCart();
 
     let createOrderResult = null;
@@ -476,9 +481,13 @@ class CartStore {
         if (this.paymentSelected.paymentType === PAYMENT_TYPE.zalo_pay) {
           await this.handleZaloPayPayment();
         } else {
-          Linking.openURL(
-            `${DEEP_LINK_PAYMENT_SUCCESS_URL}orderId=${this.currentOrder.id}&message=Payment success!`,
-          );
+          if (onSubmitCODSuccess) {
+            onSubmitCODSuccess();
+          } else {
+            Linking.openURL(
+              `${DEEP_LINK_PAYMENT_SUCCESS_URL}orderId=${this.currentOrder.id}&message=Payment success!`,
+            );
+          }
         }
       }
   }
@@ -495,6 +504,29 @@ class CartStore {
     }
 
     return result;
+  };
+
+  markVoucherWasUsed = async () => {
+    if (!this.voucherSelected) {
+      return;
+    }
+
+    const listVoucher = toJS([...this.userStore.userProfile.listVoucher]);
+
+    const index = listVoucher.findIndex(
+      (item) => item.id === this.voucherSelected.id,
+    );
+
+    if (index !== -1) {
+      listVoucher.splice(index, 1);
+
+      this.userStore.updateUser({
+        ...this.userStore.userProfile,
+        listVoucher,
+      });
+    } else {
+      // authenticationStore.fetchUser();
+    }
   };
 }
 

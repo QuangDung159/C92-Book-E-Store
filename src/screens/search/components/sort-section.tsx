@@ -46,7 +46,7 @@ const SortSection: React.FC<SortSectionProps> = ({ label, onPress }) => {
           </View>
         </TouchableOpacity>
         <Layouts.MaxSpace />
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => {
             searchStore.setViewStyle(SEARCH_VIEW_STYLE.grid);
           }}
@@ -56,7 +56,7 @@ const SortSection: React.FC<SortSectionProps> = ({ label, onPress }) => {
             size={24}
             color={searchStore.getViewStyleIconColor(SEARCH_VIEW_STYLE.grid)}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <Layouts.HSpace value={4} />
         <TouchableOpacity
           onPress={() => {

@@ -1,6 +1,13 @@
 import * as Linking from 'expo-linking';
 import { Platform } from 'react-native';
-import { GOOGLE_PLAY_STORE_URL, SCREEN_NAME, SHCEME } from '@constants';
+import {
+  APP_STORE_URL,
+  GOOGLE_PLAY_STORE_URL,
+  SCREEN_NAME,
+  SHCEME,
+  SUPPORT_LINK,
+  UNKNOWN_ERROR_MESSAGE,
+} from '@constants';
 import { DataModels } from '@models';
 import { delay } from '@utils';
 
@@ -194,13 +201,13 @@ export const useNavigate = (navigation: any) => {
     }
   };
 
-  const openPlayStore = () => {
+  const openAplicationStore = () => {
     const url = Platform.select({
       android: GOOGLE_PLAY_STORE_URL,
-      ios: GOOGLE_PLAY_STORE_URL,
+      ios: APP_STORE_URL,
     });
 
-    Linking.canOpenURL(GOOGLE_PLAY_STORE_URL)
+    Linking.canOpenURL(url)
       .then((supported) => {
         if (supported) {
           Linking.openURL(url);
@@ -208,7 +215,11 @@ export const useNavigate = (navigation: any) => {
           console.log("Don't know how to open URI: " + url);
         }
       })
-      .catch((err) => console.error('An error occurred', err));
+      .catch((err) => console.error(UNKNOWN_ERROR_MESSAGE, err));
+  };
+
+  const openSupportPage = () => {
+    Linking.openURL(SUPPORT_LINK);
   };
 
   const handleNavigateFromLinking = async (url: string) => {
@@ -265,7 +276,7 @@ export const useNavigate = (navigation: any) => {
     openBookListingScreen,
     openNotificationsScreen,
     handleNotificationNavigate,
-    openPlayStore,
+    openAplicationStore,
     openOrdersScreen,
     openOrderDetailScreen,
     openFavoriteScreen,
@@ -273,5 +284,6 @@ export const useNavigate = (navigation: any) => {
     openPaymentCardScreen,
     openAddEditPaymentCardScreen,
     openVoucherScreen,
+    openSupportPage,
   };
 };

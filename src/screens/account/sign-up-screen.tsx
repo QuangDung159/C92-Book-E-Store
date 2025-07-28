@@ -1,14 +1,18 @@
 import { observer } from 'mobx-react-lite';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Keyboard, StyleSheet, Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Buttons, Inputs, Layouts, ScreenHeader } from '@components';
+import { UNKNOWN_ERROR_MESSAGE } from '@constants';
 import { appModel, authenticationStore, sharedStore } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
+import { delay, ToastHelpers } from '@utils';
 import { SignUpViewModel } from './view-models';
 
 const SignUpScreen = ({ navigation }: any) => {
   const signUpVM = useRef(new SignUpViewModel(appModel.userStore)).current;
+
+  const [errorMessageEmail, setErrorMessageEmail] = useState('');
 
   const onSubmit = async () => {
     Keyboard.dismiss();
@@ -20,9 +24,20 @@ const SignUpScreen = ({ navigation }: any) => {
 
     sharedStore.setShowLoading(true);
 
-    await authenticationStore.signUp(signUpVM.toJsonObject, () => {
-      navigation.goBack();
-    });
+    await authenticationStore.signUp(
+      signUpVM.toJsonObject,
+      async () => {
+        navigation.goBack();
+        await delay(1000);
+        ToastHelpers.showToast({
+          title: 'Sign up successfully',
+          type: 'success',
+        });
+      },
+      (result) => {
+        setErrorMessageEmail(result.errorMessage || UNKNOWN_ERROR_MESSAGE);
+      },
+    );
 
     sharedStore.setShowLoading(false);
   };
@@ -38,9 +53,15 @@ const SignUpScreen = ({ navigation }: any) => {
           placeholder="Email"
           onChangeText={(value) => {
             signUpVM.setEmail(value);
+            setErrorMessageEmail(''); // Reset error message when user types
           }}
-          errorMessage={signUpVM.validationErrors.get('email')}
-          shouldShowErrorTitle={signUpVM.shouldShowValidationErrors}
+          errorMessage={
+            errorMessageEmail || signUpVM.validationErrors.get('email')
+          }
+          shouldShowErrorTitle={
+            Boolean(errorMessageEmail) || signUpVM.shouldShowValidationErrors
+          }
+          keyboardType="email-address"
         />
         <Layouts.VSpace value={12} />
         <Inputs.CTextInput
@@ -89,9 +110,7 @@ const SignUpScreen = ({ navigation }: any) => {
         <Buttons.CButton
           label="Sign Up"
           buttonType="primary"
-          onPress={() => {
-            onSubmit();
-          }}
+          onPress={onSubmit}
         />
         <Layouts.VSpace value={24} />
       </KeyboardAwareScrollView>

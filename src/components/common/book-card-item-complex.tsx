@@ -1,17 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
+import { Image } from 'expo-image';
 import React from 'react';
-import {
-  Dimensions,
-  StyleProp,
-  StyleSheet,
-  Text,
-  View,
-  ViewStyle,
-} from 'react-native';
-import { ImageAssets } from '@assets';
+import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import {
   AddToCartButton,
-  BookCardCarousel,
   BookCardInfo,
   BookCardPrice,
   BookHeartIcon,
@@ -24,26 +16,15 @@ import { COLORS, FONT_STYLES } from '@themes';
 interface BookCardItemComplexProps {
   bookCardItem: DataModels.IBook;
   containerStyle?: StyleProp<ViewStyle>;
+  onUpdateCount?: (countNumber: number) => void;
 }
 
 const BookCardItemComplex: React.FC<BookCardItemComplexProps> = ({
   bookCardItem,
   containerStyle,
+  onUpdateCount,
 }) => {
-  const { width } = Dimensions.get('window');
-
-  const carouselWidth = width - 48;
-  const carouselHeight = carouselWidth * 0.65;
   const navigation = useNavigation();
-
-  const data = [
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-    ImageAssets.bookImage1,
-  ];
 
   return (
     <React.Fragment key={bookCardItem.id}>
@@ -53,12 +34,14 @@ const BookCardItemComplex: React.FC<BookCardItemComplexProps> = ({
             bookCardItem={bookCardItem}
             containerStyle={styles.heartIconWrapper}
           />
-          <BookCardCarousel
-            carouselHeight={carouselHeight}
-            carouselWidth={carouselWidth}
-            data={data}
-            imageStyle={styles.image}
-            dotStyle={styles.dot}
+          <Image
+            style={{
+              width: 300,
+              height: 320,
+              alignSelf: 'center',
+            }}
+            source={bookCardItem.image}
+            contentFit="contain"
           />
         </View>
         <Layouts.VSpace value={12} />
@@ -79,6 +62,9 @@ const BookCardItemComplex: React.FC<BookCardItemComplexProps> = ({
           <AddToCartButton
             itemCount={bookCardItem.count}
             bookCardItem={bookCardItem}
+            onUpdateCount={onUpdateCount}
+            buttonType="text-icon"
+            showCount={false}
           />
         </View>
       </View>
@@ -90,8 +76,9 @@ const BookCardItemComplex: React.FC<BookCardItemComplexProps> = ({
 const styles = StyleSheet.create({
   container: {
     borderRadius: 8,
-    backgroundColor: COLORS.gray200,
+    borderColor: COLORS.gray200,
     padding: 12,
+    borderWidth: 1,
   },
   imageWrapper: {
     alignItems: 'center',
