@@ -1,6 +1,7 @@
 import { action, makeObservable, observable } from 'mobx';
 import { DataModels } from '@models';
 import { AuthenticationServices } from '@services';
+import { NotificationStore } from '@store';
 import { ServiceResultHandler, SignUpMethod } from '@types';
 import { delay, ToastHelpers } from '@utils';
 import { SharedStore } from './shared-store';
@@ -8,12 +9,17 @@ import { UserStore } from './user-store';
 
 class AuthenticationStore {
   userStore: UserStore | null = null;
+  notificationStore: NotificationStore | null = null;
   sharedStore: SharedStore | null = null;
   googleSigned: boolean = false;
   facebookSigned: boolean = false;
   appleSigned: boolean = false;
 
-  constructor(userStore: UserStore, sharedStore: SharedStore) {
+  constructor(
+    userStore: UserStore,
+    sharedStore: SharedStore,
+    notificationStore: NotificationStore,
+  ) {
     makeObservable(this, {
       userStore: observable,
       sharedStore: observable,
@@ -26,7 +32,7 @@ class AuthenticationStore {
     });
 
     this.userStore = userStore;
-
+    this.notificationStore = notificationStore;
     this.sharedStore = sharedStore;
   }
 
@@ -54,17 +60,11 @@ class AuthenticationStore {
   };
 
   signIn = async (
-    email: string,
-    password: string,
-    notificationToken: string,
+    signInParam: DataModels.ISignInParams,
     onSuccess?: () => void,
     onFail?: (result?: DataModels.ServiceResult<any>) => void,
   ) => {
-    const result = await AuthenticationServices.signIn({
-      email,
-      password,
-      notificationToken,
-    });
+    const result = await AuthenticationServices.signIn(signInParam);
 
     if (result?.success && result.data) {
       const user = result.data.user as DataModels.IUser;
@@ -157,6 +157,16 @@ class AuthenticationStore {
     return result;
   };
 
+  ssoSignIn = (user: DataModels.IUser, signInMethod: string) => {
+    this.signIn({
+      email: user.email,
+      notificationToken: this.notificationStore.expoPushToken,
+      password: '',
+      ssoToken: user.ssoToken,
+      signInMethod,
+    });
+  };
+
   googleSignIn = async () => {
     const response = await AuthenticationServices.googleSignIn();
 
@@ -174,7 +184,10 @@ class AuthenticationStore {
       if (result?.success) {
         const user = result.data.user as DataModels.IUser;
 
-        await this.onSignInSuccess(user);
+        // Update expo token
+        this.ssoSignIn(user, 'google');
+
+        this.onSignInSuccess(user);
 
         this.setGoogleSigned(true);
       }
@@ -201,9 +214,12 @@ class AuthenticationStore {
       if (result?.success) {
         const user = result.data.user as DataModels.IUser;
 
-        await this.onSignInSuccess(user);
+        // Update expo token
+        this.ssoSignIn(user, 'apple');
 
-        this.setGoogleSigned(true);
+        this.onSignInSuccess(user);
+
+        this.setAppleSigned(true);
       }
     }
   };
@@ -240,9 +256,12 @@ class AuthenticationStore {
       if (result?.success) {
         const user = result.data.user as DataModels.IUser;
 
-        await this.onSignInSuccess(user);
+        // Update expo token
+        this.ssoSignIn(user, 'facebook');
 
-        this.setGoogleSigned(true);
+        this.onSignInSuccess(user);
+
+        this.setFacebookSigned(true);
       }
     }
   };
