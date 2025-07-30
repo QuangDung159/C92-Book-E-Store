@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { APP_ID, PACKAGE_NAME } from '@constants';
+import { PACKAGE_NAME } from '@constants';
+import { sharedStore } from '@store';
 
 const getLatestVersionAndroid = async () => {
   try {
@@ -22,11 +23,13 @@ const getLatestVersionAndroid = async () => {
 
 const getLatestVersionIOS = async () => {
   try {
-    const response = await axios.get(
-      `https://itunes.apple.com/lookup?id=${APP_ID}`,
-    );
+    const latest = sharedStore.getConfig('app_version');
 
-    const latest = response.data.results[0]?.version || null;
+    // const response = await axios.get(
+    //   `https://itunes.apple.com/lookup?id=${APP_ID}`,
+    // );
+
+    // const latest = response.data.results[0]?.version || null;
 
     console.log('getLatestVersionIOS :>> ', latest);
 

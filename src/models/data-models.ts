@@ -253,3 +253,11 @@ export interface ISignUpParams {
   phoneNumber?: string;
   avatarUrl?: string;
 }
+
+export interface ISignInParams {
+  email: string;
+  password: string;
+  notificationToken: string;
+  signInMethod?: string;
+  ssoToken?: string;
+}

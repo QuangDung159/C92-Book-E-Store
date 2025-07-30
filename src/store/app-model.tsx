@@ -32,6 +32,7 @@ class AppModel {
     this.authenticationStore = new AuthenticationStore(
       this.userStore,
       this.sharedStore,
+      this.notificationStore,
     );
   }
 

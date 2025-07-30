@@ -11,6 +11,7 @@ import {
 import { Buttons, Inputs, Layouts, ScreenHeader } from '@components';
 import { UNKNOWN_ERROR_MESSAGE } from '@constants';
 import { useNavigate } from '@hooks';
+import { DataModels } from '@models';
 import {
   appModel,
   authenticationStore,
@@ -36,11 +37,17 @@ const SignInScreen = ({ navigation }: any) => {
       return;
     }
 
+    const signInParam: DataModels.ISignInParams = {
+      email: signInVM.username,
+      password: signInVM.password,
+      notificationToken: notificationStore.expoPushToken,
+      signInMethod: 'in-app',
+      ssoToken: 'in-app',
+    };
+
     sharedStore.setShowLoading(true);
     await authenticationStore.signIn(
-      signInVM.username,
-      signInVM.password,
-      notificationStore.expoPushToken,
+      signInParam,
       () => {
         navigation.goBack();
       },
