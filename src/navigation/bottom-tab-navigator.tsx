@@ -149,7 +149,6 @@ const styles = StyleSheet.create({
   },
   tabBarStyle: Platform.select({
     ios: {
-      height: 95,
       marginBottom: -30,
     },
     android: {
