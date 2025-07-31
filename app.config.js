@@ -16,7 +16,7 @@ export default {
     ios: {
       supportsTablet: true,
       bundleIdentifier: 'com.dragonc92team.BookEStoreV1',
-      buildNumber: '1',
+      buildNumber: '5',
       googleServicesFile: './ios/BookEStore/GoogleService-Info.plist',
       usesAppleSignIn: true,
       infoPlist: {
@@ -30,7 +30,7 @@ export default {
         backgroundColor: '#ffffff',
       },
       package: 'com.dragonc92team.BookEStoreV1',
-      versionCode: 81,
+      versionCode: 82,
       googleServicesFile: './android/app/google-services.json',
       permissions: ['ACCESS_FINE_LOCATION', 'ACCESS_COARSE_LOCATION'],
       targetSdkVersion: 35,
