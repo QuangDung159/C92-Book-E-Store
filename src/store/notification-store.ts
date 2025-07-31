@@ -6,7 +6,7 @@ import { action, computed, makeObservable, observable } from 'mobx';
 import { Platform } from 'react-native';
 import { DataModels } from '@models';
 import { NotificationServices } from '@services';
-import { ToastHelpers } from '@utils';
+import { delay, ToastHelpers } from '@utils';
 import { UserStore } from './user-store';
 
 class NotificationStore {
@@ -101,9 +101,68 @@ class NotificationStore {
     throw new Error(errorMessage);
   }
 
+  // async registerForPushNotificationsAsync() {
+  //   if (Platform.OS === 'android') {
+  //     Notifications.setNotificationChannelAsync('default', {
+  //       name: 'default',
+  //       importance: Notifications.AndroidImportance.MAX,
+  //       vibrationPattern: [0, 250, 250, 250],
+  //       lightColor: '#FF231F7C',
+  //     });
+  //   }
+
+  //   if (Device.isDevice) {
+  //     await delay(2000);
+  //     const { status: existingStatus } =
+  //       await Notifications.getPermissionsAsync();
+
+  //     let finalStatus = existingStatus;
+
+  //     Alert.alert(`existingStatus: ${existingStatus}`);
+
+  //     if (existingStatus !== 'granted') {
+  //       const { status } = await Notifications.requestPermissionsAsync();
+  //       finalStatus = status;
+  //     }
+
+  //     Alert.alert(`finalStatus: ${finalStatus}`);
+
+  //     if (finalStatus !== 'granted') {
+  //       this.handleRegistrationError(
+  //         'Permission not granted to get push token for push notification!',
+  //       );
+  //       return;
+  //     }
+
+  //     const projectId =
+  //       Constants?.expoConfig?.extra?.eas?.projectId ??
+  //       Constants?.easConfig?.projectId;
+
+  //     if (!projectId) {
+  //       this.handleRegistrationError('Project ID not found');
+  //     }
+
+  //     try {
+  //       const pushTokenString = (
+  //         await Notifications.getExpoPushTokenAsync({
+  //           projectId,
+  //         })
+  //       ).data;
+  //       console.log(pushTokenString);
+  //       return pushTokenString;
+  //     } catch (e: unknown) {
+  //       this.handleRegistrationError(`${e}`);
+  //     }
+  //   } else {
+  //     this.handleRegistrationError(
+  //       'Must use physical device for push notifications',
+  //     );
+  //   }
+  // }
+
   async registerForPushNotificationsAsync() {
     if (Platform.OS === 'android') {
-      Notifications.setNotificationChannelAsync('default', {
+      await Notifications.setNotificationChannelAsync('default', {
         name: 'default',
         importance: Notifications.AndroidImportance.MAX,
         vibrationPattern: [0, 250, 250, 250],
@@ -115,29 +174,39 @@ class NotificationStore {
       const { status: existingStatus } =
         await Notifications.getPermissionsAsync();
       let finalStatus = existingStatus;
+
       if (existingStatus !== 'granted') {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
+        await Notifications.requestPermissionsAsync();
+
+        // 💡 Delay after request
+        await delay(1000);
+
+        const { status: recheckStatus } =
+          await Notifications.getPermissionsAsync();
+        finalStatus = recheckStatus;
       }
+
       if (finalStatus !== 'granted') {
         this.handleRegistrationError(
           'Permission not granted to get push token for push notification!',
         );
         return;
       }
+
       const projectId =
         Constants?.expoConfig?.extra?.eas?.projectId ??
         Constants?.easConfig?.projectId;
+
       if (!projectId) {
         this.handleRegistrationError('Project ID not found');
+        return;
       }
+
       try {
         const pushTokenString = (
-          await Notifications.getExpoPushTokenAsync({
-            projectId,
-          })
+          await Notifications.getExpoPushTokenAsync({ projectId })
         ).data;
-        console.log(pushTokenString);
+        console.log('Expo push token:', pushTokenString);
         return pushTokenString;
       } catch (e: unknown) {
         this.handleRegistrationError(`${e}`);
