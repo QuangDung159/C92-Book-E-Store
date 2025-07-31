@@ -19,6 +19,10 @@ export default {
       buildNumber: '1',
       googleServicesFile: './ios/BookEStore/GoogleService-Info.plist',
       usesAppleSignIn: true,
+      infoPlist: {
+        UIBackgroundModes: ['remote-notification'],
+        UNUserNotificationCenter: true,
+      },
     },
     android: {
       adaptiveIcon: {
@@ -41,7 +45,7 @@ export default {
       [
         'onesignal-expo-plugin',
         {
-          mode: 'development',
+          mode: 'production',
         },
       ],
       'expo-router',
