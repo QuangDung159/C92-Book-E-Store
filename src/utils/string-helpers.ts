@@ -184,3 +184,19 @@ export const convertNumberToMonthYear = (text: string) => {
     return numericText;
   }
 };
+
+export const compareVersions = (v1: string, v2: string): number => {
+  const parts1 = v1.split('.').map(Number);
+  const parts2 = v2.split('.').map(Number);
+
+  const length = Math.max(parts1.length, parts2.length);
+  for (let i = 0; i < length; i++) {
+    const num1 = parts1[i] || 0;
+    const num2 = parts2[i] || 0;
+
+    if (num1 > num2) return 1; // v1 > v2
+    if (num1 < num2) return -1; // v1 < v2
+  }
+
+  return 0; // v1 = v2
+};
