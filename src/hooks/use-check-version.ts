@@ -5,7 +5,7 @@ import * as Updates from 'expo-updates';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { AppState, Platform } from 'react-native';
 import { AppVersionServices } from '@services';
-import { delay } from '@utils';
+import { delay, StringHelpers } from '@utils';
 
 export const useCheckVersion = () => {
   const appState = useRef(AppState.currentState);
@@ -41,8 +41,13 @@ export const useCheckVersion = () => {
 
       if (!latestVersion) return;
 
-      delay(1000).then(() => {
-        setShowPopup(currentVersion !== latestVersion);
+      const isHaveNewerVersion = StringHelpers.compareVersions(
+        currentVersion,
+        latestVersion,
+      );
+
+      delay(500).then(() => {
+        setShowPopup(isHaveNewerVersion === -1);
       });
     }
   }, [currentVersion]);
