@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import {
-  Platform,
   StyleProp,
   StyleSheet,
   Text,
@@ -90,10 +89,6 @@ const styles = StyleSheet.create({
   },
   label: {
     ...FONT_STYLES.BOLD_14,
-    marginTop: Platform.select({
-      ios: 5,
-      android: 0,
-    }),
   },
   container: {
     flexDirection: 'row',

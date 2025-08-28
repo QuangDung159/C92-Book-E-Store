@@ -17,21 +17,23 @@ export default {
       supportsTablet: true,
       bundleIdentifier: 'com.dragonc92team.BookEStoreV1',
       buildNumber: '1',
-      googleServicesFile: './ios/BookEStore/GoogleService-Info.plist',
+      googleServicesFile: './GoogleService-Info.plist',
       usesAppleSignIn: true,
       infoPlist: {
         UIBackgroundModes: ['remote-notification'],
         UNUserNotificationCenter: true,
       },
     },
+    jsEngine: 'hermes',
     android: {
+      edgeToEdgeEnabled: true,
       adaptiveIcon: {
         foregroundImage: './src/assets/images/e-book-logo.png',
         backgroundColor: '#ffffff',
       },
       package: 'com.dragonc92team.BookEStoreV1',
       versionCode: 71,
-      googleServicesFile: './android/app/google-services.json',
+      googleServicesFile: './google-services.json',
       permissions: ['ACCESS_FINE_LOCATION', 'ACCESS_COARSE_LOCATION'],
       targetSdkVersion: 35,
     },
@@ -41,6 +43,8 @@ export default {
       favicon: './src/assets/images/e-book-logo.png',
     },
     plugins: [
+      'expo-font',
+      'expo-web-browser',
       'expo-apple-authentication',
       [
         'onesignal-expo-plugin',
