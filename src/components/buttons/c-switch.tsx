@@ -22,7 +22,10 @@ const CSwitch: FC<CSwitchProps> = ({
     <View style={styles.container}>
       <Text style={[styles.title, labelStyle]}>{title}</Text>
       <Switch
-        style={styles.switchButton}
+        style={{
+          transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }],
+          marginRight: -10,
+        }}
         value={value}
         onValueChange={onValueChange}
         trackColor={{
@@ -42,10 +45,6 @@ const styles = StyleSheet.create({
   },
   title: {
     ...FONT_STYLES.REGULAR_14,
-  },
-  switchButton: {
-    transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }],
-    marginRight: -10,
   },
 });
 
