@@ -41,7 +41,7 @@ const Navigation = () => {
       if (response) {
         const url = response?.notification?.request?.content?.data?.url;
         if (url) {
-          handleNavigateFromLinking(url); // Navigate based on the URL
+          handleNavigateFromLinking(url as string); // Navigate based on the URL
         }
       }
     };
@@ -62,7 +62,7 @@ const Navigation = () => {
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
         handleNavigateFromLinking(
-          response?.notification?.request?.content?.data?.url,
+          response?.notification?.request?.content?.data?.url as string,
         );
       });
 
