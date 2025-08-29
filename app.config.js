@@ -14,6 +14,7 @@ export default {
       backgroundColor: '#ffffff',
     },
     ios: {
+      jsEngine: 'hermes',
       supportsTablet: true,
       bundleIdentifier: 'com.dragonc92team.BookEStoreV1',
       buildNumber: '1',
@@ -24,8 +25,8 @@ export default {
         UNUserNotificationCenter: true,
       },
     },
-    jsEngine: 'hermes',
     android: {
+      jsEngine: 'jsc',
       edgeToEdgeEnabled: true,
       adaptiveIcon: {
         foregroundImage: './src/assets/images/e-book-logo.png',

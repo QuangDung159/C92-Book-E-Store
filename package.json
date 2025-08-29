@@ -3,6 +3,7 @@
   "main": "index.js",
   "version": "1.0.1",
   "scripts": {
+    "eas-build-pre-install": "npm config set legacy-peer-deps true",
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
     "a": "expo run:android",
@@ -97,7 +98,7 @@
     "react-native": "0.79.5",
     "react-native-collapsible": "^1.6.1",
     "react-native-dotenv": "^3.4.11",
-    "react-native-fbsdk-next": "^13.0.0",
+    "react-native-fbsdk-next": "~13.4.1",
     "react-native-gesture-handler": "~2.24.0",
     "react-native-get-random-values": "^1.11.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
