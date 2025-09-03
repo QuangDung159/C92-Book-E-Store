@@ -131,5 +131,7 @@
     <string>Automatic</string>
     <key>UIViewControllerBasedStatusBarAppearance</key>
     <false/>
+    <key>UNUserNotificationCenter</key>
+    <true/>
   </dict>
 </plist>
