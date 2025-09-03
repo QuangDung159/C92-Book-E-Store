@@ -81,7 +81,8 @@ const SHCEME = 'app/BookEStoreV1/';
 
 const DEEP_LINK_URL = `c92bookestorev1:///${SHCEME}`;
 
-const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
+// const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
+const BASE_URL = 'https://847fc284f0c2.ngrok-free.app/';
 
 const APP_LINK_URL = `${BASE_URL}${SHCEME}`;
 
