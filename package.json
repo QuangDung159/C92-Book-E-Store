@@ -3,6 +3,7 @@
   "main": "index.js",
   "version": "1.0.1",
   "scripts": {
+    "eas-build-pre-install": "npm config set legacy-peer-deps true",
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
     "a": "expo run:android",
