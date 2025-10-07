@@ -22,6 +22,11 @@ export default {
       infoPlist: {
         UIBackgroundModes: ['remote-notification'],
         UNUserNotificationCenter: true,
+        NSAppTransportSecurity: {
+          NSAllowsArbitraryLoads: true,
+        },
+        NSLocationWhenInUseUsageDescription:
+          'This app uses your location to provide relevant content.',
       },
     },
     android: {

@@ -81,7 +81,8 @@ const SHCEME = 'app/BookEStoreV1/';
 
 const DEEP_LINK_URL = `c92bookestorev1:///${SHCEME}`;
 
-const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
+const BASE_URL = 'https://nodejs-e-commerce.onrender.com/';
+// const BASE_URL = 'https://a908d6482a0e.ngrok-free.app/';
 // const BASE_URL = 'https://005e7aef0d1e.ngrok-free.app/';
 
 const APP_LINK_URL = `${BASE_URL}${SHCEME}`;
