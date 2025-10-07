@@ -11,7 +11,7 @@
       "env": {
         "ENV_FILE": ".env.qa",
         "EXPO_PUBLIC_ENV": "QA",
-        "EXPO_PUBLIC_BASE_URL": "https://nodejs-e-commerce.onrender.com/"
+        "EXPO_PUBLIC_BASE_URL": "https://nodejs-e-commerce-dev.onrender.com/"
       },
       "android": {
         "buildType": "apk"
@@ -26,7 +26,7 @@
       "env": {
         "ENV_FILE": ".env.stg",
         "EXPO_PUBLIC_ENV": "STG",
-        "EXPO_PUBLIC_BASE_URL": "https://nodejs-e-commerce.onrender.com/"
+        "EXPO_PUBLIC_BASE_URL": "https://nodejs-e-commerce-dev.onrender.com/"
       },
       "android": {
         "buildType": "apk"
@@ -57,7 +57,7 @@
       "env": {
         "ENV_FILE": ".env.dev",
         "EXPO_PUBLIC_ENV": "DEV",
-        "EXPO_PUBLIC_BASE_URL": "https://nodejs-e-commerce.onrender.com/"
+        "EXPO_PUBLIC_BASE_URL": "https://nodejs-e-commerce-dev.onrender.com/"
       },
       "android": {
         "buildType": "apk"
