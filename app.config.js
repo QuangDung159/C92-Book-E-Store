@@ -55,12 +55,10 @@ export default {
         {
           ios: {
             useFrameworks: 'static',
-            newArchEnabled: false,
           },
           android: {
             targetSdkVersion: 35,
             buildToolsVersion: '35.0.0',
-            newArchEnabled: false,
           },
         },
       ],
