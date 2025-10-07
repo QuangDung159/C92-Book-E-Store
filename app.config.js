@@ -31,7 +31,7 @@ export default {
       },
       package: 'com.dragonc92team.BookEStoreV1',
       versionCode: 84,
-      googleServicesFile: './android/app/google-services.json',
+      googleServicesFile: './google-services.json',
       permissions: ['ACCESS_FINE_LOCATION', 'ACCESS_COARSE_LOCATION'],
       targetSdkVersion: 35,
     },
