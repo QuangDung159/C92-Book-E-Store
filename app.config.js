@@ -17,7 +17,7 @@ export default {
       supportsTablet: true,
       bundleIdentifier: 'com.dragonc92team.BookEStoreV1',
       buildNumber: '2',
-      googleServicesFile: './ios/BookEStore/GoogleService-Info.plist',
+      googleServicesFile: './GoogleService-Info.plist',
       usesAppleSignIn: true,
       infoPlist: {
         UIBackgroundModes: ['remote-notification'],
