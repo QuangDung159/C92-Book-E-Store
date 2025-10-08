@@ -8,6 +8,7 @@ export default {
     icon: './src/assets/images/e-book-logo.png',
     scheme: 'c92bookestorev1',
     userInterfaceStyle: 'automatic',
+    jsEngine: 'hermes',
     splash: {
       image: './src/assets/images/splash.png',
       resizeMode: 'contain',
