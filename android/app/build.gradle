@@ -92,7 +92,7 @@ android {
         applicationId 'com.dragonc92team.BookEStoreV1'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 86
+        versionCode 84
         versionName "1.0.36"
     }
     signingConfigs {
