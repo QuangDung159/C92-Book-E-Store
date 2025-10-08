@@ -118,9 +118,10 @@ export const useNavigate = (navigation: any) => {
     });
   };
 
-  const openSignInScreen = () => {
+  const openSignInScreen = (fromScreen: string) => {
     navigation.navigate(SCREEN_NAME.ACCOUNT_NAVIGATOR, {
       screen: SCREEN_NAME.SIGN_IN_SCREEN,
+      params: { fromScreen },
     });
   };
 

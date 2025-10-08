@@ -70,7 +70,7 @@ const get = async (
       data: response.data.data,
     });
   } catch (error) {
-    console.log('Http.get error :>> ', error);
+    console.log('Http.get error :>> ', JSON.stringify(error));
     console.log('Http.get error url :>> ', url);
     return buildAxiosResponse({
       success: false,

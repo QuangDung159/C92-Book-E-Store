@@ -60,7 +60,7 @@ const ReviewPopup: React.FC<ReviewPopupProps> = ({
         <Layouts.VSpace value={8} />
         <StarRating
           starSize={30}
-          rating={reviewVM.review?.rating}
+          rating={reviewVM.review?.rating || 0}
           onChange={(value) => {
             reviewVM.setReview({
               ...reviewVM.review,

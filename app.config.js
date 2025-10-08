@@ -2,12 +2,13 @@ export default {
   expo: {
     name: 'Book E-Store',
     slug: 'c92-book-e-store-v1',
-    version: '1.0.36',
-    runtimeVersion: '1.0.36',
+    version: '1.0.37',
+    runtimeVersion: '1.0.37',
     orientation: 'portrait',
     icon: './src/assets/images/e-book-logo.png',
     scheme: 'c92bookestorev1',
     userInterfaceStyle: 'automatic',
+    jsEngine: 'hermes',
     splash: {
       image: './src/assets/images/splash.png',
       resizeMode: 'contain',
@@ -17,11 +18,16 @@ export default {
       supportsTablet: true,
       bundleIdentifier: 'com.dragonc92team.BookEStoreV1',
       buildNumber: '2',
-      googleServicesFile: './ios/BookEStore/GoogleService-Info.plist',
+      googleServicesFile: './GoogleService-Info.plist',
       usesAppleSignIn: true,
       infoPlist: {
         UIBackgroundModes: ['remote-notification'],
         UNUserNotificationCenter: true,
+        NSAppTransportSecurity: {
+          NSAllowsArbitraryLoads: true,
+        },
+        NSLocationWhenInUseUsageDescription:
+          'This app uses your location to provide relevant content.',
       },
     },
     android: {
@@ -30,8 +36,8 @@ export default {
         backgroundColor: '#ffffff',
       },
       package: 'com.dragonc92team.BookEStoreV1',
-      versionCode: 86,
-      googleServicesFile: './android/app/google-services.json',
+      versionCode: 87,
+      googleServicesFile: './google-services.json',
       permissions: ['ACCESS_FINE_LOCATION', 'ACCESS_COARSE_LOCATION'],
     },
     web: {
@@ -68,6 +74,8 @@ export default {
           displayName: 'E-Store',
         },
       ],
+      'expo-font',
+      'expo-web-browser',
     ],
     experiments: {
       typedRoutes: true,
