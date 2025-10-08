@@ -13,11 +13,7 @@ const SSOButton: React.FC<SSOButtonProps> = ({ signInType, onPress }) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
-        {signInType === 'google' ? (
-          <Icons.GoogleIcon size={12} />
-        ) : (
-          <Icons.FacebookIcon size={12} />
-        )}
+        <Icons.GoogleIcon size={12} />
         <Layouts.HSpace value={4} />
         <Text
           style={styles.buttonText}

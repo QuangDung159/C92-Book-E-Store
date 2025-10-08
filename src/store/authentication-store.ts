@@ -12,7 +12,6 @@ class AuthenticationStore {
   notificationStore: NotificationStore | null = null;
   sharedStore: SharedStore | null = null;
   googleSigned: boolean = false;
-  facebookSigned: boolean = false;
   appleSigned: boolean = false;
 
   constructor(
@@ -24,9 +23,7 @@ class AuthenticationStore {
       userStore: observable,
       sharedStore: observable,
       googleSigned: observable,
-      facebookSigned: observable,
       appleSigned: observable,
-      setFacebookSigned: action,
       setGoogleSigned: action,
       setAppleSigned: action,
     });
@@ -34,10 +31,6 @@ class AuthenticationStore {
     this.userStore = userStore;
     this.notificationStore = notificationStore;
     this.sharedStore = sharedStore;
-  }
-
-  setFacebookSigned(value: boolean) {
-    this.facebookSigned = value;
   }
 
   setGoogleSigned(value: boolean) {
@@ -114,10 +107,6 @@ class AuthenticationStore {
   signOut = async () => {
     if (this.googleSigned) {
       await this.googleSignOut();
-    }
-
-    if (this.facebookSigned) {
-      await this.facebookSignOut();
     }
 
     this.sharedStore.removeStorageItem('userId');
@@ -232,38 +221,6 @@ class AuthenticationStore {
   appleSignOut = async () => {
     this.setAppleSigned(false);
     this.signOut();
-  };
-
-  facebookSignOut = async () => {
-    await AuthenticationServices.facebookSignOut();
-    this.setFacebookSigned(false);
-  };
-
-  facebookSignIn = async () => {
-    const response = await AuthenticationServices.facebookSignIn();
-
-    if (response?.status === 200) {
-      const user = response.data;
-
-      const result = await AuthenticationServices.signUp({
-        email: user.email,
-        signUpMethod: 'facebook',
-        username: `${user.first_name} ${user.last_name}`,
-        avatarUrl: user.picture?.data?.url,
-        ssoToken: user.id,
-      });
-
-      if (result?.success) {
-        const user = result.data.user as DataModels.IUser;
-
-        // Update expo token
-        this.ssoSignIn(user, 'facebook');
-
-        this.onSignInSuccess(user);
-
-        this.setFacebookSigned(true);
-      }
-    }
   };
 
   fetchUser = async () => {

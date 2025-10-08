@@ -69,17 +69,6 @@ const AuthenView: React.FC = () => {
                 }}
                 signInType="google"
               />
-              <Layouts.VSpace value={12} />
-              {process.env.EXPO_PUBLIC_ENV !== 'PROD' && (
-                <SSOButton
-                  onPress={async () => {
-                    sharedStore.setShowLoading(true);
-                    await authenticationStore.facebookSignIn();
-                    sharedStore.setShowLoading(false);
-                  }}
-                  signInType="facebook"
-                />
-              )}
             </>
           )}
         </View>
