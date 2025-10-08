@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 import { Buttons, Layouts } from '@components';
+import { SCREEN_NAME } from '@constants';
 import { useNavigate } from '@hooks';
 import { authenticationStore, sharedStore } from '@store';
 import { FONT_STYLES } from '@themes';
@@ -23,7 +24,7 @@ const AuthenView: React.FC = () => {
         <Buttons.CButton
           label="Sign In"
           onPress={() => {
-            openSignInScreen();
+            openSignInScreen(SCREEN_NAME.ACCOUNT_SCREEN);
           }}
           buttonType="primary"
         />

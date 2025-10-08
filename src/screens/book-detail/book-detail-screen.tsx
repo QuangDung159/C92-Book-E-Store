@@ -52,8 +52,10 @@ const BookDetailScreen = ({ route, navigation }: any) => {
   const [searchFilter, setSearchFilter] = useState<DataModels.ISearchFilter>(
     {},
   );
-  const [bookInfo, setBookInfo] = useState<DataModels.IBook>();
   const [itemCount, setItemCount] = useState(1);
+
+  const bookInfo = userStore.currentBookViewing;
+
   const bookId = useMemo(
     () => book?.id || bookIdParam,
     [bookIdParam, book?.id],
@@ -62,7 +64,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
   const loadDetail = useCallback(async () => {
     sharedStore.setShowLoading(true);
     if (book) {
-      setBookInfo(book);
+      userStore.setCurrentBookViewing(book);
     }
 
     if (bookId) {
@@ -87,7 +89,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
           ),
           rating: +(rating / bookData.reviews.length).toFixed(1),
         };
-        setBookInfo(bookDetail);
+        userStore.setCurrentBookViewing(bookDetail);
       }
     }
     sharedStore.setShowLoading(false);

@@ -20,6 +20,7 @@ class UserStore {
   referenceOptionsStore: ReferenceOptionsStore | null = null;
   listFavorite?: DataModels.IBook[] = [];
   listViewed?: DataModels.IBook[] = [];
+  currentBookViewing?: DataModels.IBook | null = null;
 
   constructor(referenceOptionsStore: ReferenceOptionsStore) {
     makeObservable(this, {
@@ -31,6 +32,8 @@ class UserStore {
       referenceOptionsStore: observable,
       listFavorite: observable,
       listViewed: observable,
+      currentBookViewing: observable,
+
       setListViewed: action,
       setListFavorite: action,
       setListCreatedOrder: action,
@@ -38,12 +41,18 @@ class UserStore {
       setListCanceledOrder: action,
       setListProcessingOrder: action,
       setUserProfile: action,
+      setCurrentBookViewing: action,
+
       authenticated: computed,
     });
 
     if (referenceOptionsStore) {
       this.referenceOptionsStore = referenceOptionsStore;
     }
+  }
+
+  setCurrentBookViewing(value: DataModels.IBook) {
+    this.currentBookViewing = value;
   }
 
   setListFavorite(values: DataModels.IBook[]) {
