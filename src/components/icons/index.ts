@@ -15,7 +15,6 @@ export * from './dot-single-icon';
 export * from './edit-icon';
 export * from './eye-icon';
 export * from './eye-off-icon';
-export * from './facebook-icon';
 export * from './filter-icon';
 export * from './google-icon';
 export * from './heart-icon';

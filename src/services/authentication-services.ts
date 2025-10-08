@@ -3,10 +3,8 @@ import {
   isErrorWithCode,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
-import axios, { AxiosResponse } from 'axios';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Crypto from 'expo-crypto';
-import { AccessToken, LoginManager } from 'react-native-fbsdk-next';
 import { API_URL } from '@constants';
 import { DataModels } from '@models';
 import { delay, ToastHelpers } from '@utils';
@@ -81,37 +79,6 @@ const googleSignOut = async () => {
   await GoogleSignin.signOut();
 };
 
-const facebookSignIn: () => Promise<
-  AxiosResponse<any, any>
-> | null = async () => {
-  try {
-    const loginResult = await LoginManager.logInWithPermissions([
-      'public_profile',
-      'email',
-    ]);
-
-    if (!loginResult.isCancelled) {
-      return await AccessToken.getCurrentAccessToken().then(async (data) => {
-        const token = data?.accessToken;
-        const response = await axios.get('https://graph.facebook.com/me', {
-          params: {
-            fields: 'id,first_name,last_name,email,picture',
-            access_token: token,
-          },
-        });
-
-        return response;
-      });
-    }
-    return null;
-  } catch (error) {
-    console.error('Facebook login failed', error);
-    return null;
-  }
-};
-
-const facebookSignOut = async () => {};
-
 const createCreditCard = async (params: DataModels.ICreditCardParams) => {
   return await HttpServices.post(API_URL.creditCard + '/create-one', params);
 };
@@ -180,8 +147,6 @@ export const AuthenticationServices = {
   submitVerficationCode,
   googleSignIn,
   googleSignOut,
-  facebookSignIn,
-  facebookSignOut,
   createCreditCard,
   fetchUser,
   signIn,

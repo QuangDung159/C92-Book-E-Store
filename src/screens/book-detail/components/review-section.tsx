@@ -10,6 +10,7 @@ import {
 import { ProgressBar } from 'react-native-paper';
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
 import { Buttons, Icons, Layouts } from '@components';
+import { SCREEN_NAME } from '@constants';
 import { useNavigate } from '@hooks';
 import { DataModels } from '@models';
 import { userStore } from '@store';
@@ -318,7 +319,7 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
           if (userStore.userProfile) {
             onPressLeaveReview();
           } else {
-            openSignInScreen();
+            openSignInScreen(SCREEN_NAME.BOOK_DETAIL_SCREEN);
           }
         }}
       />
