@@ -8,6 +8,7 @@ export default {
     icon: './src/assets/images/e-book-logo.png',
     scheme: 'c92bookestorev1',
     userInterfaceStyle: 'automatic',
+    jsEngine: 'hermes',
     splash: {
       image: './src/assets/images/splash.png',
       resizeMode: 'contain',
@@ -17,11 +18,16 @@ export default {
       supportsTablet: true,
       bundleIdentifier: 'com.dragonc92team.BookEStoreV1',
       buildNumber: '2',
-      googleServicesFile: './ios/BookEStore/GoogleService-Info.plist',
+      googleServicesFile: './GoogleService-Info.plist',
       usesAppleSignIn: true,
       infoPlist: {
         UIBackgroundModes: ['remote-notification'],
         UNUserNotificationCenter: true,
+        NSAppTransportSecurity: {
+          NSAllowsArbitraryLoads: true,
+        },
+        NSLocationWhenInUseUsageDescription:
+          'This app uses your location to provide relevant content.',
       },
     },
     android: {
@@ -31,7 +37,7 @@ export default {
       },
       package: 'com.dragonc92team.BookEStoreV1',
       versionCode: 84,
-      googleServicesFile: './android/app/google-services.json',
+      googleServicesFile: './google-services.json',
       permissions: ['ACCESS_FINE_LOCATION', 'ACCESS_COARSE_LOCATION'],
       targetSdkVersion: 35,
     },
@@ -69,6 +75,8 @@ export default {
           displayName: 'E-Store',
         },
       ],
+      'expo-font',
+      'expo-web-browser',
     ],
     experiments: {
       typedRoutes: true,
