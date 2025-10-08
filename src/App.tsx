@@ -7,7 +7,7 @@ import {
 import Constants from 'expo-constants';
 import * as Font from 'expo-font';
 import * as Linking from 'expo-linking';
-import { SplashScreen } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
 import { observer } from 'mobx-react-lite';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { connectToDevTools } from 'react-devtools-core';
