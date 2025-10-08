@@ -1,5 +1,6 @@
+import { useFocusEffect } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Dimensions,
   Keyboard,
@@ -21,6 +22,7 @@ import {
   userStore,
 } from '@store';
 import { COLORS, FONT_STYLES } from '@themes';
+import { delay } from '@utils';
 import { AuthenView } from './components';
 import { SignInViewModel } from './view-models';
 
@@ -43,6 +45,24 @@ const SignInScreen = ({ navigation, route }: any) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userStore.authenticated, userStore.currentBookViewing]);
+
+  useFocusEffect(
+    useCallback(() => {
+      onGoBack();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userStore.authenticated]),
+  );
+
+  const onGoBack = async () => {
+    if (userStore.authenticated) {
+      sharedStore.setShowLoading(true);
+      await delay(1000);
+      navigation.goBack();
+      await delay(1000);
+      navigation.goBack();
+      sharedStore.setShowLoading(false);
+    }
+  };
 
   const onSubmit = async () => {
     Keyboard.dismiss();
