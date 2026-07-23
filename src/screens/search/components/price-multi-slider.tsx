@@ -30,7 +30,9 @@ const PriceMultiSlider: FC<PriceMultiSliderProps> = ({
     const [value, setValue] = useState(
       sliderValue ? sliderValue : DEFAULT_VALUE,
     );
-    let renderTrackMarkComponent: (inde: number) => React.ReactNode;
+    const renderTrackMarkComponent:
+      | ((index: number) => React.ReactNode)
+      | undefined = undefined;
 
     const renderPriceMultiSlider = () => {
       return Children.map(props.children, (child: React.ReactElement) => {
@@ -40,7 +42,7 @@ const PriceMultiSlider: FC<PriceMultiSliderProps> = ({
             renderTrackMarkComponent,
             trackMarks,
             value,
-          });
+          } as any);
         }
 
         return child;
@@ -72,7 +74,7 @@ const PriceMultiSlider: FC<PriceMultiSliderProps> = ({
         minimumValue={minimumValue}
         step={PRICE_STEP}
         thumbTintColor={COLORS.primaryBlack}
-        onSlidingComplete={onSlidingComplete}
+        onSlidingComplete={onSlidingComplete as any}
       />
     </SliderContainer>
   );

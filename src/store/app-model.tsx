@@ -41,11 +41,12 @@ class AppModel {
 
     // set notification handler
     Notifications.setNotificationHandler({
-      handleNotification: async () => ({
-        shouldShowAlert: true,
-        shouldPlaySound: false,
-        shouldSetBadge: false,
-      }),
+      handleNotification: async () =>
+        ({
+          shouldShowAlert: true,
+          shouldPlaySound: false,
+          shouldSetBadge: false,
+        }) as Notifications.NotificationBehavior,
     });
 
     // get expo notification token
@@ -65,7 +66,7 @@ class AppModel {
   }
 
   async logout() {
-    this.userStore.setUserProfile(null);
+    this.userStore.clearUserStore();
 
     this.notificationStore.setListNotification([]);
   }
@@ -89,7 +90,7 @@ class AppModel {
 
     if (this.userStore.authenticated) {
       this.userStore.fetchAllListOrder();
-      this.cartStore.fetchCart(this.userStore.userProfile.id);
+      this.cartStore.fetchCart(this.userStore.userProfile?.id || '');
       this.userStore.fetchAllListInAccount();
       this.notificationStore.loadNotification();
     }

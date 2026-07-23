@@ -33,7 +33,7 @@ function BottomTabNavigator() {
     <SafeAreaView style={styles.container}>
       <Layouts.TopToast />
       <Tab.Navigator
-        id={null}
+        id={undefined}
         screenOptions={{
           headerShown: false,
           tabBarShowLabel: false,
@@ -143,14 +143,15 @@ const styles = StyleSheet.create({
     ...FONT_STYLES.SEMIBOLD_12,
     color: COLORS.primaryBlack,
   },
-  tabBarStyle: Platform.select({
-    ios: {
-      marginBottom: -50,
-    },
-    android: {
-      height: 50,
-    },
-  }),
+  tabBarStyle:
+    Platform.select({
+      ios: {
+        marginBottom: -50,
+      },
+      android: {
+        height: 50,
+      },
+    }) || {},
   dot: {
     position: 'absolute',
     zIndex: 99,

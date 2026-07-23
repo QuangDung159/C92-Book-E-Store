@@ -19,10 +19,10 @@ const CSwitch: FC<CSwitchProps> = ({
   disabled,
 }) => {
   return (
-    <View style={styles.container}>
-      <Text style={[styles.title, labelStyle]}>{title}</Text>
+    <View style={styles.container as any}>
+      <Text style={[styles.title, labelStyle] as any}>{title}</Text>
       <Switch
-        style={styles.switchButton}
+        style={styles.switchButton as any}
         value={value}
         onValueChange={onValueChange}
         trackColor={{

@@ -36,7 +36,7 @@ const HomeScreen = ({ navigation }: any) => {
     // handle when launch app by notification
     if (lastNotification) {
       handleNavigateFromLinking(
-        lastNotification.notification.request.content?.data?.url,
+        lastNotification.notification.request.content?.data?.url as string,
       );
     }
   }, [lastNotification]);

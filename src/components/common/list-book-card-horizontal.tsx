@@ -17,7 +17,6 @@ const ListBookCardHorizontal: React.FC<ListBookCardHorizontalProps> = ({
       showsHorizontalScrollIndicator={false}
       data={listItem}
       keyExtractor={(item) => item.id}
-      estimatedItemSize={186}
       renderItem={({ item, index }) => (
         <BookCardItemHorizontal
           bookCardItem={item}

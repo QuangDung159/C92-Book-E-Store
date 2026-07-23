@@ -17,7 +17,7 @@ const BookHeartIcon: React.FC<BookHeartIconProps> = ({
   bookCardItem,
   containerStyle,
 }) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
 
   const { openSignInScreen } = useNavigate(navigation);
 
@@ -27,14 +27,19 @@ const BookHeartIcon: React.FC<BookHeartIconProps> = ({
         title: 'Please sign in first',
         type: 'error',
         onPress: () => {
-          openSignInScreen();
+          openSignInScreen('');
         },
       });
 
       return;
     }
 
-    const listBookLiked = [...userStore.userProfile.listBookLiked];
+    const currentProfile = userStore.userProfile;
+    if (!currentProfile) {
+      return;
+    }
+
+    const listBookLiked = [...(currentProfile.listBookLiked ?? [])];
 
     if (isFavorite) {
       listBookLiked.push(bookCardItem.id);
@@ -47,7 +52,7 @@ const BookHeartIcon: React.FC<BookHeartIconProps> = ({
     }
 
     await userStore.updateUser({
-      ...userStore.userProfile,
+      ...currentProfile,
       listBookLiked,
     });
 
