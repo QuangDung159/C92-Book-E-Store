@@ -83,13 +83,23 @@ class UserStore {
     this.userProfile = value;
   }
 
+  clearUserStore() {
+    runInAction(() => {
+      this.userProfile = null;
+    });
+  }
+
   updateListShippingAddress = async (
     shippingAddressUpdated: DataModels.IShippingAddress,
     isAddNew?: boolean,
   ) => {
     await delay(1000);
 
+    if (!this.userProfile) return;
+
     runInAction(() => {
+      if (!this.userProfile) return;
+
       let list: DataModels.IShippingAddress[] = [
         ...(this.userProfile.listShippingAddress || []),
       ];
@@ -98,7 +108,7 @@ class UserStore {
         list.unshift(shippingAddressUpdated);
       } else {
         list = ListHelpers.updateItemById(
-          this.userProfile.listShippingAddress,
+          this.userProfile.listShippingAddress || [],
           shippingAddressUpdated,
         );
       }
@@ -128,7 +138,7 @@ class UserStore {
   };
 
   fetchListOrder = async (status: OrderStatus) => {
-    if (this.authenticated) {
+    if (this.authenticated && this.userProfile) {
       const result = await OrderServices.fetchListOrder({
         userId: this.userProfile.id,
         orderStatus: status,
@@ -160,6 +170,8 @@ class UserStore {
   };
 
   getShortAddress = (address: DataModels.IShippingAddress) => {
+    if (!this.referenceOptionsStore) return '';
+
     const ward = ListHelpers.getItemByField(
       this.referenceOptionsStore.wardDataSource,
       address.ward,
@@ -195,9 +207,9 @@ class UserStore {
   };
 
   fetchListInAccountView = async (type: 'viewed' | 'favorite') => {
-    let result: DataModels.ServiceResult<any> = null;
+    let result: DataModels.ServiceResult<any> | null = null;
 
-    if (this.authenticated) {
+    if (this.authenticated && this.userProfile) {
       if (type === 'favorite') {
         result = await BookServices.fetchListByListId({
           listId: this.userProfile.listBookLiked || [],
@@ -210,9 +222,9 @@ class UserStore {
 
       if (result?.success && result.data) {
         if (type === 'favorite') {
-          this.setListFavorite(result.data?.list);
+          this.setListFavorite(result.data?.list || []);
         } else {
-          this.setListViewed(result.data?.list);
+          this.setListViewed(result.data?.list || []);
         }
       }
 
@@ -235,7 +247,9 @@ class UserStore {
       return false;
     }
 
-    const isFavorited = this.userProfile.listBookLiked.includes(bookId);
+    const isFavorited = Boolean(
+      this.userProfile.listBookLiked?.includes(bookId),
+    );
     return isFavorited;
   };
 }

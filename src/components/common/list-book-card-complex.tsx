@@ -13,16 +13,14 @@ interface ListBookCardComplexProps {
 const ListBookCardComplex: React.FC<ListBookCardComplexProps> = ({
   listItem,
   onEndReached,
-  estimatedItemSize,
   scrollRef,
 }) => {
   return (
     <FlashList
-      ref={scrollRef}
+      ref={scrollRef as any}
       showsVerticalScrollIndicator={false}
       data={listItem}
       keyExtractor={(item) => item.id}
-      estimatedItemSize={estimatedItemSize}
       renderItem={({ item }) => {
         return <BookCardItemComplex bookCardItem={item} />;
       }}

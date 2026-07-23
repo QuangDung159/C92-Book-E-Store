@@ -45,9 +45,9 @@ const App = () => {
     appModel.appInit();
     appModel.loadMasterData();
     //
-    OneSignal.initialize(process.env.EXPO_PUBLIC_ONE_SIGNAL_APP_ID);
+    OneSignal.initialize(process.env.EXPO_PUBLIC_ONE_SIGNAL_APP_ID || '');
     OneSignal.Debug.setLogLevel(LogLevel.Verbose);
-    OneSignal.initialize(Constants.expoConfig.extra.oneSignalAppId);
+    OneSignal.initialize(Constants?.expoConfig?.extra?.oneSignalAppId);
     // Also need enable notifications to complete OneSignal setup
     OneSignal.Notifications.requestPermission(true);
   }, []);
@@ -101,10 +101,12 @@ const App = () => {
 
   if (!fontsLoaded) return null;
 
+  const Container = NavigationContainer as any;
+
   return (
-    <NavigationContainer ref={navigationRef} linking={linking}>
+    <Container ref={navigationRef} linking={linking}>
       <Navigation />
-    </NavigationContainer>
+    </Container>
   );
 };
 

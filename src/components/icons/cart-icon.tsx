@@ -16,7 +16,7 @@ const CartIcon: React.FC<CartIconProps> = ({
 }) => {
   return (
     <TouchableOpacity activeOpacity={0.6} onPress={onPress}>
-      <AntDesign name="shoppingcart" size={size} color={color} />
+      <AntDesign name="shopping-cart" size={size} color={color} />
     </TouchableOpacity>
   );
 };

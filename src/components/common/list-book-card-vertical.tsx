@@ -15,22 +15,20 @@ const ListBookCardVertical: React.FC<ListBookCardVerticalProps> = ({
   listItem,
   onUpdateCount,
   onEndReached,
-  estimatedItemSize,
   scrollRef,
 }) => {
   return (
     <FlashList
-      ref={scrollRef}
+      ref={scrollRef as any}
       showsVerticalScrollIndicator={false}
       data={listItem}
       keyExtractor={(item) => item.id}
-      estimatedItemSize={estimatedItemSize}
       renderItem={({ item }) => {
         return (
           <BookCardItemVertical
             bookCardItem={item}
             onUpdateCount={(count) => {
-              onUpdateCount(count, item);
+              onUpdateCount?.(count, item);
             }}
           />
         );

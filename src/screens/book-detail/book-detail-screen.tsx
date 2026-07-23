@@ -72,22 +72,23 @@ const BookDetailScreen = ({ route, navigation }: any) => {
 
       if (result?.data?.book) {
         const bookData = result.data.book as DataModels.IBook;
+        const reviews = bookData.reviews || [];
 
         let rating = 0;
-        bookData.reviews.forEach((item) => {
+        reviews.forEach((item) => {
           rating += item.rating;
         });
 
         const bookDetail: DataModels.IBook = {
           ...bookData,
-          reviews: bookData.reviews.map(
+          reviews: reviews.map(
             (item: any) =>
               ({
                 ...item,
                 username: item.user?.username,
               }) as DataModels.IReview,
           ),
-          rating: +(rating / bookData.reviews.length).toFixed(1),
+          rating: +(rating / reviews.length).toFixed(1),
         };
         userStore.setCurrentBookViewing(bookDetail);
       }
@@ -113,9 +114,10 @@ const BookDetailScreen = ({ route, navigation }: any) => {
   }, [book, loadDetail, bookIdParam]);
 
   const submitViewed = async () => {
-    if (!userStore.authenticated) return;
+    if (!userStore.authenticated || !userStore.userProfile) return;
 
-    const listBookViewed = [...userStore.userProfile.listBookViewed];
+    const userProfile = userStore.userProfile;
+    const listBookViewed = [...(userProfile.listBookViewed ?? [])];
     const index = listBookViewed.findIndex((item) => item === bookId);
 
     if (index === -1) {
@@ -123,7 +125,8 @@ const BookDetailScreen = ({ route, navigation }: any) => {
     }
 
     userStore.updateUser({
-      ...userStore.userProfile,
+      ...userProfile,
+      username: userProfile.username ?? '',
       listBookViewed,
     });
 
@@ -132,7 +135,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
 
   const data = [bookInfo?.image, bookInfo?.image, bookInfo?.image];
 
-  const scrollRef = useRef<ScrollView>();
+  const scrollRef = useRef<ScrollView>(null as any);
 
   const scrollToTop = () => {
     if (scrollRef.current) {
@@ -147,7 +150,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
         onDismiss={() => {
           setIsShowReviewPopup(false);
         }}
-        bookId={bookInfo?.id}
+        bookId={bookInfo?.id || bookInfo?.name || ''}
         onSubmitSuccess={() => {
           loadDetail();
         }}
@@ -175,7 +178,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
             }}
           >
             <StarRatingDisplay
-              rating={bookInfo.rating}
+              rating={bookInfo.rating || 0}
               starSize={24}
               color={COLORS.error50}
               starStyle={{
@@ -205,7 +208,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
               ...FONT_STYLES.REGULAR_14,
             }}
           >
-            {`Stock: ${bookInfo.stock > 99 ? '99+' : bookInfo.stock}`}
+            {`Stock: ${bookInfo.stock || 0 > 99 ? '99+' : bookInfo.stock}`}
           </Text>
           <Layouts.VSpace value={12} />
           <View
@@ -218,7 +221,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
             <View>
               {Boolean(bookInfo.priceNotSale) && (
                 <Text style={styles.priceNotSale}>
-                  {StringHelpers.formatCurrency(bookInfo.priceNotSale)}
+                  {StringHelpers.formatCurrency(bookInfo.priceNotSale || 0)}
                 </Text>
               )}
               <Text style={styles.price}>
@@ -291,7 +294,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
             />
             <InfoRow
               title="Form"
-              value={bookInfo.form.name}
+              value={bookInfo.form?.name || 'N/a'}
               hasCheckBox
               onCheck={(value) => {
                 const item = StringHelpers.getItemFromDataSource(
@@ -310,7 +313,10 @@ const BookDetailScreen = ({ route, navigation }: any) => {
               value={`${bookInfo.width} x ${bookInfo.height} x ${bookInfo.thick} cm`}
             />
             <Layouts.VSpace value={12} />
-            <InfoRow title="Page count" value={bookInfo.pageCount.toString()} />
+            <InfoRow
+              title="Page count"
+              value={(bookInfo.pageCount || '').toString()}
+            />
             <Layouts.VSpace value={12} />
             <InfoRow
               title="Author"
@@ -330,7 +336,7 @@ const BookDetailScreen = ({ route, navigation }: any) => {
             />
             <InfoRow
               title="Publisher"
-              value={bookInfo.publisher.name}
+              value={bookInfo.publisher?.name || 'N/a'}
               hasCheckBox
               onCheck={(value) => {
                 const item = StringHelpers.getItemFromDataSource(

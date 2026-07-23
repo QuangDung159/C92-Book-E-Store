@@ -11,9 +11,10 @@ const Stack = createStackNavigator();
 
 function CartNavigator() {
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container as any}>
       <Layouts.TopToast />
       <Stack.Navigator
+        id={undefined}
         screenOptions={{
           headerShown: false,
           gestureEnabled: false,

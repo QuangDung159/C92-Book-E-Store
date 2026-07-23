@@ -25,7 +25,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   bookCardItem,
   showCount = true,
 }) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const { openCartScreen, openSignInScreen } = useNavigate(navigation);
 
   const onAddToCart = () => {
@@ -34,7 +34,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
         title: 'Please sign in first',
         type: 'error',
         onPress: () => {
-          openSignInScreen();
+          openSignInScreen('');
         },
       });
       return;
@@ -67,7 +67,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
               onPress={() => {
                 onUpdateCount?.(itemCount + 1);
               }}
-              disabled={itemCount >= bookCardItem.stock}
+              disabled={itemCount >= (bookCardItem.stock ?? 0)}
               color={COLORS.primaryWhite}
             />
           </View>

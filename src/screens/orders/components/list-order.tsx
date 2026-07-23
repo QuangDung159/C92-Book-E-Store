@@ -48,7 +48,6 @@ const ListOrder: React.FC<ListOrderProps> = ({
             </>
           );
         }}
-        estimatedItemSize={60}
       />
     </View>
   );
