@@ -1,7 +1,7 @@
-import { ContentStyle, FlashList } from '@shopify/flash-list';
+import { FlashList } from '@shopify/flash-list';
 import { toJS } from 'mobx';
 import React from 'react';
-import { RefreshControl } from 'react-native';
+import { RefreshControl, StyleProp, ViewStyle } from 'react-native';
 import { SEARCH_VIEW_STYLE } from '@constants';
 import { DataModels } from '@models';
 import { BookCardItem } from './book-card-item';
@@ -19,13 +19,12 @@ interface ListBookSearchProps {
   endOfListText?: string;
   onRefresh?: () => void;
   refreshing?: boolean;
-  contentContainerStyle?: ContentStyle;
+  contentContainerStyle?: StyleProp<ViewStyle>;
 }
 
 const ListBookSearch: React.FC<ListBookSearchProps> = ({
   listItem,
   onEndReached,
-  estimatedItemSize,
   scrollRef,
   viewStyle,
   onUpdateCount,
@@ -34,13 +33,19 @@ const ListBookSearch: React.FC<ListBookSearchProps> = ({
   refreshing,
   contentContainerStyle,
 }) => {
-  const renderItem = ({ item, index }) => {
+  const renderItem = ({
+    item,
+    index,
+  }: {
+    item: DataModels.IBook;
+    index: number;
+  }) => {
     if (viewStyle === SEARCH_VIEW_STYLE.list) {
       return (
         <BookCardItemVertical
           bookCardItem={{ ...item, count: 1 }}
           onUpdateCount={(count) => {
-            onUpdateCount(count, item);
+            onUpdateCount?.(count, item);
           }}
         />
       );
@@ -51,7 +56,7 @@ const ListBookSearch: React.FC<ListBookSearchProps> = ({
       <BookCardItemComplex
         bookCardItem={{ ...item, count: 1 }}
         onUpdateCount={(count) => {
-          onUpdateCount(count, item);
+          onUpdateCount?.(count, item);
         }}
       />
     );
@@ -61,18 +66,17 @@ const ListBookSearch: React.FC<ListBookSearchProps> = ({
     <FlashList
       contentContainerStyle={contentContainerStyle}
       scrollEnabled
-      ref={scrollRef}
+      ref={scrollRef as any}
       showsVerticalScrollIndicator={false}
       data={toJS(listItem)}
       keyExtractor={(item) => item.id}
-      estimatedItemSize={estimatedItemSize}
       renderItem={renderItem}
       ListFooterComponent={<EndOfListListComponent content={endOfListText} />}
       onEndReached={onEndReached}
       onEndReachedThreshold={0.5}
       numColumns={viewStyle === SEARCH_VIEW_STYLE.grid ? 2 : 1}
       refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        <RefreshControl refreshing={!!refreshing} onRefresh={onRefresh} />
       }
     />
   );

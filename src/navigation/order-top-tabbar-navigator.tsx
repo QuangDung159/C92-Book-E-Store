@@ -24,6 +24,7 @@ function OrderTopTabbarNavigator() {
       <Layouts.TopToast />
       <ScreenHeader title="Orders" navigation={navigation} showBackIcon />
       <Tab.Navigator
+        id={undefined}
         initialRouteName={SCREEN_NAME.CREATED_ORDERS_SCREEN}
         screenOptions={{
           tabBarStyle: {
@@ -68,7 +69,7 @@ function OrderTopTabbarNavigator() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles: any = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.primaryWhite,

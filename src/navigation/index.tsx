@@ -24,10 +24,10 @@ import { SearchNavigator } from './search-navigator';
 const Stack = createStackNavigator();
 
 const Navigation = () => {
-  const notificationListener = useRef<Notifications.Subscription>();
-  const responseListener = useRef<Notifications.Subscription>();
+  const notificationListener = useRef<Notifications.EventSubscription>(null);
+  const responseListener = useRef<Notifications.EventSubscription>(null);
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
 
   const { openAplicationStore, handleNavigateFromLinking } =
     useNavigate(navigation);
@@ -41,7 +41,7 @@ const Navigation = () => {
       if (response) {
         const url = response?.notification?.request?.content?.data?.url;
         if (url) {
-          handleNavigateFromLinking(url); // Navigate based on the URL
+          handleNavigateFromLinking(url as string); // Navigate based on the URL
         }
       }
     };
@@ -62,17 +62,13 @@ const Navigation = () => {
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
         handleNavigateFromLinking(
-          response?.notification?.request?.content?.data?.url,
+          response?.notification?.request?.content?.data?.url as string,
         );
       });
 
     return () => {
-      notificationListener.current &&
-        Notifications.removeNotificationSubscription(
-          notificationListener.current,
-        );
-      responseListener.current &&
-        Notifications.removeNotificationSubscription(responseListener.current);
+      notificationListener.current && notificationListener.current.remove();
+      responseListener.current && responseListener.current.remove();
     };
   }, [handleNavigateFromLinking]);
 
@@ -96,6 +92,7 @@ const Navigation = () => {
         />
       )}
       <Stack.Navigator
+        id={undefined}
         screenOptions={{
           headerShown: false,
           gestureEnabled: false,

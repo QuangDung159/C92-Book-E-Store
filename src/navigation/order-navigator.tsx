@@ -15,6 +15,7 @@ function OrderNavigator() {
     <SafeAreaView style={styles.container}>
       <Layouts.TopToast />
       <Stack.Navigator
+        id={undefined}
         screenOptions={{
           headerShown: false,
         }}
@@ -28,7 +29,7 @@ function OrderNavigator() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles: any = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.primaryWhite,

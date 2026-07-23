@@ -17,18 +17,16 @@ interface ListBookCardVerticalRowProps {
 const ListBookCardVerticalRow: React.FC<ListBookCardVerticalRowProps> = ({
   listItem,
   onEndReached,
-  estimatedItemSize,
   scrollRef,
 }) => {
   return (
     <>
       <FlashList
         scrollEnabled
-        ref={scrollRef}
+        ref={scrollRef as any}
         showsVerticalScrollIndicator={false}
         data={listItem}
         keyExtractor={(item) => item.id}
-        estimatedItemSize={estimatedItemSize}
         numColumns={2}
         renderItem={({ item, index }) => (
           <BookCardItem bookCardItem={item} index={index} />

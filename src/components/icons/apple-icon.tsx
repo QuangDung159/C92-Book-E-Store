@@ -28,7 +28,7 @@ const AppleIcon: React.FC<AppleIconProps> = ({
       }}
     >
       <AntDesign
-        name="apple1"
+        name="apple"
         size={size}
         color={disabled ? disabledColor : color}
       />
