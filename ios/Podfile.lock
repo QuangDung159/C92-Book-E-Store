@@ -213,7 +213,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
     - Yoga
-  - ExpoAdapterFBSDKNext (13.4.1):
+  - ExpoAdapterFBSDKNext (13.4.3):
     - ExpoModulesCore
     - FBSDKCoreKit
     - React-Core
@@ -1723,18 +1723,18 @@ PODS:
     - React-RCTFBReactNativeSpec
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
-  - react-native-fbsdk-next (13.4.1):
+  - react-native-fbsdk-next (13.4.3):
     - React-Core
-    - react-native-fbsdk-next/Core (= 13.4.1)
-    - react-native-fbsdk-next/Login (= 13.4.1)
-    - react-native-fbsdk-next/Share (= 13.4.1)
-  - react-native-fbsdk-next/Core (13.4.1):
+    - react-native-fbsdk-next/Core (= 13.4.3)
+    - react-native-fbsdk-next/Login (= 13.4.3)
+    - react-native-fbsdk-next/Share (= 13.4.3)
+  - react-native-fbsdk-next/Core (13.4.3):
     - FBSDKCoreKit (~> 18.0)
     - React-Core
-  - react-native-fbsdk-next/Login (13.4.1):
+  - react-native-fbsdk-next/Login (13.4.3):
     - FBSDKLoginKit (~> 18.0)
     - React-Core
-  - react-native-fbsdk-next/Share (13.4.1):
+  - react-native-fbsdk-next/Share (13.4.3):
     - FBSDKGamingServicesKit (~> 18.0)
     - FBSDKShareKit (~> 18.0)
     - React-Core
@@ -2904,7 +2904,7 @@ SPEC CHECKSUMS:
   expo-dev-launcher: f944f7a1e6959ede96d23944131702f544392683
   expo-dev-menu: f8bfb74bf1041922bf3bdc946c92438dba11fd92
   expo-dev-menu-interface: 600df12ea01efecdd822daaf13cc0ac091775533
-  ExpoAdapterFBSDKNext: ea93990577019c9cd85df68a0c10683bc08f4f23
+  ExpoAdapterFBSDKNext: a4d77dd1866b7f64386b11c2d7ae79b6fa28fccc
   ExpoAdapterGoogleSignIn: 20e6be8bff6e951607ace66e6d3d11b30f2e9e3a
   ExpoAppleAuthentication: 31bb6cdc57d7169e5d994fff7ec4b97c62423534
   ExpoAsset: cc98e16f65a64e58079d9ccad3b5eec2b57b9263
@@ -2983,7 +2983,7 @@ SPEC CHECKSUMS:
   React-logger: c3e2f8a2e284341205f61eef3d4677ab5a309dfd
   React-Mapbuffer: abad17e497845ba728b779e2fac123ee961d4545
   React-microtasksnativemodule: 90dfab2adb37c8c90da7afffcec427d7c90acb29
-  react-native-fbsdk-next: 1baeeacf0ecdeb839cca16ca75cb16a9bbbf8e03
+  react-native-fbsdk-next: 4fa40d3b1df411ed9bc3cca899572b41f58a4dae
   react-native-get-random-values: 21325b2244dfa6b58878f51f9aa42821e7ba3d06
   react-native-onesignal: 0829ce2a504db26dd80eaf14d4e0211ea626fe62
   react-native-pager-view: 97a093c403ac360d2f9450220d39156a13634f4b
