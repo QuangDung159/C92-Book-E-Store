@@ -77,6 +77,7 @@ export default {
       ],
       'expo-font',
       'expo-web-browser',
+      './plugins/withNonModularHeaders',
     ],
     experiments: {
       typedRoutes: true,
